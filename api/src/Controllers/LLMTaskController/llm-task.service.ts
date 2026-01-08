@@ -27,9 +27,13 @@ export class LLMTaskService {
 
   constructor(
   ) {
-    this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-      organization: process.env.OPENAI_ORGANISATION,
+    const apiKey = process.env.OPENAI_API_KEY
+    const organisation = process.env.OPENAI_ORGANISATION
+    const ifNone = !apiKey || apiKey.length === 0 || !organisation || organisation.length === 0
+
+    this.openai = ifNone ? null : new OpenAI({
+      apiKey: apiKey,
+      organization: organisation,
     });
   }
 
