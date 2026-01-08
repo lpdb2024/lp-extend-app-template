@@ -245,14 +245,17 @@ export default boot(({ router }) => {
 
       if (isLpExpired) {
         if (logging) console.info("AuthGuard - No valid auth, redirecting to login");
-        return loginRoute(accountId, to.fullPath);
+        // Redirect to login with the original destination as redirect param
+        const redirectPath = to.fullPath === "/" ? undefined : to.fullPath;
+        return loginRoute(accountId, redirectPath);
       }
 
       // LP SSO auth - verify user exists
       const user = await userStore.getSelf();
       if (!user) {
         if (logging) console.info("AuthGuard - LP user not found, redirecting to login");
-        return loginRoute(accountId, to.fullPath);
+        const redirectPath = to.fullPath === "/" ? undefined : to.fullPath;
+        return loginRoute(accountId, redirectPath);
       }
 
       if (logging) console.info("AuthGuard - LP SSO auth valid for:", to.name);

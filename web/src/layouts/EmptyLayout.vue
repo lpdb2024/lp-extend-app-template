@@ -48,7 +48,7 @@ onBeforeMount(async () => {
   // SHELL MODE: If running in LP Extend iframe, skip account checks
   // Shell provides authentication via token and account context
   if (isInShellMode.value) {
-    console.log("[MainLayout] Running in shell mode, using shell context");
+    console.log("[EmptyLayout] Running in shell mode, using shell context");
 
     // Use accountId from shell context
     const shellAccountId = shellAuthState.context.value?.accountId;
@@ -56,41 +56,48 @@ onBeforeMount(async () => {
       useAppStore().setaccountId(shellAccountId);
       useUserStore().setaccountId(shellAccountId);
       console.log(
-        "[MainLayout] Set accountId from shell context:",
+        "[EmptyLayout] Set accountId from shell context:",
         shellAccountId
       );
     }
+
+    // Initialize navRoutes for shell mode
+    const isDev = import.meta.env.MODE === "development";
+    const allRoutes = router.getRoutes();
+    navRoutes.value =
+      allRoutes.filter((route) => {
+        return (
+          route.meta.type === "external" ||
+          route.meta.isNav ||
+          route.meta.active ||
+          (route.meta.activeDev && isDev)
+        );
+      }) || [];
 
     // In shell mode, we trust the shell for auth - don't redirect to login
     return;
   }
 
   // STANDALONE MODE: Normal account/auth checks
-  // hasActiveLpSession
-  // activeLpAccountId
   const isDev = import.meta.env.MODE === "development";
-  // const accountId = _route.params.accountId
-  //   ? String(_route.params.accountId)
-  //   : "";
   const accountId = firebaseAuth.activeLpAccountId;
 
-  // If no accountId in route, check if user needs to set up their account
+  // Initialize navRoutes regardless of auth state (needed to render page)
+  const allRoutes = router.getRoutes();
+  navRoutes.value =
+    allRoutes.filter((route) => {
+      return (
+        route.meta.type === "external" ||
+        route.meta.isNav ||
+        route.meta.active ||
+        (route.meta.activeDev && isDev)
+      );
+    }) || [];
+
+  // If no accountId, the authGuard will handle redirects
+  // Just let the page render - authGuard handles auth
   if (!accountId) {
-    // Check if we have a Firebase user but no LP account set up
-    if (firebaseAuth.isAuthenticated && !firebaseAuth.defaultAccountId) {
-      await router.push({ name: ROUTE_NAMES.ACCOUNT_SETUP });
-      return;
-    }
-    // If we have a default account, redirect there
-    if (firebaseAuth.defaultAccountId) {
-      await router.push({
-        name: ROUTE_NAMES.APP,
-        params: { accountId: firebaseAuth.defaultAccountId },
-      });
-      return;
-    }
-    // No Firebase auth either - go to login
-    await router.push({ name: ROUTE_NAMES.LOGIN });
+    console.log("[EmptyLayout] No accountId set, authGuard will handle redirects");
     return;
   }
 
@@ -126,18 +133,6 @@ onBeforeMount(async () => {
       },
     });
   }
-  const allRoutes = router.getRoutes();
-  console.info("allRoutes", allRoutes);
-  navRoutes.value =
-    allRoutes.filter((route) => {
-      return (
-        route.meta.type === "external" ||
-        route.meta.isNav ||
-        route.meta.active ||
-        (route.meta.activeDev && isDev)
-      );
-    }) || [];
-
   // Check if user has an active LP session before making LP-specific API calls
   // Firebase auth alone is NOT enough to call LP APIs - we need LP SSO token
   const hasLpSession = firebaseAuth.hasActiveLpSession;
