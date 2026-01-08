@@ -1,6 +1,9 @@
 FROM node:22.15-alpine3.20 AS frontend-builder
+WORKDIR /app
+# Copy both web and api folders so Quasar's distDir: "../api/public" works correctly
+COPY web/ ./web/
+COPY api/ ./api/
 WORKDIR /app/web
-COPY web/ .
 RUN rm -rf node_modules
 RUN npm install --legacy-peer-deps
 RUN npm run build
@@ -22,8 +25,8 @@ RUN  mkdir -p ${APP_CODE}/ && \
 
 # Copy backend code
 COPY api/ ${APP_CODE}/
-# Copy built frontend to backend's public folder
-COPY --from=frontend-builder /app/web/dist/spa ${APP_CODE}/public
+# Copy built frontend to backend's public folder (Quasar builds to ../api/public)
+COPY --from=frontend-builder /app/api/public ${APP_CODE}/public
 
 # Move to app dir
 WORKDIR ${APP_CODE}
