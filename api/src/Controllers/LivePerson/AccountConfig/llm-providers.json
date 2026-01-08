@@ -1,0 +1,96 @@
+{
+  "success": true,
+  "statusCode": 200,
+  "successResult": {
+    "provider_subscriptions": [
+      {
+        "models": {
+          "gemini-2.0-flash": "ENABLED",
+          "gemini-2.5-pro": "ENABLED"
+        },
+        "account_id": "Liveperson",
+        "provider_name": "google",
+        "subscription_name": "ai-studio",
+        "enable_subscription": true,
+        "llmType": "INTERNAL",
+        "supported_clients": ["LANGUAGE_DETECTION", "TRANSLATION"],
+        "created_at": 1760811675753,
+        "updated_at": 1760811675753
+      },
+      {
+        "models": { "gemini-2.0-flash": "ENABLED" },
+        "account_id": "Liveperson",
+        "provider_name": "google",
+        "subscription_name": "translate",
+        "enable_subscription": true,
+        "llmType": "INTERNAL",
+        "supported_clients": ["LANGUAGE_DETECTION", "TRANSLATION"],
+        "created_at": 1761320711735,
+        "updated_at": 1761320711735
+      },
+      {
+        "models": {
+          "gpt-4": "ENABLED",
+          "gpt-4-32k": "ENABLED",
+          "aidojo-text-embedding-ada-model": "ENABLED",
+          "gpt-4o-mini": "ENABLED",
+          "llmgateway-text-35turbo-1106-model": "ENABLED",
+          "gpt-4o": "ENABLED"
+        },
+        "account_id": "Liveperson",
+        "provider_name": "openai-azure",
+        "subscription_name": "ai-studio",
+        "enable_subscription": true,
+        "llmType": "INTERNAL",
+        "supported_clients": [
+          "ROUTING_AI_AGENT_MESSAGING_BOT",
+          "ROUTING_AI_AGENT_VOICE_BOT"
+        ],
+        "created_at": 1740241429468,
+        "updated_at": 1740241429468
+      },
+      {
+        "models": { "gpt-4o-mini-2024-07-18": "ENABLED" },
+        "account_id": "Liveperson",
+        "provider_name": "openai-azure",
+        "subscription_name": "lp-llm-ptu",
+        "enable_subscription": true,
+        "llmType": "INTERNAL",
+        "supported_clients": [
+          "VOICE_BOT",
+          "CONV_ASSIST",
+          "VOICE_AGENT",
+          "AUTO_SUMMARIZATION",
+          "MESSAGING_BOT",
+          "COPILOT_REWRITE"
+        ],
+        "created_at": 1740237295595,
+        "updated_at": 1740237295595
+      },
+      {
+        "models": { "gpt-4o-2024-11-20": "ENABLED" },
+        "account_id": "Liveperson",
+        "provider_name": "openai-azure",
+        "subscription_name": "lp-ptu-gpt-4o",
+        "enable_subscription": true,
+        "llmType": "INTERNAL",
+        "supported_clients": [
+          "ROUTING_AI_AGENT_MESSAGING_BOT",
+          "ROUTING_AI_AGENT_VOICE_BOT"
+        ],
+        "created_at": 1747066715029,
+        "updated_at": 1747066715029
+      },
+      {
+        "models": { "gpt-4o-mini-2024-07-18": "ENABLED" },
+        "account_id": "Liveperson",
+        "provider_name": "openai-azure",
+        "subscription_name": "voice-summarization",
+        "enable_subscription": true,
+        "llmType": "INTERNAL",
+        "created_at": 1743621065608,
+        "updated_at": 1743621065608
+      }
+    ]
+  }
+}

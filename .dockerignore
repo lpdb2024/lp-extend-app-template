@@ -1,0 +1,54 @@
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Git
+.git
+.gitignore
+
+# Claude
+.claude
+
+# Node modules
+node_modules
+web/node_modules
+api/node_modules
+
+# Build outputs
+web/dist
+api/dist
+
+# Environment files
+.env
+.env.*
+web/.env
+web/.env.*
+api/.env
+api/.env.*
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage
+web/coverage
+api/coverage
+
+# Documentation (not needed in container)
+docs
+*.md
+!README.md

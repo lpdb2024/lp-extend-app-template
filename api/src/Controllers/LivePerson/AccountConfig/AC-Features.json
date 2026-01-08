@@ -1,0 +1,2940 @@
+{
+  "acApp": [
+    {
+      "name": "provision",
+      "apiVersion": 1.0,
+      "accountList": {
+        "account": [
+          {
+            "id": "31487986",
+            "grantedFeatures": {
+              "revision": 51,
+              "grantedFeature": [
+                {
+                  "id": "LEUI.iHub_Enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Connectors_Audio_Sharing",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerDiscoveryFull",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.ManagerWorkspace",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "VisitorFeed.Data",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.AI_Assist_Widget",
+                  "from": "1970-01-01T00:00:00-05:00",
+                  "to": "3000-01-01T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.SecureFormStudio",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Messaging_Conversation_Sources_Google",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Agent_Photo_Sharing",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Automation.Watson",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "PD.LiveEngage_2_SurveyMainSkillAvailability",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.isCtrlEnterFeatureEnabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerAccess",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Reports.leReportBuilderOpenProfile",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerChat",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.CreditCard_XL4D_Masking",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Private_Messages",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Messaging_Cross_Account_Contact_Center",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Engagement_History_Intent",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Auto_Messages",
+                  "from": "1970-01-01T00:00:00-05:00",
+                  "to": "3000-01-01T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.hideSLATimerPerSkill",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerDiscoveryLite",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_Agent_Groups_Prioritization",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_Offsite_Engagement",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerAccessLPAOnly",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.IntentAnalyzerEnableBackfill",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "SocialConnect.Enabled",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.EncryptionBYOKEnabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Voice.Make_Outbound_Calls",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.aiAnnotatorAccessInsideIntentAnalyzer",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.Enforce_New_Agent_Workspace",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Multiple_Consumer_IDP",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Edit_Auto_Messages",
+                  "from": "1970-01-01T00:00:00-05:00",
+                  "to": "3000-01-01T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Agent.CustomPdc",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "App.ProfanityImageNotification",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Chat.Wrap_Up",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LiveChat_Queue_Priority",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Reports.leMstrAccess",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_Chat_on_UMS",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.gcpApproved",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.performancePortalAccessLPAOnly",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "LEUI.BAM_Enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Reports.leDashboardAccess",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Dummy_Always_Off",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Agent_Survey",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "AIAutomation.BYOM",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.ConnectionBar_Notification_Visible",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Next_Best_Conversation",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "MessagingHistory.expose_cross_session",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Conversations_Export",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.LiveEngage_2_Messaging_EngagementHistory",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "MessagingHistory.sde_close_to_start_time",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Agent_Manager_Mandatory_Grouping",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Reports.leReportBuilderAnalytics",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.ManagerWorkspaceExportWidgetDataToCSV",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.AutoClosePerSkill",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_ExpectedWaitTime_For_SystemMessages",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Workspace.HideCsatDataBar",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "lp-rtbf-ui.rtbf-ui.Data_Deletion_Self_Service",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Allow_Granularity_for_Agent_Manager_Permissions",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.dataTransporterPremium",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Authenticated_Chat",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "SocialMessaging.Widget_Facebook_Enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_Site_Override",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.SLAPerSkill",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.SecureForms.show_agent_confirmation_dialog",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Consumer_Message_Channel_Indicator",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.EncryptionDEKEnabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.StrictLogout",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerLPATuning",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Redistribute_load_to_connected_agent_groups",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "lp-aistudio-app.aiStudio.enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_HSTS_Header_Enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Availability_Web_Messaging",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerEmail",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.RichContent",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerMessaging",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.staffForecasterAccessLPAOnly",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Reports.leReportBuilderNonLpa",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.BlockAddingUsers",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Billing_CPI2",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Reporting.ReportCenter.Override",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Launchpad",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "LiveVoice.LiveVoice_Integration",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_Unified_window_deployment",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LivePerson_Authentication_Method",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Automation.Bot_Connectors",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.HideSelectiveSkillsHistory",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.MyAccountMenuItem",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_Unified_window",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Agent_File_Sharing",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Smart_Compose",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LPInsights.MRProcessExecution",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Conversation_Summary_Widget",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.HtmlEngagementsBlockScripts",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.VisitorFeed.PreFiltering",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "LEUI.Use_Custom_Rings",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.User_Management_AC_Users",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.EmailConnector",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Historic_Data_Masking_Agent_Summary",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Select_Favorite_Predefined_Content",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Ring_for_All",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "LEApps.QuickLaunchMenuButton",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Block_Chat_Export",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.ManagerWorkspaceConfiguration",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.portalAccessLPAOnly",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Reports.LiveEngage_2_EngagementHistory",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerContractSigned",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.Messaging.Agent.CustomPdc",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Unified_window_captcha",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "SocialMessaging.Agent_Message_Delete_Enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.SMS_numbers_management",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LPA_Profiles_Assignment",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Partners_IsPartnerAccount",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "app.DEMO_sys_test_default_3",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Answering_Service",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Block_MSTR",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.New_agent_workspace",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.accessByProfile_RealtimeDashboard",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.ETLHadoop",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Shark.Consumer_Journey_Identity_Only_Support",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Account_Info",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Static_Load_Balancing",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Un_Auth_Messaging",
+                  "from": "1970-01-01T00:00:00-05:00",
+                  "to": "3000-01-01T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LiveVideo.LiveVideo_Integration",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.RefreshButton",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "UnifiedWindow.Block_CC_Patterns",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "LEUI.isPendoEnabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "AIAutomation.GCPforGenAI",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Analytics.LiveEngage_2_SentimentAnalysis",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "CoApp.CoApp_Integration",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Analytics.LiveEngage_2_HotTopics",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Estimated_Wait_Time_Calculations",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.FallbackSkillPerSkill",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.conversationEvaluationAccess",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Messaging_Agent_Availability",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.AgentApp",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "messaging.ManagerWorkspaceEnablePresetsAPI",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Agent_File_Sharing_v2",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "InteractionPlatform.Interaction_Platform",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Agent.Widget_Visibility",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "ac_common.enable_gcp_cdn_for_ac",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Cobrowse.Cobrowse_Integration",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.ConnectionBar_CaseManagement_Visible",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "3000-01-01T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Reports.LE_DataAccess",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.API_User_Login",
+                  "from": "1970-01-01T00:00:00-05:00",
+                  "to": "3000-01-01T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Async_Messaging",
+                  "from": "1970-01-01T00:00:00-05:00",
+                  "to": "3000-01-01T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.LE_CKEditor_P_Tag",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.AgentSetConsumerProfile",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Legacy_Chat",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "lp-dataconnector-app.Intelligence.dataTransporterPremium",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Billing_CPI3_or_higher",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.WorkforceManagement_AHT",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "lp-msghistory-app.MessagingHistory.sde_close_to_start_time",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.NLS_enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Smart_Reply",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.ContentProviderMsgHistoryAccess",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_CrossDomainStorage",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Conversation_Events_In_Transcript",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.ControlReturnToQueue",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Set_Agent_State_By_Facts",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Automation.Automation_Area",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_MultipleChatCenterLoadBalancing",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.ContentProviderAccount",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.accessByProfile_MCSToolkit",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.ManagerWorkspace_bots_widget",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Historic_Data_Masking",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Identification_Verification",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.User_type_bot",
+                  "from": "1970-01-01T00:00:00-05:00",
+                  "to": "3000-01-01T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEApps.FirstTimeExperienceModal",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Advanced_Login.Bots_OAuth2.0_Credentials",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_Limit_Sticky_Size",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "App.Intelligence.GenerativeInsights.Access.FreeTrial",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.VisitorFeedV2Domain",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Clean_Routing_Ghost_Conversations",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Reset_allocated_group_on_transfer_to_skill",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.MTLS_enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.AuditTrail",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Send_Consumer_Message_Metadata",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Automated_Conversation_Summary",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Queue_Position_Calculations",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "ProfanitySuite.ProfanityTextNotification",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Tasks.Handle_False_Responses",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.EncodedMetadata",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Reports.leReportBuilderAccess",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "App.ProfanityImageFilter",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "LEUI.ConnectionBar_OpenCase_Visible",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "3000-01-01T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "messaging.restApi",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Pinned_Conversations",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "LEUI.AllowUsersModification",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Exclusive_SuperUser_Login_Only",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Show_Only_Currently_Handled_Rollover_Conversations",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "SocialListening.Enabled",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "messaging.set.agent.intensity.event.update.agent.state.offline.enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Tasks.Handle_Intent_Annotaitons",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.IpMasking",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Messaging_Conversation_Sources",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.AgentViewForAgentsInMWS",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.dataTransporterAccess",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerTwitter",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "AIAutomation.GenerativeAI",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.StepUp_close_previous_auth_conversation",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_WalkMe_Tag",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.AllowLinksRendering",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Voice.isVoiceBaseEnabled",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Automation.Dialogflow",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Voice.Receive_Inbound_Calls",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Conversation_Timers",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerProvisionalTrial",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Reports.EngagementHistory_PCI_Data_Display",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Analytics.Analytics.Third_Party_Enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.ManagerWorkspace_UI_Alerts",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "SocialMessaging.Moderation_Enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.MyAccount",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Reports.AnalyticsViewerAccess",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Data_API_Audit_log",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.lp-mtls-ui.MTLS.Self_Service",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Reports.AccessLooker",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "messaging.enhanced_status_filter",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerSelfServiceTrial",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "LEUI.Block_New_Agent_Workspace",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.ManagerWorkspaceSkillsView",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.dataTransporterAccessLPAOnly",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.AgentStatusTimer",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.WebAnalytics",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Copilot.Translate",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.AllConnections_PreFilteringBySkill",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.Multi_Channel_Engagements",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Global_Encryption_Enabled",
+                  "from": "2022-11-14T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.Messaging_Agent_List",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Voice.Agent_Call_Controls_Enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Messaging_Survey",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.ManagerWorkspace_Tabs_View",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.portalAccess",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Reports.GenerateSecureFormToken",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.HideLastMessageTooltip",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.AgentGroups",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Agent_Link_Sending",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Smart_Suggestions",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Profiles",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.staffForecasterAccess",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Send_Post_Conversation_Survey_After_Human_Agent",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Api_key_management",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.BellaInsights.Access",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.Messaging_Secure_Form",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.performancePortalAccess",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Transfer_To_Agent",
+                  "from": "1970-01-01T00:00:00-05:00",
+                  "to": "3000-01-01T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Rich_Text_Formatting",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.rtdForMessaging",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerEnableAPI",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "sentry.isEnforcedSampling",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_Migrating",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "AIAutomation.GenerativeAI_Preview",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Webhooks.SubscriptionModel",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.AgentMasking",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Shark.ComparisonGroupTaglets",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Automation.Conversation_Builder",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.AES256_Encryption",
+                  "from": "2022-11-14T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.Tagging_By_LOB",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Takeover_Conversation",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.AgentPicture",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.WorkforceManagement_AHT_export",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "LEUI.ManagementConsole_Enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "LEUI.ConnectionBar_Display",
+                  "from": "2021-08-18T00:00:00-04:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.IP_Restriction",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerBypassUsic",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "LEUI.VIEW_APPLICATION_SECRET",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "ProfanitySuite.ProfanityTextMasking",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Data_Export_Explicit_Delimiter",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.rtdForChat",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_2_ChatCenterLoadBalancing_Cascading",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "lp-agentactivity-app.wfm-nrt-interval-metrics",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "FaaS.FaaS",
+                  "from": "1970-01-01T00:00:00-05:00",
+                  "to": "3000-01-01T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Reporting.LEOfflineAnalytics.SMB",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.EncryptionKeyAutoRotationEnabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.SecureForms_LE2",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerMultipleDomains",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Reporting.ReportCenter",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "VisitorFeed.Query",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.LiveEngage_LOB_Support",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Messaging.Display_MCS_In_Conversation",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Web_To_SMS_Eng",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "SocialMessaging.Widget_Twitter_Enabled",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.BlockSupportAccess",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Intelligence.intentAnalyzerLanguage",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Config_Maximum_Custom_Away_Status",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Smart_Rewrite",
+                  "from": "1969-12-31T00:00:00-05:00",
+                  "to": "2999-12-31T00:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "messaging.selectFavoritePredefinedContent",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Messaging.Accessible_Shortcuts.New_Shortcuts",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "false"
+                  }
+                },
+                {
+                  "id": "Common.Common.Auto_Unassign",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                },
+                {
+                  "id": "Common.Multiple_Agent_Status",
+                  "from": "1969-12-31T19:00:00-05:00",
+                  "to": "2999-12-31T19:00:00-05:00",
+                  "deleted": false,
+                  "value": {
+                    "type": "LPBoolean",
+                    "$": "true"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

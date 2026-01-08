@@ -1,0 +1,95 @@
+{
+  "success": true,
+  "successResult": {
+    "success": {
+      "articles": [
+        {
+          "id": "7e0880ff-c5d0-4bca-9025-104e2374230c",
+          "title": "what steps should I take when noticing a suspcious transaction",
+          "summary": "what steps should I take when noticing a suspcious transaction?",
+          "detail": "If you notice a suspicious transaction on your ANZ online banking account, it's understandable to be worried. Before submitting a dispute, take the following steps to ensure that you are proceeding correctly and to potentially resolve the situation quicker:\n\n1. **Review Your Own Activities**: Begin by reviewing your own recent transactions, purchases, and withdrawals. Sometimes, transactions may appear under different merchant names, which could seem unfamiliar at first.\n\n2. **Check with Joint Account Holders**: If you share the account with anyone else, check with them to see if they recognize the transaction. They may have conducted a transaction you were unaware of.\n\n3. **Verify Subscriptions and Recurring Payments**: Consider if the transaction could be a subscription or a recurring payment you may have forgotten about, such as streaming services, apps, or memberships.\n\n4. **Contact the Merchant**: If you recognize the merchant but still believe the transaction is suspicious, try contacting the merchant directly for more information. This can often be the fastest way to resolve misunderstandings or to confirm fraudulent activity.\n\n5. **Gather Evidence**: If, after the above steps, the transaction still appears to be fraudulent, gather any evidence that supports your claim. This might include receipts, statements, or communications that verify you did not authorize the transaction.\n\n6. **Change Your Online Banking Passwords and Security Details**: Before reporting the fraudulent activity, it’s a good idea to change your online banking passwords and any related security information to prevent further unauthorized access to your account.\n\n7. **Check for Security Breaches**: Ensure your devices are free from malware or viruses that could compromise your information. Running an antivirus scan could be helpful.\n\n8. **Contact ANZ Directly**: After taking the above steps, contact ANZ immediately to report the suspicious transaction. The sooner you report, the better. Use the contact information provided on ANZ’s official website. ANZ may have specific advice or steps for you to follow to dispute the transaction. They may also require you to fill out a dispute form or provide additional information.\n\n9. **Follow Up**: Keep track of all communications and any reference numbers provided by ANZ related to your dispute. Be prepared to provide additional information if required, and follow up if you don’t hear back in the expected timeframe.\n\n10. **Review Your Account Regularly**: After the incident, regularly review your account transactions to detect any future unauthorized activities as soon as possible.\n\nRemember, the security of your financial information is paramount. Taking preventive measures, such as enabling alerts for transactions and regularly reviewing your account, can help in early detection of any unauthorized activity.",
+          "modifiedBy": "Brandt Stevenson",
+          "source": "ce21ae8b2bef4f4c9d161ac8a213ad58",
+          "createTime": 1712639944760,
+          "modificationTime": 1712639947569,
+          "status": "ACTIVE",
+          "intentMatchScore": 0.0
+        },
+        {
+          "id": "78eb3df7-cea7-46f5-ab3d-0b5e3ed169fd",
+          "title": "how do I lodge a transaction dispute",
+          "summary": "how do I lodge a transaction dispute?\nhow or where do I submit a transaction dispute",
+          "detail": "If you think the transaction was unauthorised or the result of a scam, you should call ANZ immediately. However, if you see a transaction that doesn’t look right for another reason, and you don’t think your account is at risk, there are a few things you can check before you give us a call:\n\n    Investigate the transaction by using the view and search transaction instructions above. Sometimes this may jog your memory on a legitimate payment but, if it still doesn't look right, continue to the next step\n    Confirm the transaction has processed to your account. Transactions can show as Pending in your transaction list in the ANZ App or as Outstanding Transactions in Internet Banking. We suggest you wait until the transaction has been processed before lodging a dispute\n    Choose the account that contains the transaction you'd like to dispute\n    Tap on the transaction. This will open up the transaction details. You may see some helpful information on how you might be able to dispute the transaction directly with the merchant before you give us a call\n    Tap on Something not right?\n    You can query a transaction you don’t recognise by sending a message to the team that can help. Scroll down to the bottom of the screen and tap Message us or you can call us.\n\nWe’ll look into it and give you updates along the way. Time limits apply, so it’s important you contact us as soon as you can. But before you send us a message or call us, make sure you’ve gathered the following information:\n\n    Account name and/or number\n    Date the transaction was processed\n    Exact description of the transaction\n    Amount of the transaction\n\nIf possible, it’s also helpful to collect other supporting documents such as receipts, bank statements, photographs of the item and business’ contact details.",
+          "modifiedBy": "Brandt Stevenson",
+          "source": "ce21ae8b2bef4f4c9d161ac8a213ad58",
+          "createTime": 1712639777432,
+          "modificationTime": 1712639780177,
+          "status": "ACTIVE",
+          "intentMatchScore": 0.0
+        },
+        {
+          "id": "095ac25f-c60a-4e2c-a05a-590a1f5f198f",
+          "tags": ["identity theft", "security", "fraud"],
+          "title": "protect yourself from identity theft",
+          "summary": "How can I protect myself from identity theft",
+          "detail": "7 tips to protect yourself from identity theft\n\n    Don't open suspicious messages – delete them.\n    Be very careful about how much personal information you share on social network sites.\n    Secure your networks and devices with anti-virus software and a good firewall.\n    Put a lock on your mailbox and redirect mail when you move.\n    Shred documents containing personal information before you throw them away.\n    If a new card or product arrives in the mail that you didn't apply for, call the bank it came from immediately.\n    Regularly check your credit file.\n",
+          "modifiedBy": "Brandt Stevenson",
+          "source": "ce21ae8b2bef4f4c9d161ac8a213ad58",
+          "category": "security",
+          "createTime": 1712639665398,
+          "modificationTime": 1712639668132,
+          "status": "ACTIVE",
+          "intentMatchScore": 0.0
+        },
+        {
+          "id": "ebac1e1d-1664-4bb9-8e7d-4f9d6b1535e7",
+          "tags": ["phising", "fraud"],
+          "title": "what is Phishing",
+          "summary": "Phishing\nwhat is Phishing?\nThis is when a criminal tricks you into handing over your personal information via email or phone.",
+          "detail": "Phishing\n\nThis is when a criminal tricks you into handing over your personal information via email or phone.",
+          "modifiedBy": "Brandt Stevenson",
+          "source": "ce21ae8b2bef4f4c9d161ac8a213ad58",
+          "category": "security",
+          "createTime": 1712639622927,
+          "modificationTime": 1712639626798,
+          "status": "ACTIVE",
+          "intentMatchScore": 0.0
+        },
+        {
+          "id": "8d86613a-e6f7-4017-ad1c-0d092ec5be05",
+          "tags": ["fraud"],
+          "title": "Identity Fraud",
+          "summary": "Identity fraud is often a two-stage process where your personal details are stolen and then used for financial gain or other criminal activity. You might be left with debt, a poor credit rating or other legal implications as a result.\n\nPersonal information such as your name, address, date of birth or bank account details can be obtained by criminals in a number of ways including phishing, hacking and document theft.",
+          "detail": "Identity fraud is often a two-stage process where your personal details are stolen and then used for financial gain or other criminal activity. You might be left with debt, a poor credit rating or other legal implications as a result.\n\nPersonal information such as your name, address, date of birth or bank account details can be obtained by criminals in a number of ways including phishing, hacking and document theft.",
+          "modifiedBy": "Brandt Stevenson",
+          "source": "ce21ae8b2bef4f4c9d161ac8a213ad58",
+          "category": "security",
+          "createTime": 1712639580340,
+          "modificationTime": 1712639588035,
+          "status": "ACTIVE",
+          "intentMatchScore": 0.0
+        },
+        {
+          "id": "65e39ff2-e825-4433-b07d-3b40f78fd275",
+          "title": "Financial Hardship",
+          "summary": "i lost my job\ncant afford next payment\ncan't make next payment",
+          "detail": "Sorry to hear about those circumstances, Roger.\nIf you are currently having difficulty making payments on your accounts, then you can complete and submit this form to request a call back from one of our Customer Help team.\nhttps://www.anz.com.au/support/financial-hardship/",
+          "modifiedBy": "Brandt Stevenson",
+          "source": "ce21ae8b2bef4f4c9d161ac8a213ad58",
+          "intentId": "31eca588-2803-4070-b308-c14ff71a818a",
+          "createTime": 1689557421581,
+          "modificationTime": 1698615026748,
+          "status": "ACTIVE",
+          "intentMatchScore": 0.0
+        }
+      ],
+      "pagination": {
+        "nextPage": 0,
+        "page": 1,
+        "totalSize": 6,
+        "totalPages": 1,
+        "size": 6
+      }
+    }
+  }
+}

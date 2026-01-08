@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1400596270,
+    "name": "All visitors",
+    "description": "Default target audience, automatically created",
+    "isSystemDefault": true,
+    "systemDefault": true,
+    "conditionBoxTypes": [0]
+  }
+]

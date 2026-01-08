@@ -1,0 +1,345 @@
+{
+  "name": "LP General",
+  "welcomeText": "👋 Welcome to LivePerson, how can we help you today?",
+  "accountId": "31487986",
+  "backgroundColor": {
+    "useCustom": false,
+    "color": "#f5f5f5",
+    "custom": "linear-gradient(to right, #3863e5, #8d46eb, #e849b7)"
+  },
+  "bodyBgColor": {
+    "useCustom": false,
+    "color": "#ffffff",
+    "custom": "linear-gradient(to right, #3863e5, #8d46eb, #e849b7)"
+  },
+  "systemTextColor": {
+    "useCustom": false,
+    "color": "#f5f5f5",
+    "custom": "linear-gradient(deg, #f5f5f5 NaN%)",
+    "gradient": {
+      "type": "linear",
+      "direction": "",
+      "stops": [{ "color": "#f5f5f5", "position": null }]
+    }
+  },
+  "top": {
+    "bg": {
+      "useCustom": true,
+      "color": "#f5f5f5",
+      "custom": "linear-gradient(to right, #3863e5 0%, #8d46eb 50%, #e849b7 100%)",
+      "gradient": {
+        "type": "linear",
+        "direction": "to right",
+        "stops": [
+          { "color": "#3863e5", "position": 0 },
+          { "color": "#8d46eb", "position": 50 },
+          { "color": "#e849b7", "position": 100 }
+        ],
+        "radialShape": "ellipse",
+        "radialPosition": "bottom left"
+      }
+    },
+    "text": {
+      "useCustom": false,
+      "color": "#ffffff",
+      "custom": "linear-gradient(deg, #ffffff NaN%)",
+      "gradient": {
+        "type": "linear",
+        "direction": "",
+        "stops": [{ "color": "#ffffff", "position": null }]
+      }
+    },
+    "bannerText": "LP Messaging",
+    "avatar": null
+  },
+  "banner": {
+    "imageUrl": "https://storage.googleapis.com/lp-demo-builder/app-resources/LivePerson_logo.webp",
+    "bgColor": {
+      "useCustom": false,
+      "color": "#ffffff",
+      "custom": "linear-gradient(deg, #ffffff NaN%)",
+      "gradient": {
+        "type": "linear",
+        "direction": "",
+        "stops": [{ "color": "#ffffff", "position": null }]
+      }
+    },
+    "height": 87,
+    "padding": [10, "10", 20, 10]
+  },
+  "body": {
+    "bgColor": {
+      "useCustom": false,
+      "color": "#f5f5f5",
+      "custom": "linear-gradient(deg, #f5f5f5 NaN%)",
+      "gradient": {
+        "type": "linear",
+        "direction": "",
+        "stops": [{ "color": "#f5f5f5", "position": null }]
+      }
+    },
+    "textColor": {
+      "useCustom": false,
+      "color": "#f5f5f5",
+      "custom": "linear-gradient(to right, #3863e5, #8d46eb, #e849b7)"
+    },
+    "agentMessages": {
+      "bgColor": {
+        "useCustom": true,
+        "color": "#3863e5",
+        "custom": "linear-gradient(to right, #3863e5 0%, #8d46eb 50%, #e849b7 100%)",
+        "gradient": {
+          "type": "linear",
+          "direction": "to right",
+          "stops": [
+            { "color": "#3863e5", "position": 0 },
+            { "color": "#8d46eb", "position": 50 },
+            { "color": "#e849b7", "position": 100 }
+          ]
+        }
+      },
+      "textColor": {
+        "useCustom": false,
+        "color": "#f5f5f5",
+        "custom": "linear-gradient(deg, #f5f5f5 NaN%)",
+        "gradient": {
+          "type": "linear",
+          "direction": "",
+          "stops": [{ "color": "#f5f5f5", "position": null }]
+        }
+      },
+      "avatar": null
+    },
+    "customerMessages": {
+      "bgColor": {
+        "useCustom": false,
+        "color": "#e849b7",
+        "custom": "linear-gradient(deg, #e849b7 NaN%)",
+        "gradient": {
+          "type": "linear",
+          "direction": "",
+          "stops": [{ "color": "#e849b7", "position": null }]
+        }
+      },
+      "textColor": {
+        "useCustom": false,
+        "color": "#f5f5f5",
+        "custom": "linear-gradient(deg, #f5f5f5 NaN%)",
+        "gradient": {
+          "type": "linear",
+          "direction": "",
+          "stops": [{ "color": "#f5f5f5", "position": null }]
+        }
+      }
+    }
+  },
+  "content": {
+    "cards": {
+      "buttonType": "unelevated",
+      "padding": 10,
+      "borderRadius": 10,
+      "bgColor": {
+        "useCustom": false,
+        "color": "#ffffff",
+        "custom": "linear-gradient(deg, #ffffff NaN%)",
+        "gradient": {
+          "type": "linear",
+          "direction": "",
+          "stops": [{ "color": "#ffffff", "position": null }]
+        }
+      },
+      "textColor": {
+        "useCustom": false,
+        "color": "#878686",
+        "custom": "linear-gradient(deg, #878686 NaN%)",
+        "gradient": {
+          "type": "linear",
+          "direction": "",
+          "stops": [{ "color": "#878686", "position": null }]
+        }
+      },
+      "buttonBgColor": {
+        "useCustom": false,
+        "color": "#3863e5",
+        "custom": "linear-gradient(deg, #3863e5 NaN%)",
+        "gradient": {
+          "type": "linear",
+          "direction": "",
+          "stops": [{ "color": "#3863e5", "position": null }]
+        }
+      },
+      "buttonTextColor": {
+        "useCustom": false,
+        "color": "#f5f5f5",
+        "custom": "linear-gradient(deg, #f5f5f5 NaN%)",
+        "gradient": {
+          "type": "linear",
+          "direction": "",
+          "stops": [{ "color": "#f5f5f5", "position": null }]
+        }
+      }
+    },
+    "buttons": {
+      "buttonType": "unelevated",
+      "bgColor": {
+        "useCustom": false,
+        "color": "#3863e5",
+        "custom": "linear-gradient(deg, #3863e5 NaN%)",
+        "gradient": {
+          "type": "linear",
+          "direction": "",
+          "stops": [{ "color": "#3863e5", "position": null }]
+        }
+      },
+      "textColor": {
+        "useCustom": false,
+        "color": "#f5f5f5",
+        "custom": "linear-gradient(deg, #f5f5f5 NaN%)",
+        "gradient": {
+          "type": "linear",
+          "direction": "",
+          "stops": [{ "color": "#f5f5f5", "position": null }]
+        }
+      }
+    }
+  },
+  "bottom": {
+    "bgColor": {
+      "useCustom": false,
+      "color": "#bfc2d6",
+      "custom": "linear-gradient(deg, #bfc2d6 NaN%)",
+      "gradient": {
+        "type": "linear",
+        "direction": "",
+        "stops": [{ "color": "#bfc2d6", "position": null }]
+      }
+    },
+    "textColor": {
+      "useCustom": false,
+      "color": "#f5f5f5",
+      "custom": "linear-gradient(deg, #f5f5f5 NaN%)",
+      "gradient": {
+        "type": "linear",
+        "direction": "",
+        "stops": [{ "color": "#f5f5f5", "position": null }]
+      }
+    }
+  },
+  "mobileApp": {
+    "icon": "https://storage.googleapis.com/lp-demo-builder/app-resources/cog.png",
+    "pages": [
+      "https://storage.googleapis.com/lp-demo-builder/app-resources/lp-website-mobile.png"
+    ]
+  },
+  "knowledegeAI": { "useKAI": false, "KAIID": null },
+  "faqs": [
+    "track an order",
+    "place new order",
+    "get offers",
+    "refund status",
+    "order history"
+  ],
+  "update": { "label": "", "image": "" },
+  "engagement": {
+    "useIcon": true,
+    "label": "message us",
+    "mobileButtonType": "icon-only",
+    "desktopButtonType": "standard",
+    "width": 150,
+    "useBackLayer": true,
+    "borderWidth": "3",
+    "useBoxShadow": false,
+    "boxShadow": { "h": 0, "v": 0, "blur": 0, "spread": 0, "color": "#1c1c1c" },
+    "background": {
+      "useCustom": false,
+      "color": "#ffffff",
+      "custom": "linear-gradient(deg, #ffffff NaN%)",
+      "gradient": {
+        "type": "linear",
+        "direction": "",
+        "stops": [{ "color": "#ffffff", "position": null }]
+      }
+    },
+    "backLayer": {
+      "useCustom": true,
+      "color": "#3863e5",
+      "custom": "linear-gradient(to right, #3863e5 0%, #e849b7 100%)",
+      "gradient": {
+        "type": "linear",
+        "direction": "to right",
+        "stops": [
+          { "color": "#3863e5", "position": 0 },
+          { "color": "#e849b7", "position": 100 }
+        ]
+      }
+    },
+    "textColor": {
+      "useCustom": false,
+      "color": "#6b5f5f",
+      "custom": "linear-gradient(deg, #f5f5f5 NaN%)",
+      "gradient": {
+        "type": "linear",
+        "direction": "",
+        "stops": [{ "color": "#f5f5f5", "position": null }]
+      }
+    }
+  },
+  "id": "08df2969-36c4-4b47-9b7f-90f9d4bcfe2a",
+  "window": {
+    "useShadow": true,
+    "boxShadow": {
+      "h": 0,
+      "v": 0,
+      "blur": 17,
+      "spread": 3,
+      "color": "#a2acf2e0"
+    },
+    "borderRadius": [10, 10, 0, 0],
+    "width": "320",
+    "height": "580",
+    "top": "50",
+    "bottom": "50"
+  },
+  "cssProperties": {
+    "--window-height": "580px",
+    "--window-width": "320px",
+    "--window-top": "50px",
+    "--window-top-BgColor": "linear-gradient(to right, #3863e5 0%, #8d46eb 50%, #e849b7 100%)",
+    "--window-topTextColor": "#ffffff",
+    "--window-body": "480px",
+    "--window-bgColor": "#f5f5f5",
+    "--window-bottom": "50px",
+    "--window-borderRadius": "10px 10px 0px 0px",
+    "--window-bodyBgColor": "#f5f5f5",
+    "--window-systemTextColor": "#f5f5f5",
+    "--window-bannerBgColor": "#ffffff",
+    "--window-bannerHeight": "87px",
+    "--window-bannerPadding": "10px 10px 20px 10px",
+    "--window-bannerImageUrl": "url(https://storage.googleapis.com/lp-demo-builder/app-resources/LivePerson_logo.webp)",
+    "--window-bottomBgColor": "#bfc2d6",
+    "--window-bottomTextColor": "#f5f5f5",
+    "--card-padding": "10px",
+    "--card-borderRadius": "10px",
+    "--v-card-BgColor": "#ffffff",
+    "--v-card-textColor": "#878686",
+    "--v-card-width": "177.77777777777777px",
+    "--v-card-padding": "10px",
+    "--card-button-bgColor": "#3863e5",
+    "--card-button-textColor": "#f5f5f5",
+    "--agent-msg-bgColor": "linear-gradient(to right, #3863e5 0%, #8d46eb 50%, #e849b7 100%)",
+    "--agent-msg-textColor": "#f5f5f5",
+    "--customer-msg-bgColor": "#e849b7",
+    "--customer-msg-textColor": "#f5f5f5",
+    "--button-bgColor": "#3863e5",
+    "--button-textColor": "#f5f5f5",
+    "--window-bs": "0px 0px 17px 3px #a2acf2e0",
+    "--lp-btn-width": "150px",
+    "--lp-btn-bgColor": "#ffffff",
+    "--lp-btn-textColor": "#6b5f5f",
+    "--lp-btn-borderWidth": "3px",
+    "--lp-btn-borderColor": "linear-gradient(to right, #3863e5 0%, #e849b7 100%)",
+    "--lp-btn-borderStyle": "solid",
+    "--lp-btn-borderRadius": "0px 0px 0 0",
+    "--lp-btn-boxShadow": "none"
+  }
+}

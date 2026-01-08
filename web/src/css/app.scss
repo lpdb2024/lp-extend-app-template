@@ -1,0 +1,1680 @@
+// =============================================================================
+// LP Extend - Global Styles
+// =============================================================================
+// Organized CSS for the LivePerson Extend application
+// Author: Brandt Stevenson
+// =============================================================================
+
+@import 'quasar.variables.scss';
+@import 'extend-theme.scss';
+
+// =============================================================================
+// CSS Custom Properties (Theme Variables)
+// =============================================================================
+:root {
+  // LivePerson Brand Gradient
+  --lp-gradient: linear-gradient(to right, #3863e5, #8d46eb, #e849b7, #ff6d00);
+  --lp-gradient-reverse: linear-gradient(to left, #3863e5, #8d46eb, #e849b7, #ff6d00);
+  --lp-gradient-orange: linear-gradient(to left, #f9a11e, #fd650d, #fe5139);
+
+  // Light Theme Defaults
+  --app-bg: #e6ebf5;
+  --card-bg: #ffffff;
+  --card-bg-elevated: #f9f8f8;
+  --text-primary: #141a42;
+  --text-secondary: #545790;
+  --text-muted: #757575;
+  --table-header-bg: #ffffff;
+  --table-row-bg: #ffffff;
+  --drawer-bg: #ffffff;
+  --header-bg: #f7fbff;
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --dialog-bg: #ffffff;
+
+  // Accent Colors
+  --accent-info: #31CCEC;
+  --accent-button: #ff5722; // deep-orange for light mode
+}
+
+// Dark Theme Overrides
+.body--dark {
+  --app-bg: transparent;
+  --card-bg: rgba(179, 181, 203, 0.1);
+  --card-bg-elevated: #33355d;
+  --text-primary: #ffffff;
+  --text-secondary: #afcdff;
+  --text-muted: #9e9e9e;
+  --table-header-bg: #202849;
+  --table-row-bg: rgba(27, 29, 77, 0.6);
+  --drawer-bg: transparent;
+  --header-bg: rgba(255, 255, 255, 0.05);
+  --border-color: #474a6a;
+  --shadow-color: rgba(46, 9, 181, 0.05);
+  --glass-bg: rgba(18, 21, 57, 0.7);
+  --dialog-bg: #2a3042;
+
+  --accent-button: #31CCEC; // info for dark mode
+}
+
+// =============================================================================
+// Dark Mode Background
+// =============================================================================
+$darkmode_bg_url: 'https://storage.googleapis.com/lp-extend-au/assets/extend-nrg-bg.webp';
+// 'https://lpcdn.lpsnmedia.net/le/apps/agent-workspace/1.51.0-release_1166406301/img/dark-theme-background.3175f99.png';
+
+// =============================================================================
+// Main Layout Structure
+// =============================================================================
+#main-layout {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--app-bg);
+
+  .q-page-container {
+    display: flex;
+    
+
+    .q-page {
+      width: 100%;
+      height: calc(100vh - 0px);
+      min-height: 100% !important;
+      // display: flex;
+      padding: 20px;
+    }
+  }
+  .q-page-container{
+      padding-left: 72px;
+    }
+}
+
+// Dark mode background - separate layers for gradient and image
+// Change --bg-image-opacity to adjust image visibility (0-1)
+.body--dark {
+  --bg-image-opacity: 0.2; // Adjust this to change background image opacity
+
+  #main-layout,
+  .q-layout {
+    position: relative;
+
+    // Gradient layer (on top)
+    // background: radial-gradient(
+    //   ellipse at 0% 0%,
+    //   rgba(255, 140, 50, 0.25) 0%,
+    //   rgba(180, 80, 160, 0.4) 5%,
+    //   rgba(120, 40, 140, 0.35) 20%,
+    //   rgba(16, 18, 58, 0.5) 85%
+    // );
+
+    background: radial-gradient(
+      ellipse at 0% 0%,
+      rgba(255, 140, 50, 0.25) 0%,
+      rgba(122, 54, 109, 0.4) 5%,
+      rgba(42, 18, 107, 0.35) 20%,
+      rgba(16, 18, 58, 0.5) 85%
+    );
+
+    // Image layer (behind, using pseudo-element for independent opacity)
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: url($darkmode_bg_url) no-repeat center / cover;
+      opacity: var(--bg-image-opacity);
+    }
+
+    .q-page-container {
+      background: radial-gradient(
+        circle at 30% 40%,
+        rgba(80, 40, 120, 0.15) 0%,
+        rgba(7, 8, 55, 0.4) 50%,
+        rgba(0, 0, 0, 0.5) 100%
+      );
+    }
+  }
+}
+
+// =============================================================================
+// Header & Navigation
+// =============================================================================
+.q-header {
+  height: 50px;
+  background-color: var(--header-bg);
+  color: var(--text-secondary);
+}
+
+.body--dark .q-header {
+  background: var(--header-bg);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.q-drawer {
+  background-color: var(--drawer-bg);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+}
+
+.body--dark .q-drawer {
+  border-right: 1px solid #1c1a44 !important;
+  background-color: transparent;
+}
+
+// =============================================================================
+// LivePerson Brand Elements
+// =============================================================================
+
+// Gradient Ribbons
+.lp-ribbon,
+.top-ribbon-thin {
+  background-image: var(--lp-gradient);
+  position: absolute;
+
+  &.top {
+    top: 0;
+    width: 100vw;
+  }
+
+  &.bottom {
+    top: auto;
+    bottom: 0;
+  }
+}
+
+.lp-ribbon-alt {
+  background-image: var(--lp-gradient-reverse);
+  position: absolute;
+}
+
+// Gradient Text Effects
+.lp-theme-text,
+.lp-grad-text {
+  width: fit-content;
+  background: linear-gradient(45deg, #3863e5, #8d46eb, #e849b7, #db711b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lp-grad-text-dark {
+  background-image: linear-gradient(to right, $le-blue-2, $info);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+}
+
+.lp-grad-text-dark-orange {
+  background-image: var(--lp-gradient-orange);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+}
+
+.lp-theme-text-orange {
+  width: fit-content;
+  background: linear-gradient(-180deg, #f9a11e, #fd650d, #fe5139);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lp-theme-text-alt {
+  width: fit-content;
+  background: linear-gradient(-180deg, #3863e5, #8d46eb, #e849b7, #db711b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lp-bg-theme-gradient {
+  background-image: linear-gradient(to right, #3863e5, #8d46eb, #e849b7);
+}
+
+// =============================================================================
+// Cards & Containers
+// =============================================================================
+.st-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 0.75rem 2rem 0 var(--shadow-color);
+}
+
+.ct-widget {
+  padding: 10px;
+  border-radius: 10px;
+  background: radial-gradient(circle, #f7f4f4 20%, #ffffff);
+  box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.body--dark .ct-widget {
+  background: radial-gradient(circle, rgba(41, 49, 94, 0.3) 20%, rgba(58, 69, 131, 0.3));
+}
+
+.card-glass {
+  background: radial-gradient(circle, #ffffff 20%, rgba(243, 244, 245, 0.47));
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.body--dark .card-glass {
+  background: radial-gradient(circle, rgba(30, 42, 110, 0.87) 20%, rgba(47, 61, 141, 0.81));
+}
+
+// Glass Effect
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.frost {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+// =============================================================================
+// Tables
+// =============================================================================
+.le-table {
+  border-radius: 10px;
+  max-height: calc(100vh - 260px);
+  box-shadow: 0 0.75rem 2rem 0 var(--shadow-color);
+  background-color: var(--card-bg);
+
+  .q-table__top,
+  .q-table__bottom,
+  thead tr:first-child th {
+    background: var(--table-header-bg);
+  }
+
+  thead tr th {
+    position: sticky;
+    z-index: 1;
+  }
+
+  thead tr:first-child th {
+    top: 0;
+  }
+
+  &.q-table--loading thead tr:last-child th {
+    top: 48px;
+  }
+
+  tbody {
+    scroll-margin-top: 48px;
+  }
+
+  // Dark mode table styles
+  &.dark,
+  &.q-table--dark {
+    background: transparent !important;
+
+    .q-tr {
+      background: var(--table-row-bg);
+    }
+
+    thead tr:first-child th {
+      background: var(--table-header-bg);
+    }
+
+    .q-table__bottom {
+      background: rgba(0, 0, 0, 0.09);
+    }
+  }
+}
+
+.snapshot-table {
+  max-height: calc(100vh - 400px);
+}
+
+.snapshots-page {
+  .ext-panel--full {
+    min-height: auto;
+    height: auto;
+  }
+}
+
+
+// =============================================================================
+// Dialogs & Menus
+// =============================================================================
+.menu-glass,
+.q-dialog,
+.q-menu {
+  .card-glass,
+  .q-card {
+    background: var(--dialog-bg);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+}
+
+.q-tooltip {
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+// =============================================================================
+// Navigation Links
+// =============================================================================
+.nav-link {
+  .title {
+    width: fit-content;
+    font-size: 0.9em;
+    font-weight: 700;
+  }
+
+  .q-item__label--caption {
+    font-size: 0.7em;
+  }
+
+  &:not(.q-item--dark) .title {
+    background: linear-gradient(45deg, #3863e5, #8d46eb, #e849b7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &.q-item--dark .title {
+    color: $info;
+  }
+}
+
+// =============================================================================
+// Buttons
+// =============================================================================
+.ct-btn {
+  &.blue {
+    background: linear-gradient(90deg, #3863e5, $info);
+  }
+
+  &.pink-info {
+    background: linear-gradient(90deg, #e849b7, $info);
+  }
+
+  &.pink {
+    background: linear-gradient(90deg, #cb289a, #e849b7);
+  }
+
+  &.green-info {
+    background: linear-gradient(90deg, #00bfa5, $info);
+  }
+
+  &.green {
+    background: linear-gradient(90deg, $positive, #00bfa5);
+  }
+}
+
+.n-btn-blue {
+  background: linear-gradient(90deg, #3863e5, $info) !important;
+  color: white !important;
+}
+
+// =============================================================================
+// Theme Gradients for Headers
+// =============================================================================
+.theme-grad {
+  background: linear-gradient(90deg, #fe5139 0%, #fd650d 50%, #f9a11e 100%);
+}
+
+.body--dark .theme-grad {
+  background: linear-gradient(90deg, #3a62e5 0%, #3863e5 50%, #8d46eb, #e849b7 100%);
+}
+
+.light-theme-grad {
+  background: linear-gradient(90deg, #f9a11e 0%, #fd650d 50%, #fe5139 100%);
+}
+
+.dark-theme-grad {
+  background: linear-gradient(90deg, #3a62e5 0%, #3863e5 50%, #8d46eb, #e849b7 100%);
+}
+
+// =============================================================================
+// Brand Color Utilities
+// =============================================================================
+.bg-lp-blue { background-color: $lp-blue; }
+.bg-lp-purple { background-color: $lp-purple; }
+.bg-lp-pink { background-color: $lp-pink; }
+.bg-lp-green { background-color: $lp-green; }
+.bg-transparent { background: transparent !important; }
+
+.text-lp-blue { color: $lp-blue; }
+.text-lp-purple { color: $lp-purple; }
+.text-lp-pink { color: $lp-pink; }
+.text-lp-green { color: $lp-green; }
+
+// =============================================================================
+// Typography Utilities
+// =============================================================================
+.ellipsis,
+.elip {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.word-wrap {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.card-title {
+  color: var(--text-secondary);
+}
+
+.body--dark .card-title {
+  color: $info;
+}
+
+// =============================================================================
+// Layout Utilities
+// =============================================================================
+.w-fc { width: fit-content; }
+.w-max { width: max-content; }
+.w-min { width: min-content; }
+
+.dead-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.relative { position: relative; }
+
+// Transform Utilities
+.flip-h { transform: scaleX(-1); }
+.flip-v { transform: scaleY(-1); }
+.flip-vh { transform: scale(-1, -1); }
+
+// Scroll Utilities
+.scroll-vertical, .sv {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.scroll-horizontal, .sh {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.no-scroll, .ns {
+  overflow: hidden;
+}
+
+.ns-h { overflow-x: hidden !important; }
+.ns-v { overflow-y: hidden !important; }
+
+.hide-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide, .hidden { display: none; }
+
+// =============================================================================
+// Link Styles
+// =============================================================================
+.link {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+
+  &.info { text-decoration-color: $info; }
+  &.indigo { text-decoration-color: $indigo; }
+
+  @for $i from 1 through 14 {
+    &.indigo-#{$i} { text-decoration-color: var(--q-indigo-#{$i}, $indigo); }
+  }
+}
+
+// =============================================================================
+// Hover Effects (Simplified with Loop)
+// =============================================================================
+$hover-colors: (
+  'info': $info,
+  'indigo': $indigo,
+  'blue': $blue,
+  'red': $red,
+  'orange': $orange,
+  'purple': $purple,
+  'pink': $pink,
+  'light-blue': $light-blue,
+  'white': white,
+  'black': black,
+  'primary': $primary,
+  'secondary': $secondary
+);
+
+@each $name, $color in $hover-colors {
+  .hover-#{$name}:hover {
+    color: $color !important;
+  }
+}
+
+// =============================================================================
+// Form Elements
+// =============================================================================
+#account-input {
+  .q-field__label {
+    max-width: 330px;
+    width: 330px;
+    text-align: center;
+  }
+}
+
+// =============================================================================
+// Indicators & Status Elements
+// =============================================================================
+.c-indicator-small {
+  height: 20px;
+  width: 20px;
+  border-radius: 90px;
+  border: 1px solid $grey-9;
+}
+
+.color-indicator {
+  height: 40px;
+  width: 40px;
+  border-radius: 6px;
+  margin: 1px;
+  border: 1px solid $grey-9;
+
+  &.sm {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.color-indicator-square {
+  height: 100%;
+  width: 40px;
+  border-radius: 6px;
+  margin: 1px;
+  border: 1px solid $grey-9;
+}
+
+// Severity Field Indicator
+.sev-field {
+  height: 10px;
+  width: 30px;
+  border-radius: 10px;
+
+  .sev-01 {
+    background-color: #2f9809;
+    width: 10px;
+    border-radius: 10px 0 0 10px;
+  }
+
+  .sev-02 {
+    background-color: $grey-2;
+    width: 10px;
+    border-left: 1px solid $grey-5;
+    border-right: 1px solid $grey-5;
+
+    &.active { background-color: #db711b; }
+  }
+
+  .sev-03 {
+    width: 10px;
+    background-color: $grey-2;
+    border-radius: 0 10px 10px 0;
+
+    &.active { background-color: #911326; }
+  }
+}
+
+// =============================================================================
+// Code Editor Styles
+// =============================================================================
+.CodeMirror,
+.cm-editor,
+.cm-content {
+  font-family: 'Fira Code', 'Monaco', monospace !important;
+
+  * {
+    font-family: inherit !important;
+  }
+}
+
+.json-edit {
+  background-color: var(--card-bg);
+  width: 500px;
+
+  .jsoneditor-vue {
+    height: 100%;
+  }
+}
+
+// =============================================================================
+// Quasar Editor Overrides
+// =============================================================================
+.q-editor,
+#slide-container {
+  min-width: fit-content;
+
+  *[face=inter] { font-family: inter; }
+
+  @for $i from 1 through 7 {
+    *[size='#{$i}'] {
+      font-size: #{$i}em;
+    }
+  }
+}
+
+.ql-size-large {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.ql-size-huge {
+  font-size: 4em !important;
+  height: 56px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.q-edit-menu {
+  min-height: 27vh;
+  max-height: 50vh;
+}
+
+.ql-container .ql-snow {
+  border: 1px dotted $grey-1 !important;
+}
+
+// =============================================================================
+// Notification Styles
+// =============================================================================
+.lp-theme-notify {
+  background: rgba(255, 255, 255, 0.9);
+  color: #141a42 !important;
+  min-height: 100px;
+  height: 100px;
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.lpSuccess {
+  text-align: left;
+}
+
+// =============================================================================
+// Dropdown Button Slim Style
+// =============================================================================
+.slim-dd-btn {
+  padding-left: 4px;
+  padding-right: 4px;
+
+  .q-btn-dropdown__arrow {
+    display: none;
+  }
+}
+
+// =============================================================================
+// Checkered Background (for transparency preview)
+// =============================================================================
+.checkered-background {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAAAXNSR0IArs4c6QAAAAZQTFRF9/f3////TOsULwAAABRJREFUCNdjYGD4/5+BigR1TWMAAO29P8H0ss2LAAAAAElFTkSuQmCC');
+  background-size: 10px;
+  min-height: 340px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+// =============================================================================
+// Avatar Styles
+// =============================================================================
+.self-avatar {
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  padding: 1px;
+
+  img {
+    border-radius: 100%;
+    height: 37px !important;
+    width: 37px !important;
+  }
+}
+
+// =============================================================================
+// Menu Styles
+// =============================================================================
+.cc-menu,
+.predefined-selection,
+.phrase-examples {
+  font-family: inter;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+}
+
+.body--dark {
+  .cc-menu,
+  .predefined-selection,
+  .phrase-examples {
+    background-color: $le-blue-8;
+    border: 1px solid #474a6a;
+  }
+}
+
+.demo-w-menu {
+  font-family: inter;
+  box-shadow: 0 100px 2rem 0 rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
+}
+
+.body--dark .demo-w-menu {
+  background-color: #141a42;
+  border: 1px solid #474a6a;
+}
+
+// =============================================================================
+// Status Container
+// =============================================================================
+#status-container {
+  margin-left: 0;
+  width: 100vw;
+  transition: all 0.2s ease-in-out;
+  padding: 10px;
+}
+
+// =============================================================================
+// Persona List
+// =============================================================================
+.persona-list {
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+// =============================================================================
+// App Title Positioning
+// =============================================================================
+#lp-logo {
+  position: absolute;
+  top: 14px;
+  left: 50px;
+  width: 100px;
+}
+
+.app-title {
+  position: relative;
+  top: 0;
+  border-radius: 0 10px 10px 0;
+  background: linear-gradient(to right, #f7f4f4 20%, #ffffff);
+  backdrop-filter: blur(5px);
+  padding: 10px;
+
+  &.q--dark {
+    background: linear-gradient(to right, rgba(41, 49, 94, 0.29) 20%, rgba(58, 69, 131, 0.1));
+  }
+}
+
+// =============================================================================
+// Headers (Legacy Support)
+// =============================================================================
+.els {
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0 !important;
+    width: max-content;
+  }
+}
+
+// =============================================================================
+// Misc Utilities
+// =============================================================================
+.gbshad {
+  background: rgba(255, 255, 255, 0.375);
+}
+
+.stat-text {
+  background-image: linear-gradient(90deg, #3863e5, #8d46eb);
+}
+
+.db-tooltip {
+  background-image: linear-gradient(to right, #370e81, #3863e5);
+}
+
+.widget-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: $grey-9;
+}
+
+.spanblock {
+  line-height: normal;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+// SDE Button (Small)
+.sde-btn {
+  max-height: 25.2617px !important;
+  height: 25.2617px !important;
+
+  span { font-size: 10px !important; }
+  i { font-size: 1.715em; }
+}
+
+
+// Theme colors
+$cosmic-950: #070820;
+$cosmic-900: #0c1035;
+$cosmic-800: #12184a;
+$cosmic-700: #1c2464;
+$cosmic-600: #283380;
+$cosmic-500: #3548a0;
+$cosmic-400: #5068c0;
+$cosmic-300: #7890d8;
+$cosmic-200: #a8b8e8;
+$cosmic-100: #d8e0f5;
+$cosmic-50: #f0f4fb;
+
+$nebula-blue: #4169e8;
+$nebula-purple: #8d46eb;
+$nebula-pink: #e849b7;
+$nebula-orange: #ff8c42;
+$nebula-teal: #14b8a6;
+
+// Page layout
+.q-page {
+  position: relative;
+  min-height: 100vh;
+  // padding: 0 24px 48px;
+  // background: $cosmic-50;
+  overflow-x: hidden;
+}
+
+// Background
+.ext-page-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ext-bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      ellipse at top right,
+      rgba($nebula-purple, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at bottom left,
+      rgba($nebula-blue, 0.05) 0%,
+      transparent 50%
+    );
+}
+
+.ext-bg-grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: $cosmic-600;
+}
+
+// Page wrapper - container-based scrolling approach
+// The page fills available height, header stays at top, content scrolls inside its container
+.ext-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0; // Important for flex children to shrink
+  overflow: hidden; // Prevent page-level scrolling
+}
+
+// Header - NOT sticky, just a normal flex child
+.ext-page-header {
+  flex-shrink: 0; // Don't shrink the header
+  // max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 18px 34px;
+  // background: $cosmic-50;
+  background: transparent;
+  z-index: 10;
+  transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  // Collapsed state when scrolled
+  &.ext-page-header--collapsed {
+    padding: 0 24px;
+    min-height: 50px;
+    max-height: 50px;
+    overflow: hidden;
+    // background: rgba($cosmic-50, 0.98);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba($cosmic-200, 0.5);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    .ext-header-content {
+      align-items: center;
+      gap: 16px;
+      height: 50px;
+    }
+
+    .ext-header-text {
+      min-width: auto;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ext-overline {
+      display: none;
+    }
+
+    .ext-display-3 {
+      font-size: 1.1rem;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .ext-body {
+      display: none;
+    }
+
+    .ext-header-actions {
+      transform: scale(0.85);
+      transform-origin: right center;
+    }
+  }
+}
+
+// Dark mode header
+// .body--dark .ext-page-header {
+//   background: $cosmic-950;
+// }
+
+.body--dark .ext-page-header.ext-page-header--collapsed {
+  // background: rgba($cosmic-900, 0.98);
+  border-bottom-color: rgba($cosmic-700, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+// Scrollable content container - takes remaining height and scrolls internally
+.ext-scroll-container {
+  flex: 1;
+  min-height: 0; // Critical for flex overflow scrolling
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+// Content wrapper inside the scroll container
+.ext-content,
+.ext-loading-state {
+  position: relative;
+  z-index: 1;
+  // max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px 24px;
+}
+
+// // Content area
+// .ext-content {
+//   position: relative;
+//   z-index: 1;
+//   width: calc(100vw - 100px);
+//   margin: 0 auto;
+// }
+
+.ext-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.ext-header-text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.ext-overline {
+  display: block;
+  font-family: "Sohne Breit", "Inter", sans-serif;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: $nebula-orange;
+  margin-bottom: 8px;
+}
+
+.ext-display-3 {
+  font-family: "Sohne Breit", "Inter", sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 8px;
+}
+
+.ext-text-gradient {
+  background: linear-gradient(
+    135deg,
+    $nebula-blue,
+    $nebula-purple,
+    $nebula-pink
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ext-body {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.ext-text-secondary {
+  color: $cosmic-400;
+}
+
+.ext-text-muted {
+  color: $cosmic-300;
+}
+
+// Header actions
+.ext-header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.ext-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--primary {
+    background: linear-gradient(135deg, $nebula-blue, $nebula-purple);
+    color: white;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($nebula-purple, 0.3);
+    }
+  }
+
+  &--outline {
+    background: white;
+    color: $cosmic-600;
+    border: 1px solid $cosmic-200;
+
+    &:hover:not(:disabled) {
+      border-color: $nebula-purple;
+      color: $nebula-purple;
+    }
+  }
+}
+
+// Loading state
+.ext-loading-state {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+}
+
+// Content area
+.ext-content {
+  position: relative;
+  z-index: 1;
+  // max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+// .ext-content {
+//   position: relative;
+//   z-index: 1;
+//   // width: calc(100vw - 100px);
+//   margin: 0 auto;
+// }
+
+// Navigation tabs
+.ext-nav-tabs {
+  display: flex;
+  gap: 10px;
+  padding: 4px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid $cosmic-100;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.ext-nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $cosmic-400;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    color: $cosmic-600;
+    background: $cosmic-50;
+  }
+
+  &.active {
+    color: white;
+    background: linear-gradient(135deg, $nebula-blue, $nebula-purple);
+    box-shadow: 0 2px 8px rgba($nebula-purple, 0.25);
+    .q-badge {
+      background: white;
+      color: $nebula-purple;
+    }
+  }
+}
+
+// Sub tabs
+.ext-sub-tabs {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid $cosmic-100;
+  margin-bottom: 16px;
+  overflow-x: auto;
+}
+
+.ext-sub-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: $cosmic-400;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    color: $cosmic-600;
+    background: $cosmic-50;
+  }
+
+  &.active {
+    color: $nebula-purple;
+    background: rgba($nebula-purple, 0.08);
+    border-color: rgba($nebula-purple, 0.2);
+  }
+}
+
+.ext-tab-count {
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: $cosmic-100;
+  border-radius: 10px;
+  color: $cosmic-500;
+
+  .ext-sub-tab.active & {
+    background: rgba($nebula-purple, 0.15);
+    color: $nebula-purple;
+  }
+}
+
+// Panels
+.ext-panel {
+  &--full {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 340px);
+  }
+}
+
+.ext-table-container {
+  flex: 1;
+  overflow: auto;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid $cosmic-100;
+}
+
+// Stats grid
+.ext-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  // margin-bottom: 24px;
+}
+
+.ext-stat-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: white;
+  border: 1px solid $cosmic-100;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: $cosmic-200;
+    box-shadow: 0 4px 12px rgba($cosmic-900, 0.05);
+  }
+}
+
+.ext-stat-icon {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: white;
+
+  &.users {
+    background: linear-gradient(
+      135deg,
+      $nebula-blue,
+      darken($nebula-blue, 10%)
+    );
+  }
+
+  &.skills {
+    background: linear-gradient(
+      135deg,
+      $nebula-purple,
+      darken($nebula-purple, 10%)
+    );
+  }
+
+  &.campaigns {
+    background: linear-gradient(
+      135deg,
+      $nebula-pink,
+      darken($nebula-pink, 10%)
+    );
+  }
+
+  &.lobs {
+    background: linear-gradient(
+      135deg,
+      $nebula-orange,
+      darken($nebula-orange, 10%)
+    );
+  }
+}
+
+.ext-stat-content {
+  flex: 1;
+}
+
+.ext-stat-value {
+  font-family: "Sohne Breit", "Inter", sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $cosmic-900;
+  line-height: 1;
+}
+
+.ext-stat-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $cosmic-500;
+  margin-top: 4px;
+}
+
+.ext-stat-detail {
+  font-size: 0.75rem;
+  color: $cosmic-400;
+  margin-top: 2px;
+}
+
+// Card
+.ext-card {
+  background: white;
+  border: 1px solid $cosmic-100;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ext-card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid $cosmic-100;
+}
+
+.ext-card-title {
+  margin: 0;
+  font-family: "Sohne Breit", "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $cosmic-900;
+}
+
+.ext-card-body {
+  padding: 0;
+}
+
+// Table
+.ext-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  th {
+    padding: 12px 16px;
+    font-weight: 600;
+    color: $cosmic-500;
+    background: $cosmic-50;
+    border-bottom: 1px solid $cosmic-100;
+  }
+
+  td {
+    padding: 12px 16px;
+    color: $cosmic-700;
+    border-bottom: 1px solid $cosmic-100;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover td {
+    background: rgba($cosmic-50, 0.5);
+  }
+}
+
+.ext-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  padding: 2px 8px;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  background: linear-gradient(
+    135deg,
+    rgba($nebula-blue, 0.1),
+    rgba($nebula-purple, 0.1)
+  );
+  color: $nebula-purple;
+  border-radius: 6px;
+}
+
+// ========================================
+// Dark theme
+// ========================================
+.body--dark {
+  .ext-snapshots-page {
+    background: $cosmic-900;
+  }
+
+  .ext-bg-gradient {
+    background: radial-gradient(
+        ellipse at top right,
+        rgba($nebula-purple, 0.15) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse at bottom left,
+        rgba($nebula-blue, 0.1) 0%,
+        transparent 50%
+      );
+  }
+
+  .ext-bg-grid {
+    color: $cosmic-400;
+    opacity: 0.5;
+  }
+
+  .ext-overline {
+    // color: $nebula-pink;
+    // color: $nebula-orange;
+    color: white;
+  }
+
+  .ext-text-secondary {
+    color: $cosmic-300;
+  }
+
+  .ext-text-muted {
+    color: $cosmic-400;
+  }
+
+  .ext-btn--outline {
+    background: rgba($cosmic-800, 0.8);
+    border-color: $cosmic-700;
+    color: $cosmic-200;
+
+    &:hover:not(:disabled) {
+      border-color: $nebula-purple;
+      color: $nebula-pink;
+    }
+  }
+
+  .ext-nav-tabs {
+    background: rgba($cosmic-800, 0.8);
+    border-color: $cosmic-700;
+  }
+
+  .ext-tab-badge {
+    background: $cosmic-300;
+    color: $cosmic-700;
+  }
+
+  .ext-nav-tab {
+    color: $cosmic-200;
+
+    &:hover {
+      color: $cosmic-200;
+      background: rgba($cosmic-700, 0.5);
+    }
+
+    &.active {
+      color: white;
+    }
+  }
+
+  .ext-sub-tabs {
+    border-bottom-color: $cosmic-700;
+  }
+
+  .ext-sub-tab {
+    color: $cosmic-400;
+
+    &:hover {
+      color: $cosmic-200;
+      background: rgba($cosmic-700, 0.5);
+    }
+
+    &.active {
+      color: $nebula-pink;
+      background: rgba($nebula-purple, 0.15);
+      border-color: rgba($nebula-purple, 0.3);
+    }
+  }
+
+  .ext-tab-count {
+    background: $cosmic-700;
+    color: $cosmic-300;
+
+    .ext-sub-tab.active & {
+      background: rgba($nebula-purple, 0.25);
+      color: $nebula-pink;
+    }
+  }
+
+  .ext-table-container {
+    background: rgba($cosmic-800, 0.8);
+    border-color: $cosmic-700;
+  }
+
+  .ext-stat-card {
+    background: rgba($cosmic-800, 0.8);
+    border-color: $cosmic-700;
+
+    &:hover {
+      border-color: $cosmic-600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .ext-stat-value {
+    color: white;
+  }
+
+  .ext-stat-label {
+    color: $cosmic-300;
+  }
+
+  .ext-stat-detail {
+    color: $cosmic-400;
+  }
+
+  .ext-card {
+    background: rgba($cosmic-800, 0.8);
+    border-color: $cosmic-700;
+  }
+
+  .ext-card-header {
+    border-bottom-color: $cosmic-700;
+  }
+
+  .ext-card-title {
+    color: white;
+  }
+
+  .ext-table {
+    th {
+      color: $cosmic-300;
+      background: rgba($cosmic-700, 0.5);
+      border-bottom-color: $cosmic-700;
+    }
+
+    td {
+      color: $cosmic-200;
+      border-bottom-color: $cosmic-700;
+    }
+
+    tr:hover td {
+      background: rgba($cosmic-700, 0.3);
+    }
+  }
+
+  .ext-count-badge {
+    background: linear-gradient(
+      135deg,
+      rgba($nebula-blue, 0.2),
+      rgba($nebula-purple, 0.2)
+    );
+    color: $nebula-pink;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  // .ext-page-header {
+  //   padding: 32px 0 24px;
+  // }
+
+  .ext-header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ext-header-actions {
+    justify-content: stretch;
+
+    .ext-btn {
+      flex: 1;
+    }
+  }
+
+  .ext-display-3 {
+    font-size: 2rem;
+  }
+
+  .ext-nav-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ext-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Empty state
+.ext-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+}

@@ -1,0 +1,147 @@
+{
+  "id": null,
+  "name": "Engagement 1",
+  "description": "",
+  "weight": 0.5,
+  "enabled": false,
+  "deleted": false,
+  "windowId": 1400595970,
+  "isPopOut": false,
+  "useSystemRouting": false,
+  "renderingType": 0,
+  "appInstallationId": null,
+  "channel": 1,
+  "showSmsPreSurveyOnMobile": false,
+  "language": "en-US",
+  "onsiteLocations": [1410022670],
+  "visitorBehaviors": [1400596470],
+  "source": 0,
+  "isUnifiedWindow": true,
+  "type": 6,
+  "externalTargets": null,
+  "displayInstances": [
+    {
+      "events": { "click": { "enabled": true, "target": "_blank" } },
+      "presentation": {
+        "background": { "color": "#0363AD", "image": "" },
+        "border": { "radius": 30, "width": 0, "color": "transparent" },
+        "size": { "width": "40", "height": "152" },
+        "elements": {
+          "images": [
+            {
+              "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+              "alt": "",
+              "css": { "left": 8, "top": 113, "zIndex": 600 }
+            }
+          ],
+          "labels": [
+            {
+              "text": "Message us",
+              "css": {
+                "color": "#ffffff",
+                "fontFamily": "Arial,Helvetica,sans-serif",
+                "fontSize": 16,
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+                "left": -23,
+                "top": 53,
+                "transform": "rotate(270deg)",
+                "white-space": "nowrap",
+                "zIndex": 601
+              }
+            }
+          ]
+        }
+      },
+      "macros": [],
+      "displayInstanceType": 2,
+      "enabled": true
+    },
+    {
+      "events": { "click": { "enabled": true, "target": "_blank" } },
+      "presentation": {
+        "background": { "color": "#0363AD", "image": "" },
+        "border": { "radius": 30, "width": 0, "color": "transparent" },
+        "size": { "width": "40", "height": "152" },
+        "elements": {
+          "images": [
+            {
+              "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+              "alt": "",
+              "css": { "left": 8, "top": 113, "zIndex": 600 }
+            }
+          ],
+          "labels": [
+            {
+              "text": "Message us",
+              "css": {
+                "color": "#ffffff",
+                "fontFamily": "Arial,Helvetica,sans-serif",
+                "fontSize": 16,
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+                "left": -23,
+                "top": 53,
+                "transform": "rotate(270deg)",
+                "white-space": "nowrap",
+                "zIndex": 601
+              }
+            }
+          ]
+        }
+      },
+      "macros": [],
+      "displayInstanceType": 1,
+      "enabled": true
+    },
+    {
+      "events": { "click": { "enabled": true, "target": "_blank" } },
+      "presentation": {
+        "background": { "color": "#0363AD", "image": "" },
+        "border": { "radius": 30, "width": 0, "color": "transparent" },
+        "size": { "width": "40", "height": "152" },
+        "elements": {
+          "images": [
+            {
+              "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+              "alt": "",
+              "css": { "left": 8, "top": 113, "zIndex": 600 }
+            }
+          ],
+          "labels": [
+            {
+              "text": "Message us",
+              "css": {
+                "color": "#ffffff",
+                "fontFamily": "Arial,Helvetica,sans-serif",
+                "fontSize": 16,
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+                "left": -23,
+                "top": 53,
+                "transform": "rotate(270deg)",
+                "white-space": "nowrap",
+                "zIndex": 601
+              }
+            }
+          ]
+        }
+      },
+      "macros": [],
+      "displayInstanceType": 4,
+      "enabled": true
+    }
+  ],
+  "position": { "left": 0, "top": 0, "type": 6 },
+  "followMePages": 1,
+  "followMeTime": 0,
+  "timeInQueue": 0,
+  "availabilityPolicy": 0,
+  "conversationType": 1,
+  "connectorId": 1400597870,
+  "allowUnauthMsg": true,
+  "skillId": 1697158870,
+  "skillName": "auto-pilot",
+  "viewErrors": 0,
+  "subType": 24
+}

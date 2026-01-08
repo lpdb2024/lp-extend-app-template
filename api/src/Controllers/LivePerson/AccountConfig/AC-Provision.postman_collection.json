@@ -1,0 +1,2266 @@
+{
+	"info": {
+		"_postman_id": "0a832a1e-796f-4ca2-8daf-88feb51eac32",
+		"name": "AC-Provision",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18336958"
+	},
+	"item": [
+		{
+			"name": "AccountInfo",
+			"item": [
+				{
+					"name": "Create AccountInfo for site",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": 1485761630,
+									"type": "number"
+								},
+								{
+									"key": "nonce",
+									"value": "KG4BIg",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\r\n\r\n    \"expirationDate\": \"2016-10-10 11:47:16\",\r\n    \"maxConcurrentAgentSessions\": 10,\r\n    \"numberOfUsers\": 11,\r\n    \"maxConcurrentVisitors\": 12\r\n}]"
+						},
+						"url": {
+							"raw": "https://{{acweb}}/api/account/{{SITEID}}/configuration/provision/accountInfo/?v=2.0",
+							"protocol": "https",
+							"host": [
+								"{{acweb}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"{{SITEID}}",
+								"configuration",
+								"provision",
+								"accountInfo",
+								""
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update AccountInfo for site",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": 1485761630,
+									"type": "number"
+								},
+								{
+									"key": "nonce",
+									"value": "KG4BIg",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-HTTP-Method-Override",
+								"value": "PUT"
+							},
+							{
+								"key": "If-Match",
+								"value": "-1"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":3598982116,\r\n    \"expirationDate\": \"2016-10-10 11:47:16\",\r\n    \"maxConcurrentAgentSessions\": 10,\r\n    \"numberOfUsers\": 11,\r\n    \"maxConcurrentVisitors\": 12\r\n}"
+						},
+						"url": {
+							"raw": "https://{{acweb}}/api/account/{{SITEID}}/configuration/provision/accountInfo/{{AccountInfoObjectId}}?v=2.0&{{overrideAll}}=false",
+							"protocol": "https",
+							"host": [
+								"{{acweb}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"{{SITEID}}",
+								"configuration",
+								"provision",
+								"accountInfo",
+								"{{AccountInfoObjectId}}"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "{{overrideAll}}",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get AccountInfo by ID",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": 1497859631,
+									"type": "number"
+								},
+								{
+									"key": "nonce",
+									"value": "hfZt4y",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1497859631\",oauth_nonce=\"hfZt4y\",oauth_version=\"1.0\",oauth_signature=\"vBmTb26qVHZuYfe242emgQF0%2F6o%3D\""
+							}
+						],
+						"url": {
+							"raw": "https://{{acweb}}/api/account/{{SITEID}}/configuration/provision/accountInfo/{{AccountInfoObjectId}}?v=2.0",
+							"protocol": "https",
+							"host": [
+								"{{acweb}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"{{SITEID}}",
+								"configuration",
+								"provision",
+								"accountInfo",
+								"{{AccountInfoObjectId}}"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AppInstall",
+			"item": [
+				{
+					"name": "Local - create appInstall",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": 1500269553,
+									"type": "number"
+								},
+								{
+									"key": "nonce",
+									"value": "Fy2fV7",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1500269553\",oauth_nonce=\"Fy2fV7\",oauth_version=\"1.0\",oauth_signature=\"55KGPg0jWGkIdskIzauOwwJzt5I%3D\""
+							},
+							{
+								"key": "If-Match",
+								"value": "-1",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n{\r\n  \"client_name\": \"client 5a\",\r\n  \"redirect_uris\": [\r\n    \"https://client.exampe.org/callback\",\r\n    \"https://client.example.org/callback2\"\r\n  ],\r\n  \"logo_uri\": \"www.logo4.com\",\r\n  \"jwks_uri\": \"https://client.example.org/my_public_keys.jwks\",\r\n  \"jwks\": {\r\n    \"keys\": [\r\n      {\r\n        \"crv\": \"P-256\",\r\n        \"kty\": \"EC\",\r\n        \"use\": \"enc\",\r\n        \"y\": \"4Etl6SRW2YiLUrN5vfvVHuhp7x8PxltmWWlbbM4IFyM\",\r\n        \"x\": \"MKBCTNIcKUSDii11ySs3526iDZ8AiTo7Tu6KPAqv7D4\",\r\n        \"kid\": \"1\"\r\n      },\r\n      {\r\n        \"alg\": \"RS256\",\r\n        \"e\": \"AQAB\",\r\n        \"n\": \"0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx\\r\\n                         4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMs\\r\\n                         tn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2\\r\\n                         QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbI\\r\\n                         SD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqb\\r\\n                         w0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw\",\r\n        \"kty\": \"RSA\",\r\n        \"kid\": \"2011-04-29\"\r\n      }\r\n    ]\r\n  }\r\n}\r\n]"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/account/le6724696/configuration/provision/appInstall?v=2.0&select=$xxsumm",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"account",
+								"le6724696",
+								"configuration",
+								"provision",
+								"appInstall"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "select",
+									"value": "$xxsumm"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Local - get all appInstalls",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": 1500384810,
+									"type": "number"
+								},
+								{
+									"key": "nonce",
+									"value": "17Bk6C",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1500384810\",oauth_nonce=\"17Bk6C\",oauth_version=\"1.0\",oauth_signature=\"aLO5d6GN7CtELr5YOMgOWDletSU%3D\""
+							},
+							{
+								"key": "If-Match",
+								"value": "-1",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n{\r\n  \"client_name\": \"client 5a\",\r\n  \"redirect_uris\": [\r\n    \"https://client.exampe.org/callback\",\r\n    \"https://client.example.org/callback2\"\r\n  ],\r\n  \"logo_uri\": \"www.logo4.com\",\r\n  \"jwks_uri\": \"https://client.example.org/my_public_keys.jwks\",\r\n  \"jwks\": {\r\n    \"keys\": [\r\n      {\r\n        \"crv\": \"P-256\",\r\n        \"kty\": \"EC\",\r\n        \"use\": \"enc\",\r\n        \"y\": \"4Etl6SRW2YiLUrN5vfvVHuhp7x8PxltmWWlbbM4IFyM\",\r\n        \"x\": \"MKBCTNIcKUSDii11ySs3526iDZ8AiTo7Tu6KPAqv7D4\",\r\n        \"kid\": \"1\"\r\n      },\r\n      {\r\n        \"alg\": \"RS256\",\r\n        \"e\": \"AQAB\",\r\n        \"n\": \"0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx\\r\\n                         4cbbfAAtVT86zwu1RK7aPFFxuhDR1L6tSoc_BJECPebWKRXjBZCiFV4n3oknjhMs\\r\\n                         tn64tZ_2W-5JsGY4Hc5n9yBXArwl93lqt7_RN5w6Cf0h4QyQ5v-65YGjQR0_FDW2\\r\\n                         QvzqY368QQMicAtaSqzs8KJZgnYb9c7d0zgdAZHzu6qMQvRL5hajrn1n91CbOpbI\\r\\n                         SD08qNLyrdkt-bFTWhAI4vMQFh6WeZu0fM4lFd2NcRwr3XPksINHaQ-G_xBniIqb\\r\\n                         w0Ls1jF44-csFCur-kEgU8awapJzKnqDKgw\",\r\n        \"kty\": \"RSA\",\r\n        \"kid\": \"2011-04-29\"\r\n      }\r\n    ]\r\n  }\r\n}\r\n]"
+						},
+						"url": {
+							"raw": "http://{{acweb}}/api/account/le6724696/configuration/provision/appInstall/query?v=2.0",
+							"protocol": "http",
+							"host": [
+								"{{acweb}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"le6724696",
+								"configuration",
+								"provision",
+								"appInstall",
+								"query"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Local - get specific appInstall",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": 1500269798,
+									"type": "number"
+								},
+								{
+									"key": "nonce",
+									"value": "a90Pyw",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1500269798\",oauth_nonce=\"a90Pyw\",oauth_version=\"1.0\",oauth_signature=\"aSuBPC9%2F%2FEoEFlcnGS2RFRJ6fqk%3D\""
+							},
+							{
+								"key": "If-Match",
+								"value": "-1",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/account/le6724696/configuration/provision/appInstall/0812f583-8139-4769-b1b1-a9c7ed20acc6?v=2.0&select=$xxsumm",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"account",
+								"le6724696",
+								"configuration",
+								"provision",
+								"appInstall",
+								"0812f583-8139-4769-b1b1-a9c7ed20acc6"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "select",
+									"value": "$xxsumm"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Local - delete specific appInstall",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": 1500269867,
+									"type": "number"
+								},
+								{
+									"key": "nonce",
+									"value": "zESKQI",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1500269867\",oauth_nonce=\"zESKQI\",oauth_version=\"1.0\",oauth_signature=\"o890ngekAwDhEIt3KSStaw%2FlWwo%3D\""
+							},
+							{
+								"key": "If-Match",
+								"value": "-1"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\"0812f583-8139-4769-b1b1-a9c7ed20acc6\"]"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/account/le6724696/configuration/provision/appInstall?v=2.0&select=$xxsumm",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"account",
+								"le6724696",
+								"configuration",
+								"provision",
+								"appInstall"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "select",
+									"value": "$xxsumm"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Provision",
+			"item": [
+				{
+					"name": "WhoHasTheFeature",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "nonce",
+									"value": "trgcVk",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "OAuth oauth_consumer_key=\"8c31f0d1910c45bd8b3616ee28f4de83\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1505117141\",oauth_nonce=\"trgcVk\",oauth_version=\"1.0\",oauth_signature=\"EU44Ofy0bYtirTWWZd1qjBIXiPg%3D\""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/xml"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version='1.0' encoding='UTF-8' standalone='yes'?>\r\n<grantedFeatures>\r\n   <grantedFeature id='Reports.LE_DataAccess' from='2000-08-01T21:34:04.836+03:00' to='2030-08-13T11:20:44.835+03:00'>\r\n     <value type='LPBoolean'>true</value>\r\n  </grantedFeature>\r\n</grantedFeatures>"
+						},
+						"url": {
+							"raw": "https://{{acweb}}/api/account/configuration/provision/query?v=2.0&ac_app_name=provision",
+							"protocol": "https",
+							"host": [
+								"{{acweb}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"configuration",
+								"provision",
+								"query"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "ac_app_name",
+									"value": "provision"
+								}
+							]
+						},
+						"description": "the lpboolean should be different than the dictionary value.\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Features for site",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "nonce",
+									"value": "hvNQC4",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-HTTP-Method-Override",
+								"value": "PUT"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer c1e7273a4a023f0aadaca7aecad9839c16b0922a5fcd2607d65341d6207edb51"
+							},
+							{
+								"key": "If-Match",
+								"value": "26"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"appDataList\": [{\r\n        \"appName\": \"provision\",\r\n        \"appApiVersion\": 1.0,\r\n        \"accountList\": {\r\n            \"accountList\": [{\r\n                \"siteId\": \"le38616689\",\r\n                \"itemsCollection\": {\r\n                    \"data\": [{\r\n                        \"compoundFeatureID\": \"legacy.0\",\r\n                        \"value\": {\r\n                            \"value\": true\r\n                        },\r\n                        \"isDeleted\": false\r\n                    }]\r\n                }\r\n            }]\r\n        }\r\n    }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{acweb}}/api/account/le38616689/configuration/provision/featureGrants?v=1.0&excludeLegacy=true&jsonProvider=gson",
+							"protocol": "http",
+							"host": [
+								"{{acweb}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"le38616689",
+								"configuration",
+								"provision",
+								"featureGrants"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "1.0"
+								},
+								{
+									"key": "excludeLegacy",
+									"value": "true"
+								},
+								{
+									"key": "jsonProvider",
+									"value": "gson"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Features for site WITHOUT legacy(appserver) features ",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "nonce",
+									"value": "xpetUa",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1492691309\",oauth_nonce=\"xpetUa\",oauth_version=\"1.0\",oauth_signature=\"xY31twhHjDU2c1%2FGiyR%2Fqo%2BmWAk%3D\""
+							}
+						],
+						"url": {
+							"raw": "https://{{acweb}}/api/account/10603849/configuration/provision/featureGrants?v=2.0&overrideAll=false&excludeLegacy=true&jsonProvider=gson",
+							"protocol": "https",
+							"host": [
+								"{{acweb}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"10603849",
+								"configuration",
+								"provision",
+								"featureGrants"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "overrideAll",
+									"value": "false"
+								},
+								{
+									"key": "excludeLegacy",
+									"value": "true"
+								},
+								{
+									"key": "jsonProvider",
+									"value": "gson"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Features for site WITH legacy(appserver) features ",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "nonce",
+									"value": "SmOSPw",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1492691340\",oauth_nonce=\"SmOSPw\",oauth_version=\"1.0\",oauth_signature=\"eJS0l0YePsqayaVEVRGyJrWlnJk%3D\""
+							}
+						],
+						"url": {
+							"raw": "https://{{acweb}}/api/account/le35242607/configuration/provision/featureGrants?v=2.0&overrideAll=false&jsonProvider=gson",
+							"protocol": "https",
+							"host": [
+								"{{acweb}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"le35242607",
+								"configuration",
+								"provision",
+								"featureGrants"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "overrideAll",
+									"value": "false"
+								},
+								{
+									"key": "jsonProvider",
+									"value": "gson"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single/multiple Features for site",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "nonce",
+									"value": "1G0vAF",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://{{acweb}}/api/account/le48891478/configuration/provision/featureGrants?v=2.0&features=Common.EncodedMetadata&excludeLegacy=true&jsonProvider=gson",
+							"protocol": "https",
+							"host": [
+								"{{acweb}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"le48891478",
+								"configuration",
+								"provision",
+								"featureGrants"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "features",
+									"value": "Common.EncodedMetadata"
+								},
+								{
+									"key": "excludeLegacy",
+									"value": "true"
+								},
+								{
+									"key": "jsonProvider",
+									"value": "gson"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Features for site",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "tokenType",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "accessToken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiIxNzA2ODY3MCIsInVzZXJuYW1lIjoiTFBBLXB2aXNzYXByYWdhZGEiLCJhY0JlYXJlclRva2VuIjoiMzgzZDI3MjFlMTA5YmIyNjg1ZWI1MjgzZWFjNzBlMTU5MzJhNDVjNmYyMzFiNzlkMTMzM2FmN2U1NTUxMzQ2NGEwMDRlMDUyZDNmYjI5ZWNkZDI1Zjk5MmExNjI4ZGJhZDkyMGE4YTA0YTExOTk0NzAzMmViMWMyYzJmNzUxMDgwMDVjZTUyYjhkYzAzZmYyYmZlMTYwZTI5NzEzNjdhNC43NjE5ZDhiODY4NTQ0MGVlMjA2Y2M2Yzg3MDhjN2JjOS5kNDY0MmM0ZDU2YzQ2NGMzYzY5ZGRiZTkzMTgxMzc0OWZjM2UxM2YwZGMzNmI0NDc3ZTFiMDBkMDA4NjAxYjFkIiwiY2JUb2tlbiI6ImZiMWVhYTVjZWJhOTZhOGVhZTQyMDFkZjNjYzIyZDMxMGIzOGEzNjdkZWYyNTkzMDEyM2JlYTY4YWRmN2E4ZjJkM2Q3MDVkMDE5MTA3MjI2MmNjYjY2MjA5MmI2NDc2Yy4zNjc5MTBiMTkzMThkYTBhMGRjMTM3MGQ2YTJmNTg0ZC40NmM4YWUyNjAwNDRjYTk5OGZlNzcwMzRlMjM5ZWJjNjdlM2VlM2NlMzdiY2JhNmIwOTFhOTdkNjZhZGMxMzE1IiwiY2JPcmdJZCI6IjM4YzNmNGVlNjk3MzFlYmI3Yjg0MTUwMWNmNWY1MWY0OWRiZDE3YzhiNzc1NWM2ZGU4M2VhYzU1ZTgyYmMzNmY2OTE3MTdiMTVmZjAwOGQ3MjMwYjgzNDY2ZGU0ZDNhMi44NjZiOWM3NzczN2IxZDQ1YTZjNmZiNThlZDI4NTU0YS4wZmY5NmQ4MTI2YjgzODBmMmU4OWE2Y2YzMzU0MTg4NjI5NTkzYjkzM2Q4ODcxNWUxN2JkMmYyMTRiMWYwNjg3IiwiY2JVc2VySWQiOiI5MTU0YzRlNzFhYmM0MjEwYTY3ZDdkMmQwZjU2Yjc4NiIsImlhdCI6MTY0OTI1NTU5OSwiZXhwIjoxNjQ5MjU5MTk5fQ.97FjMLI5hYe1vgACwI8ycWY967ySBjsnO8oYMrPTGQc",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1485761630\",oauth_nonce=\"KG4BIg\",oauth_version=\"1.0\",oauth_signature=\"BjPiAIF1QyHuZX0YWfg7VDId5wM%3D\""
+							}
+						],
+						"url": {
+							"raw": "https://va-a.ac.liveperson.net/api/account/17068670/configuration/provision/featureGrants?v=2.0&excludeLegacy=true&jsonProvider=gson HTTP/1.1",
+							"protocol": "https",
+							"host": [
+								"va-a",
+								"ac",
+								"liveperson",
+								"net"
+							],
+							"path": [
+								"api",
+								"account",
+								"17068670",
+								"configuration",
+								"provision",
+								"featureGrants"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "excludeLegacy",
+									"value": "true"
+								},
+								{
+									"key": "jsonProvider",
+									"value": "gson HTTP/1.1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Features for site",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1485761630\",oauth_nonce=\"KG4BIg\",oauth_version=\"1.0\",oauth_signature=\"BjPiAIF1QyHuZX0YWfg7VDId5wM%3D\""
+									}
+								],
+								"url": {
+									"raw": "https://{{acweb}}/api/account/le38616689/configuration/provision/featureGrants?v=2.0&excludeLegacy=true&jsonProvider=gson",
+									"protocol": "https",
+									"host": [
+										"{{acweb}}"
+									],
+									"path": [
+										"api",
+										"account",
+										"le38616689",
+										"configuration",
+										"provision",
+										"featureGrants"
+									],
+									"query": [
+										{
+											"key": "v",
+											"value": "2.0"
+										},
+										{
+											"key": "excludeLegacy",
+											"value": "true"
+										},
+										{
+											"key": "jsonProvider",
+											"value": "gson"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 16 Sep 2020 09:53:08 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "JSESSIONID=6BBA682540F4792FAFBF5134CC3521C1; Path=/; HttpOnly"
+								},
+								{
+									"key": "X-LP-Host",
+									"value": "724384A2055CB8AACAA63E9A8BD86DB9"
+								},
+								{
+									"key": "ac-revision",
+									"value": "1"
+								},
+								{
+									"key": "Server",
+									"value": "ws"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-HTTP-Method-Override, LP-DOMAIN-REFERER, LP-URL, ETag, ac-revision, X-LP-Last-Modified, If-Match, Authentication-Method, Credit-Card-Ref, Automation-Secret, Email-Token"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "X-Requested-With, X-HTTP-Method-Override, LP-DOMAIN-REFERER, LP-URL, ETag, ac-revision, X-LP-Last-Modified, If-Match, Authentication-Method, Credit-Card-Ref, Automation-Secret, Email-Token, x-lp-host, Lp-Req-Time, date, x-application-context, strict-transport-security, x-content-type-options, x-download-options, x-xss-protection, x-cache-status, x-amz-id-2, x-amz-request-id, expires, last-modified, set-cookie, content-security-policy, x-frame-options"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=0, no-cache, no-store"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"appDataList\": [\n        {\n            \"appName\": \"provision\",\n            \"appApiVersion\": 1,\n            \"accountList\": {\n                \"accountList\": [\n                    {\n                        \"siteId\": \"le38616689\",\n                        \"itemsCollection\": {\n                            \"data\": [\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_CrossDomainStorage\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.ManagerWorkspace\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Set_Agent_State_By_Facts\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Automation.Automation_Area\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.AI_Assist_Widget\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_MultipleChatCenterLoadBalancing\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Messaging_Conversation_Sources_Google\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.ContentProviderAccount\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Intelligence.accessByProfile_MCSToolkit\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Agent_Photo_Sharing\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Automation.Watson\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Historic_Data_Masking\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"PD.LiveEngage_2_SurveyMainSkillAvailability\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Identification_Verification\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.User_type_bot\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEApps.FirstTimeExperienceModal\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Intelligence.intentAnalyzerAccess\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Reports.leReportBuilderOpenProfile\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_Limit_Sticky_Size\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.CreditCard_XL4D_Masking\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Private_Messages\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Messaging_Cross_Account_Contact_Center\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Auto_Messages\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Intelligence.intentAnalyzerDiscoveryLite\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_Offsite_Engagement\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_Agent_Groups_Prioritization\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.VisitorFeedV2Domain\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Clean_Routing_Ghost_Conversations\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.MTLS_enabled\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Intelligence.intentAnalyzerAccessLPAOnly\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.AuditTrail\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"SocialConnect.Enabled\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.Enforce_New_Agent_Workspace\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.EncodedMetadata\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Edit_Auto_Messages\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Reports.leReportBuilderAccess\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveChat_Queue_Priority\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Chat.Wrap_Up\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Reports.leMstrAccess\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_Chat_on_UMS\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.ConnectionBar_OpenCase_Visible\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Reports.leDashboardAccess\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.AllowUsersModification\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Dummy_Always_Off\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Agent_Survey\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.ConnectionBar_Notification_Visible\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Tasks.Handle_Intent_Annotaitons\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.IpMasking\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.LiveEngage_2_Messaging_EngagementHistory\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Messaging_Conversation_Sources\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Intelligence.dataTransporterAccess\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Reports.leReportBuilderAnalytics\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.AutoClosePerSkill\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_ExpectedWaitTime_For_SystemMessages\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.StepUp_close_previous_auth_conversation\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_WalkMe_Tag\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Automation.Dialogflow\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Authenticated_Chat\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_Site_Override\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.SLAPerSkill\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.StrictLogout\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Redistribute_load_to_connected_agent_groups\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Reports.EngagementHistory_PCI_Data_Display\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_HSTS_Header_Enabled\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Availability_Web_Messaging\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Analytics.Analytics.Third_Party_Enabled\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.RichContent\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Reports.leReportBuilderNonLpa\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.MyAccount\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.BlockAddingUsers\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Reports.AnalyticsViewerAccess\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Data_API_Audit_log\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Billing_CPI2\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Launchpad\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LiveVoice.LiveVoice_Integration\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_Unified_window_deployment\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LivePerson_Authentication_Method\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Automation.Bot_Connectors\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.Block_New_Agent_Workspace\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.ManagerWorkspaceSkillsView\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_Unified_window\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Agent_File_Sharing\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.WebAnalytics\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.AllConnections_PreFilteringBySkill\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LPInsights.MRProcessExecution\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.Multi_Channel_Engagements\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Global_Encryption_Enabled\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Conversation_Summary_Widget\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.Messaging_Agent_List\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.VisitorFeed.PreFiltering\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.HtmlEngagementsBlockScripts\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Messaging_Survey\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.Use_Custom_Rings\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.User_Management_AC_Users\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.EmailConnector\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Historic_Data_Masking_Agent_Summary\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Intelligence.portalAccess\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Reports.GenerateSecureFormToken\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.AgentGroups\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Ring_for_All\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Agent_Link_Sending\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Block_Chat_Export\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEApps.QuickLaunchMenuButton\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.ManagerWorkspaceConfiguration\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Intelligence.portalAccessLPAOnly\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Smart_Suggestions\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Profiles\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Intelligence.staffForecasterAccess\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Send_Post_Conversation_Survey_After_Human_Agent\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Api_key_management\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Reports.LiveEngage_2_EngagementHistory\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.Messaging_Secure_Form\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Unified_window_captcha\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Intelligence.performancePortalAccess\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Transfer_To_Agent\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.SMS_numbers_management\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LPA_Profiles_Assignment\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_Migrating\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Webhooks.SubscriptionModel\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.AgentMasking\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Answering_Service\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Automation.Conversation_Builder\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Shark.ComparisonGroupTaglets\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Block_MSTR\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.Tagging_By_LOB\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Takeover_Conversation\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.New_agent_workspace\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Intelligence.accessByProfile_RealtimeDashboard\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.ETLHadoop\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.AgentPicture\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Shark.Consumer_Journey_Identity_Only_Support\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Account_Info\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Un_Auth_Messaging\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Static_Load_Balancing\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.ConnectionBar_Display\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.IP_Restriction\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.RefreshButton\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LiveVideo.LiveVideo_Integration\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"UnifiedWindow.Block_CC_Patterns\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Analytics.LiveEngage_2_SentimentAnalysis\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"CoApp.CoApp_Integration\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Analytics.LiveEngage_2_HotTopics\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Data_Export_Explicit_Delimiter\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_2_ChatCenterLoadBalancing_Cascading\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"FaaS.FaaS\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.FallbackSkillPerSkill\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.SecureForms_LE2\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Intelligence.conversationEvaluationAccess\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.AgentApp\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"VisitorFeed.Query\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LiveEngage_LOB_Support\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.Agent_File_Sharing_v2\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"InteractionPlatform.Interaction_Platform\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Web_To_SMS_Eng\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.BlockSupportAccess\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Cobrowse.Cobrowse_Integration\",\n                                    \"startDate\": \"2020-09-06 00:00:00\",\n                                    \"endDate\": \"2999-12-31 00:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"LEUI.ConnectionBar_CaseManagement_Visible\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Reports.LE_DataAccess\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.API_User_Login\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Async_Messaging\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.LE_CKEditor_P_Tag\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Common.Auto_Unassign\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Messaging.AgentSetConsumerProfile\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.Multiple_Agent_Status\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": true\n                                    },\n                                    \"isDeleted\": false\n                                },\n                                {\n                                    \"compoundFeatureID\": \"Common.NLS_enabled\",\n                                    \"startDate\": \"1969-12-31 19:00:00\",\n                                    \"endDate\": \"2999-12-31 19:00:00\",\n                                    \"value\": {\n                                        \"value\": false\n                                    },\n                                    \"isDeleted\": false\n                                }\n                            ],\n                            \"revision\": 1\n                        },\n                        \"context\": {\n                            \"contextType\": \"ACCOUNT\",\n                            \"contextId\": \"le38616689\"\n                        }\n                    }\n                ]\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Local - Get All Features for site",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "nonce",
+									"value": "k2QNK2",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://{{acweb}}/api/account/le35242607/configuration/provision/featureGrants?v=2.0&jsonProvider=gson",
+							"protocol": "https",
+							"host": [
+								"{{acweb}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"le35242607",
+								"configuration",
+								"provision",
+								"featureGrants"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "jsonProvider",
+									"value": "gson"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query Delta request (Provision)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "nonce",
+									"value": "FlEu5X",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1500314608\",oauth_nonce=\"FlEu5X\",oauth_version=\"1.0\",oauth_signature=\"VAGfjaZn%2F%2BblYJfmKO%2BTw%2BScw5o%3D\"",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n      \"site\": \"le80366288\",\r\n      \"revision\": 0\r\n    }\r\n  ]"
+						},
+						"url": {
+							"raw": "http://localhost:8080/provision/accountConfig/api/account/le90442628/configuration/provision/featureGrants?v=2.0&select=$all&features=Reports.LE_DataAccess&excludeLegacy=true&jsonProvider=gson",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"provision",
+								"accountConfig",
+								"api",
+								"account",
+								"le90442628",
+								"configuration",
+								"provision",
+								"featureGrants"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "select",
+									"value": "$all"
+								},
+								{
+									"key": "features",
+									"value": "Reports.LE_DataAccess"
+								},
+								{
+									"key": "excludeLegacy",
+									"value": "true"
+								},
+								{
+									"key": "jsonProvider",
+									"value": "gson"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Local - Get all features for accounts in list",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{appKey}}",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "{{appSecret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "nonce",
+									"value": "tghzPE",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/account/configuration/provision/featureGrants?v=1.0&accounts=le48891478,le60461864",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"account",
+								"configuration",
+								"provision",
+								"featureGrants"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "1.0"
+								},
+								{
+									"key": "accounts",
+									"value": "le48891478,le60461864"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Local - Get all feature for site with auth",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "419284668b2548a7b81ced593b90395a",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "a46ad3b66ec2a500",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "nonce",
+									"value": "hvNQC4",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer c1e7273a4a023f0aadaca7aecad9839c16b0922a5fcd2607d65341d6207edb51",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://va-a.ac.liveperson.net/api/account/89814793/configuration/provision/featureGrants?v=2.0&excludeLegacy=true&jsonProvider=gson",
+							"protocol": "https",
+							"host": [
+								"va-a",
+								"ac",
+								"liveperson",
+								"net"
+							],
+							"path": [
+								"api",
+								"account",
+								"89814793",
+								"configuration",
+								"provision",
+								"featureGrants"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "excludeLegacy",
+									"value": "true"
+								},
+								{
+									"key": "jsonProvider",
+									"value": "gson"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Localhost - Get all feature for site with auth Copy",
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "419284668b2548a7b81ced593b90395a",
+									"type": "string"
+								},
+								{
+									"key": "consumerSecret",
+									"value": "a46ad3b66ec2a500",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "timestamp",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "nonce",
+									"value": "hvNQC4",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "realm",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer c1e7273a4a023f0aadaca7aecad9839c16b0922a5fcd2607d65341d6207edb51",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://va-a.ac.liveperson.net/api/account/89814793/configuration/provision/featureGrants?v=2.0&excludeLegacy=true&jsonProvider=gson",
+							"protocol": "https",
+							"host": [
+								"va-a",
+								"ac",
+								"liveperson",
+								"net"
+							],
+							"path": [
+								"api",
+								"account",
+								"89814793",
+								"configuration",
+								"provision",
+								"featureGrants"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": "2.0"
+								},
+								{
+									"key": "excludeLegacy",
+									"value": "true"
+								},
+								{
+									"key": "jsonProvider",
+									"value": "gson"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Local - AC-Provision delta query",
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "consumerKey",
+							"value": "{{appKey}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "{{appSecret}}",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "tokenSecret",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "timestamp",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "nonce",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "realm",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+						"key": "Authorization",
+						"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1500314608\",oauth_nonce=\"FlEu5X\",oauth_version=\"1.0\",oauth_signature=\"VAGfjaZn%2F%2BblYJfmKO%2BTw%2BScw5o%3D\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n        {\n            \"site\": \"le80366288\",\n            \"revision\": 0\n        }\n    ]"
+				},
+				"url": {
+					"raw": "http://localhost:8080/provision/accountConfig/api/account/configuration/provision/query/delta?v=2.0&ac_app_name=provision&jsonProvider=gson&acClient=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"provision",
+						"accountConfig",
+						"api",
+						"account",
+						"configuration",
+						"provision",
+						"query",
+						"delta"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": "2.0"
+						},
+						{
+							"key": "ac_app_name",
+							"value": "provision"
+						},
+						{
+							"key": "jsonProvider",
+							"value": "gson"
+						},
+						{
+							"key": "acClient",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AC-Provision delta query",
+			"request": {
+				"auth": {
+					"type": "oauth1",
+					"oauth1": [
+						{
+							"key": "consumerKey",
+							"value": "{{appKey}}",
+							"type": "string"
+						},
+						{
+							"key": "consumerSecret",
+							"value": "{{appSecret}}",
+							"type": "string"
+						},
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "tokenSecret",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "signatureMethod",
+							"value": "HMAC-SHA1",
+							"type": "string"
+						},
+						{
+							"key": "timestamp",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "nonce",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "version",
+							"value": "1.0",
+							"type": "string"
+						},
+						{
+							"key": "realm",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "addParamsToHeader",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "addEmptyParamsToSign",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+						"key": "Authorization",
+						"value": "OAuth oauth_consumer_key=\"a6acf4f3e5ab4dfead0fb220d5451749\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"1500314608\",oauth_nonce=\"FlEu5X\",oauth_version=\"1.0\",oauth_signature=\"VAGfjaZn%2F%2BblYJfmKO%2BTw%2BScw5o%3D\"",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " [{\n            \"site\": \"le29492369\",\n            \"revision\": 5\n }]\n"
+				},
+				"url": {
+					"raw": "https://{{acweb}}/api/account/configuration/provision/query/delta",
+					"protocol": "https",
+					"host": [
+						"{{acweb}}"
+					],
+					"path": [
+						"api",
+						"account",
+						"configuration",
+						"provision",
+						"query",
+						"delta"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

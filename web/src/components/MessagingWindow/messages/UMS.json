@@ -1,0 +1,114 @@
+{
+  "kind": "notification",
+  "body": {
+    "changes": [
+      {
+        "sequence": 0,
+        "originatorId": "24b9a23cd7cf083b475a4a561f60b4f6f5fc4e210b4510c8769151f31c25b9d4",
+        "originatorMetadata": {
+          "id": "24b9a23cd7cf083b475a4a561f60b4f6f5fc4e210b4510c8769151f31c25b9d4",
+          "role": "CONSUMER"
+        },
+        "serverTimestamp": 1741758931833,
+        "event": {
+          "type": "ContentEvent",
+          "message": "get started",
+          "contentType": "text/plain"
+        },
+        "dialogId": "b65e2d4f-9b66-4842-84ee-fcd0ce69fab8",
+        "messageAudience": "ALL"
+      },
+      {
+        "sequence": 2,
+        "originatorId": "27fc5936-9ba8-52f9-a562-806baa8d14f8",
+        "originatorMetadata": {
+          "id": "27fc5936-9ba8-52f9-a562-806baa8d14f8",
+          "role": "ASSIGNED_AGENT"
+        },
+        "serverTimestamp": 1741758938150,
+        "event": {
+          "type": "ContentEvent",
+          "message": {
+            "formId": "1550964770",
+            "invitationId": "24b9a23cd7cf083b475a4a561f60b4f6f5fc4e210b4510c8769151f31c25b9d4-1550964770-1741758937897-3",
+            "title": "Credit Card Form"
+          },
+          "contentType": "forms/secure-invitation"
+        },
+        "dialogId": "b65e2d4f-9b66-4842-84ee-fcd0ce69fab8",
+        "messageAudience": "ALL"
+      },
+      {
+        "sequence": 3,
+        "originatorId": "24b9a23cd7cf083b475a4a561f60b4f6f5fc4e210b4510c8769151f31c25b9d4",
+        "originatorMetadata": {
+          "id": "24b9a23cd7cf083b475a4a561f60b4f6f5fc4e210b4510c8769151f31c25b9d4",
+          "role": "CONSUMER"
+        },
+        "serverTimestamp": 1741758957671,
+        "event": {
+          "type": "ContentEvent",
+          "message": {
+            "submissionId": "0ff461a4-8f59-4ad8-99eb-3a6f5ac3ea88",
+            "invitationId": "24b9a23cd7cf083b475a4a561f60b4f6f5fc4e210b4510c8769151f31c25b9d4-1550964770-1741758937897-3"
+          },
+          "contentType": "forms/secure-submission"
+        },
+        "dialogId": "b65e2d4f-9b66-4842-84ee-fcd0ce69fab8",
+        "messageAudience": "ALL"
+      },
+      {
+        "sequence": 4,
+        "originatorId": "24b9a23cd7cf083b475a4a561f60b4f6f5fc4e210b4510c8769151f31c25b9d4",
+        "originatorMetadata": {
+          "id": "24b9a23cd7cf083b475a4a561f60b4f6f5fc4e210b4510c8769151f31c25b9d4",
+          "role": "CONSUMER"
+        },
+        "serverTimestamp": 1741758957684,
+        "event": {
+          "type": "ContentEvent",
+          "message": {
+            "submissionId": "0ff461a4-8f59-4ad8-99eb-3a6f5ac3ea88",
+            "invitationId": "24b9a23cd7cf083b475a4a561f60b4f6f5fc4e210b4510c8769151f31c25b9d4-1550964770-1741758937897-3"
+          },
+          "contentType": "forms/secure-submission"
+        },
+        "dialogId": "b65e2d4f-9b66-4842-84ee-fcd0ce69fab8",
+        "messageAudience": "ALL"
+      },
+      {
+        "sequence": 6,
+        "originatorId": "27fc5936-9ba8-52f9-a562-806baa8d14f8",
+        "originatorMetadata": {
+          "id": "27fc5936-9ba8-52f9-a562-806baa8d14f8",
+          "role": "ASSIGNED_AGENT"
+        },
+        "serverTimestamp": 1741758957737,
+        "event": {
+          "type": "AcceptStatusEvent",
+          "status": "ACCEPT",
+          "sequenceList": [4]
+        },
+        "dialogId": "b65e2d4f-9b66-4842-84ee-fcd0ce69fab8",
+        "messageAudience": "ALL"
+      },
+      {
+        "sequence": 7,
+        "originatorId": "27fc5936-9ba8-52f9-a562-806baa8d14f8",
+        "originatorMetadata": {
+          "id": "27fc5936-9ba8-52f9-a562-806baa8d14f8",
+          "role": "ASSIGNED_AGENT"
+        },
+        "serverTimestamp": 1741758974848,
+        "event": {
+          "type": "AcceptStatusEvent",
+          "status": "READ",
+          "sequenceList": [4]
+        },
+        "dialogId": "b65e2d4f-9b66-4842-84ee-fcd0ce69fab8",
+        "messageAudience": "ALL"
+      }
+    ]
+  },
+  "type": "ms.MessagingEventNotification"
+}

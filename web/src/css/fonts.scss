@@ -1,0 +1,102 @@
+@font-face {
+  font-family: "inter-light";
+  src: local("inter-light"),
+    url("./inter/Inter-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "inter";
+  src: local("inter"),
+    url("./inter/Inter-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter-Medium";
+  src: local("inter"),
+    url("./inter/Inter-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter-Bold";
+  src: local("inter"),
+    url("./inter/Inter-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "space-grotesk";
+  src: local("space-grotesk"),
+    url("./space-grotesk/SpaceGrotesk-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SpaceGrotesk-Bold";
+  src: local(""),
+    url("./space-grotesk/SpaceGrotesk-Bold.ttf") format("truetype");
+}
+
+.ff-space {
+  font-family: space-grotesk;
+}
+.ff-space-bold {
+  font-family: SpaceGrotesk-Bold;
+}
+.ff-space-italic {
+  font-family: space-grotesk;
+  font-style: italic;
+}
+.ff-space-bold-italic {
+  font-family: SpaceGrotesk-Bold;
+  font-style: italic;
+}
+
+.ff-space-light {
+  font-family: space-grotesk;
+  font-weight: 300;
+}
+
+.ff-roboto {
+  font-family: 'Roboto', sans-serif;
+}
+
+.ff-roboto-bold {
+  font-family: 'Roboto-Bold', sans-serif;
+}
+
+.ff-roboto-light {
+  font-family: 'Roboto-Light', sans-serif;
+}
+
+@for $i from 0 through 10 {
+  @for $j from 0 through 10 {
+    .f-rem-#{$i}-#{$j} {
+      // example f-rem-1-2
+      font-size: #{$i}+'.'+#{$j}rem;
+    }
+  }
+}
+
+.ff-italic {
+  font-style: italic;
+}
+
+.ff-inter {
+  font-family: inter;
+}
+.ff-inter-light {
+  font-family: inter-light;
+}
+
+.ff-inter-bold {
+  font-family: Inter-Bold;
+}
+.ff-inter-medium {
+  font-family: Inter-Medium;
+}
+
+.ff-wrap {
+  white-space: normal;
+}
+
+.ff-roboto-black {
+  font-family: 'Roboto-Black', sans-serif;
+}

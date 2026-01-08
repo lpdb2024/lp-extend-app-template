@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1400597870,
+    "deleted": false,
+    "name": "unauth implicit",
+    "description": "unauthentiate implicit connector",
+    "type": 1,
+    "configuration": {
+      "jwtPublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvGQctwBFFZBaSu+LC4LVk/4/XyVQmhcwM5a91lT7BwZug/GtpR+ZGpKkiZSgTehRdBJKSPjv5K6D8/cBm28OV11Mekjn1PJrveSXrRsfUbOqIHgpfVtnkxN3ZaV6GSWQrrZArkpbAm+Kf5o5jxFPhCadB8BdRGCbMI3rFEkYSFqnmptI3olIAtAjmtbLJnwYZyXl2WZXMBmORLXnV9aTMGp4uFZdX+QbK808q55zxSB5HM3N9B8NLUP1TELc6N2dhWk2RwR/C9WvQYH/UAnxqVEwrAXt+rb+YWuu92Dj4NLAmpEYbRQi+S+5Y6t5g6kX/QMQ/ycdFOW/WA3JoptUSQIDAQAB",
+      "rfcCompliance": true,
+      "preferred": false,
+      "authorizationEndpoint": "https://lpcdn.lpsnmedia.net/unifiedwindow/unauth.min.html",
+      "jsContext": "lpTag.taglets.unAuthMessaging",
+      "jsMethodName": "lpTag.taglets.unAuthMessaging.lpUnauthFunction",
+      "clientId": "31487986",
+      "acrValues": ["0"],
+      "pkceEnabled": false
+    }
+  },
+  {
+    "id": 1505943770,
+    "deleted": false,
+    "name": "Auth0",
+    "type": 1,
+    "configuration": {
+      "jwtValidationType": "JWKS_ENDPOINT",
+      "jwksEndpoint": "https://dev-7-obgo2p.au.auth0.com/.well-known/jwks.json",
+      "jwtPublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqAv5yhC5Ab4LKIzTfcQt\nEdC8FQgehTPPJzHqIhHsxOIsczpu9dWU/hH29EMPRBSiq9IhheDRrttW62c/2UOr\nuv+h/6li9AUCOLcf74EstoIMf5uj6DRkqEzV2fK2wgqnUMowTf79w+DBzs3J0e/G\nGWVeLW/4ZGKH/AKTzCQGk3T9pnAwjg/HrG3dlBjNTiEnR+oS6pz3FC0Eqy/NhJVX\nvZdKLxrC9KslLFqru+LrG9sWiK6VACTbV2Jwt6Sjo7kPyqGtTngftXF3b0Vbp5x+\nrPpTkJzFOW7KhkTYAl4MfVx00XMxsARjioCz5RlZCEGtw/pv4c7TQRxvQLrmz+wf\nkQIDAQAB",
+      "rfcCompliance": true,
+      "issuerDisplayName": "Auth0",
+      "issuer": "https://dev-7-obgo2p.au.auth0.com/",
+      "preferred": false,
+      "authorizationEndpoint": "https://dev-7-obgo2p.au.auth0.com/authorize",
+      "jsContext": "window",
+      "jsMethodName": "lpGetAuthenticationToken",
+      "clientId": "gcFEFNaN4gIKwMklCGXpCtFG0Q7O3uCh",
+      "pkceEnabled": false
+    }
+  }
+]

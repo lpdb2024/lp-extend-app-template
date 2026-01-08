@@ -1,0 +1,41 @@
+{
+  "success": true,
+  "errorCode": "200",
+  "successResult": {
+    "KnowledgeDataSource": {
+      "createdByName": "Brandt Stevenson",
+      "modifiedByName": "Brandt Stevenson",
+      "id": "ce21ae8b2bef4f4c9d161ac8a213ad58",
+      "name": "Banking - Agent Facing",
+      "type": "KnowledgeBase",
+      "chatBotPlatformUserId": "5303f94b92074a89b13b8c1c050d8e1a",
+      "status": "ACTIVE",
+      "dataSourceConfiguration": { "properties": {} },
+      "organizationId": "dc19d7b6-f114-4b3a-9852-84dfd063357a",
+      "privateAccess": false,
+      "language": "English",
+      "langCode": "en-US",
+      "entitiesAvailable": false,
+      "intentAssociationType": "DOMAIN",
+      "entitiesDataSourceId": "059fa862-a9af-40bb-814d-03f561ff2f2d",
+      "publicKB": true,
+      "createdAt": 1689555908316,
+      "modifiedAt": 1698614981078,
+      "createdBy": "5303f94b92074a89b13b8c1c050d8e1a",
+      "modifiedBy": "5303f94b92074a89b13b8c1c050d8e1a",
+      "kbConfigProperties": { "llmEnrichment": "false" },
+      "domainType": "LivePersonV2",
+      "kBLandingPageMetrics": {
+        "kbId": "ce21ae8b2bef4f4c9d161ac8a213ad58",
+        "organizationId": "dc19d7b6-f114-4b3a-9852-84dfd063357a",
+        "numOfTotalArticles": 6,
+        "numOfActiveArticles": 6,
+        "numOfArticlesHaveIntents": 1,
+        "lastContentUpdatedTime": 1712639947738,
+        "connectedConvAssistSkills": [],
+        "modifiedTime": 1744189264244,
+        "createdTime": 1689557421912
+      }
+    }
+  }
+}

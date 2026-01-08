@@ -1,0 +1,45 @@
+E:\apps\lp-demo\services\frontend\src\applications\AIAgents\components\NodeConfigPanel.vue
+  6:32  error  'onMounted' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+E:\apps\lp-demo\services\frontend\src\applications\AIAgents\components\RoutingAgentEditor.vue
+   912:5   error  Unexpected side effect in computed function                                       vue/no-side-effects-in-computed-properties
+  1146:12  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  1151:1   error  Async function 'deleteCategory' has no 'await' expression                         @typescript-eslint/require-await
+  1166:11  error  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  1188:14  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  1291:12  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  1296:1   error  Async function 'deleteRoute' has no 'await' expression                            @typescript-eslint/require-await
+  1302:11  error  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  1318:14  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  1335:12  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  1387:12  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  1406:12  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+
+E:\apps\lp-demo\services\frontend\src\applications\RoutesLibrary\RoutesLibrary.vue
+  490:12  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  495:1   error  Async function 'deleteCategory' has no 'await' expression                         @typescript-eslint/require-await
+  505:11  error  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  509:14  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  546:12  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  551:1   error  Async function 'deleteRoute' has no 'await' expression                            @typescript-eslint/require-await
+  557:11  error  Promise returned in function argument where a void return was expected            @typescript-eslint/no-misused-promises
+  561:14  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  570:12  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  587:12  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+  605:12  error  'error' is defined but never used. Allowed unused caught errors must match /^_/u  @typescript-eslint/no-unused-vars
+
+E:\apps\lp-demo\services\frontend\src\applications\RoutesLibrary\components\ChannelBehaviorsView.vue
+  363:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  394:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  423:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+E:\apps\lp-demo\services\frontend\src\applications\RoutesLibrary\components\OperationalRulesView.vue
+  479:20  error  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  479:35  error  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  504:36  error  This assertion is unnecessary since it does not change the type of the expression  @typescript-eslint/no-unnecessary-type-assertion
+  677:19  error  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+  706:19  error  Unexpected any. Specify a different type                                           @typescript-eslint/no-explicit-any
+
+E:\apps\lp-demo\services\frontend\src\applications\RoutesLibrary\components\RouteEditor.vue
+  480:23  error  Async arrow function 'save' has no 'await' expression  @typescript-eslint/require-await
+  498:19  error  Unexpected any. Specify a different type               @typescript-eslint/no-explicit-any

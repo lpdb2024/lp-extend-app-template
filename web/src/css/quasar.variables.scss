@@ -1,0 +1,154 @@
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+
+// Check documentation for full list of Quasar variables
+
+// Your own variables (that are declared here) and Quasar's own
+// ones will be available out of the box in your .vue/.scss/.sass files
+
+// It's highly recommended to change the default colors
+// to match your app's branding.
+// Tip: Use the "Theme Builder" on Quasar's documentation website.
+
+$primary : #3863e5;
+$secondary : #8d46eb;
+$accent : #e849b7;
+
+$dark : #1D1D1D;
+$dark-page : #121212;
+
+$positive : #21BA45;
+$negative : #C10015;
+$info : #31CCEC;
+$warning : #db711b;
+
+$le-blue-10 : #080524;
+$le-blue-9 : #0f0943; // top bar
+$le-blue-8 : #12154a; // sidebar
+$le-blue-7 : #1a0d6d;
+$le-blue-6 : #2a1e9d;
+$le-blue-5 : #3b2fcd;
+$le-blue-4 : #4c40ff;
+$le-blue-3 : #6b5fff;
+$le-blue-2 : #8a7fff;
+$le-blue-1 : #a99fff;
+$le-blue-0 : #c8bfff;
+
+// 141a42
+$le-grey-10 : #e7e9fb; // sidebar
+$le-grey-9 : #dcdeef;
+$le-grey-8 : #e6ebf5; // bg
+$le-grey-7 : #f0f4fa;
+$le-grey-6 : #f5f8fc;
+$le-grey-5 : #f9fbfd;
+$le-grey-4 : #f7fbff; // top bar
+$le-grey-3 : #fcfcfc;
+$le-grey-2 : #fdfdfd;
+$le-grey-1 : #fefefe;
+$le-grey-0 : #ffffff;
+
+
+$id : #f7fbff;
+
+$manager-bot-manager : #2196f3;
+$form-builder : #e91e63;
+$css-explorer : #ff9800;
+$demo-builder : #3f51b5;
+$proactive-tool : #aa00ff;
+$google-storage : #d50000;
+$lp-blue : #3863e5;
+$lp-purple : #8d46eb;
+$lp-pink : #e849b7;
+$lp-green : #00bfa5;
+
+$lp-widget-blue-1 : #4f5375;
+$lp-widget-blue-2 : #2f345d;
+$lp-widget-blue-3 : #232854;
+$lp-widget-blue-4 : #1e2247;
+$lp-widget-blue-5 : #151831;
+
+$le-blue-map: (
+  0: #c8bfff,
+  1: #a99fff,
+  2: #8a7fff,
+  3: #6b5fff,
+  4: #4c40ff,
+  5: #3b2fcd,
+  6: #2a1e9d,
+  7: #1a0d6d,
+  8: #12154a,
+  9: #0f0943,
+  10: #080524
+);
+
+$lp-grey-map: (
+  0: #ffffff,
+  1: #fefefe,
+  2: #fdfdfd,
+  3: #fcfcfc,
+  4: #f7fbff,
+  5: #f9fbfd,
+  6: #f5f8fc,
+  7: #f0f4fa,
+  8: #e6ebf5,
+  9: #dcdeef,
+  10: #e7e9fb
+);
+
+$id : #f7fbff;
+
+$manager-bot-manager : #2196f3;
+$form-builder : #e91e63;
+$css-explorer : #ff9800;
+$demo-builder : #3f51b5;
+$proactive-tool : #aa00ff;
+$google-storage : #d50000;
+$lp-blue : #3863e5;
+$lp-purple : #8d46eb;
+$lp-pink : #e849b7;
+$lp-green : #00bfa5;
+
+$lp-widget-blue-map: (
+  1: #4f5375,
+  2: #2f345d,
+  3: #232854,
+  4: #1e2247,
+  5: #151831
+);
+
+@for $i from 1 through 5 {
+  .lp-widget-blue-#{$i} {
+    color: map-get($lp-widget-blue-map, $i) !important;
+  }
+  .text-lp-widget-blue-#{$i} {
+    color: map-get($lp-widget-blue-map, $i) !important;
+  }
+  .bg-lp-widget-blue-#{$i} {
+    background-color: map-get($lp-widget-blue-map, $i) !important;
+  }
+  
+}
+
+@for $i from 0 through 10 {
+  .le-grey-#{$i} {
+    color: map-get($lp-grey-map, $i) !important;
+  }
+  .text-le-grey-#{$i} {
+    color: map-get($lp-grey-map, $i) !important;
+  }
+  .bg-le-grey-#{$i} {
+    background-color: map-get($lp-grey-map, $i) !important;
+  }
+
+  .le-blue-#{$i} {
+    color: map-get($le-blue-map, $i) !important;
+  }
+  .text-le-blue-#{$i} {
+    color: map-get($le-blue-map, $i) !important;
+  }
+  .bg-le-blue-#{$i} {
+    background-color: map-get($le-blue-map, $i) !important;
+  }
+}

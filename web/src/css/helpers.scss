@@ -1,0 +1,248 @@
+// =============================================================================
+// LP Extend - Helper Utilities
+// =============================================================================
+// Optimized utility classes for common layout and styling needs
+// Uses sensible ranges to avoid CSS bloat
+// =============================================================================
+
+@use "sass:math";
+@import 'quasar.variables.scss';
+
+// =============================================================================
+// Viewport Units
+// =============================================================================
+.hv100 { height: 100vh; }
+.wv100 { width: 100vw; }
+.inh-h, .h-inherit { height: inherit; }
+.inh-w, .w-inherit { width: inherit; }
+
+// =============================================================================
+// Margin Auto Utilities
+// =============================================================================
+.mt-a { margin-top: auto; }
+.mb-a { margin-bottom: auto; }
+.ml-a { margin-left: auto; }
+.mr-a { margin-right: auto; }
+.m-a { margin: auto; }
+
+// =============================================================================
+// Flexbox Utilities
+// =============================================================================
+.fr { display: flex; flex-direction: row; }
+.fc { display: flex; flex-direction: column; }
+.fw { flex-wrap: wrap; }
+.fg { flex-grow: 1; }
+.f-1 { flex: 1; }
+.f-0 { flex: 0; }
+
+// Gap shortcuts (alias for gap-X)
+.g-4 { gap: 4px; }
+.g-8 { gap: 8px; }
+.g-12 { gap: 12px; }
+.g-16 { gap: 16px; }
+
+// Justify Content
+.jc-c { justify-content: center; }
+.jc-s { justify-content: flex-start; }
+.jc-e { justify-content: flex-end; }
+.jc-sa { justify-content: space-around; }
+.jc-sb { justify-content: space-between; }
+.jc-se { justify-content: space-evenly; }
+.js-c { justify-self: center; }
+
+// Align Items
+.ai-c { align-items: center; }
+.ai-s { align-items: flex-start; }
+.ai-e { align-items: flex-end; }
+.ai-st { align-items: stretch; }
+
+// Align Self
+.as-c { align-self: center; }
+.as-l { align-self: flex-start; }
+.as-r { align-self: flex-end; }
+
+// =============================================================================
+// Text Alignment
+// =============================================================================
+.ta-c { text-align: center; }
+.ta-l { text-align: left; }
+.ta-r { text-align: right; }
+
+// =============================================================================
+// Font Weight Utilities
+// =============================================================================
+.fw300 { font-weight: 300; }
+.fw400 { font-weight: 400; }
+.fw500 { font-weight: 500; }
+.fw600 { font-weight: 600; }
+.fw700 { font-weight: 700; }
+.fw800 { font-weight: 800; }
+.fw900 { font-weight: 900; }
+
+// =============================================================================
+// Cursor & Interaction
+// =============================================================================
+.pointer, .cursor-pointer { cursor: pointer; }
+.hidden { display: none; }
+
+// =============================================================================
+// Text Utilities
+// =============================================================================
+.elipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.w-fc { width: fit-content; }
+
+// =============================================================================
+// Overflow Utilities
+// =============================================================================
+.ns { overflow: hidden; }
+.ns-h { overflow-x: hidden; }
+.ns-v { overflow-y: hidden; }
+
+.spanblock { line-height: normal; }
+
+// =============================================================================
+// Hover Effects
+// =============================================================================
+.hover-info:hover { color: $info !important; }
+.hover-white:hover { color: white; }
+.hover-black:hover { color: black; }
+.hover-primary:hover { color: $primary; }
+.hover-secondary:hover { color: $secondary; }
+.hover-indigo:hover { color: $indigo; }
+
+.hover-indigo-12:hover {
+  color: $indigo;
+  i { color: $indigo; }
+}
+
+// =============================================================================
+// No Border
+// =============================================================================
+.no-border { border: none !important; }
+
+// =============================================================================
+// Avatar Valid State
+// =============================================================================
+.q-avatar.valid * i {
+  color: $green !important;
+}
+
+// =============================================================================
+// Z-Index Utilities (Common values only)
+// =============================================================================
+@each $z in (0, 1, 2, 3, 4, 5, 10, 20, 50, 100) {
+  .z-#{$z} { z-index: #{$z}; }
+}
+
+// =============================================================================
+// Border Radius Utilities (Common values)
+// =============================================================================
+@each $r in (0, 2, 4, 6, 8, 10, 12, 15, 20, 50, 100) {
+  .br-#{$r} { border-radius: #{$r}px; }
+}
+
+.br-t-4 { border-top-left-radius: 4px; border-top-right-radius: 4px; }
+.br-t-6 { border-top-left-radius: 6px; border-top-right-radius: 6px; }
+.br-t-10 { border-top-left-radius: 10px; border-top-right-radius: 10px; }
+
+.br-b-4 { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
+.br-b-6 { border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; }
+.br-b-10 { border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; }
+
+// =============================================================================
+// Blur Utilities (Common values)
+// =============================================================================
+@each $b in (0, 1, 2, 3, 4, 5, 10) {
+  .blur-#{$b} {
+    filter: blur(#{$b}px);
+    backdrop-filter: blur(#{$b}px);
+    -webkit-backdrop-filter: blur(#{$b}px);
+  }
+
+  .bg-blur-#{$b} {
+    backdrop-filter: blur(#{$b}px);
+    -webkit-backdrop-filter: blur(#{$b}px);
+  }
+}
+
+// =============================================================================
+// Size Utilities - Optimized Ranges
+// =============================================================================
+
+// Small values (0-10 by 1)
+@for $i from 0 through 10 {
+  .gap-#{$i} { gap: #{$i}px; }
+  .h-#{$i} { height: #{$i}px; }
+  .w-#{$i} { width: #{$i}px; }
+  .p-#{$i} { padding: #{$i}px; }
+  .m-#{$i} { margin: #{$i}px; }
+  .pt-#{$i} { padding-top: #{$i}px; }
+  .pb-#{$i} { padding-bottom: #{$i}px; }
+  .pl-#{$i} { padding-left: #{$i}px; }
+  .pr-#{$i} { padding-right: #{$i}px; }
+  .mt-#{$i} { margin-top: #{$i}px; }
+  .mb-#{$i} { margin-bottom: #{$i}px; }
+  .ml-#{$i} { margin-left: #{$i}px; }
+  .mr-#{$i} { margin-right: #{$i}px; }
+}
+
+// Medium values (15, 20, 25, 30, 35, 40, 45, 50)
+@each $i in (15, 20, 25, 30, 35, 40, 45, 50) {
+  .gap-#{$i} { gap: #{$i}px; }
+  .h-#{$i} { height: #{$i}px; }
+  .w-#{$i} { width: #{$i}px; }
+  .p-#{$i} { padding: #{$i}px; }
+  .m-#{$i} { margin: #{$i}px; }
+  .pt-#{$i} { padding-top: #{$i}px; }
+  .pb-#{$i} { padding-bottom: #{$i}px; }
+  .pl-#{$i} { padding-left: #{$i}px; }
+  .pr-#{$i} { padding-right: #{$i}px; }
+  .mt-#{$i} { margin-top: #{$i}px; }
+  .mb-#{$i} { margin-bottom: #{$i}px; }
+  .ml-#{$i} { margin-left: #{$i}px; }
+  .mr-#{$i} { margin-right: #{$i}px; }
+  .min-h-#{$i} { min-height: #{$i}px; }
+  .min-w-#{$i} { min-width: #{$i}px; }
+  .max-height-#{$i} { max-height: #{$i}px; }
+  .max-width-#{$i} { max-width: #{$i}px !important; }
+}
+
+// Large values (60, 70, 80, 90, 100, 120, 140, 160, 180, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800)
+@each $i in (60, 70, 80, 90, 100, 120, 140, 160, 180, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800) {
+  .gap-#{$i} { gap: #{$i}px; }
+  .h-#{$i} { height: #{$i}px; }
+  .w-#{$i} { width: #{$i}px; }
+  .min-h-#{$i} { min-height: #{$i}px; }
+  .min-w-#{$i} { min-width: #{$i}px; }
+  .max-height-#{$i} { max-height: #{$i}px; }
+  .max-width-#{$i} { max-width: #{$i}px !important; }
+}
+
+// Negative margins (common values only)
+@each $i in (5, 10, 15, 20, 25, 30) {
+  .mt-n#{$i} { margin-top: -#{$i}px; }
+  .mb-n#{$i} { margin-bottom: -#{$i}px; }
+  .ml-n#{$i} { margin-left: -#{$i}px; }
+  .mr-n#{$i} { margin-right: -#{$i}px; }
+}
+
+// =============================================================================
+// Viewport Width/Height Utilities
+// =============================================================================
+@each $i in (10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 100) {
+  .vw-#{$i} { width: #{$i}vw; }
+  .hv-#{$i} { height: #{$i}vh; }
+}
+
+// =============================================================================
+// Percentage Width/Height Utilities
+// =============================================================================
+@each $p in (10, 20, 25, 30, 33, 40, 50, 60, 66, 70, 75, 80, 90, 100) {
+  .w-#{$p}-p { width: percentage(math.div($p, 100)); }
+  .h-#{$p}-p { height: percentage(math.div($p, 100)); }
+}

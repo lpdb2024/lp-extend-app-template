@@ -1,0 +1,1377 @@
+[
+  {
+    "id": "a07dc55e-eee1-4c08-9ed4-6844ac95434e",
+    "deleted": false,
+    "description": "Testing apps",
+    "redirect_uris": [
+      "http://localhost:3000",
+      "https://www.lp-apps.net",
+      "https://www.lp-apps.net/login",
+      "https://www.lp-apps.net/callback",
+      "https://www.orca.net",
+      "https://www.orca.net/login",
+      "http://localhost:3000/botJoinStart",
+      "https://bs-lp-dev-apac.net/auth",
+      "https://bs-lp-dev-apac.net/login",
+      "http://localhost:3000/login",
+      "http://localhost:3000/auth",
+      "http://localhost:3000/#/login",
+      "http://localhost:3000/#/auth"
+    ],
+    "grant_types": ["authorization_code", "refresh_token"],
+    "enabled": true,
+    "client_id": "a07dc55e-eee1-4c08-9ed4-6844ac95434e",
+    "client_name": "PROJECT-KREIGER",
+    "client_secret": "7akv0dmc8optnalgpd8o1vm80k",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1629279346,
+    "capabilities": {},
+    "is_internal": false
+  },
+  {
+    "id": "af91a872-bdfb-426c-8283-cb01f686c31e",
+    "deleted": false,
+    "description": "Authenticated environment to test Conversation Builder Bots with real time debugging",
+    "redirect_uris": [
+      "http://localhost:3000/sandboxStart",
+      "http://localhost:3000/botJoinStart",
+      "https://bs-lp-dev-apac.net/auth",
+      "https://bs-lp-dev-apac.net/login",
+      "http://localhost:3000/login",
+      "http://localhost:3000/auth",
+      "http://localhost:3000/#/login",
+      "http://localhost:3000/#/auth"
+    ],
+    "grant_types": ["authorization_code", "refresh_token"],
+    "enabled": true,
+    "client_id": "af91a872-bdfb-426c-8283-cb01f686c31e",
+    "client_name": "CBSANDBOX",
+    "client_secret": "8hoqma64v7dio95b7jc93cp656",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1584506902,
+    "capabilities": {},
+    "entry_uri": "http://localhost:3000/cbdevtool",
+    "is_internal": false
+  },
+  {
+    "id": "606d5622-73df-461a-9206-840587c4ff10",
+    "deleted": false,
+    "description": "Post Conversation Survey for Messaging",
+    "enabled": false,
+    "client_id": "606d5622-73df-461a-9206-840587c4ff10",
+    "client_name": "Survey Bot",
+    "client_secret": "91pb7u7777k9htmtrk743ci849",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1636325714,
+    "software_statement": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb2Z0d2FyZV9pZCI6IjI0N2VhNTE4LWY2NWQtNDA2ZS04NGE4LTUyN2Y2ZjFlZmI1YiIsInNvZnR3YXJlX3ZlcnNpb24iOiIxLjAuMC4wIiwiY2xpZW50X25hbWUiOiJTdXJ2ZXkgQm90IiwibG9nb191cmkiOiIvc3JjL21vZHVsZXMvY2FtcGFpZ25zL2Fzc2V0cy9pbWcvc29mdHdhcmUvU3VydmV5LUJvdC5wbmciLCJjbGllbnRfdXJpIjoiIiwibGFuZ3Vpbm9fa2V5Ijoic3VydmV5Qm90IiwiZGVzY3JpcHRpb24iOiJQb3N0IENvbnZlcnNhdGlvbiBTdXJ2ZXkgZm9yIE1lc3NhZ2luZyIsImNhcGFiaWxpdGllcyI6eyJNUy5TdXJ2ZXkiOnsicG9zdCI6dHJ1ZX19fQ.wB2YAO2JCcWl6fmqcpdfVlNo95iXxz9mOzDNlWeKy5E",
+    "capabilities": { "ms_survey": {} },
+    "is_internal": false
+  },
+  {
+    "id": "eb688bd9-0075-43b9-b200-1393e1697277",
+    "deleted": false,
+    "response_types": ["token"],
+    "grant_types": ["client_credentials"],
+    "enabled": true,
+    "client_id": "eb688bd9-0075-43b9-b200-1393e1697277",
+    "client_name": "medallia hook",
+    "client_secret": "nd76kop2ltljc32blc2h6sjk7",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1652239230,
+    "scope": "ihub.medallia.hook",
+    "is_internal": false
+  },
+  {
+    "id": "82a74b95-81f0-4d30-bca5-00747b7affd6",
+    "deleted": false,
+    "response_types": ["token"],
+    "grant_types": ["client_credentials"],
+    "enabled": true,
+    "client_id": "82a74b95-81f0-4d30-bca5-00747b7affd6",
+    "client_name": "medallia bot",
+    "client_secret": "9nnmjcf1oj4q47ggth75hhmjm7",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1652239230,
+    "scope": "ihub.medallia.bot",
+    "capabilities": { "ms_survey": {} },
+    "is_internal": false
+  },
+  {
+    "id": "ea9c3e05-aa13-4d65-bdf5-cb77373e232f",
+    "deleted": false,
+    "response_types": ["token"],
+    "grant_types": ["client_credentials"],
+    "enabled": true,
+    "client_id": "ea9c3e05-aa13-4d65-bdf5-cb77373e232f",
+    "client_name": "medallia sentinel",
+    "client_secret": "fohkjfq2isj6lm6jipvvjqofrm",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1652239230,
+    "scope": "msg.consumer",
+    "is_internal": false
+  },
+  {
+    "id": "3c9b678a-4ad5-4701-af83-3358187a4c49",
+    "deleted": false,
+    "description": "auto provision by connectors",
+    "grant_types": [
+      "client_credentials",
+      "refresh_token",
+      "authorization_code"
+    ],
+    "enabled": true,
+    "client_id": "3c9b678a-4ad5-4701-af83-3358187a4c49",
+    "client_name": "connector_twilio",
+    "client_secret": "ipkj0gtmj53hbd2usg16ua9bo0",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1657049107,
+    "scope": "msg.consumer",
+    "capabilities": {
+      "engagement": {
+        "design_engagement": false,
+        "design_window": false,
+        "entry_point": ["section"],
+        "visitor_behavior": [
+          "visited_location",
+          "time_on_location",
+          "flow",
+          "engaged_in_session",
+          "about_to_abandon",
+          "cart_value",
+          "cart_items",
+          "visitor_error",
+          "viewed_products",
+          "service_activity"
+        ],
+        "target_audience": [
+          "external_referral",
+          "search_keywords",
+          "ip",
+          "platform",
+          "geo_location",
+          "returning_visitors",
+          "marketing_source",
+          "customer_type",
+          "age",
+          "balance",
+          "customer_id",
+          "gender",
+          "store_zip_code",
+          "store_number",
+          "company_size",
+          "registration_date"
+        ],
+        "goal": [
+          "url",
+          "purchase_total",
+          "num_of_pages",
+          "lead",
+          "service_activity"
+        ],
+        "consumer_identity": ["auth", "unauth"],
+        "language_selection": false
+      },
+      "webhooks": {
+        "ms.MessagingEventNotification.ContentEvent": {
+          "endpoint": "https://msg-gw.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/contentEvent?client_name=connector_twilio"
+        },
+        "ms.MessagingEventNotification.RichContentEvent": {
+          "endpoint": "https://msg-gw.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/richContentEvent?client_name=connector_twilio"
+        },
+        "ms.MessagingEventNotification.AcceptStatusEvent": {
+          "endpoint": "https://msg-gw.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/acceptStatusEvent?client_name=connector_twilio"
+        },
+        "ms.MessagingEventNotification.ChatStateEvent": {
+          "endpoint": "https://msg-gw.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/chatStateEvent?client_name=connector_twilio"
+        },
+        "cqm.ExConversationChangeNotification": {
+          "endpoint": "https://msg-gw.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/exconversationChangeNotification?client_name=connector_twilio"
+        },
+        "retry": { "retention_time": 86400 }
+      }
+    },
+    "logo_uri": "/src/modules/campaigns/assets/img/software/Mobile-App.png",
+    "is_internal": false
+  },
+  {
+    "id": "7a7705d3-29c8-4cee-8dd7-d8f8f7acbcff",
+    "deleted": false,
+    "enabled": true,
+    "client_id": "7a7705d3-29c8-4cee-8dd7-d8f8f7acbcff",
+    "client_name": "proactive_messaging",
+    "client_secret": "77f9fapgtl45gplncfjta7mj6v",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1658879485,
+    "is_internal": false
+  },
+  {
+    "id": "5b21393d-6a20-4011-9897-026d7cc066d9",
+    "deleted": false,
+    "description": "proactive-messaging-api2.0",
+    "grant_types": ["client_credentials"],
+    "enabled": true,
+    "client_id": "5b21393d-6a20-4011-9897-026d7cc066d9",
+    "client_name": "proactive-messaging-api2.0",
+    "client_secret": "145itt0o14ufrasdsoas30etdn",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1658879619,
+    "is_internal": false
+  },
+  {
+    "id": "3e789924-e257-44e5-baac-db340a619acb",
+    "deleted": false,
+    "description": "Facebook connector app - FB web layer",
+    "grant_types": [
+      "client_credentials",
+      "refresh_token",
+      "authorization_code"
+    ],
+    "enabled": true,
+    "client_id": "3e789924-e257-44e5-baac-db340a619acb",
+    "client_name": "Facebook-Messaging",
+    "client_secret": "8959a9iucd44mf92vbir7arcb7",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1662350000,
+    "scope": "msg.consumer",
+    "capabilities": {
+      "engagement": {
+        "design_engagement": false,
+        "design_window": false,
+        "entry_point": ["section"],
+        "visitor_behavior": [
+          "visited_location",
+          "time_on_location",
+          "flow",
+          "engaged_in_session",
+          "about_to_abandon",
+          "cart_value",
+          "cart_items",
+          "visitor_error",
+          "viewed_products",
+          "service_activity"
+        ],
+        "target_audience": [
+          "external_referral",
+          "search_keywords",
+          "ip",
+          "platform",
+          "geo_location",
+          "returning_visitors",
+          "marketing_source",
+          "customer_type",
+          "age",
+          "balance",
+          "customer_id",
+          "gender",
+          "store_zip_code",
+          "store_number",
+          "company_size",
+          "registration_date"
+        ],
+        "goal": [
+          "url",
+          "purchase_total",
+          "num_of_pages",
+          "lead",
+          "service_activity"
+        ],
+        "consumer_identity": ["auth", "unauth"],
+        "language_selection": false
+      },
+      "webhooks": {
+        "ms.MessagingEventNotification.ContentEvent": {
+          "endpoint": "https://sy.facebook-gw.liveperson.net/api/receive/contentEvent?client_name=Facebook-Messaging"
+        },
+        "ms.MessagingEventNotification.RichContentEvent": {
+          "endpoint": "https://sy.facebook-gw.liveperson.net/api/receive/richContentEvent?client_name=Facebook-Messaging"
+        },
+        "ms.MessagingEventNotification.AcceptStatusEvent": {
+          "endpoint": "https://sy.facebook-gw.liveperson.net/api/receive/acceptStatusEvent?client_name=Facebook-Messaging"
+        },
+        "ms.MessagingEventNotification.ChatStateEvent": {
+          "endpoint": "https://sy.facebook-gw.liveperson.net/api/receive/chatStateEvent?client_name=Facebook-Messaging"
+        },
+        "cqm.ExConversationChangeNotification": {
+          "endpoint": "https://sy.facebook-gw.liveperson.net/api/receive/exconversationChangeNotification?client_name=Facebook-Messaging"
+        },
+        "retry": { "retention_time": 86400 }
+      }
+    },
+    "logo_uri": "/src/modules/campaigns/assets/img/software/Mobile-App.png",
+    "is_internal": false
+  },
+  {
+    "id": "f07b5f4d-aa86-4206-8f34-6b11fd3ce095",
+    "deleted": false,
+    "description": "DEPRECATED on 18.08.2025",
+    "grant_types": [
+      "client_credentials",
+      "refresh_token",
+      "authorization_code"
+    ],
+    "enabled": false,
+    "client_id": "f07b5f4d-aa86-4206-8f34-6b11fd3ce095",
+    "client_name": "Google-Messaging",
+    "client_secret": "adnqkc6ngo5sqvv33t6g0kp6n7",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1663695485,
+    "scope": "msg.consumer",
+    "capabilities": {
+      "engagement": {
+        "design_engagement": false,
+        "design_window": false,
+        "entry_point": ["section"],
+        "visitor_behavior": [
+          "visited_location",
+          "time_on_location",
+          "flow",
+          "engaged_in_session",
+          "about_to_abandon",
+          "cart_value",
+          "cart_items",
+          "visitor_error",
+          "viewed_products",
+          "service_activity"
+        ],
+        "target_audience": [
+          "external_referral",
+          "search_keywords",
+          "ip",
+          "platform",
+          "geo_location",
+          "returning_visitors",
+          "marketing_source",
+          "customer_type",
+          "age",
+          "balance",
+          "customer_id",
+          "gender",
+          "store_zip_code",
+          "store_number",
+          "company_size",
+          "registration_date"
+        ],
+        "goal": [
+          "url",
+          "purchase_total",
+          "num_of_pages",
+          "lead",
+          "service_activity"
+        ],
+        "consumer_identity": ["auth", "unauth"],
+        "language_selection": false
+      },
+      "webhooks": {
+        "ms.MessagingEventNotification.ContentEvent": {
+          "endpoint": "https://sy.ggl-gw.liveperson.net/api/receive/contentEvent?client_name=Google-Messaging"
+        },
+        "ms.MessagingEventNotification.RichContentEvent": {
+          "endpoint": "https://sy.ggl-gw.liveperson.net/api/receive/richContentEvent?client_name=Google-Messaging"
+        },
+        "ms.MessagingEventNotification.AcceptStatusEvent": {
+          "endpoint": "https://sy.ggl-gw.liveperson.net/api/receive/acceptStatusEvent?client_name=Google-Messaging"
+        },
+        "ms.MessagingEventNotification.ChatStateEvent": {
+          "endpoint": "https://sy.ggl-gw.liveperson.net/api/receive/chatStateEvent?client_name=Google-Messaging"
+        },
+        "cqm.ExConversationChangeNotification": {
+          "endpoint": "https://sy.ggl-gw.liveperson.net/api/receive/exconversationChangeNotification?client_name=Google-Messaging"
+        },
+        "retry": { "retention_time": 86400 }
+      }
+    },
+    "logo_uri": "/src/modules/campaigns/assets/img/software/Mobile-App.png",
+    "is_internal": false
+  },
+  {
+    "id": "963ed068-94c9-4d1f-a0bb-fb17a7ddbbe3",
+    "deleted": false,
+    "enabled": true,
+    "client_id": "963ed068-94c9-4d1f-a0bb-fb17a7ddbbe3",
+    "client_name": "Mobile App",
+    "client_secret": "hv9itmbm4teb3659e8a24q3l1q",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1674107602,
+    "software_statement": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb2Z0d2FyZV9pZCI6IjkyMjc0Y2ZkLTI5ZTctNGQ5NC1hMDEzLTA2NDYyMTJkODA3NSIsInNvZnR3YXJlX3ZlcnNpb24iOiIxLjAuMC4wIiwiY2xpZW50X25hbWUiOiJNb2JpbGUgQXBwIiwibG9nb191cmkiOiIvc3JjL21vZHVsZXMvY2FtcGFpZ25zL2Fzc2V0cy9pbWcvc29mdHdhcmUvTW9iaWxlLUFwcC5wbmciLCJjbGllbnRfdXJpIjoiIiwibGFuZ3Vpbm9fa2V5IjoibW9iaWxlQXBwIiwiZGVzY3JpcHRpb24iOiJCdWlsZCBsb25nLXRlcm0gcmVsYXRpb25zaGlwcyB3aXRoIHVzZXJzIG9mIHlvdXIgYnJhbmQncyBtb2JpbGUgYXBwLiIsImNhcGFiaWxpdGllcyI6eyJlbmdhZ2VtZW50Ijp7ImRlc2lnbl9lbmdhZ2VtZW50IjpmYWxzZSwiZGVzaWduX3dpbmRvdyI6ZmFsc2UsImVudHJ5X3BvaW50IjpbInNlY3Rpb24iXSwidmlzaXRvcl9iZWhhdmlvciI6WyJ2aXNpdGVkX2xvY2F0aW9uIiwiZmxvdyIsImVuZ2FnZWRfaW5fc2Vzc2lvbiIsImNhcnRfdmFsdWUiLCJjYXJ0X2l0ZW1zIiwidmlzaXRvcl9lcnJvciIsInZpZXdlZF9wcm9kdWN0cyIsInNlcnZpY2VfYWN0aXZpdHkiXSwidGFyZ2V0X2F1ZGllbmNlIjpbInNlYXJjaF9rZXl3b3JkcyIsImlwIiwicGxhdGZvcm0iLCJnZW9fbG9jYXRpb24iLCJtYXJrZXRpbmdfc291cmNlIiwiY3VzdG9tZXJfdHlwZSIsImFnZSIsImJhbGFuY2UiLCJjdXN0b21lcl9pZCIsImdlbmRlciIsInN0b3JlX3ppcF9jb2RlIiwic3RvcmVfbnVtYmVyIiwiY29tcGFueV9zaXplIiwicmVnaXN0cmF0aW9uX2RhdGUiXSwiZ29hbCI6WyJwdXJjaGFzZV90b3RhbCIsImxlYWQiLCJzZXJ2aWNlX2FjdGl2aXR5Il0sImNvbnN1bWVyX2lkZW50aXR5IjpbImF1dGgiLCJ1bmF1dGgiXSwibGFuZ3VhZ2Vfc2VsZWN0aW9uIjp0cnVlfX19.uvox1dDTKuOo8BtTlgMg47vtCKKw2mpwSIGYH9CQrp8",
+    "capabilities": {
+      "engagement": {
+        "design_engagement": false,
+        "design_window": false,
+        "entry_point": ["section"],
+        "visitor_behavior": [
+          "visited_location",
+          "flow",
+          "engaged_in_session",
+          "cart_value",
+          "cart_items",
+          "visitor_error",
+          "viewed_products",
+          "service_activity"
+        ],
+        "target_audience": [
+          "search_keywords",
+          "ip",
+          "platform",
+          "geo_location",
+          "marketing_source",
+          "customer_type",
+          "age",
+          "balance",
+          "customer_id",
+          "gender",
+          "store_zip_code",
+          "store_number",
+          "company_size",
+          "registration_date"
+        ],
+        "goal": ["purchase_total", "lead", "service_activity"],
+        "consumer_identity": ["auth", "unauth"],
+        "language_selection": true
+      }
+    },
+    "logo_uri": "https://lpcdn.lpsnmedia.net/le/apps/manager/1.4.6-release_171641/img/software/Mobile-App.png",
+    "is_internal": false
+  },
+  {
+    "id": "bf7c6769-e66d-4419-8e5a-34db7742ce64",
+    "deleted": false,
+    "description": "Solutions to support messaging agents",
+    "display_name": "Agent Support Solutions",
+    "redirect_uris": [
+      "https://cb-toolbox.net/login",
+      "http://localhost:3000/cc-callback",
+      "http://localhost:3000/login",
+      "http://localhost:3011/cc-callback",
+      "http://localhost:3011/login",
+      "https://orca-assist.net/login",
+      "https://lp-apps.net/login",
+      "https://agent-solutions.cb-toolbox.net/login",
+      "https://agent-solutions.cb-toolbox.net"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "bf7c6769-e66d-4419-8e5a-34db7742ce64",
+    "client_name": "Agent Support Solutions",
+    "client_secret": "fb85cnjgu925qo49b41fpkogo3",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1674514088,
+    "capabilities": {},
+    "entry_uri": "https://lp-apps.net/login?siteId=31487986",
+    "logo_uri": "https://elasticbeanstalk-ap-southeast-2-915210978262.s3.ap-southeast-2.amazonaws.com/content/demo-builder/toolbox.png",
+    "quick_launch_enabled": true,
+    "categories": ["Conversation Intelligence"],
+    "is_internal": false
+  },
+  {
+    "id": "a47ef4b1-6a17-4800-9c65-5682fb06f326",
+    "deleted": false,
+    "description": "Suite of dev tools for automation builder and account management",
+    "display_name": "Automation Toolbox",
+    "redirect_uris": [
+      "https://cb-toolbox.net/login",
+      "https://ai.cb-toolbox.net/login",
+      "https://ai.cb-toolbox.net/callback",
+      "http://localhost:8010/login",
+      "http://localhost:8011/login",
+      "http://localhost:8080/login",
+      "http://localhost:8081/login",
+      "http://localhost:8010/callback",
+      "http://localhost:8011/callback",
+      "http://localhost:8080/callback",
+      "http://localhost:8081/callback"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "a47ef4b1-6a17-4800-9c65-5682fb06f326",
+    "client_name": "AUTOMATION_TOOLBOX",
+    "client_secret": "t3ftsui2ho2ica62lp8ltq2k07",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1675933672,
+    "capabilities": {},
+    "entry_uri": "https://cb-toolbox.net/login",
+    "logo_uri": "https://elasticbeanstalk-ap-southeast-2-915210978262.s3.ap-southeast-2.amazonaws.com/content/demo-builder/toolbox.png",
+    "quick_launch_enabled": true,
+    "enabled_for_profiles": [0, 1, 2, 3],
+    "categories": ["Conversation Intelligence"],
+    "is_internal": false
+  },
+  {
+    "id": "b765f7f7-8609-4f79-a019-58706ceae13a",
+    "deleted": false,
+    "description": "auto provision by migration",
+    "grant_types": [
+      "client_credentials",
+      "refresh_token",
+      "authorization_code"
+    ],
+    "enabled": true,
+    "client_id": "b765f7f7-8609-4f79-a019-58706ceae13a",
+    "client_name": "Whatsapp-Messaging",
+    "client_secret": "1vrla7bskoa6edj3bi9d3arsfj",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1680272662,
+    "scope": "msg.consumer",
+    "capabilities": {
+      "engagement": {
+        "design_engagement": false,
+        "design_window": false,
+        "entry_point": ["section"],
+        "visitor_behavior": [
+          "visited_location",
+          "time_on_location",
+          "flow",
+          "engaged_in_session",
+          "about_to_abandon",
+          "cart_value",
+          "cart_items",
+          "visitor_error",
+          "viewed_products",
+          "service_activity"
+        ],
+        "target_audience": [
+          "external_referral",
+          "search_keywords",
+          "ip",
+          "platform",
+          "geo_location",
+          "returning_visitors",
+          "marketing_source",
+          "customer_type",
+          "age",
+          "balance",
+          "customer_id",
+          "gender",
+          "store_zip_code",
+          "store_number",
+          "company_size",
+          "registration_date"
+        ],
+        "goal": [
+          "url",
+          "purchase_total",
+          "num_of_pages",
+          "lead",
+          "service_activity"
+        ],
+        "consumer_identity": ["auth", "unauth"],
+        "language_selection": false
+      },
+      "webhooks": {
+        "ms.MessagingEventNotification.ContentEvent": {
+          "endpoint": "https://whatsapp-gw.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/contentEvent?client_name=Whatsapp-Messaging"
+        },
+        "ms.MessagingEventNotification.RichContentEvent": {
+          "endpoint": "https://whatsapp-gw.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/richContentEvent?client_name=Whatsapp-Messaging"
+        },
+        "ms.MessagingEventNotification.AcceptStatusEvent": {
+          "endpoint": "https://whatsapp-gw.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/acceptStatusEvent?client_name=Whatsapp-Messaging"
+        },
+        "ms.MessagingEventNotification.ChatStateEvent": {
+          "endpoint": "https://whatsapp-gw.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/chatStateEvent?client_name=Whatsapp-Messaging"
+        },
+        "cqm.ExConversationChangeNotification": {
+          "endpoint": "https://whatsapp-gw.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/exconversationChangeNotification?client_name=Whatsapp-Messaging"
+        },
+        "retry": { "retention_time": 86400 }
+      }
+    },
+    "logo_uri": "/src/modules/campaigns/assets/img/software/Mobile-App.png",
+    "is_internal": false
+  },
+  {
+    "id": "bf9ae3e8-47ed-4749-af0f-ccab7c5bafdc",
+    "deleted": false,
+    "description": "connect_to_messaging",
+    "grant_types": [
+      "client_credentials",
+      "authorization_code",
+      "refresh_token"
+    ],
+    "enabled": true,
+    "client_id": "bf9ae3e8-47ed-4749-af0f-ccab7c5bafdc",
+    "client_name": "connect_to_messaging",
+    "client_secret": "g9k3srs8dm2i82cj7siikgpg31",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1688429526,
+    "scope": "livedeflect",
+    "is_internal": false
+  },
+  {
+    "id": "b358f920-27d4-4bcc-9194-f981a940eea9",
+    "deleted": false,
+    "description": "LLM powered bots to complete tasks",
+    "display_name": "LLM powered Task Bots",
+    "redirect_uris": [
+      "https://gen-ai.cb-toolbox.net/le-login",
+      "https://gen-ai.cb-toolbox.net/le-callback"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "b358f920-27d4-4bcc-9194-f981a940eea9",
+    "client_name": "LLM_TASK_BOTS",
+    "client_secret": "2214r01ddvc99jfqk6oddm3v6a",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1690771497,
+    "capabilities": {},
+    "entry_uri": "https://gen-ai.cb-toolbox.net/le-login",
+    "logo_uri": "https://elasticbeanstalk-ap-southeast-2-915210978262.s3.ap-southeast-2.amazonaws.com/content/demo-builder/toolbox.png",
+    "categories": ["Conversation Intelligence"],
+    "is_internal": false
+  },
+  {
+    "id": "80c41816-4c34-4b01-9bb9-c8053cdbdc73",
+    "deleted": false,
+    "description": "Create LLM powered automated processes for data discovery, consultation and comparison",
+    "redirect_uris": [
+      "http://localhost:3111",
+      "https://gen-ai.cb-toolbox.net",
+      "https://gen-ai.cb-toolbox.net/login",
+      "https://gen-ai.cb-toolbox.net/callback-cc",
+      "http://localhost:3111/callback-cc",
+      "http://localhost:3111/login",
+      "http://localhost:3111/auth"
+    ],
+    "grant_types": ["authorization_code", "refresh_token"],
+    "enabled": true,
+    "client_id": "80c41816-4c34-4b01-9bb9-c8053cdbdc73",
+    "client_name": "GenAITaskBots",
+    "client_secret": "5cb81bfasjs1h70o760c7vvan0",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1696311622,
+    "capabilities": {},
+    "is_internal": false
+  },
+  {
+    "id": "8a4017a9-dfec-44e1-b66a-76959a282454",
+    "deleted": false,
+    "description": "Full Manager workspace",
+    "display_name": "Demo Builder",
+    "redirect_uris": [
+      "https://msg-ops.cb-toolbox.net/login",
+      "http://localhost:8010/login",
+      "http://localhost:8011/login",
+      "https://msg-ops.cb-toolbox.net/callback",
+      "http://localhost:8010/callback",
+      "http://localhost:8011/callback",
+      "http://localhost:3000/callback",
+      "http://localhost:3001/callback",
+      "http://localhost:3000/login",
+      "http://localhost:3001/login",
+      "http://localhost:3000/login-ext",
+      "http://localhost:3001/login-ext"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "8a4017a9-dfec-44e1-b66a-76959a282454",
+    "client_name": "MSG_OPS",
+    "client_secret": "12o1lbh60qqesnsq6aemmuse6b",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1698708330,
+    "capabilities": {},
+    "logo_uri": "https://elasticbeanstalk-ap-southeast-2-915210978262.s3.ap-southeast-2.amazonaws.com/content/demo-builder/toolbox.png",
+    "quick_launch_enabled": true,
+    "enabled_for_profiles": [0, 1, 2, 3],
+    "categories": ["Conversation Intelligence"],
+    "is_internal": false
+  },
+  {
+    "id": "02af42eb-79bb-40ce-84ca-1d1f7dfe086e",
+    "deleted": false,
+    "description": "Dive into innovation with us, where your brand's ideas meet our conversational AI expertise. Together, we'll prototype and pioneer solutions that define the future of customer engagement. Join this journey of creativity, passion, and technology.",
+    "display_name": "Nexus",
+    "redirect_uris": [
+      "http://localhost:3000/login",
+      "http://localhost:3000/callback",
+      "http://localhost:8080/login",
+      "http://127.0.0.1:8080/callback",
+      "https%3A%2F%2Fewe-warm-beagle.ngrok-free.app%2Fapi%2Fcallback",
+      "https://ewe-warm-beagle.ngrok-free.app/callback",
+      "https://ewe-warm-beagle.ngrok-free.app/api/callback",
+      "https%3A%2F%2Fproject-nexus-hvn5nlja3q-ts.a.run.app%2Fapi%2Fcallback",
+      "https://project-nexus-hvn5nlja3q-ts.a.run.app/api/callback",
+      "http%3A%2F%2Flocalhost%3A8080%2Fapi%2Fcallback",
+      "https%3A%2F%2Flocalhost%3A8080%2Fapi%2Fcallback",
+      "http://localhost:8080/api/callback"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "02af42eb-79bb-40ce-84ca-1d1f7dfe086e",
+    "client_name": "NEXUS",
+    "client_secret": "1aqialjvas2nvs64o3nbipfjn7",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1675934019,
+    "capabilities": {},
+    "logo_uri": "https://elasticbeanstalk-ap-southeast-2-915210978262.s3.ap-southeast-2.amazonaws.com/content/demo-builder/toolbox.png",
+    "quick_launch_enabled": true,
+    "enabled_for_profiles": [0, 1, 2, 3],
+    "categories": ["Conversation Intelligence"],
+    "is_internal": false
+  },
+  {
+    "id": "05e872ee-69f2-413d-b2fe-ae42f2b4b830",
+    "deleted": false,
+    "description": "Creates sample conversations and simulates in Conversational Cloud",
+    "display_name": "Nexus",
+    "redirect_uris": [
+      "http://localhost:3000/callback",
+      "http://localhost:8080/login",
+      "http://127.0.0.1:8080/api/callback",
+      "http://localhost:8080/api/callback",
+      "https://localhost:8080/api/callback",
+      "https://ewe-warm-beagle.ngrok-free.app/api/callback",
+      "https%3A%2F%2Fewe-warm-beagle.ngrok-free.app%2Fapi%2Fcallback",
+      "http%3A%2F%2F127.0.0.1%3A8080%2Fapi%2Fcallback",
+      "https%3A%2F%2F127.0.0.1%3A8080%2Fapi%2Fcallback"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "05e872ee-69f2-413d-b2fe-ae42f2b4b830",
+    "client_name": "ConversationGenerator",
+    "client_secret": "dlj4vc1kc8sj9f28thoqudh7et",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1675934019,
+    "capabilities": {},
+    "logo_uri": "https://elasticbeanstalk-ap-southeast-2-915210978262.s3.ap-southeast-2.amazonaws.com/content/demo-builder/toolbox.png",
+    "quick_launch_enabled": true,
+    "enabled_for_profiles": [0, 1, 2, 3],
+    "categories": ["Conversation Intelligence"],
+    "is_internal": false
+  },
+  {
+    "id": "d8707229-8907-43e8-aaae-62271720eed6",
+    "deleted": false,
+    "description": "Creates sample conversations and simulates in Conversational Cloud",
+    "display_name": "Conversation Creator",
+    "redirect_uris": [
+      "http://localhost:3000/callback",
+      "http://localhost:8080/login",
+      "http://127.0.0.1:8080/api/callback",
+      "http://localhost:8080/api/callback",
+      "https://localhost:8080/api/callback",
+      "https://conversation-creator-hvn5nlja3q-ts.a.run.app/login",
+      "https://conversation-creator-hvn5nlja3q-ts.a.run.app/callback",
+      "https://ewe-warm-beagle.ngrok-free.app/api/callback",
+      "https%3A%2F%2Fewe-warm-beagle.ngrok-free.app%2Fapi%2Fcallback",
+      "http%3A%2F%2F127.0.0.1%3A8080%2Fapi%2Fcallback",
+      "https%3A%2F%2F127.0.0.1%3A8080%2Fapi%2Fcallback"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "d8707229-8907-43e8-aaae-62271720eed6",
+    "client_name": "Conversation Creator",
+    "client_secret": "72bg40t8i5qlhksgs4r6duvdtg",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1675934019,
+    "capabilities": {},
+    "logo_uri": "https://elasticbeanstalk-ap-southeast-2-915210978262.s3.ap-southeast-2.amazonaws.com/content/demo-builder/toolbox.png",
+    "quick_launch_enabled": true,
+    "enabled_for_profiles": [0, 1, 2, 3],
+    "categories": ["Conversation Intelligence"],
+    "is_internal": false
+  },
+  {
+    "id": "cbfdb899-51a8-48bc-b334-dca2e056dc8e",
+    "deleted": false,
+    "description": "Instagram connector app - IG web layer",
+    "grant_types": [
+      "client_credentials",
+      "refresh_token",
+      "authorization_code"
+    ],
+    "enabled": true,
+    "client_id": "cbfdb899-51a8-48bc-b334-dca2e056dc8e",
+    "client_name": "Instagram-Messaging",
+    "client_secret": "mm5n6tsfhofuuacsbgte4m50j0",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1746402852,
+    "scope": "msg.consumer",
+    "capabilities": {
+      "engagement": {
+        "design_engagement": false,
+        "design_window": false,
+        "entry_point": ["section"],
+        "visitor_behavior": [
+          "visited_location",
+          "time_on_location",
+          "flow",
+          "engaged_in_session",
+          "about_to_abandon",
+          "cart_value",
+          "cart_items",
+          "visitor_error",
+          "viewed_products",
+          "service_activity"
+        ],
+        "target_audience": [
+          "external_referral",
+          "search_keywords",
+          "ip",
+          "platform",
+          "geo_location",
+          "returning_visitors",
+          "marketing_source",
+          "customer_type",
+          "age",
+          "balance",
+          "customer_id",
+          "gender",
+          "store_zip_code",
+          "store_number",
+          "company_size",
+          "registration_date"
+        ],
+        "goal": [
+          "url",
+          "purchase_total",
+          "num_of_pages",
+          "lead",
+          "service_activity"
+        ],
+        "consumer_identity": ["auth"],
+        "language_selection": false
+      },
+      "webhooks": {
+        "ms.MessagingEventNotification.ContentEvent": {
+          "endpoint": "https://lp-connector2instagram-app.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/contentEvent?client_name=Instagram-Messaging"
+        },
+        "ms.MessagingEventNotification.RichContentEvent": {
+          "endpoint": "https://lp-connector2instagram-app.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/richContentEvent?client_name=Instagram-Messaging"
+        },
+        "ms.MessagingEventNotification.AcceptStatusEvent": {
+          "endpoint": "https://lp-connector2instagram-app.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/acceptStatusEvent?client_name=Instagram-Messaging"
+        },
+        "ms.MessagingEventNotification.ChatStateEvent": {
+          "endpoint": "https://lp-connector2instagram-app.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/chatStateEvent?client_name=Instagram-Messaging"
+        },
+        "cqm.ExConversationChangeNotification": {
+          "endpoint": "https://lp-connector2instagram-app.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/exconversationChangeNotification?client_name=Instagram-Messaging"
+        },
+        "retry": { "retention_time": 86400 }
+      }
+    },
+    "is_internal": false
+  },
+  {
+    "id": "d152006c-d057-40ee-bb22-1fdc4b955574",
+    "deleted": false,
+    "description": "Twitter Connector App",
+    "grant_types": [
+      "client_credentials",
+      "refresh_token",
+      "authorization_code"
+    ],
+    "enabled": true,
+    "client_id": "d152006c-d057-40ee-bb22-1fdc4b955574",
+    "client_name": "Twitter-Messaging",
+    "client_secret": "mgh37h3rnm626svvq2mtng15tc",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1746687431,
+    "scope": "msg.consumer",
+    "capabilities": {
+      "webhooks": {
+        "ms.MessagingEventNotification.ContentEvent": {
+          "endpoint": "https://lp-connector2twitter.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/contentEvent?client_name=Twitter-Messaging"
+        },
+        "ms.MessagingEventNotification.RichContentEvent": {
+          "endpoint": "https://lp-connector2twitter.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/richContentEvent?client_name=Twitter-Messaging"
+        },
+        "ms.MessagingEventNotification.AcceptStatusEvent": {
+          "endpoint": "https://lp-connector2twitter.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/acceptStatusEvent?client_name=Twitter-Messaging"
+        },
+        "ms.MessagingEventNotification.ChatStateEvent": {
+          "endpoint": "https://lp-connector2twitter.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/chatStateEvent?client_name=Twitter-Messaging"
+        },
+        "cqm.ExConversationChangeNotification": {
+          "endpoint": "https://lp-connector2twitter.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/exconversationChangeNotification?client_name=Twitter-Messaging"
+        },
+        "retry": { "retention_time": 86400 }
+      }
+    },
+    "is_internal": false
+  },
+  {
+    "id": "bc1f848d-3e3a-4bb6-8f16-4bda0e9fc468",
+    "deleted": false,
+    "description": "Shift public social posts to LiveEngage messaging",
+    "display_name": "Social Connect",
+    "response_types": ["code", "token"],
+    "grant_types": [
+      "client_credentials",
+      "authorization_code",
+      "refresh_token"
+    ],
+    "enabled": true,
+    "client_id": "bc1f848d-3e3a-4bb6-8f16-4bda0e9fc468",
+    "client_name": "Social Monitoring",
+    "client_secret": "******",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1569125446,
+    "capabilities": {
+      "engagement": {
+        "design_engagement": false,
+        "design_window": false,
+        "entry_point": ["section"],
+        "visitor_behavior": [
+          "visited_location",
+          "time_on_location",
+          "flow",
+          "engaged_in_session",
+          "about_to_abandon",
+          "cart_value",
+          "cart_items",
+          "visitor_error",
+          "viewed_products",
+          "service_activity"
+        ],
+        "target_audience": [
+          "external_referral",
+          "search_keywords",
+          "ip",
+          "platform",
+          "geo_location",
+          "returning_visitors",
+          "marketing_source",
+          "customer_type",
+          "age",
+          "balance",
+          "customer_id",
+          "gender",
+          "store_zip_code",
+          "store_number",
+          "company_size",
+          "registration_date"
+        ],
+        "goal": [
+          "url",
+          "purchase_total",
+          "num_of_pages",
+          "lead",
+          "service_activity"
+        ],
+        "consumer_identity": ["auth"],
+        "language_selection": true
+      }
+    },
+    "categories": ["Messaging Channels", "Conversation Management"],
+    "overview": "Extends LiveEngage to allow brands to monitor, reply and interact with consumers on Twitter and Facebook, both publicly and privately - bringing the conversations into LiveEngage.",
+    "is_internal": false
+  },
+  {
+    "id": "63fd57e3-78b4-426e-b6f9-a42f772e5105",
+    "deleted": false,
+    "description": "demo builder v.5",
+    "redirect_uris": [
+      "https://db5-799437481810.australia-southeast1.run.app/callback"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "63fd57e3-78b4-426e-b6f9-a42f772e5105",
+    "client_name": "db5",
+    "client_secret": "ts5i0vntd9r6p5tk60ctrplnpq",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1753097498,
+    "scope": "msg.consumer",
+    "logo_uri": "",
+    "is_internal": false
+  },
+  {
+    "id": "d4b12c8f-b615-4eb0-88af-e487117cb7ce",
+    "deleted": false,
+    "description": "auto provision by connectors",
+    "grant_types": [
+      "client_credentials",
+      "refresh_token",
+      "authorization_code"
+    ],
+    "enabled": true,
+    "client_id": "d4b12c8f-b615-4eb0-88af-e487117cb7ce",
+    "client_name": "Email-Messaging",
+    "client_secret": "vstogrs2niaqp4q8iehdgq1du7",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1753142386,
+    "scope": "msg.consumer",
+    "capabilities": {
+      "engagement": {
+        "design_engagement": false,
+        "design_window": false,
+        "entry_point": ["section"],
+        "visitor_behavior": [
+          "visited_location",
+          "time_on_location",
+          "flow",
+          "engaged_in_session",
+          "about_to_abandon",
+          "cart_value",
+          "cart_items",
+          "visitor_error",
+          "viewed_products",
+          "service_activity"
+        ],
+        "target_audience": [
+          "external_referral",
+          "search_keywords",
+          "ip",
+          "platform",
+          "geo_location",
+          "returning_visitors",
+          "marketing_source",
+          "customer_type",
+          "age",
+          "balance",
+          "customer_id",
+          "gender",
+          "store_zip_code",
+          "store_number",
+          "company_size",
+          "registration_date"
+        ],
+        "goal": [
+          "url",
+          "purchase_total",
+          "num_of_pages",
+          "lead",
+          "service_activity"
+        ],
+        "consumer_identity": ["auth", "unauth"],
+        "language_selection": false
+      },
+      "webhooks": {
+        "ms.MessagingEventNotification.ContentEvent": {
+          "endpoint": "https://lp-connector2email-app.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/contentEvent?client_name=Email-Messaging"
+        },
+        "ms.MessagingEventNotification.RichContentEvent": {
+          "endpoint": "https://lp-connector2email-app.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/richContentEvent?client_name=Email-Messaging"
+        },
+        "ms.MessagingEventNotification.AcceptStatusEvent": {
+          "endpoint": "https://lp-connector2email-app.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/acceptStatusEvent?client_name=Email-Messaging"
+        },
+        "ms.MessagingEventNotification.ChatStateEvent": {
+          "endpoint": "https://lp-connector2email-app.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/chatStateEvent?client_name=Email-Messaging"
+        },
+        "cqm.ExConversationChangeNotification": {
+          "endpoint": "https://lp-connector2email-app.australia-southeast1.prod.int.gw.lpcloud.io/api/receive/exconversationChangeNotification?client_name=Email-Messaging"
+        },
+        "retry": { "retention_time": 86400 }
+      }
+    },
+    "logo_uri": "/src/modules/campaigns/assets/img/software/Mobile-App.png",
+    "is_internal": false
+  },
+  {
+    "id": "9cfb1467-63c3-49b6-8f56-feebe0cfa55e",
+    "deleted": false,
+    "description": "lp-ihubcrmw-auth-2.0",
+    "grant_types": ["client_credentials"],
+    "enabled": true,
+    "client_id": "9cfb1467-63c3-49b6-8f56-feebe0cfa55e",
+    "client_name": "lp-ihubcrmw-auth-2.0",
+    "client_secret": "jjqtib32rmfp5rrrmv1g11tliq",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1756871673,
+    "scope": "data.services.external.msghist users.external",
+    "is_internal": false
+  },
+  {
+    "id": "2ab24c96-d371-49b7-9ae7-91eb95a33f0f",
+    "deleted": false,
+    "description": "Suite of development tools for Solution Consulting teams",
+    "display_name": "Liveperson Solutions",
+    "redirect_uris": [
+      "http://localhost:3000/auth/callback",
+      "https://lp-webhooks.ngrok.app/auth/callback"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "2ab24c96-d371-49b7-9ae7-91eb95a33f0f",
+    "client_name": "LP Solutions Toolkit",
+    "client_secret": "ddfsgfcgeiqdqep5ufr0nf4dde",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1759206891,
+    "capabilities": {},
+    "enabled_for_profiles": [0, 1, 2, 3],
+    "is_internal": false
+  },
+  {
+    "id": "1b598343-0ff4-4b3c-b486-46b2000942bd",
+    "deleted": false,
+    "description": "Suite of development tools for Solution Consulting teams",
+    "display_name": "Demo Builder",
+    "redirect_uris": [
+      "https://db5-799437481810.australia-southeast1.run.app/callback",
+      "https://lp-extend-1000472894765.australia-southeast1.run.app/callback",
+      "http://localhost:3000/login",
+      "http://localhost:8080/login",
+      "https://lp-webhooks.ngrok.app/callback",
+      "https://lp-webhooks.ngrok.app/login",
+      "https%3A%2F%2F127.0.0.1%3A8080%2Fapi%2Fv1%2Fcallback",
+      "https%3A%2F%2F127.0.0.1%3A3000%2Fapi%2Fv1%2Fcallback",
+      "http://127.0.0.1:3000/callback",
+      "http://127.0.0.1:3001/callback",
+      "http://localhost:8080/callback",
+      "https://lp-solutions-toolkit-bkvdvjg6sq-km.a.run.app/callback",
+      "https://ai.cb-toolbox.net/login",
+      "http://localhost:3000/callback"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "1b598343-0ff4-4b3c-b486-46b2000942bd",
+    "client_name": "Solutions Toolkit",
+    "client_secret": "rc1o6627cicdf8tcc1ivd2mjnf",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1675934019,
+    "capabilities": {},
+    "logo_uri": "https://elasticbeanstalk-ap-southeast-2-915210978262.s3.ap-southeast-2.amazonaws.com/content/demo-builder/toolbox.png",
+    "quick_launch_enabled": true,
+    "enabled_for_profiles": [0, 1, 2, 3],
+    "categories": ["Conversation Intelligence"],
+    "is_internal": false
+  },
+  {
+    "id": "1c7743eb-b00b-438c-999e-3545e4e7c21c",
+    "deleted": false,
+    "description": "Voice Connector to interact with LiveEngage",
+    "grant_types": ["client_credentials"],
+    "enabled": true,
+    "client_id": "1c7743eb-b00b-438c-999e-3545e4e7c21c",
+    "client_name": "Voice Connector",
+    "client_secret": "on7sugsvom1otdsid272838jbm",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1762963838,
+    "scope": "msg.consumer",
+    "capabilities": {
+      "engagement": {
+        "design_engagement": false,
+        "design_window": false,
+        "entry_point": ["section"],
+        "visitor_behavior": [
+          "visited_location",
+          "time_on_location",
+          "flow",
+          "engaged_in_session",
+          "about_to_abandon",
+          "cart_value",
+          "cart_items",
+          "visitor_error",
+          "viewed_products",
+          "service_activity"
+        ],
+        "target_audience": [
+          "external_referral",
+          "search_keywords",
+          "ip",
+          "platform",
+          "geo_location",
+          "returning_visitors",
+          "marketing_source",
+          "customer_type",
+          "age",
+          "balance",
+          "customer_id",
+          "gender",
+          "store_zip_code",
+          "store_number",
+          "company_size",
+          "registration_date"
+        ],
+        "goal": [
+          "url",
+          "purchase_total",
+          "num_of_pages",
+          "lead",
+          "service_activity"
+        ],
+        "consumer_identity": ["auth"],
+        "language_selection": false
+      },
+      "webhooks": {
+        "ms.MessagingEventNotification.ContentEvent": {
+          "endpoint": "https://apac-sea1-01.p.voice.liveperson.net/voice-connector/v1/webhooks",
+          "max_retries": 5
+        },
+        "cqm.ExConversationChangeNotification": {
+          "endpoint": "https://apac-sea1-01.p.voice.liveperson.net/voice-connector/v1/webhooks",
+          "max_retries": 5
+        }
+      }
+    },
+    "is_internal": false
+  },
+  {
+    "id": "e71ce811-bd06-4f24-857b-02d0a73f7518",
+    "deleted": false,
+    "description": "Created advanced event identification and process management chains",
+    "display_name": "Conversation Simulator",
+    "redirect_uris": [
+      "http://localhost:3000/login",
+      "http://localhost:8080/login",
+      "http://localhost:8080/callback",
+      "https://lp-webhooks.ngrok.app/callback",
+      "http://localhost:3000/callback"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "e71ce811-bd06-4f24-857b-02d0a73f7518",
+    "client_name": "control_tower",
+    "client_secret": "qd51sr53panqjhbetalg3n8l7l",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1746085839,
+    "scope": "msg.consumer",
+    "capabilities": {
+      "webhooks": {
+        "ms.MessagingEventNotification.ContentEvent": {
+          "endpoint": "https://lp-api-server.ngrok.app/api/v1/webhooks/31487986/messaging-event",
+          "headers": []
+        },
+        "ms.MessagingEventNotification.RichContentEvent": {
+          "endpoint": "https://lp-api-server.ngrok.app/api/v1/webhooks/31487986/conversation-change",
+          "headers": []
+        },
+        "cqm.ExConversationChangeNotification": {
+          "endpoint": "https://lp-api-server.ngrok.app/api/v1/webhooks/31487986/conversation-change",
+          "headers": []
+        }
+      }
+    },
+    "logo_uri": "",
+    "quick_launch_enabled": true,
+    "enabled_for_profiles": [0, 1, 2, 3],
+    "is_internal": false
+  },
+  {
+    "id": "006c3514-fcb2-4a3a-9520-824de16d27fd",
+    "deleted": false,
+    "description": "Response Flow Integration",
+    "display_name": "ResponseFlow",
+    "redirect_uris": [
+      "http://localhost:3000/login",
+      "http://localhost:8080/login",
+      "http://localhost:8080/callback",
+      "https://response-flow.net/callback",
+      "https://response-flow.net"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "006c3514-fcb2-4a3a-9520-824de16d27fd",
+    "client_name": "response_flow",
+    "client_secret": "pd13i7c3t63ijbkabf7m4jjf8q",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1763170861,
+    "scope": "msg.consumer",
+    "capabilities": {
+      "webhooks": {
+        "ms.MessagingEventNotification.ContentEvent": {
+          "endpoint": "https://response-flow.net/api/v1/connector-api/82983311/messaging-event",
+          "headers": []
+        },
+        "ms.MessagingEventNotification.RichContentEvent": {
+          "endpoint": "https://response-flow.net/api/v1/connector-api/82983311/messaging-event",
+          "headers": []
+        },
+        "cqm.ExConversationChangeNotification": {
+          "endpoint": "https://response-flow.net/api/v1/connector-api/82983311/conversation-change",
+          "headers": []
+        }
+      }
+    },
+    "logo_uri": "",
+    "quick_launch_enabled": true,
+    "enabled_for_profiles": [0, 1, 2, 3],
+    "is_internal": false
+  },
+  {
+    "id": "f4b12158-bbcb-437d-9617-5b51c3b63e19",
+    "deleted": false,
+    "description": "orchestrator for simulated conversations",
+    "display_name": "Conversation Simulator",
+    "redirect_uris": [
+      "http://localhost:3000/login",
+      "http://localhost:8080/login",
+      "http://localhost:8080/callback",
+      "https://lp-webhooks.ngrok.app/callback",
+      "https://conversation-simulator-875995949580.australia-southeast1.run.app/callback",
+      "https://conversation-simulator-875995949580.us-central1.run.app/callback",
+      "https://conversation-simulator-875995949580.europe-central2.run.app/callback",
+      "http://localhost:3000/callback"
+    ],
+    "grant_types": [
+      "authorization_code",
+      "refresh_token",
+      "client_credentials"
+    ],
+    "enabled": true,
+    "client_id": "f4b12158-bbcb-437d-9617-5b51c3b63e19",
+    "client_name": "conversation_simulator",
+    "client_secret": "ljac5d84djeeobvg8tqnj1j55a",
+    "client_secret_expires_at": 0,
+    "client_id_issued_at": 1746085839,
+    "scope": "msg.consumer",
+    "capabilities": {
+      "webhooks": {
+        "ms.MessagingEventNotification.ContentEvent": {
+          "endpoint": "https://lp-simulation-api-875995949580.australia-southeast1.run.app/api/v1/connector-api/31487986/content-event/conv-sim",
+          "headers": []
+        },
+        "ms.MessagingEventNotification.RichContentEvent": {
+          "endpoint": "https://lp-simulation-api-875995949580.australia-southeast1.run.app/api/v1/connector-api/31487986/content-event/conv-sim",
+          "headers": []
+        },
+        "cqm.ExConversationChangeNotification": {
+          "endpoint": "https://lp-simulation-api-875995949580.australia-southeast1.run.app/api/v1/connector-api/31487986/state/conv-sim",
+          "headers": []
+        }
+      }
+    },
+    "logo_uri": "",
+    "quick_launch_enabled": true,
+    "enabled_for_profiles": [0, 1, 2, 3],
+    "is_internal": false
+  }
+]

@@ -1,0 +1,460 @@
+[
+  {
+    "id": 1400596570,
+    "name": "Entire site",
+    "description": "Default location, automatically created",
+    "isSystemDefault": true,
+    "systemDefault": true,
+    "conditionBoxTypes": [0]
+  },
+  {
+    "id": 1410373070,
+    "name": "Bunnings",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 4093270770,
+    "name": "Hutchgo Site",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1544843570,
+    "name": "KIWI super demo",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 4178765677,
+    "name": "CIC Site",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 4192966873,
+    "name": "FB Messaging",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4],
+    "appInstallationId": "3e789924-e257-44e5-baac-db340a619acb"
+  },
+  {
+    "id": 1432974770,
+    "name": "topics",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 4193031173,
+    "name": "WhatsApp Messaging",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4],
+    "appInstallationId": "b765f7f7-8609-4f79-a019-58706ceae13a"
+  },
+  {
+    "id": 1433854670,
+    "name": "Embedded Type-in",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 4330477179,
+    "name": "Hutchgo Agent",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1435736670,
+    "name": "anz-site-search-demo",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1455495270,
+    "name": "SENSITIVE SKILL",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1471176570,
+    "name": "eng=medibank-demo",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1475401170,
+    "name": "eng=testbot3",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1478820970,
+    "name": "eng=testbot-2",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1478895070,
+    "name": "eng=servian-demo",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1487708570,
+    "name": "eng=demo-builder-entry",
+    "description": "web entry point for Demo Builder Demo",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1487959770,
+    "name": "story (light)",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1400601070,
+    "name": "web-sales",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1495898270,
+    "name": "eng=integrity-systems-demo",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1409865870,
+    "name": "campaign=testBot",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1503921070,
+    "name": "page=accred",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1505945170,
+    "name": "authenticated",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1526348470,
+    "name": "eng=nandos",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1529509770,
+    "name": "type-in",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1529531070,
+    "name": "campaign=eng-button",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1489616470,
+    "name": "story -> cart",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1534294570,
+    "name": "campaign=sms",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1534329570,
+    "name": "demo-retail-type-in",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1542567270,
+    "name": "eng=testbot-4",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1565349370,
+    "name": "story [Fi-Serve]",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1571190970,
+    "name": "Honda",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1572161970,
+    "name": "Honda Civic",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1585226570,
+    "name": "story (API based Window)",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1593557570,
+    "name": "DemoBuilder V2",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1463070270,
+    "name": "eng=db-fsi",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1609944570,
+    "name": "rent",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1644695070,
+    "name": "Tealium Demo",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1715523670,
+    "name": "Telstra Demo",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1725564370,
+    "name": "Whitehorse",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1729605570,
+    "name": "Bank First - SN",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1730207070,
+    "name": "vic-roads",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1738838170,
+    "name": "Sky NZ",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1718052470,
+    "name": "cba-demo",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1830410370,
+    "name": "A&G presentation/31487986/",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1410022670,
+    "name": "Orca",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1924287570,
+    "name": "OUA",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 2944314070,
+    "name": "Razer",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 1489072770,
+    "name": "story",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 3588218870,
+    "name": "campaign=web-retail",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 3588613770,
+    "name": "campaign=guided-routing",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 3627762870,
+    "name": "unisuper",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 3729797970,
+    "name": "campaign=m1",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 3820606670,
+    "name": "https://storage.googleapis.com/lp-project-nexus-cc",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 3821312170,
+    "name": "tag: authenticated",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 3821312370,
+    "name": "tag:messaging",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  },
+  {
+    "id": 3945251870,
+    "name": "iWantTFC Site",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [4]
+  }
+]

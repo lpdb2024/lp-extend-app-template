@@ -1,0 +1,488 @@
+[
+  {
+    "id": "le.site.skill.selection.definition",
+    "type": 4,
+    "propertyValue": {
+      "value": {
+        "rules": [
+          {
+            "orderId": 2.0,
+            "description": "FB Channel - Public",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "721828394593589" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              },
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "FacebookPublic" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.ctype"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.51860207e9 }]
+          },
+          {
+            "orderId": 1.0,
+            "description": "FB Channel - Private",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "721828394593589" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              },
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "FacebookPrivate" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.ctype"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.51860207e9 }]
+          },
+          {
+            "orderId": 4.0,
+            "description": "DemoBuilderEntry",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "113466531684796" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              },
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "FacebookPublic" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.ctype"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.66317767e9 }]
+          },
+          {
+            "orderId": 5.0,
+            "description": "Default skill for Whatsapp ",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "61485866642" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 4.183284173e9 }]
+          },
+          {
+            "orderId": 6.0,
+            "description": "Default skill for SMS",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "+61485866642" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.53479257e9 }]
+          },
+          {
+            "orderId": 7.0,
+            "description": "Default skill for SMS",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "61485866642" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.53479257e9 }]
+          },
+          {
+            "orderId": 8.0,
+            "description": "APAC - Demo Builder",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": {
+                        "type": "equals",
+                        "value": "31487986_LivePerson"
+                      }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.48770807e9 }]
+          },
+          {
+            "orderId": 9.0,
+            "description": "Facebook default skill",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "105863834436343" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.53421487e9 }]
+          },
+          {
+            "orderId": 10.0,
+            "description": "APAC - Demo Builder (All GBM Entry Points)",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": {
+                        "type": "equals",
+                        "value": "ENTRY_POINT_UNSPECIFIED"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "PLACESHEET" }
+                    },
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "MAPS" }
+                    },
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "FEATURED_SNIPPETS" }
+                    },
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "SITELINKS" }
+                    },
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "WEB_WIDGET" }
+                    },
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "PHONE" }
+                    },
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "URL" }
+                    },
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "LOCAL_PACK" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.ctype"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.48770807e9 }]
+          },
+          {
+            "orderId": 11.0,
+            "description": "Honda FB Bot - Public",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "106703798890144" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              },
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "FacebookPublic" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.ctype"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.57081947e9 }]
+          },
+          {
+            "orderId": 12.0,
+            "description": "Honda FB Bot - Private",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "106703798890144" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              },
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "FacebookPrivate" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.ctype"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.57081947e9 }]
+          },
+          {
+            "orderId": 13.0,
+            "description": "Woolies X Human Skill",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "106190369072102" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.61150177e9 }]
+          },
+          {
+            "orderId": 14.0,
+            "description": "SMS-+19705512695",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "+19705512695" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.49595057e9 }]
+          },
+          {
+            "orderId": 15.0,
+            "description": "SMS-+61485866642",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "+61485866642" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.49595057e9 }]
+          },
+          {
+            "orderId": 16.0,
+            "description": "WhatsApp-61485866642",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "61485866642" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 4.183284173e9 }]
+          },
+          {
+            "orderId": 17.0,
+            "description": "EmailConnect-rogerstymes.2023@gmail.com",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": {
+                        "type": "equals",
+                        "value": "rogerstymes.2023@gmail.com"
+                      }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 3.73223187e9 }]
+          },
+          {
+            "orderId": 18.0,
+            "description": "EmailConnect-liveperson.demo.builder@gmail.com",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": {
+                        "type": "equals",
+                        "value": "liveperson.demo.builder@gmail.com"
+                      }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.55872937e9 }]
+          },
+          {
+            "orderId": 19.0,
+            "description": "WhatsApp-18555640842",
+            "conditions": [
+              {
+                "type": "sde",
+                "data": {
+                  "include": [
+                    {
+                      "type": "text",
+                      "data": { "type": "equals", "value": "18555640842" }
+                    }
+                  ]
+                },
+                "sdeType": "ctmrinfo",
+                "field": "info.companyBranch"
+              }
+            ],
+            "outcomes": [{ "type": "skill", "skillId": 1.93012237e9 }]
+          }
+        ]
+      }
+    },
+    "deleted": false
+  },
+  {
+    "id": "messaging.default.skill.id",
+    "type": 2,
+    "propertyValue": { "value": "-1" },
+    "deleted": false
+  }
+]

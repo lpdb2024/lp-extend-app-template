@@ -1,0 +1,271 @@
+[
+  {
+    "id": "1cb06a8f0218404db184c33a655f14f7",
+    "name": "test",
+    "orgId": "dc19d7b6-f114-4b3a-9852-84dfd063357a",
+    "variables": [
+      { "key": "fallback_skill", "value": "1400599670", "csdsWebhook": null },
+      { "key": "WM_Licensing", "value": "1400599670", "csdsWebhook": null },
+      { "key": "allowTransfers", "value": "true", "csdsWebhook": null }
+    ],
+    "created": 1646107599398,
+    "updated": 1649296585092,
+    "createdBy": "5303f94b92074a89b13b8c1c050d8e1a",
+    "updatedBy": "5303f94b92074a89b13b8c1c050d8e1a"
+  },
+  {
+    "id": "10065d3895774563ab26000a2c9497f4",
+    "name": "bot_flag",
+    "orgId": "dc19d7b6-f114-4b3a-9852-84dfd063357a",
+    "variables": [{ "key": "active", "value": "false", "csdsWebhook": null }],
+    "created": 1712114112603,
+    "updated": 1712114878559,
+    "createdBy": "5303f94b92074a89b13b8c1c050d8e1a",
+    "updatedBy": "5303f94b92074a89b13b8c1c050d8e1a"
+  },
+  {
+    "id": "03e1c8ba08534015b41b697f6dcd89c3",
+    "name": "AI_STUDIO",
+    "orgId": "dc19d7b6-f114-4b3a-9852-84dfd063357a",
+    "variables": [
+      { "key": "failoverErrorCodes", "value": "null", "csdsWebhook": null },
+      {
+        "key": "errorEmailAddress",
+        "value": "bstevenson@liveperson.com",
+        "csdsWebhook": null
+      },
+      {
+        "key": "contextDataNamespace",
+        "value": "ai_studio",
+        "csdsWebhook": null
+      }
+    ],
+    "created": 1715065309802,
+    "updated": 1715066280848,
+    "createdBy": "5303f94b92074a89b13b8c1c050d8e1a",
+    "updatedBy": "5303f94b92074a89b13b8c1c050d8e1a"
+  },
+  {
+    "id": "f3ab9956f5d14c50948b7db49712f6cd",
+    "name": "sensitive_topic_identification",
+    "orgId": "dc19d7b6-f114-4b3a-9852-84dfd063357a",
+    "variables": [
+      { "key": "tz", "value": "11", "csdsWebhook": null },
+      {
+        "key": "skills_banking",
+        "value": "1729539170, 729539370, 718055970, 718056470, 550940870, 550842570, 1550940870, 1718055970",
+        "csdsWebhook": null
+      },
+      {
+        "key": "serviceEmailNotEscalated2",
+        "value": "bstevenson@liveperson.com",
+        "csdsWebhook": null
+      },
+      {
+        "key": "serviceEmailNotEscalated",
+        "value": "bstevenson@liveperson.com",
+        "csdsWebhook": null
+      },
+      {
+        "key": "serviceEmail",
+        "value": "bstevenson@liveperson.com",
+        "csdsWebhook": null
+      },
+      {
+        "key": "safeSelfHarmEscalated",
+        "value": "bstevenson@liveperson.com",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pm_threat_to_self_harm",
+        "value": "Customer mentioned keywords indicating potential Self Harm. Conversation escalated by SENSITIVE_DETECTION bot to specialised team.",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pm_priority_assistance",
+        "value": "Customer mentioned keywords indicating potential Priority Assistance assistance required. Conversation hijacked by Vulnerable bot to specialised team.",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pm_financial_hardship",
+        "value": "**FINANCIAL HARDSHIP**<br/><br/> Customer has mentioned words/phrases indicating financial hardship, please follow process accordingly.",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pm_domestic_violence",
+        "value": "Customer mentioned keywords indicating potential Domestic Violence. Conversation hijacked by Vulnerable bot to specialised team.",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pm_customer_aggression",
+        "value": "Customer mentioned inappropriate language. Conversation hijacked by Vulnerable bot to specialised team.",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pm_bereavement",
+        "value": "Customer mentioned keywords indicating bereavement. Conversation hijacked by Vulnerable bot to specialised team.",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_threat_to_self_harm_exclusion",
+        "value": "(suicide squad|speed is killing me|slow internet is killing me|i cut myself by accident)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_threat_to_self_harm",
+        "value": "(kill myself|I want to die|overdose|overdosing|going to be dead| end my life| end myself|end my self|hang myself|call lifeline|suicide|suicidal|self harm|breaking point|neck myself|cut myself|hurt myself| draw blood| with a blade| knife |bleeding everywhere|bleeding every where|bleed to death|bleed out|bleed all over|killing myself|cliff and jump|take my own life)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_priority_assistance",
+        "value": "(priority assistance|priority assist|priority assisted customer)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_priority_assist_alerts",
+        "value": "(working telephone service|without access|stroke|signed by a registered medical practitioner|returned within 28 days|registered priority|priority with connection|prioritised connection|pacemaker|offers priority customers|medi alert|may be at risk|priority assist|heart condition|diagnosed|(hurt (.){3}self)|event of an emergency|fault repair service|(life(.)?threatening)|(move (bundle|home(.)?phone|landline))|(home(.)?phone restored urgently)|(home(.)?phone is vital)|(medical (alert|cond|emergenc|prob|reason)))",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_guardianship_carer",
+        "value": "(nursing home|power of attorney|carer|guardian|guardianship)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_fraud",
+        "value": "(streaming emails and social media|actually i'm looking for a new phone|no overseas plans|send it on my email|fraud victim|victim of fraud|Hello can you help me to getting a new mobile service on my account|I am looking for a new mobile with the plan|watching movies making calls|i want upgrade my number|i want new plan with new device|i use internet for entertainment purpose|for searching browsing watching movies)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_financial_hardship",
+        "value": "(payment program|payment programs|payment assistance|debt management|debt assistance|financial assistance|financial help|help with debts|help with debt|finanical incapacity|cannot pay|unable to pay|cannot make payment|payment arrangement|unable to make payment|bankrupt|bankrupcy|hardship|credit management|\\blost\\b.*\\b(job|work|employment|career)\\b|jobless|unemployed|hard time paying bills|no money|struggling to pay)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_domestic_violence_exclusion",
+        "value": "(dvd|dve|dva)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_domestic_violence",
+        "value": "( dv|domestic abuse|physical abuse|verbal abuse|physically abusing|verbally abusing|physically abused|verbally abused|stab me|stabbed|stabbing|assault|assaulting|assualted|mental abuse|mentally abused|mentally abusing|domestic violence| domestic violent |physical violence|verbal violence|mental violence|physically violent|verbally violent|mentally violent| DVO | DV |safehouse|safe house| FVO |abuser|emotional abuse|emotionally abused|emotionally abusing|abusive relationship|family violence)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_customer_aggression",
+        "value": "(dickhead|bitch|you are dumb|you are an idiot|moron|hang yourself|slut|fuck you|for fuck sake| you cunt|you shit|this is shit|this is bullshit|you’re fucked|bash you|you are stupid|this is crap|you dog|you retard|go kill yourself|hunt you down|you cunt|you’re stupid|you’re a dog|you are a dog|you are retarded|you’re retarded|you’re dumb|you’re an idiot|fuck off|you are fucked|you’re a cunt|your fucked|your an idiot|fuck heads|fuckheads|fuck all of you| cunt |foreign mutt|fucking filth|filthy mutts|indian mutt| mutts |fucking mutts| go hurt yourself| go cut yourself)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_complaints",
+        "value": "(accc|dissatisfied|extremely unhappy|fair trading|lawyer|media|ombudsman|(\\s)+tio|^tio)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_communication_challenged",
+        "value": "(english not very good|english second language|english 2nd language|do not understand english|don't understand english|english is poor|translator|english is bad|bad english|english no good)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_cognitive_impairment_02",
+        "value": "(drug addict|drug addiction|additcted to drugs|anxiety disorder|mental illness|alcoholic|schizophrenia|schizophrenic|autism|bipolar|bipolar disorder|dyslexia|dyslexic|neuro diverse|spectrum disorder|on the spectrum|manic depressive|manic depression|major depressive|major depression|borderline personality|border line personality|post traumatic stress|PTSD|panic disorder|addiction|substance abuse|mental disorder|learning disability|learning disabilities|clinical depression|mental health|not mentally ok|mental help|mentally unwell|mental hospital|psychological support|mentally ill|mhealth issues|clinically depressed)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_cognitive_impairment_01",
+        "value": "(brain injury|alzheimer|alzheimers|intellectual disability|intellectual disabilities|intellectually disabled|dementia|decision making impairment|decision making impaired|processing deficient|processing deficiency|mental disability|mentally disabled|mental capacity)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_bereavement_exclusion",
+        "value": "(phone has died|phone is dead|internet has died|internet is dead|modem died|modem is dead)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "pattern_bereavement",
+        "value": "(estate of |passed away|bereavement|account owner is dead|account owner died|deceased)",
+        "csdsWebhook": null
+      },
+      {
+        "key": "intent_threat_to_self_harm",
+        "value": "true",
+        "csdsWebhook": null
+      },
+      {
+        "key": "intent_guardianship_carer",
+        "value": "false",
+        "csdsWebhook": null
+      },
+      { "key": "intent_fraud", "value": "false", "csdsWebhook": null },
+      {
+        "key": "intent_financial_hardship",
+        "value": "true",
+        "csdsWebhook": null
+      },
+      {
+        "key": "intent_domestic_violence",
+        "value": "false",
+        "csdsWebhook": null
+      },
+      {
+        "key": "intent_customer_aggression",
+        "value": "false",
+        "csdsWebhook": null
+      },
+      { "key": "intent_complaints", "value": "true", "csdsWebhook": null },
+      {
+        "key": "intent_communication_challenged",
+        "value": "false",
+        "csdsWebhook": null
+      },
+      {
+        "key": "intent_cognitive_impairment_02",
+        "value": "false",
+        "csdsWebhook": null
+      },
+      {
+        "key": "intent_cognitive_impairment_01",
+        "value": "false",
+        "csdsWebhook": null
+      },
+      { "key": "intent_bereavement", "value": "false", "csdsWebhook": null },
+      {
+        "key": "intentPriority",
+        "value": "threat_to_self_harm,domestic_violence,customer_aggression,priority_assistance,cognitive_impairment_01,cognitive_impairment_02,communication_challenged,financial_hardship,guardianship_carer,bereavement,fraud",
+        "csdsWebhook": null
+      },
+      { "key": "group_banking", "value": "true", "csdsWebhook": null },
+      {
+        "key": "financialHardshipEscalated",
+        "value": "bstevenson@liveperson.com",
+        "csdsWebhook": null
+      },
+      { "key": "emailMultiple", "value": "true", "csdsWebhook": null },
+      {
+        "key": "blacklist",
+        "value": "1565946670,1565945870",
+        "csdsWebhook": null
+      },
+      {
+        "key": "banking_escalation",
+        "value": "1774169570",
+        "csdsWebhook": null
+      },
+      {
+        "key": "bankingSkillOnlineStart",
+        "value": "00:00",
+        "csdsWebhook": null
+      },
+      { "key": "bankingSkillOnlineFor", "value": "23:59", "csdsWebhook": null },
+      {
+        "key": "bankingEmail",
+        "value": "bstevenson@liveperson.com",
+        "csdsWebhook": null
+      }
+    ],
+    "created": 1703035611134,
+    "updated": 1712114036955,
+    "createdBy": "5303f94b92074a89b13b8c1c050d8e1a",
+    "updatedBy": "5303f94b92074a89b13b8c1c050d8e1a"
+  }
+]

@@ -1,0 +1,1758 @@
+{
+  "id": 1487706770,
+  "accountId": "31487986",
+  "createdDate": "2022-03-30 03:36:09",
+  "modifiedDate": "2022-03-30 03:46:54",
+  "visitorProfiles": [1400596270],
+  "engagementCollectionRevision": 611,
+  "engagements": [
+    {
+      "deleted": false,
+      "id": 1487708670,
+      "name": "demo-builder-entry",
+      "description": "",
+      "modifiedDate": "2022-09-25 20:53:59",
+      "createdDate": "2022-03-30 03:46:39",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1489072770],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div data-LP-event=\"click\" class=\"fc jc-c db-btn standard h100 w100\">\n<img class=\"m-a\" style=\"height: 32px; width: 32px;\"\n      src=\"https://lpcdn.lpsnmedia.net/gallery/preview/chat/t2_c9_sn11_th4_s5_asset.png\" alt=\"\">\n</div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div></div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div></div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1489075770,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [1487708170],
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1489569270,
+      "name": "Remove product from cart",
+      "description": "",
+      "modifiedDate": "2022-04-05 01:37:06",
+      "createdDate": "2022-04-04 22:55:57",
+      "channel": 1,
+      "type": 1,
+      "onsiteLocations": [1489616470],
+      "visitorBehaviors": [1489569970],
+      "enabled": true,
+      "language": "en-US",
+      "position": { "left": 0, "top": 0, "type": 5 },
+      "effects": { "useLightBox": true, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div>\n\n  <div class=\"remove-product invite\" >\n\n    <div class=\"invite-reason\" style=\"display: flex; flex-direction: row; justify-content: center;\">\nWe're here to help!\n    </div>\n\n  <div class=\"invite-description\" style=\"display: flex; flex-direction: row; justify-content: center;\">\n     Need help with a product, our expert staff on here to assist!\n  </div>\n<div class=\"banner-image-container\">\n  <img class=\"banner-image\" src=\"https://theuncaringcarer.co.uk/wp-content/uploads/2021/03/confused-shopper.png\" />\n</div>\n\n\n  <div style=\"display: flex; flex-direction: row; justify-content: space-between;\">\n\n      <div class=\"invite-button cancel\" data-LP-event=\"close\" >no thanks</div>\n\n      <button class=\"invite-button accept\"    data-LP-event=\"click\" >message us!</button>\n\n  </div>\n\n  </div>\n\n</div>\n"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 9,
+      "followMeTime": 0,
+      "windowId": 1489075770,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [],
+      "subType": 5,
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1489610870,
+      "name": "high value sale",
+      "description": "",
+      "modifiedDate": "2022-04-05 02:20:08",
+      "createdDate": "2022-04-05 01:19:16",
+      "channel": 1,
+      "type": 1,
+      "onsiteLocations": [1489616470],
+      "visitorBehaviors": [1489611170],
+      "enabled": true,
+      "language": "en-US",
+      "position": { "left": 0, "top": 0, "type": 5 },
+      "effects": { "useLightBox": true, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div>\n\n  <div class=\"remove-product invite\" >\n\n    <div class=\"invite-reason\" style=\"display: flex; flex-direction: row; justify-content: center;\">\nHey big spender!\n    </div>\n\n  <div class=\"invite-description\" style=\"display: flex; flex-direction: row; justify-content: center;\">\nYou have some heavy duty goods in your cart - we're here to help make sure your order goes smoothly\n  </div>\n<div class=\"banner-image-container\">\n  <img class=\"banner-image\" src=\"https://paintestimating.com/wp-content/uploads/2018/06/happy-customers.png\" />\n</div>\n\n\n  <div style=\"display: flex; flex-direction: row; justify-content: space-between;\">\n\n      <div class=\"invite-button cancel\" data-LP-event=\"close\" >no thanks</div>\n\n      <button class=\"invite-button accept\"    data-LP-event=\"click\" >message us!</button>\n\n  </div>\n\n  </div>\n\n</div>\n"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 9,
+      "followMeTime": 0,
+      "windowId": 1489075770,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [],
+      "subType": 5,
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1505945270,
+      "name": "Authenticated",
+      "description": "",
+      "modifiedDate": "2022-10-09 23:51:33",
+      "createdDate": "2022-05-09 19:06:34",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1505945170],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div data-LP-event=\"click\" class=\"fc jc-c db-btn standard h100 w100\">\n<img class=\"m-a\" style=\"height: 32px; width: 32px;\"\n      src=\"https://lpcdn.lpsnmedia.net/gallery/preview/chat/t2_c9_sn11_th4_s5_asset.png\" alt=\"\">\n</div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div></div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div></div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1489075770,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": false,
+      "zones": [1505944970],
+      "source": 0,
+      "connectorId": 1505943770,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1534347070,
+      "name": "type-in-proxy",
+      "description": "",
+      "modifiedDate": "2022-07-31 21:21:37",
+      "createdDate": "2022-07-07 02:39:38",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1489072770],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div\ndata-LP-event=\"click\"\nid=\"lp-engagement-typein-sticky-mounting-point\"\n\n\n\ndata-stay-minimized=\"false\"\ndata-verticalPosition=\"0\"\n\ndata-type-family=\"Roboto, Arial, sans-serif\"\ndata-engagement-min-height=\"229px\"\ndata-engagement-max-height=\"236px\"\n\ndata-chat-bubble-width=\"80px\"\ndata-chat-bubble-height=\"80px\"\ndata-chat-bubble-border-radius=\"39px 10px 39px 39px\"\nbubblecolor=\"#009cff\"\n\ndata-x-icon-vertical=\"-27px\"\ndata-x-icon-horizontal=\"4px\"\n\ndata-greeting-bubble-background-color=\"#FFFFFF\"\ndata-greeting-bubble-max-height=\"148px\"\ndata-greeting-bubble-border-radius=\"24px 24px 10px 24px\"\ndata-greeting-bubble-vertical-margin=\"8px\"\ndata-greeting-bubble-padding=\"22px 20px 23px 20px\"\ndata-greeting=\"Hi! How can I help you today? \\n\"\n\ndata-hand-width=\"32px\"\ndata-hand-height=\"32px\"\n\ndata-message-container-width=\"278px\"\ndata-message-container-height=\"50px\"\ndata-message-line-color=\"#000000\"\ndata-message-line-size=\"16px\"\ndata-message-line-weight=\"normal\"\n\ndata-typein-container-width=\"280px\"\ndata-typein-container-height=\"51px\"\ndata-typein-container-border=\"solid 1px #dcdcdc\"\ndata-typein-container-background-color=\"#ededed\"\ndata-typein-container-margin=\"0 0 0 0\"\n\ndata-typein-message=\"Write your message\"\ndata-typein-message-color=\"#000000\"\ndata-typein-message-size=\"16px\"\ndata-typein-message-weight=\"normal\"\ndata-typein-message-container-width=\"280px\"\ndata-typein-message-container-height=\"51px\"\ndata-typein-plane-horizontal=\"25px\"\ndata-typein-plane-vertical=\"35px\">\n</div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div></div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div></div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1489081170,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [1534346970],
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1556198970,
+      "name": "type-in-proxy (Auth)",
+      "description": "",
+      "modifiedDate": "2022-08-29 20:01:03",
+      "createdDate": "2022-08-29 20:00:53",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1489072770],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div\ndata-LP-event=\"click\"\nid=\"lp-engagement-typein-sticky-mounting-point\"\n\n\n\ndata-stay-minimized=\"false\"\ndata-verticalPosition=\"0\"\n\ndata-type-family=\"Roboto, Arial, sans-serif\"\ndata-engagement-min-height=\"229px\"\ndata-engagement-max-height=\"236px\"\n\ndata-chat-bubble-width=\"80px\"\ndata-chat-bubble-height=\"80px\"\ndata-chat-bubble-border-radius=\"39px 10px 39px 39px\"\nbubblecolor=\"#009cff\"\n\ndata-x-icon-vertical=\"-27px\"\ndata-x-icon-horizontal=\"4px\"\n\ndata-greeting-bubble-background-color=\"#FFFFFF\"\ndata-greeting-bubble-max-height=\"148px\"\ndata-greeting-bubble-border-radius=\"24px 24px 10px 24px\"\ndata-greeting-bubble-vertical-margin=\"8px\"\ndata-greeting-bubble-padding=\"22px 20px 23px 20px\"\ndata-greeting=\"Hi! How can I help you today? \\n\"\n\ndata-hand-width=\"32px\"\ndata-hand-height=\"32px\"\n\ndata-message-container-width=\"278px\"\ndata-message-container-height=\"50px\"\ndata-message-line-color=\"#000000\"\ndata-message-line-size=\"16px\"\ndata-message-line-weight=\"normal\"\n\ndata-typein-container-width=\"280px\"\ndata-typein-container-height=\"51px\"\ndata-typein-container-border=\"solid 1px #dcdcdc\"\ndata-typein-container-background-color=\"#ededed\"\ndata-typein-container-margin=\"0 0 0 0\"\n\ndata-typein-message=\"Write your message\"\ndata-typein-message-color=\"#000000\"\ndata-typein-message-size=\"16px\"\ndata-typein-message-weight=\"normal\"\ndata-typein-message-container-width=\"280px\"\ndata-typein-message-container-height=\"51px\"\ndata-typein-plane-horizontal=\"25px\"\ndata-typein-plane-vertical=\"35px\">\n</div>"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1489081170,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": false,
+      "zones": [1534346970],
+      "source": 0,
+      "connectorId": 1505943770,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1561847170,
+      "name": "demo-builder-entry (fi-serve)",
+      "description": "",
+      "modifiedDate": "2023-02-25 20:09:56",
+      "createdDate": "2022-09-11 22:18:14",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1565349370],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div data-LP-event=\"click\" class=\"fc jc-c db-btn standard h100 w100\">\n<img class=\"m-a\" style=\"height: 32px; width: 32px;\"\n      src=\"https://lpcdn.lpsnmedia.net/gallery/preview/chat/t2_c9_sn11_th4_s5_asset.png\" alt=\"\">\n</div>"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1561869870,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [1569686270],
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1562153070,
+      "name": "demo-builder-entry-auth (fi-serve)",
+      "description": "",
+      "modifiedDate": "2023-02-17 01:04:18",
+      "createdDate": "2022-09-12 17:52:48",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1505945170],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div data-LP-event=\"click\" class=\"fc jc-c db-btn standard h100 w100\">\n<img class=\"m-a\" style=\"height: 32px; width: 32px;\"\n      src=\"https://lpcdn.lpsnmedia.net/gallery/preview/chat/t2_c9_sn11_th4_s5_asset.png\" alt=\"\">\n</div>"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1561869870,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": false,
+      "zones": [1573301170],
+      "source": 0,
+      "connectorId": 1505943770,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1569546670,
+      "name": "demo-builder-entry (health-insurance)",
+      "description": "",
+      "modifiedDate": "2022-11-23 21:02:09",
+      "createdDate": "2022-10-02 18:26:48",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1489072770],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div data-LP-event=\"click\" class=\"fc jc-c db-btn standard h100 w100\">\n<img class=\"m-a\" style=\"height: 32px; width: 32px;\"\n      src=\"https://lpcdn.lpsnmedia.net/gallery/preview/chat/t2_c9_sn11_th4_s5_asset.png\" alt=\"\">\n</div>"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1569546770,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [1569686170],
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1570488770,
+      "name": "demo-builder-entry (education)",
+      "description": "",
+      "modifiedDate": "2022-10-05 01:01:32",
+      "createdDate": "2022-10-05 00:19:32",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1489072770],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div data-LP-event=\"click\" class=\"fc jc-c db-btn standard h100 w100\">\n<img class=\"m-a\" style=\"height: 32px; width: 32px;\"\n      src=\"https://lpcdn.lpsnmedia.net/gallery/preview/chat/t2_c9_sn11_th4_s5_asset.png\" alt=\"\">\n</div>"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1570488970,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [1570505170],
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1573302370,
+      "name": "demo-builder-entry (QSR)",
+      "description": "",
+      "modifiedDate": "2022-10-10 20:09:30",
+      "createdDate": "2022-10-10 20:09:24",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1489072770],
+      "visitorBehaviors": [1400596470],
+      "enabled": false,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div data-LP-event=\"click\" class=\"fc jc-c db-btn standard h100 w100\">\n<img class=\"m-a\" style=\"height: 32px; width: 32px;\"\n      src=\"https://lpcdn.lpsnmedia.net/gallery/preview/chat/t2_c9_sn11_th4_s5_asset.png\" alt=\"\">\n</div>"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1570488970,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [1570505170],
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1573728170,
+      "name": "demo-builder-entry (retail)",
+      "description": "",
+      "modifiedDate": "2025-06-24 22:39:57",
+      "createdDate": "2022-10-11 19:29:34",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [3588218870],
+      "visitorBehaviors": [1400596470],
+      "enabled": false,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div data-LP-event=\"click\" class=\"fc jc-c db-btn standard h100 w100\">\n<img class=\"m-a\" style=\"height: 32px; width: 32px;\"\n      src=\"https://lpcdn.lpsnmedia.net/gallery/preview/chat/t2_c9_sn11_th4_s5_asset.png\" alt=\"\">\n</div>"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1573728370,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [1573728270],
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1573740970,
+      "name": "demo-builder-entry-auth (retail)",
+      "description": "",
+      "modifiedDate": "2022-10-11 20:21:54",
+      "createdDate": "2022-10-11 20:21:28",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1505945170],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div data-LP-event=\"click\" class=\"fc jc-c db-btn standard h100 w100\">\n<img class=\"m-a\" style=\"height: 32px; width: 32px;\"\n      src=\"https://lpcdn.lpsnmedia.net/gallery/preview/chat/t2_c9_sn11_th4_s5_asset.png\" alt=\"\">\n</div>"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1573728370,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": false,
+      "zones": [1573741070],
+      "source": 0,
+      "connectorId": 1505943770,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1574538670,
+      "name": "demo-builder-entry (telco)",
+      "description": "",
+      "modifiedDate": "2025-06-24 22:34:28",
+      "createdDate": "2022-10-12 20:53:29",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [3588218870],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div data-LP-event=\"click\" class=\"fc jc-c db-btn standard h100 w100\">\n<img class=\"m-a\" style=\"height: 32px; width: 32px;\"\n      src=\"https://lpcdn.lpsnmedia.net/gallery/preview/chat/t2_c9_sn11_th4_s5_asset.png\" alt=\"\">\n</div>"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1489075770,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [1574538770],
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 1585226370,
+      "name": "demo-builder-entry-API-window",
+      "description": "",
+      "modifiedDate": "2022-11-09 21:27:59",
+      "createdDate": "2022-11-09 21:27:16",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1585226570],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div data-LP-event=\"click\" class=\"fc jc-c db-btn standard h100 w100\">\n<img class=\"m-a\" style=\"height: 32px; width: 32px;\"\n      src=\"https://lpcdn.lpsnmedia.net/gallery/preview/chat/t2_c9_sn11_th4_s5_asset.png\" alt=\"\">\n</div>"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1487708070,
+      "skillName": "demo-builder-entry",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1489075770,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [1487708170],
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 3588226270,
+      "name": "db-web-retail",
+      "description": "",
+      "modifiedDate": "2025-06-24 22:39:51",
+      "createdDate": "2025-06-24 22:39:38",
+      "channel": 1,
+      "type": 6,
+      "onsiteLocations": [3588218870],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "position": { "left": 0, "top": 0, "type": 6 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "background": { "color": "#0363AD", "image": "" },
+            "border": { "radius": 30, "width": 0, "color": "transparent" },
+            "size": { "width": "40", "height": "152" },
+            "elements": {
+              "images": [
+                {
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": "",
+                  "css": { "left": 8, "top": 113, "zIndex": 600 }
+                }
+              ],
+              "labels": [
+                {
+                  "text": "Message us",
+                  "css": {
+                    "color": "#ffffff",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "left": -23,
+                    "top": 53,
+                    "transform": "rotate(270deg)",
+                    "white-space": "nowrap",
+                    "zIndex": 601
+                  }
+                }
+              ]
+            }
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "background": { "color": "#0363AD", "image": "" },
+            "border": { "radius": 30, "width": 0, "color": "transparent" },
+            "size": { "width": "40", "height": "152" },
+            "elements": {
+              "images": [
+                {
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": "",
+                  "css": { "left": 8, "top": 113, "zIndex": 600 }
+                }
+              ],
+              "labels": [
+                {
+                  "text": "db-web-retail",
+                  "css": {
+                    "color": "#ffffff",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "left": -23,
+                    "top": 53,
+                    "transform": "rotate(270deg)",
+                    "white-space": "nowrap",
+                    "zIndex": 601
+                  }
+                }
+              ]
+            }
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "background": { "color": "#0363AD", "image": "" },
+            "border": { "radius": 30, "width": 0, "color": "transparent" },
+            "size": { "width": "40", "height": "152" },
+            "elements": {
+              "images": [
+                {
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": "",
+                  "css": { "left": 8, "top": 113, "zIndex": 600 }
+                }
+              ],
+              "labels": [
+                {
+                  "text": "Message us",
+                  "css": {
+                    "color": "#ffffff",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "left": -23,
+                    "top": 53,
+                    "transform": "rotate(270deg)",
+                    "white-space": "nowrap",
+                    "zIndex": 601
+                  }
+                }
+              ]
+            }
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": true
+        }
+      ],
+      "skillId": 1518602070,
+      "skillName": "db-retail-web",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1715523570,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [],
+      "subType": 24,
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 0,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 3588611270,
+      "name": "db-routing",
+      "description": "",
+      "modifiedDate": "2025-06-25 00:14:07",
+      "createdDate": "2025-06-25 00:13:04",
+      "channel": 1,
+      "type": 6,
+      "onsiteLocations": [3588613770],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "position": { "left": 0, "top": 0, "type": 6 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "border": { "color": "transparent", "width": 0, "radius": 30 },
+            "size": { "width": "40", "height": "152" },
+            "background": { "image": "", "color": "#0363AD" },
+            "elements": {
+              "images": [
+                {
+                  "css": { "top": 113, "left": 8, "zIndex": 600 },
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": ""
+                }
+              ],
+              "labels": [
+                {
+                  "css": {
+                    "transform": "rotate(270deg)",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "color": "#ffffff",
+                    "top": 53,
+                    "left": -23,
+                    "white-space": "nowrap",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "zIndex": 601
+                  },
+                  "text": "Message us"
+                }
+              ]
+            }
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "border": { "color": "transparent", "width": 0, "radius": 30 },
+            "size": { "width": "40", "height": "152" },
+            "background": { "image": "", "color": "#0363AD" },
+            "elements": {
+              "images": [
+                {
+                  "css": { "top": 113, "left": 8, "zIndex": 600 },
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": ""
+                }
+              ],
+              "labels": [
+                {
+                  "css": {
+                    "transform": "rotate(270deg)",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "color": "#ffffff",
+                    "top": 50,
+                    "left": -31,
+                    "white-space": "nowrap",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "zIndex": 601
+                  },
+                  "text": "guided-routing"
+                }
+              ]
+            }
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "border": { "color": "transparent", "width": 0, "radius": 30 },
+            "size": { "width": "40", "height": "152" },
+            "background": { "image": "", "color": "#0363AD" },
+            "elements": {
+              "images": [
+                {
+                  "css": { "top": 113, "left": 8, "zIndex": 600 },
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": ""
+                }
+              ],
+              "labels": [
+                {
+                  "css": {
+                    "transform": "rotate(270deg)",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "color": "#ffffff",
+                    "top": 53,
+                    "left": -23,
+                    "white-space": "nowrap",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "zIndex": 601
+                  },
+                  "text": "Message us"
+                }
+              ]
+            }
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": true
+        }
+      ],
+      "skillId": 1930122370,
+      "skillName": "guided-routing",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 1715523570,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [],
+      "subType": 24,
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 0,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 3820606770,
+      "name": "AuthLPTAGSDK",
+      "description": "",
+      "modifiedDate": "2025-08-21 02:22:09",
+      "createdDate": "2025-08-07 19:58:56",
+      "channel": 1,
+      "type": 6,
+      "onsiteLocations": [3821312370],
+      "visitorBehaviors": [1400596470],
+      "enabled": false,
+      "language": "en-US",
+      "position": { "left": 0, "top": 0, "type": 9 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "background": { "color": "#0363AD", "image": "" },
+            "border": { "radius": 30, "width": 0, "color": "transparent" },
+            "size": { "width": "40", "height": "152" },
+            "elements": {
+              "images": [
+                {
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": "",
+                  "css": { "left": 8, "top": 113, "zIndex": 600 }
+                }
+              ],
+              "labels": [
+                {
+                  "text": "Message us",
+                  "css": {
+                    "color": "#ffffff",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "left": -23,
+                    "top": 53,
+                    "transform": "rotate(270deg)",
+                    "white-space": "nowrap",
+                    "zIndex": 601
+                  }
+                }
+              ]
+            },
+            "margin": {
+              "top": "auto",
+              "right": "1.5%",
+              "bottom": "1.5%",
+              "left": "auto"
+            },
+            "floating_engagement": true
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "background": {
+              "color": "#000000",
+              "image": "url({galleryBasePath}/libraries/chat/images/styles/sticky_stripes_light_grad_l.png)"
+            },
+            "border": { "radius": 30, "width": 0, "color": "#ffffff" },
+            "size": { "width": "180", "height": "40" },
+            "elements": {
+              "images": [
+                {
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": "",
+                  "css": { "left": 9, "top": 6, "zIndex": 600 }
+                }
+              ],
+              "labels": [
+                {
+                  "text": "messaging",
+                  "css": {
+                    "color": "#ffffff",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "left": 53,
+                    "top": 11,
+                    "transform": "rotate(0deg)",
+                    "white-space": "normal",
+                    "zIndex": 601
+                  }
+                }
+              ]
+            },
+            "margin": {
+              "top": "auto",
+              "right": "1.5%",
+              "bottom": "1.5%",
+              "left": "auto"
+            },
+            "floating_engagement": true
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "background": { "color": "#0363AD", "image": "" },
+            "border": { "radius": 30, "width": 0, "color": "transparent" },
+            "size": { "width": "40", "height": "152" },
+            "elements": {
+              "images": [
+                {
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": "",
+                  "css": { "left": 8, "top": 113, "zIndex": 600 }
+                }
+              ],
+              "labels": [
+                {
+                  "text": "Message us",
+                  "css": {
+                    "color": "#ffffff",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "left": -23,
+                    "top": 53,
+                    "transform": "rotate(270deg)",
+                    "white-space": "nowrap",
+                    "zIndex": 601
+                  }
+                }
+              ]
+            },
+            "margin": {
+              "top": "auto",
+              "right": "1.5%",
+              "bottom": "1.5%",
+              "left": "auto"
+            },
+            "floating_engagement": true
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": true
+        }
+      ],
+      "skillId": 1518602070,
+      "skillName": "db-retail-web",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 3729796570,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [],
+      "subType": 27,
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 0,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 3821311870,
+      "name": "AuthLPTAGSDK[1]_AUTH",
+      "description": "",
+      "modifiedDate": "2025-08-21 03:05:13",
+      "createdDate": "2025-08-07 23:06:20",
+      "channel": 1,
+      "type": 6,
+      "onsiteLocations": [3821312170],
+      "visitorBehaviors": [1400596470],
+      "enabled": false,
+      "language": "en-US",
+      "position": { "left": 0, "top": 0, "type": 9 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "border": { "color": "transparent", "width": 0, "radius": 30 },
+            "margin": {
+              "top": "auto",
+              "left": "auto",
+              "bottom": "1.5%",
+              "right": "1.5%"
+            },
+            "size": { "width": "40", "height": "152" },
+            "background": { "image": "", "color": "#0363AD" },
+            "elements": {
+              "images": [
+                {
+                  "css": { "top": 113, "left": 8, "zIndex": 600 },
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": ""
+                }
+              ],
+              "labels": [
+                {
+                  "css": {
+                    "transform": "rotate(270deg)",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "color": "#ffffff",
+                    "top": 53,
+                    "left": -23,
+                    "white-space": "nowrap",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "zIndex": 601
+                  },
+                  "text": "Message us"
+                }
+              ]
+            },
+            "floating_engagement": true
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "border": { "color": "#ffffff", "width": 0, "radius": 30 },
+            "margin": {
+              "top": "auto",
+              "left": "auto",
+              "bottom": "1.5%",
+              "right": "1.5%"
+            },
+            "size": { "width": "180", "height": "40" },
+            "background": {
+              "image": "url({galleryBasePath}/libraries/chat/images/styles/sticky_stripes_light_grad_l.png)",
+              "color": "#000000"
+            },
+            "elements": {
+              "images": [
+                {
+                  "css": { "top": 8, "left": 9, "zIndex": 600 },
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": ""
+                }
+              ],
+              "labels": [
+                {
+                  "css": {
+                    "transform": "rotate(0deg)",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "color": "#ffffff",
+                    "top": 11,
+                    "left": 42,
+                    "white-space": "normal",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "zIndex": 601
+                  },
+                  "text": "Auth messaging"
+                }
+              ]
+            },
+            "floating_engagement": true
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "border": { "color": "transparent", "width": 0, "radius": 30 },
+            "margin": {
+              "top": "auto",
+              "left": "auto",
+              "bottom": "1.5%",
+              "right": "1.5%"
+            },
+            "size": { "width": "40", "height": "152" },
+            "background": { "image": "", "color": "#0363AD" },
+            "elements": {
+              "images": [
+                {
+                  "css": { "top": 113, "left": 8, "zIndex": 600 },
+                  "imageUrl": "{galleryBasePath}/preview/chat/t2_c9_sn11_th4_s4_asset.png",
+                  "alt": ""
+                }
+              ],
+              "labels": [
+                {
+                  "css": {
+                    "transform": "rotate(270deg)",
+                    "fontFamily": "Arial,Helvetica,sans-serif",
+                    "color": "#ffffff",
+                    "top": 53,
+                    "left": -23,
+                    "white-space": "nowrap",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                    "zIndex": 601
+                  },
+                  "text": "Message us"
+                }
+              ]
+            },
+            "floating_engagement": true
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": true
+        }
+      ],
+      "skillId": 1518602070,
+      "skillName": "db-retail-web",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 3729796570,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": false,
+      "zones": [],
+      "subType": 27,
+      "source": 0,
+      "connectorId": 1505943770,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 0,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 3889642070,
+      "name": "LPAuthTag_Embedded",
+      "description": "",
+      "modifiedDate": "2025-09-18 20:24:41",
+      "createdDate": "2025-08-21 02:21:37",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [1400596570],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div class=\"lp-btn fc pointer\"\n    style=\"\n    position: absolute;\n    bottom: 20px;\n    right: 20px;\n    padding: 3px;\n    background-color: #ffb648;\n    background-image: linear-gradient(175deg,#ffb648,#ff5d5d);\n    box-shadow: 0 20px 50px 0 rgba(0,0,0,.1);\n    z-index: 10;\n    border-radius: 40px;\n    \"\n    data-lp-event=\"click\"\n    >\n      <div\n      style=\"\n      padding: 5px 15px 5px 15px;\n      background: #ffffff;\n      border-radius: 40px;\n      \"\n      class=\"fr\"\n      >\n        <span class=\"material-symbols-outlined\" style=\"margin-right: 5px;\">\n          forum\n        </span>\n        <div class=\"fc jc-c\">\n          <span class=\"mt-a mb-a\">\n            message us\n          </span>\n        </div>\n      </div>\n    </div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div></div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "html": "<div></div>",
+            "margin": {},
+            "floating_engagement": false
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1574133570,
+      "skillName": "db-telco-bot",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 3729796570,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": true,
+      "zones": [3889641970],
+      "source": 0,
+      "connectorId": 1400597870,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    },
+    {
+      "deleted": false,
+      "id": 3889793870,
+      "name": "LPAuthTag_Embedded[1]",
+      "description": "",
+      "modifiedDate": "2025-09-18 20:24:33",
+      "createdDate": "2025-08-21 03:04:52",
+      "channel": 1,
+      "type": 5,
+      "onsiteLocations": [3821312170],
+      "visitorBehaviors": [1400596470],
+      "enabled": true,
+      "language": "en-US",
+      "effects": { "useLightBox": false, "secondsToCollapseAfter": 0 },
+      "displayInstances": [
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div class=\"lp-btn fc pointer\"\n    style=\"\n    position: absolute;\n    bottom: 20px;\n    right: 20px;\n    padding: 3px;\n    background-color: #ffb648;\n    background-image: linear-gradient(175deg,#ffb648,#ff5d5d);\n    box-shadow: 0 20px 50px 0 rgba(0,0,0,.1);\n    z-index: 10;\n    border-radius: 40px;\n    \"\n    data-lp-event=\"click\"\n    >\n      <div\n      style=\"\n      padding: 5px 15px 5px 15px;\n      background: #ffffff;\n      border-radius: 40px;\n      \"\n      class=\"fr\"\n      >\n        <span class=\"material-symbols-outlined\" style=\"margin-right: 5px;\">\n          forum\n        </span>\n        <div class=\"fc jc-c\">\n          <span class=\"mt-a mb-a\">\n            message us\n          </span>\n        </div>\n      </div>\n    </div>"
+          },
+          "macros": [],
+          "displayInstanceType": 1,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 2,
+          "enabled": true
+        },
+        {
+          "events": { "click": { "enabled": true, "target": "_blank" } },
+          "presentation": {
+            "margin": {},
+            "floating_engagement": false,
+            "html": "<div></div>"
+          },
+          "macros": [],
+          "displayInstanceType": 4,
+          "enabled": false
+        }
+      ],
+      "skillId": 1574133570,
+      "skillName": "db-telco-bot",
+      "timeInQueue": 0,
+      "followMePages": 1,
+      "followMeTime": 0,
+      "windowId": 3729796570,
+      "isPopOut": false,
+      "isUnifiedWindow": true,
+      "useSystemRouting": false,
+      "allowUnauthMsg": false,
+      "zones": [3889641970],
+      "source": 0,
+      "connectorId": 1505943770,
+      "availabilityPolicy": 0,
+      "availabilityPolicyForMessaging": 1,
+      "renderingType": 1,
+      "conversationType": 1
+    }
+  ],
+  "name": "demo-builder",
+  "description": "auto-created demos from demo-builder app",
+  "startDate": "2022-03-30 00:00:00",
+  "startDateTimeZoneOffset": -14400000,
+  "startTimeInMinutes": -1945536,
+  "goalId": 1400596370,
+  "status": 1,
+  "controlGroup": { "percentage": 0.0 },
+  "isDeleted": false,
+  "deleted": false,
+  "weight": 0.2,
+  "priority": 0.5,
+  "engagementIds": [
+    1487708670, 1489569270, 1489610870, 1505945270, 1534347070, 1556198970,
+    1561847170, 1562153070, 1569546670, 1570488770, 1573302370, 1573728170,
+    1573740970, 1574538670, 1585226370, 3588226270, 3588611270, 3820606770,
+    3821311870, 3889642070, 3889793870
+  ],
+  "timeZone": "America/New_York",
+  "timeZoneOffset": -18000000,
+  "type": 0
+}

@@ -1,0 +1,21 @@
+{
+  "numOfExposedViews": 0,
+  "numOfEligibleVisits": 0,
+  "numOfEngagements": 0,
+  "numOfInteractiveChats": 0,
+  "numOfClicks": 0,
+  "revenueData": {
+    "multiCurrenciesInPeriod": false,
+    "value": 0.0,
+    "incrementalValue": 0.0,
+    "incrementalRatio": 0.0,
+    "incrementalPvalueDescription": "NOT_ENOUGH_INFORMATION"
+  },
+  "conversionData": {
+    "value": 0,
+    "incrementalValue": 0,
+    "incrementalRatio": 0.0,
+    "incrementalPvalueDescription": "NOT_ENOUGH_INFORMATION"
+  },
+  "controlGroupSetForEntirePeriod": true
+}

@@ -1,0 +1,1049 @@
+{
+  "baseURIs": [
+    {
+      "service": "leIntegration",
+      "account": "31487986",
+      "baseURI": "sy.octopus.liveperson.net"
+    },
+    {
+      "service": "lpvoiceConfigurationService",
+      "account": "31487986",
+      "baseURI": "apac-sea1-01.p.voice.liveperson.net"
+    },
+    {
+      "service": "smt",
+      "account": "31487986",
+      "baseURI": "ause1.v.liveperson.net"
+    },
+    {
+      "service": "lineConnector",
+      "account": "31487986",
+      "baseURI": "sy.line-gw.liveperson.net"
+    },
+    {
+      "service": "appleConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://lp-connector2apple-app.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "ccs",
+      "account": "31487986",
+      "baseURI": "ause1.ccs.liveperson.net"
+    },
+    {
+      "service": "leCdnDomain",
+      "account": "31487986",
+      "baseURI": "lpcdn.lpsnmedia.net"
+    },
+    {
+      "service": "nlp",
+      "account": "31487986",
+      "baseURI": "sy.nlp.liveperson.net"
+    },
+    {
+      "service": "cbBotService",
+      "account": "31487986",
+      "baseURI": "ause1.cbbotengine.liveperson.net"
+    },
+    {
+      "service": "loggos",
+      "account": "31487986",
+      "baseURI": "ause1.loggos.liveperson.net"
+    },
+    {
+      "service": "rtbf",
+      "account": "31487986",
+      "baseURI": "ause1.data-mng.liveperson.net"
+    },
+    {
+      "service": "aIConnector",
+      "account": "31487986",
+      "baseURI": "bot-console.stg.fs.liveperson.com"
+    },
+    {
+      "service": "leBilling",
+      "account": "31487986",
+      "baseURI": "sy.le-billing.liveperson.net"
+    },
+    {
+      "service": "googleRcsConnector",
+      "account": "31487986",
+      "baseURI": "sy.grcs-gw.liveperson.net"
+    },
+    {
+      "service": "twitterConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://lp-connector2twitter.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "whatsappConnector",
+      "account": "31487986",
+      "baseURI": "sy.whatsapp-gw.liveperson.net"
+    },
+    {
+      "service": "googleRcsConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://lp-connector2grcs-app.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "outboundConfiguration",
+      "account": "31487986",
+      "baseURI": "ause1.handoff.liveperson.net"
+    },
+    {
+      "service": "botAnalyticsBrandsApi",
+      "account": "31487986",
+      "baseURI": "ause1.cbanalyticsbrandsapi.liveperson.net"
+    },
+    {
+      "service": "troutNvxModel",
+      "account": "31487986",
+      "baseURI": "https://lp-gai-tgi.australia-southeast1.prod.int.gw.lpcloud.io/v1/ray/nvx/api/v1.0/predictions"
+    },
+    {
+      "service": "acCdnDomainMobileSdk",
+      "account": "31487986",
+      "baseURI": "accdn.lpsnmedia.net"
+    },
+    {
+      "service": "predictiveDialer",
+      "account": "31487986",
+      "baseURI": "ause1.pd.liveperson.net"
+    },
+    {
+      "service": "routingBot",
+      "account": "31487986",
+      "baseURI": "sy.routingbot.ext.liveperson.net"
+    },
+    {
+      "service": "authenticationServiceDomain",
+      "account": "31487986",
+      "baseURI": "auth-z3.liveperson.net"
+    },
+    {
+      "service": "shiftstatus",
+      "account": "31487986",
+      "baseURI": "ause1.shiftstatus.liveperson.net"
+    },
+    {
+      "service": "leBiMstr",
+      "account": "31487986",
+      "baseURI": "z3.bi.liveperson.net"
+    },
+    {
+      "service": "encryptionMgmtExtDomain",
+      "account": "31487986",
+      "baseURI": "ause1.encryptionmgmt.liveperson.net"
+    },
+    {
+      "service": "faasUI",
+      "account": "31487986",
+      "baseURI": "sy.faasui.liveperson.net"
+    },
+    {
+      "service": "kakaotalkConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://msg-gw-kakaotalk.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "rtDashboard",
+      "account": "31487986",
+      "baseURI": "sy.realtime.liveperson.net"
+    },
+    {
+      "service": "appMgmtSvcDomain",
+      "account": "31487986",
+      "baseURI": "ause1.appmgmtsvc.liveperson.net"
+    },
+    {
+      "service": "liveEngageUI",
+      "account": "31487986",
+      "baseURI": "sy.le1.liveperson.net"
+    },
+    {
+      "service": "accountInfo",
+      "account": "31487986",
+      "baseURI": "accountinfo.au.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "predictiveDialerInternal",
+      "account": "31487986",
+      "baseURI": "pdapi.au.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "cbLeIntegrations",
+      "account": "31487986",
+      "baseURI": "ause1.cbleintegrations.liveperson.net"
+    },
+    {
+      "service": "openPlatform",
+      "account": "31487986",
+      "baseURI": "server.sy.liveperson.net"
+    },
+    {
+      "service": "cbAnalytics",
+      "account": "31487986",
+      "baseURI": "ause1.cbanalytics.liveperson.net"
+    },
+    {
+      "service": "cbIbc",
+      "account": "31487986",
+      "baseURI": "ause1.cbnluibc.liveperson.net"
+    },
+    {
+      "service": "uconnDomain",
+      "account": "31487986",
+      "baseURI": "sy-ges-uconn.liveperson.net"
+    },
+    {
+      "service": "cxReportingEtl",
+      "account": "31487986",
+      "baseURI": "ause1.cx-reporting-etl.liveperson.net"
+    },
+    {
+      "service": "cbQualityMetrics",
+      "account": "31487986",
+      "baseURI": "ause1.cbqualitymetrics.liveperson.net"
+    },
+    {
+      "service": "coreAIFeedback",
+      "account": "31487986",
+      "baseURI": "ause1.aifeedback.liveperson.net"
+    },
+    {
+      "service": "leadGenerator",
+      "account": "31487986",
+      "baseURI": "leadgenerator.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "secureformconfig",
+      "account": "31487986",
+      "baseURI": "ause1.secureformconfig.liveperson.net"
+    },
+    {
+      "service": "coda",
+      "account": "31487986",
+      "baseURI": "ause1.coda.liveperson.net"
+    },
+    {
+      "service": "subscription",
+      "account": "31487986",
+      "baseURI": "ause1.providersubscription.liveperson.net"
+    },
+    {
+      "service": "pusherInt",
+      "account": "31487986",
+      "baseURI": "pusher.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "lpEng",
+      "account": "31487986",
+      "baseURI": "z3.lpEng.liveperson.net"
+    },
+    {
+      "service": "pusher",
+      "account": "31487986",
+      "baseURI": "ause1.pusher.liveperson.net"
+    },
+    {
+      "service": "cbKb",
+      "account": "31487986",
+      "baseURI": "ause1.cbknowledge.liveperson.net"
+    },
+    {
+      "service": "cbExternalIntegrations",
+      "account": "31487986",
+      "baseURI": "ause1.cbextintegration.liveperson.net"
+    },
+    {
+      "service": "darecommender",
+      "account": "31487986",
+      "baseURI": "darecommender.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "askMaven",
+      "account": "31487986",
+      "baseURI": "ause1.askmaven.liveperson.net"
+    },
+    {
+      "service": "otelDomainConsumerSdk",
+      "account": "31487986",
+      "baseURI": "empty.liveperson.net"
+    },
+    {
+      "service": "mtlsGateway",
+      "account": "31487986",
+      "baseURI": "ause1.mtls.liveperson.net"
+    },
+    {
+      "service": "transporter",
+      "account": "31487986",
+      "baseURI": "ause1.transporter.liveperson.net"
+    },
+    {
+      "service": "botAuthMigration",
+      "account": "31487986",
+      "baseURI": "botauthmigration.au.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "staticContent",
+      "account": "31487986",
+      "baseURI": "sy.content.lpsnmedia.net"
+    },
+    {
+      "service": "kakaotalkConnector",
+      "account": "31487986",
+      "baseURI": "sy.kakaotalk-gw.liveperson.net"
+    },
+    {
+      "service": "rollover",
+      "account": "31487986",
+      "baseURI": "ause1.lp-rollover.liveperson.net"
+    },
+    {
+      "service": "auditTrail",
+      "account": "31487986",
+      "baseURI": "ause1.audit-trail.int.liveperson.net"
+    },
+    {
+      "service": "coreAIFeedbackChuteDomain",
+      "account": "31487986",
+      "baseURI": "aifeedback-app.au.prod.int.gw.lpcloud.io/"
+    },
+    {
+      "service": "socialOperationsDomain",
+      "account": "31487986",
+      "baseURI": "socialoperations.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "cbAiSearch",
+      "account": "31487986",
+      "baseURI": "cbkaisearch.au.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "instagramConnector",
+      "account": "31487986",
+      "baseURI": "sy.lp-connector2instagram.liveperson.net"
+    },
+    {
+      "service": "cbMacsAnalytics",
+      "account": "31487986",
+      "baseURI": "ause1.cbleanalytics.liveperson.net"
+    },
+    {
+      "service": "agentVep",
+      "account": "31487986",
+      "baseURI": "ause1.agentvep.liveperson.net"
+    },
+    {
+      "service": "fms",
+      "account": "31487986",
+      "baseURI": "ause1.fms.liveperson.net"
+    },
+    {
+      "service": "acCdnDomain",
+      "account": "31487986",
+      "baseURI": "accdn.lpsnmedia.net"
+    },
+    {
+      "service": "aiStudioFlowService",
+      "account": "31487986",
+      "baseURI": "ause1.langchain.liveperson.net"
+    },
+    {
+      "service": "accountCreation",
+      "account": "31487986",
+      "baseURI": "ause1.acc-create.liveperson.net"
+    },
+    {
+      "service": "instagramConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://lp-connector2instagram-app.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "cbNluFacade",
+      "account": "31487986",
+      "baseURI": "ause1.cbnlufacade.liveperson.net"
+    },
+    {
+      "service": "adminArea",
+      "account": "31487986",
+      "baseURI": "server.sy.liveperson.net"
+    },
+    {
+      "service": "facadeMsg",
+      "account": "31487986",
+      "baseURI": "ause1.facade-msg.liveperson.net"
+    },
+    {
+      "service": "cbPcsManager",
+      "account": "31487986",
+      "baseURI": "cbcsm-app.au.prod.int.gw.lpcloud.io/lp-cb-cms"
+    },
+    {
+      "service": "batchelor",
+      "account": "31487986",
+      "baseURI": "ause1.batchelor.liveperson.net"
+    },
+    {
+      "service": "coreAIUserjoin",
+      "account": "31487986",
+      "baseURI": "userjoin-app.au.prod.int.gw.lpcloud.io/"
+    },
+    {
+      "service": "ihubCrmwExplorer",
+      "account": "31487986",
+      "baseURI": "ause1.ihubcrmwexplorer.liveperson.net"
+    },
+    {
+      "service": "intentAnalyzer",
+      "account": "31487986",
+      "baseURI": "ause1.intent.liveperson.net"
+    },
+    {
+      "service": "appKeyManagement",
+      "account": "31487986",
+      "baseURI": "ause1.appkey-mgmnt.liveperson.net"
+    },
+    {
+      "service": "accountConfigReadWrite",
+      "account": "31487986",
+      "baseURI": "ause1.ac.liveperson.net"
+    },
+    {
+      "service": "wechatConnector",
+      "account": "31487986",
+      "baseURI": "sy.wechat-gw.liveperson.net"
+    },
+    {
+      "service": "troutUsicModel",
+      "account": "31487986",
+      "baseURI": "https://lp-gai-tgi.australia-southeast1.prod.int.gw.lpcloud.io/v1/ray/usic/api/v1.0/predictions"
+    },
+    {
+      "service": "conversationVep",
+      "account": "31487986",
+      "baseURI": "sy.c.liveperson.net"
+    },
+    {
+      "service": "lpvoiceAudioFilesRepositoryService",
+      "account": "31487986",
+      "baseURI": "apac-sea1-01.p.voice.liveperson.net"
+    },
+    {
+      "service": "proactiveOnboarder",
+      "account": "31487986",
+      "baseURI": "ause1.proactive-onboarder.liveperson.net"
+    },
+    {
+      "service": "liveEngage",
+      "account": "31487986",
+      "baseURI": "ause1.le.liveperson.net"
+    },
+    {
+      "service": "cbWebPlatform",
+      "account": "31487986",
+      "baseURI": "ause1.cbplatformui.liveperson.net"
+    },
+    {
+      "service": "proactivecp",
+      "account": "31487986",
+      "baseURI": "ause1.proactivecp.liveperson.net"
+    },
+    {
+      "service": "msdkgw",
+      "account": "31487986",
+      "baseURI": "ause1.v.liveperson.net"
+    },
+    {
+      "service": "liveEngageVep",
+      "account": "31487986",
+      "baseURI": "ause1.batchelor.liveperson.net"
+    },
+    {
+      "service": "cbLlmGatewayInt",
+      "account": "31487986",
+      "baseURI": "cbllmgateway-app.au.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "usmsConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "http://lp-usmsgw-app.plteng-connectors:8080"
+    },
+    {
+      "service": "appleConnector",
+      "account": "31487986",
+      "baseURI": "sy.apple-gw.liveperson.net"
+    },
+    {
+      "service": "orchestrator",
+      "account": "31487986",
+      "baseURI": "orchestrator.au.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "cbMonitoring",
+      "account": "31487986",
+      "baseURI": "ause1.cbcmanager.liveperson.net"
+    },
+    {
+      "service": "facebookConnector",
+      "account": "31487986",
+      "baseURI": "sy.facebook-gw.liveperson.net"
+    },
+    {
+      "service": "twitterConnector",
+      "account": "31487986",
+      "baseURI": "sy.lp-connector2twitter.liveperson.net"
+    },
+    {
+      "service": "act",
+      "account": "31487986",
+      "baseURI": "sy.act.liveperson.net"
+    },
+    {
+      "service": "leProxyDomain",
+      "account": "31487986",
+      "baseURI": "sy.leproxy.liveperson.net"
+    },
+    {
+      "service": "coreAIAutomation",
+      "account": "31487986",
+      "baseURI": "ause1.automationlookup.liveperson.net"
+    },
+    {
+      "service": "cbKaiClassification",
+      "account": "31487986",
+      "baseURI": "cbkaiclass-app.au.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "usmsgwDomain",
+      "account": "31487986",
+      "baseURI": "sy-ges-usmsgw.liveperson.net"
+    },
+    {
+      "service": "promptlibrary",
+      "account": "31487986",
+      "baseURI": "ause1.promptlibrary.liveperson.net"
+    },
+    {
+      "service": "mobileChat",
+      "account": "31487986",
+      "baseURI": "dispatch.look.io"
+    },
+    {
+      "service": "cbBotPlatform",
+      "account": "31487986",
+      "baseURI": "ause1.cbplatformmanager.liveperson.net"
+    },
+    {
+      "service": "troutEncoderModel",
+      "account": "31487986",
+      "baseURI": "https://sy.seldon-core-ambassador.int.liveperson.net/seldon/lp-encoder-mdl/api/v1.0/predictions"
+    },
+    {
+      "service": "cbChatService",
+      "account": "31487986",
+      "baseURI": "ause1.cbchatservice.liveperson.net"
+    },
+    {
+      "service": "csdsDomain",
+      "account": "31487986",
+      "baseURI": "ause1.csds.liveperson.net"
+    },
+    {
+      "service": "thirdPartyBots",
+      "account": "31487986",
+      "baseURI": "bot-platform-api.apac.fs.liveperson.com"
+    },
+    {
+      "service": "coBrowse",
+      "account": "31487986",
+      "baseURI": "ause1.cobrowse.liveperson.net"
+    },
+    {
+      "service": "troutEncoder2Model",
+      "account": "31487986",
+      "baseURI": "https://lp-gai-tgi.australia-southeast1.prod.int.gw.lpcloud.io/v1/ray/encoder2/api/v1.0/predictions"
+    },
+    {
+      "service": "provisionGW",
+      "account": "31487986",
+      "baseURI": "register.liveperson.com"
+    },
+    {
+      "service": "coreAIIntent",
+      "account": "31487986",
+      "baseURI": "ause1.intentid.liveperson.net"
+    },
+    {
+      "service": "pbconfig",
+      "account": "31487986",
+      "baseURI": "ause1.daconfig.liveperson.net"
+    },
+    {
+      "service": "socialMsgDomain",
+      "account": "31487986",
+      "baseURI": "ause1.facade-msg.liveperson.net"
+    },
+    {
+      "service": "cbLlmGatewayExt",
+      "account": "31487986",
+      "baseURI": "ause1.cbllmgateway.liveperson.net"
+    },
+    {
+      "service": "botConnectorsDomain",
+      "account": "31487986",
+      "baseURI": "z3.bot-connectors.liveperson.net"
+    },
+    {
+      "service": "mavenContext",
+      "account": "31487986",
+      "baseURI": "ause1.context.liveperson.net"
+    },
+    {
+      "service": "redirect",
+      "account": "31487986",
+      "baseURI": "ause1.liveper.sn"
+    },
+    {
+      "service": "ihubCrmwData",
+      "account": "31487986",
+      "baseURI": "ause1.ihubcrmwdata.liveperson.net"
+    },
+    {
+      "service": "mcfeature",
+      "account": "31487986",
+      "baseURI": "ause1.mcfeature.liveperson.net"
+    },
+    {
+      "service": "tokenizer",
+      "account": "31487986",
+      "baseURI": "ause1.tokenizer.liveperson.net"
+    },
+    {
+      "service": "facebookConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://lp-connector2facebook-app.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "auditLog",
+      "account": "31487986",
+      "baseURI": "ause1.auditlog.liveperson.net"
+    },
+    {
+      "service": "messageRoutingServiceDomain",
+      "account": "31487986",
+      "baseURI": "ause1.messageroutingservice.liveperson.net"
+    },
+    {
+      "service": "wechatConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://msg-gw-wechat.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "runtimeFormLogic",
+      "account": "31487986",
+      "baseURI": "ause1.rfl.liveperson.net"
+    },
+    {
+      "service": "cxReporting",
+      "account": "31487986",
+      "baseURI": "ause1.cx-reporting.liveperson.net"
+    },
+    {
+      "service": "agentActivityDomain",
+      "account": "31487986",
+      "baseURI": "ause1.agentactivity.liveperson.net"
+    },
+    {
+      "service": "orchestratorext",
+      "account": "31487986",
+      "baseURI": "ause1.orchestratorext.liveperson.net"
+    },
+    {
+      "service": "cbShortenedUrl",
+      "account": "31487986",
+      "baseURI": "ause1.cbextintegration.liveperson.net/r"
+    },
+    {
+      "service": "lineConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://msg-gw-line.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "accountConfigReadOnly",
+      "account": "31487986",
+      "baseURI": "ause1.acr.liveperson.net"
+    },
+    {
+      "service": "msgHist",
+      "account": "31487986",
+      "baseURI": "ause1.msghist.liveperson.net"
+    },
+    {
+      "service": "launchpadDomain",
+      "account": "31487986",
+      "baseURI": "hub.liveperson.net"
+    },
+    {
+      "service": "agentManagerWorkspace",
+      "account": "31487986",
+      "baseURI": "ause1.agentmngworkspace.liveperson.net"
+    },
+    {
+      "service": "marketplaceDomain",
+      "account": "31487986",
+      "baseURI": "sy.marketplace.liveperson.net"
+    },
+    {
+      "service": "logingateway",
+      "account": "31487986",
+      "baseURI": "ause1.logingateway.liveperson.net"
+    },
+    {
+      "service": "cqmMsg",
+      "account": "31487986",
+      "baseURI": "sy.cqm-msg.liveperson.net"
+    },
+    {
+      "service": "entityTrack",
+      "account": "31487986",
+      "baseURI": "entitytrack-app.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "keyService",
+      "account": "31487986",
+      "baseURI": "ause1.keyservice.liveperson.net"
+    },
+    {
+      "service": "googleConnector",
+      "account": "31487986",
+      "baseURI": "sy.ggl-gw.liveperson.net"
+    },
+    {
+      "service": "engHistDomain",
+      "account": "31487986",
+      "baseURI": "ause1.enghistory.liveperson.net"
+    },
+    {
+      "service": "visitManager",
+      "account": "31487986",
+      "baseURI": "ause1.vm.liveperson.net"
+    },
+    {
+      "service": "ihubWorkatoIntegration",
+      "account": "31487986",
+      "baseURI": "ause1.workato.liveperson.net"
+    },
+    {
+      "service": "cbNerModel",
+      "account": "31487986",
+      "baseURI": "https://lp-gai-tgi.australia-southeast1.prod.int.gw.lpcloud.io/v1/ray/cbner/api/v1.0/predictions"
+    },
+    {
+      "service": "leBackofficeInt",
+      "account": "31487986",
+      "baseURI": "houston.au.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "messagingRestApiDomain",
+      "account": "31487986",
+      "baseURI": "ause1.msg.liveperson.net"
+    },
+    {
+      "service": "viberConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://lp-connector2viber-app.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "acCdnDomainConsumerSdk",
+      "account": "31487986",
+      "baseURI": "accdn.lpsnmedia.net"
+    },
+    {
+      "service": "idp",
+      "account": "31487986",
+      "baseURI": "ause1.idp.liveperson.net"
+    },
+    {
+      "service": "whatsappConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://whatsapp-gw.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "maps",
+      "account": "31487986",
+      "baseURI": "ause1.lp-marketplacemgmt.liveperson.net"
+    },
+    {
+      "service": "mcs",
+      "account": "31487986",
+      "baseURI": "mcs.liveperson.net"
+    },
+    {
+      "service": "ootb",
+      "account": "31487986",
+      "baseURI": "ause1.ootbapi.liveperson.net"
+    },
+    {
+      "service": "mlInference",
+      "account": "31487986",
+      "baseURI": "lp-gai-tgi.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "uconnConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "http://lp-uconn-app.plteng-connectors:8080"
+    },
+    {
+      "service": "customerSDE",
+      "account": "31487986",
+      "baseURI": "ause1.customersde.liveperson.net"
+    },
+    {
+      "service": "coreAIFeedbackOnlyDomain",
+      "account": "31487986",
+      "baseURI": "aifeedback-app.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "agentSmartAssist",
+      "account": "31487986",
+      "baseURI": "ause1.agentsmartassist.liveperson.net"
+    },
+    {
+      "service": "oauthclientmgr",
+      "account": "31487986",
+      "baseURI": "ause1.oauthclientmgr.liveperson.net"
+    },
+    {
+      "service": "encryptionMgmtDomain",
+      "account": "31487986",
+      "baseURI": "ause1.encryptionmgmt.liveperson.net"
+    },
+    {
+      "service": "emailConnector",
+      "account": "31487986",
+      "baseURI": "sy.lp-connector2email.liveperson.net"
+    },
+    {
+      "service": "smsConnector",
+      "account": "31487986",
+      "baseURI": "sy.msg-gw.liveperson.net"
+    },
+    {
+      "service": "pbsignalprocessor",
+      "account": "31487986",
+      "baseURI": "ause1.signalprocessor.liveperson.net"
+    },
+    {
+      "service": "ihubCrmwConfig",
+      "account": "31487986",
+      "baseURI": "ause1.ihubcrmwconfig.liveperson.net"
+    },
+    {
+      "service": "coreAIMavenHubDomain",
+      "account": "31487986",
+      "baseURI": "ause1.mavenhub.liveperson.net"
+    },
+    {
+      "service": "routingMsg",
+      "account": "31487986",
+      "baseURI": "agentmatchingservice-1.au.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "troutPiiModel",
+      "account": "31487986",
+      "baseURI": "https://lp-gai-tgi.australia-southeast1.prod.int.gw.lpcloud.io/v1/ray/pii/api/v1.0/predictions"
+    },
+    {
+      "service": "lpvoiceCallDetailRecordService",
+      "account": "31487986",
+      "baseURI": "apac-sea1-01.p.voice.liveperson.net"
+    },
+    {
+      "service": "smsConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://msg-gw.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "cbNluDomain",
+      "account": "31487986",
+      "baseURI": "ause1.cbnluv1.liveperson.net"
+    },
+    {
+      "service": "connectToMessagingDomain",
+      "account": "31487986",
+      "baseURI": "ause1.connect-to-messaging.liveperson.net"
+    },
+    {
+      "service": "msgEwtAPI",
+      "account": "31487986",
+      "baseURI": "sy.lp-msgewt.liveperson.net"
+    },
+    {
+      "service": "emailConnectorMultiCloud",
+      "account": "31487986",
+      "baseURI": "https://lp-connector2email-app.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "dataaccess",
+      "account": "31487986",
+      "baseURI": "ause1.da.liveperson.net"
+    },
+    {
+      "service": "eventManager",
+      "account": "31487986",
+      "baseURI": "ause1.event-manager.liveperson.net"
+    },
+    {
+      "service": "leDataReporting",
+      "account": "31487986",
+      "baseURI": "ause1.data.liveperson.net"
+    },
+    {
+      "service": "aiSummarization",
+      "account": "31487986",
+      "baseURI": "ause1.ai-summarization.liveperson.net"
+    },
+    {
+      "service": "leRBMstr",
+      "account": "31487986",
+      "baseURI": "z3.bi.liveperson.net"
+    },
+    {
+      "service": "socialMsgHistDomain",
+      "account": "31487986",
+      "baseURI": "ause1.smmsghistproxy.liveperson.net"
+    },
+    {
+      "service": "analyticsStudio",
+      "account": "31487986",
+      "baseURI": "ause1.ea.liveperson.net"
+    },
+    {
+      "service": "visitorFeed",
+      "account": "31487986",
+      "baseURI": "ause1.visitorsfeed.liveperson.net"
+    },
+    {
+      "service": "visitorFeedV2",
+      "account": "31487986",
+      "baseURI": "z3.visitorfeedv2.liveperson.net"
+    },
+    {
+      "service": "predictiveIntelligentTargeting",
+      "account": "31487986",
+      "baseURI": "ptscoring.au.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "asyncMessagingEnt",
+      "account": "31487986",
+      "baseURI": "ause1.msg.liveperson.net"
+    },
+    {
+      "service": "viberConnector",
+      "account": "31487986",
+      "baseURI": "sy.viber-gw.liveperson.net"
+    },
+    {
+      "service": "faasGW",
+      "account": "31487986",
+      "baseURI": "sy.faasgw.liveperson.net"
+    },
+    {
+      "service": "aiStudioPlatformService",
+      "account": "31487986",
+      "baseURI": "aistudio-p-au.liveperson.net"
+    },
+    {
+      "service": "agent",
+      "account": "31487986",
+      "baseURI": "server.sy.liveperson.net"
+    },
+    {
+      "service": "pciCompliance",
+      "account": "31487986",
+      "baseURI": "ause1.pcicompliance.liveperson.net"
+    },
+    {
+      "service": "connectionPanel",
+      "account": "31487986",
+      "baseURI": "ause1.connection-panel.liveperson.net"
+    },
+    {
+      "service": "ihubMedalliaAdaptor",
+      "account": "31487986",
+      "baseURI": "ause1.medalliaadaptor.liveperson.net"
+    },
+    {
+      "service": "pbcbbotengine",
+      "account": "31487986",
+      "baseURI": "cbbotengine-app-conv-orchestration.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "bellaInsights",
+      "account": "31487986",
+      "baseURI": "ause1.conversationinsights.liveperson.net"
+    },
+    {
+      "service": "sentinel",
+      "account": "31487986",
+      "baseURI": "ause1.sentinel.liveperson.net"
+    },
+    {
+      "service": "3pcOutboundApp",
+      "account": "31487986",
+      "baseURI": "lp-3pcoutbound-app.australia-southeast1.prod.int.gw.lpcloud.io"
+    },
+    {
+      "service": "mTag",
+      "account": "31487986",
+      "baseURI": "server.sy.liveperson.net"
+    },
+    {
+      "service": "asyncMessaging",
+      "account": "31487986",
+      "baseURI": "ause1.msg.liveperson.net"
+    },
+    {
+      "service": "mobileVisit",
+      "account": "31487986",
+      "baseURI": "dispatch.look.io"
+    },
+    {
+      "service": "etool",
+      "account": "31487986",
+      "baseURI": "z3.etool.liveperson.net"
+    },
+    {
+      "service": "connectorsConfig",
+      "account": "31487986",
+      "baseURI": "ause1.connectorscfg.liveperson.net"
+    },
+    {
+      "service": "coApp",
+      "account": "31487986",
+      "baseURI": "z3.coapp.liveperson.net"
+    },
+    {
+      "service": "ihubShell",
+      "account": "31487986",
+      "baseURI": "ause1.ihubshell.liveperson.net"
+    },
+    {
+      "service": "odinDomain",
+      "account": "31487986",
+      "baseURI": "ause1.odin.liveperson.net"
+    },
+    {
+      "service": "swift",
+      "account": "31487986",
+      "baseURI": "z3.objectstorage.liveperson.net"
+    },
+    {
+      "service": "seldon",
+      "account": "31487986",
+      "baseURI": "sy.seldon-core-ambassador.int.liveperson.net"
+    }
+  ]
+}

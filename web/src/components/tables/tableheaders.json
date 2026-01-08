@@ -1,0 +1,791 @@
+{
+  "skills": [
+    {
+      "name": "id",
+      "label": "skill id",
+      "align": "left",
+      "field": "id",
+      "sortable": true,
+      "classes": "word-wrap",
+      "style": "max-width: 200px;"
+    },
+    {
+      "name": "name",
+      "label": "name",
+      "align": "left",
+      "field": "name",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "description",
+      "label": "description",
+      "align": "left",
+      "field": "description",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "canTransfer",
+      "label": "canTransfer",
+      "align": "left",
+      "field": "canTransfer",
+      "classes": "word-wrap",
+      "style": "max-width: 100px;"
+    },
+    {
+      "name": "maxWaitTime",
+      "label": "maxWaitTime",
+      "align": "left",
+      "field": "maxWaitTime",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "deleted",
+      "label": "deleted",
+      "align": "left",
+      "field": "deleted"
+    },
+    {
+      "name": "fallbackWhenAllAgentsAreAway",
+      "label": "fallbackWhenAllAgentsAreAway",
+      "align": "left",
+      "field": "fallbackWhenAllAgentsAreAway",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "workingHoursId",
+      "label": "workingHoursId",
+      "align": "left",
+      "field": "workingHoursId",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "lobIds",
+      "label": "Lines of Business",
+      "align": "left",
+      "field": "lobIds",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "skillOrder",
+      "label": "skillOrder",
+      "align": "left",
+      "field": "skillOrder",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "fallbackSkill",
+      "label": "fallbackSkill",
+      "align": "left",
+      "field": "fallbackSkill",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "skillTransferList",
+      "label": "skillTransferList",
+      "align": "left",
+      "field": "skillTransferList",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "defaultAgentSurveyId",
+      "label": "defaultAgentSurveyId",
+      "align": "left",
+      "field": "defaultAgentSurveyId",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "redistributeLoadToConnectedAgentGroups",
+      "label": "redistributeLoadToConnectedAgentGroups",
+      "align": "left",
+      "field": "redistributeLoadToConnectedAgentGroups",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "dateUpdated",
+      "label": "dateUpdated",
+      "align": "left",
+      "field": "dateUpdated",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    }
+  ],
+  "users": [
+    {
+      "name": "userTypeId",
+      "label": "userTypeId",
+      "align": "left",
+      "field": "userTypeId",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "id",
+      "label": "id",
+      "align": "left",
+      "field": "id",
+      "sortable": true,
+      "classes": "word-wrap",
+      "style": "max-width: 200px;"
+    },
+
+    {
+      "name": "profileIds",
+      "label": "profileIds",
+      "align": "left",
+      "field": "profileIds",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "permissionGroups",
+      "label": "permissionGroups",
+      "align": "left",
+      "field": "permissionGroups",
+      "classes": "word-wrap",
+      "style": "max-width: 100px;"
+    },
+    {
+      "name": "skills",
+      "label": "skills",
+      "align": "left",
+      "field": "skills",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "dateCreated",
+      "label": "dateCreated",
+      "align": "left",
+      "field": "dateCreated"
+    },
+    {
+      "name": "maxChats",
+      "label": "maxChats",
+      "align": "left",
+      "field": "maxChats",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "skillIds",
+      "label": "skillIds",
+      "align": "left",
+      "field": "skillIds",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "loginName",
+      "label": "Login Name",
+      "align": "left",
+      "field": "loginName",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "nickname",
+      "label": "Nickname",
+      "align": "left",
+      "field": "nickname",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "fullName",
+      "label": "Full Name",
+      "align": "left",
+      "field": "fullName",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "memberOf",
+      "label": "memberOf",
+      "align": "left",
+      "field": "memberOf",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "email",
+      "label": "email",
+      "align": "left",
+      "field": "email",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "lobs",
+      "label": "lobs",
+      "align": "left",
+      "field": "lobs",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "managerOf",
+      "label": "managerOf",
+      "align": "left",
+      "field": "managerOf",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "pictureUrl",
+      "label": "pictureUrl",
+      "align": "left",
+      "field": "pictureUrl",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "profiles",
+      "label": "profiles",
+      "align": "left",
+      "field": "profiles",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+
+    {
+      "name": "employeeId",
+      "label": "employeeId",
+      "align": "left",
+      "field": "employeeId",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "managedAgentGroups",
+      "label": "managedAgentGroups",
+      "align": "left",
+      "field": "managedAgentGroups",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "dateUpdated",
+      "label": "dateUpdated",
+      "align": "left",
+      "field": "dateUpdated",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "deleted",
+      "label": "deleted",
+      "align": "left",
+      "field": "deleted",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "isEnabled",
+      "label": "isEnabled",
+      "align": "left",
+      "field": "isEnabled",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    }
+  ],
+  "profiles": [
+    {
+      "name": "id",
+      "label": "id",
+      "align": "left",
+      "field": "id",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "roleTypeId",
+      "label": "roleTypeId",
+      "align": "left",
+      "field": "roleTypeId",
+      "sortable": true,
+      "classes": "word-wrap",
+      "style": "max-width: 200px;"
+    },
+
+    {
+      "name": "roleTypeName",
+      "label": "roleTypeName",
+      "align": "left",
+      "field": "roleTypeName",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "name",
+      "label": "name",
+      "align": "left",
+      "field": "name",
+      "classes": "word-wrap",
+      "style": "max-width: 100px;"
+    },
+    {
+      "name": "description",
+      "label": "description",
+      "align": "left",
+      "field": "description",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "permissions",
+      "label": "permissions",
+      "align": "left",
+      "field": "permissions",
+      "classes": "ellipsis max-width-300 permissions",
+      "style": "max-width: 300px; overflow: hidden; text-overflow: ellipsis;"
+    },
+    {
+      "name": "numOfAssignedUsers",
+      "label": "numOfAssignedUsers",
+      "align": "left",
+      "field": "numOfAssignedUsers"
+    },
+    {
+      "name": "dateUpdated",
+      "label": "dateUpdated",
+      "align": "left",
+      "field": "dateUpdated",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "isAssignedToLPA",
+      "label": "isAssignedToLPA",
+      "align": "left",
+      "field": "isAssignedToLPA",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    }
+  ],
+  "linesOfBusiness": [
+    {
+      "name": "id",
+      "label": "id",
+      "align": "left",
+      "field": "id",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "name",
+      "label": "name",
+      "align": "left",
+      "field": "name",
+      "classes": "word-wrap",
+      "style": "max-width: 100px;"
+    },
+    {
+      "name": "description",
+      "label": "description",
+      "align": "left",
+      "field": "description",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    }
+  ],
+  "predefinedContent": [
+    {
+      "name": "id",
+      "label": "id",
+      "align": "left",
+      "field": "id",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "data",
+      "label": "data",
+      "align": "left",
+      "field": "data",
+      "classes": "word-wrap",
+      "style": "max-width: 100px;"
+    },
+    {
+      "name": "enabled",
+      "label": "enabled",
+      "align": "left",
+      "field": "enabled",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "deleted",
+      "label": "deleted",
+      "align": "left",
+      "field": "deleted",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "hotkey",
+      "label": "hotkey",
+      "align": "left",
+      "field": "hotkey",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "type",
+      "label": "type",
+      "align": "left",
+      "field": "type",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "categoriesIds",
+      "label": "categoriesIds",
+      "align": "left",
+      "field": "categoriesIds",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "skillIds",
+      "label": "skillIds",
+      "align": "left",
+      "field": "skillIds",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    },
+    {
+      "name": "lobIds",
+      "label": "lobIds",
+      "align": "left",
+      "field": "lobIds",
+      "classes": "word-wrap",
+      "style": "max-width: 300px;"
+    }
+  ],
+  "automaticMessages": [
+    {
+      "name": "enabled",
+      "label": "enabled",
+      "align": "left",
+      "field": "enabled",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "id",
+      "label": "id",
+      "align": "left",
+      "field": "id",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "contexts",
+      "label": "Variation for skill",
+      "align": "left",
+      "field": "contexts",
+      "classes": "word-wrap",
+      "style": "max-width: 100px;"
+    }
+  ],
+  "workingHours": [
+    {
+      "name": "id",
+      "label": "id",
+      "align": "left",
+      "field": "id",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "name",
+      "label": "name",
+      "align": "left",
+      "field": "name",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "description",
+      "label": "description",
+      "align": "left",
+      "field": "description",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "default",
+      "label": "default",
+      "align": "left",
+      "field": "default",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "deleted",
+      "label": "deleted",
+      "align": "left",
+      "field": "deleted",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "timezone",
+      "label": "timezone",
+      "align": "left",
+      "field": "timezone",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "events",
+      "label": "events",
+      "align": "left",
+      "field": "events",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    }
+  ],
+  "specialOccasions": [
+    {
+      "name": "id",
+      "label": "id",
+      "align": "left",
+      "field": "id",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "name",
+      "label": "name",
+      "align": "left",
+      "field": "name",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "description",
+      "label": "description",
+      "align": "left",
+      "field": "description",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "default",
+      "label": "default",
+      "align": "left",
+      "field": "default",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "deleted",
+      "label": "deleted",
+      "align": "left",
+      "field": "deleted",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "events",
+      "label": "events",
+      "align": "left",
+      "field": "events",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    }
+  ],
+  "campaigns": [
+    {
+      "name": "id",
+      "label": "id",
+      "align": "left",
+      "field": "id",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "name",
+      "label": "name",
+      "align": "left",
+      "field": "name",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "description",
+      "label": "description",
+      "align": "left",
+      "field": "description",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "engagementIds",
+      "label": "engagementIds",
+      "align": "left",
+      "field": "engagementIds",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "startDate",
+      "label": "startDate",
+      "align": "left",
+      "field": "startDate",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "expirationDate",
+      "label": "expirationDate",
+      "align": "left",
+      "field": "expirationDate",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "goalId",
+      "label": "goalId",
+      "align": "left",
+      "field": "goalId",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "status",
+      "label": "status",
+      "align": "left",
+      "field": "status",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "isDeleted",
+      "label": "isDeleted",
+      "align": "left",
+      "field": "isDeleted",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "weight",
+      "label": "weight",
+      "align": "left",
+      "field": "weight",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "priority",
+      "label": "priority",
+      "align": "left",
+      "field": "priority",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "timeZone",
+      "label": "timeZone",
+      "align": "left",
+      "field": "timeZone",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "type",
+      "label": "type",
+      "align": "left",
+      "field": "type",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    }
+  ],
+  "agentGroups": [
+    {
+      "name": "id",
+      "label": "id",
+      "align": "left",
+      "field": "id",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "name",
+      "label": "name",
+      "align": "left",
+      "field": "name",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+    {
+      "name": "members",
+      "label": "members",
+      "align": "left",
+      "field": "members",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "managers",
+      "label": "managers",
+      "align": "left",
+      "field": "managers",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "dateUpdated",
+      "label": "dateUpdated",
+      "align": "left",
+      "field": "dateUpdated",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "isEnabled",
+      "label": "isEnabled",
+      "align": "left",
+      "field": "isEnabled",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    },
+
+    {
+      "name": "deleted",
+      "label": "deleted",
+      "align": "left",
+      "field": "deleted",
+      "classes": "ellipsis",
+      "style": "max-width: 160px;"
+    }
+  ]
+}

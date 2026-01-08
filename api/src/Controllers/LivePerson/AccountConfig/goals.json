@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1400596370,
+    "description": "Measure the number of interactive chats and clicks on content.",
+    "name": "Interact with visitors",
+    "systemDefault": true,
+    "deleted": false,
+    "modifiedDate": "2021-08-18 22:44:52",
+    "createdDate": "2021-08-18 22:44:52",
+    "type": 4,
+    "indicatorType": 3
+  }
+]

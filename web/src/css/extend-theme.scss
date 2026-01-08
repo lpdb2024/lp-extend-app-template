@@ -1,0 +1,1578 @@
+// =============================================================================
+// eXtend Theme - Design System Implementation
+// =============================================================================
+// LivePerson's innovation platform theme
+// See extend-theme.md for full documentation
+// =============================================================================
+
+// =============================================================================
+// Font Face Definitions
+// =============================================================================
+
+// Sohne Breit - Primary Display Font
+@font-face {
+  font-family: 'Sohne Breit';
+  src: url('./fonts/TestSohneBreit-Extraleicht-BF663d89cd9eb84.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne Breit';
+  src: url('./fonts/TestSohneBreit-Leicht-BF663d89cae7333.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne Breit';
+  src: url('./fonts/TestSohneBreit-Buch-BF663d89ca2ff42.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne Breit';
+  src: url('./fonts/TestSohneBreit-Kraftig-BF663d89caa6b6c.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne Breit';
+  src: url('./fonts/TestSohneBreit-Halbfett-BF663d89cacf645.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne Breit';
+  src: url('./fonts/TestSohneBreit-Dreiviertelfett-BF663d89c955618.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Sohne Breit';
+  src: url('./fonts/TestSohneBreit-Fett-BF663d89ca84caa.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+// =============================================================================
+// SCSS Variables
+// =============================================================================
+
+// Brand Colors
+$ext-blue: #4169e8;
+$ext-purple: #8d46eb;
+$ext-pink: #e849b7;
+$ext-coral: #ff6b6b;
+$ext-orange: #ff8c42;
+
+// Cosmic Scale (Dark base)
+$ext-cosmic-950: #070820;
+$ext-cosmic-900: #0c1035;
+$ext-cosmic-800: #12184a;
+$ext-cosmic-700: #1c2464;
+$ext-cosmic-600: #283380;
+$ext-cosmic-500: #3548a0;
+$ext-cosmic-400: #5068c0;
+$ext-cosmic-300: #7890d8;
+$ext-cosmic-200: #a8b8e8;
+$ext-cosmic-100: #d8e0f5;
+$ext-cosmic-50: #f0f4fb;
+
+// Status Colors
+$ext-success: #10b981;
+$ext-success-dark: #34d399;
+$ext-warning: #f59e0b;
+$ext-warning-dark: #fbbf24;
+$ext-error: #ef4444;
+$ext-error-dark: #f87171;
+$ext-info: #31ccec;
+$ext-info-dark: #67e8f9;
+
+// Typography Scale
+$ext-display-1: 4rem;
+$ext-display-2: 3rem;
+$ext-display-3: 2.5rem;
+$ext-h1: 2rem;
+$ext-h2: 1.5rem;
+$ext-h3: 1.25rem;
+$ext-h4: 1.125rem;
+$ext-h5: 1rem;
+$ext-h6: 0.875rem;
+$ext-body-lg: 1.125rem;
+$ext-body: 1rem;
+$ext-body-sm: 0.875rem;
+$ext-caption: 0.75rem;
+$ext-overline: 0.625rem;
+
+// Border Radius
+$ext-radius-xs: 4px;
+$ext-radius-sm: 6px;
+$ext-radius-md: 8px;
+$ext-radius-lg: 12px;
+$ext-radius-xl: 16px;
+$ext-radius-2xl: 24px;
+$ext-radius-full: 9999px;
+
+// Timing
+$ext-ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+$ext-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+$ext-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+$ext-duration-fast: 150ms;
+$ext-duration-normal: 250ms;
+$ext-duration-slow: 400ms;
+
+// =============================================================================
+// CSS Custom Properties (Light Theme Default)
+// =============================================================================
+:root {
+  // Gradients
+  --ext-gradient-nebula: linear-gradient(90deg, #{$ext-blue}, #{$ext-purple}, #{$ext-pink}, #{$ext-orange});
+  --ext-gradient-nebula-reverse: linear-gradient(270deg, #{$ext-blue}, #{$ext-purple}, #{$ext-pink}, #{$ext-orange});
+  --ext-gradient-nebula-diagonal: linear-gradient(135deg, #{$ext-blue}, #{$ext-purple}, #{$ext-pink}, #{$ext-orange});
+  --ext-gradient-nebula-vertical: linear-gradient(180deg, #{$ext-blue}, #{$ext-purple}, #{$ext-pink}, #{$ext-orange});
+
+  // Backgrounds
+  --ext-bg-base: #{$ext-cosmic-50};
+  --ext-bg-surface: #ffffff;
+  --ext-bg-elevated: #f8fafc;
+  --ext-bg-muted: #e8eef6;
+  --ext-bg-glass: rgba(255, 255, 255, 0.9);
+
+  // Text
+  --ext-text-primary: #0f172a;
+  --ext-text-secondary: #475569;
+  --ext-text-muted: #94a3b8;
+  --ext-text-inverse: #ffffff;
+  --ext-text-link: #{$ext-blue};
+
+  // Borders
+  --ext-border-default: #e2e8f0;
+  --ext-border-subtle: #f1f5f9;
+  --ext-border-strong: #cbd5e1;
+  --ext-border-focus: #{$ext-blue};
+
+  // Shadows
+  --ext-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --ext-shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.06);
+  --ext-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --ext-shadow-lg: 0 8px 24px rgba(15, 23, 42, 0.10);
+  --ext-shadow-xl: 0 16px 48px rgba(15, 23, 42, 0.12);
+  --ext-shadow-glow: 0 0 20px rgba(141, 70, 235, 0.2);
+
+  // Status
+  --ext-success: #{$ext-success};
+  --ext-warning: #{$ext-warning};
+  --ext-error: #{$ext-error};
+  --ext-info: #{$ext-info};
+
+  // Component specific
+  --ext-input-bg: #ffffff;
+  --ext-input-border: #e2e8f0;
+  --ext-btn-primary-bg: var(--ext-gradient-nebula);
+  --ext-btn-primary-text: #ffffff;
+
+  // Aliases for backwards compatibility
+  --ext-surface: var(--ext-bg-surface);
+  --ext-surface-variant: var(--ext-bg-elevated);
+  --ext-surface-elevated: var(--ext-bg-elevated);
+  --ext-border: var(--ext-border-default);
+  --ext-bg: var(--ext-bg-base);
+  --ext-primary: #{$ext-purple};
+  --ext-primary-rgb: 141, 70, 235;
+  --ext-shadow: rgba(15, 23, 42, 0.1);
+  --ext-bg-subtle: var(--ext-bg-muted);
+  --ext-border-emphasis: var(--ext-border-strong);
+  --ext-bg-hover: var(--ext-bg-muted);
+  --ext-bg-overlay: rgba(0, 0, 0, 0.5);
+}
+
+// =============================================================================
+// Dark Theme Overrides
+// =============================================================================
+.body--dark {
+  // Backgrounds
+  --ext-bg-base: #{$ext-cosmic-900};
+  --ext-bg-surface: rgba(18, 24, 74, 0.8);
+  --ext-bg-elevated: #{$ext-cosmic-800};
+  --ext-bg-muted: rgba(28, 36, 100, 0.5);
+  --ext-bg-glass: rgba(12, 16, 53, 0.85);
+
+  // Text
+  --ext-text-primary: #f8fafc;
+  --ext-text-secondary: #{$ext-cosmic-200};
+  --ext-text-muted: #{$ext-cosmic-400};
+  --ext-text-inverse: #0f172a;
+  --ext-text-link: #{$ext-info-dark};
+
+  // Borders
+  --ext-border-default: #{$ext-cosmic-600};
+  --ext-border-subtle: rgba(40, 51, 128, 0.5);
+  --ext-border-strong: #{$ext-cosmic-500};
+  --ext-border-focus: #{$ext-purple};
+
+  // Shadows
+  --ext-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --ext-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.25);
+  --ext-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --ext-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --ext-shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.4);
+  --ext-shadow-glow: 0 0 30px rgba(141, 70, 235, 0.3), 0 0 60px rgba(232, 73, 183, 0.15);
+
+  // Status
+  --ext-success: #{$ext-success-dark};
+  --ext-warning: #{$ext-warning-dark};
+  --ext-error: #{$ext-error-dark};
+  --ext-info: #{$ext-info-dark};
+
+  // Component specific
+  --ext-input-bg: rgba(18, 24, 74, 0.6);
+  --ext-input-border: #{$ext-cosmic-600};
+
+  // Aliases for backwards compatibility (dark mode values inherit from above)
+  --ext-surface: var(--ext-bg-surface);
+  --ext-surface-variant: var(--ext-bg-elevated);
+  --ext-surface-elevated: var(--ext-bg-elevated);
+  --ext-border: var(--ext-border-default);
+  --ext-bg: var(--ext-bg-base);
+  --ext-primary: #{$ext-pink};
+  --ext-primary-rgb: 232, 73, 183;
+  --ext-shadow: rgba(0, 0, 0, 0.3);
+  --ext-bg-subtle: var(--ext-bg-muted);
+  --ext-border-emphasis: var(--ext-border-strong);
+  --ext-bg-hover: var(--ext-bg-muted);
+  --ext-bg-overlay: rgba(0, 0, 0, 0.7);
+}
+
+// =============================================================================
+// Typography Classes
+// =============================================================================
+
+// Font family utilities
+.ext-font-display {
+  font-family: 'Sohne Breit', system-ui, sans-serif;
+}
+
+.ext-font-body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.ext-font-mono {
+  font-family: 'Fira Code', 'Monaco', monospace;
+}
+
+// Display text
+.ext-display-1 {
+  font-family: 'Sohne Breit', system-ui, sans-serif;
+  font-size: $ext-display-1;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.ext-display-2 {
+  font-family: 'Sohne Breit', system-ui, sans-serif;
+  font-size: $ext-display-2;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.ext-display-3 {
+  font-family: 'Sohne Breit', system-ui, sans-serif;
+  font-size: $ext-display-3;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.ext-display-black {
+  font-family: 'Sohne Breit', system-ui, sans-serif;
+  font-size: $ext-display-1;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+// Headings
+.ext-h1 { font-size: $ext-h1; font-weight: 700; line-height: 1.25; }
+.ext-h2 { font-size: $ext-h2; font-weight: 600; line-height: 1.3; }
+.ext-h3 { font-size: $ext-h3; font-weight: 600; line-height: 1.35; }
+.ext-h4 { font-size: $ext-h4; font-weight: 600; line-height: 1.4; }
+.ext-h5 { font-size: $ext-h5; font-weight: 600; line-height: 1.45; }
+.ext-h6 { font-size: $ext-h6; font-weight: 600; line-height: 1.5; }
+
+// Body text
+.ext-body-lg { font-size: $ext-body-lg; line-height: 1.6; }
+.ext-body { font-size: $ext-body; line-height: 1.6; }
+.ext-body-sm { font-size: $ext-body-sm; line-height: 1.5; }
+.ext-caption { font-size: $ext-caption; line-height: 1.4; }
+.ext-overline {
+  font-size: $ext-overline;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+// Gradient text
+.ext-text-gradient {
+  background: var(--ext-gradient-nebula);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+}
+
+.ext-text-gradient-reverse {
+  background: var(--ext-gradient-nebula-reverse);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: fit-content;
+}
+
+// =============================================================================
+// Card Components (.ext-card)
+// =============================================================================
+.ext-card {
+  background: var(--ext-bg-surface);
+  border-radius: $ext-radius-lg;
+  border: 1px solid var(--ext-border-subtle);
+  box-shadow: var(--ext-shadow-md);
+  transition: box-shadow $ext-duration-normal $ext-ease-out,
+              transform $ext-duration-normal $ext-ease-out;
+
+  &:hover {
+    box-shadow: var(--ext-shadow-lg);
+  }
+
+  // Elevated variant
+  &--elevated {
+    background: var(--ext-bg-elevated);
+    box-shadow: var(--ext-shadow-lg);
+  }
+
+  // Glass variant
+  &--glass {
+    background: var(--ext-bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--ext-border-default);
+  }
+
+  // Gradient border variant
+  &--gradient-border {
+    position: relative;
+    background: var(--ext-bg-surface);
+    border: none;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: inherit;
+      background: var(--ext-gradient-nebula);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+  }
+
+  // Interactive variant
+  &--interactive {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  // Glow variant (dark mode emphasis)
+  &--glow {
+    box-shadow: var(--ext-shadow-glow);
+  }
+}
+
+.body--dark .ext-card {
+  border-color: var(--ext-border-default);
+
+  &--glass {
+    background: var(--ext-bg-glass);
+  }
+}
+
+// Card sections
+.ext-card__header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ext-border-subtle);
+}
+
+.ext-card__body {
+  padding: 20px;
+}
+
+.ext-card__footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--ext-border-subtle);
+}
+
+// =============================================================================
+// Button Components (.ext-btn)
+// =============================================================================
+.ext-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: $ext-body-sm;
+  font-weight: 600;
+  border-radius: $ext-radius-md;
+  border: none;
+  cursor: pointer;
+  transition: all $ext-duration-fast $ext-ease-out;
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // Primary (gradient)
+  &--primary {
+    background: var(--ext-gradient-nebula);
+    color: #ffffff;
+    box-shadow: var(--ext-shadow-sm);
+
+    &:hover:not(:disabled) {
+      box-shadow: var(--ext-shadow-md), 0 0 20px rgba(141, 70, 235, 0.3);
+      transform: translateY(-1px);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+  }
+
+  // Secondary (outlined)
+  &--secondary {
+    background: transparent;
+    color: var(--ext-text-primary);
+    border: 1px solid var(--ext-border-default);
+
+    &:hover:not(:disabled) {
+      background: var(--ext-bg-muted);
+      border-color: var(--ext-border-strong);
+    }
+  }
+
+  // Ghost (minimal)
+  &--ghost {
+    background: transparent;
+    color: var(--ext-text-secondary);
+
+    &:hover:not(:disabled) {
+      background: var(--ext-bg-muted);
+      color: var(--ext-text-primary);
+    }
+  }
+
+  // Gradient text button
+  &--gradient-text {
+    background: transparent;
+    color: transparent;
+    background-image: var(--ext-gradient-nebula);
+    -webkit-background-clip: text;
+    background-clip: text;
+    border: 1px solid var(--ext-border-default);
+
+    &:hover:not(:disabled) {
+      border-color: $ext-purple;
+      box-shadow: var(--ext-shadow-glow);
+    }
+  }
+
+  // Size variants
+  &--sm {
+    padding: 6px 12px;
+    font-size: $ext-caption;
+  }
+
+  &--lg {
+    padding: 14px 28px;
+    font-size: $ext-body;
+  }
+
+  // Icon only
+  &--icon {
+    padding: 10px;
+    aspect-ratio: 1;
+  }
+}
+
+// =============================================================================
+// Input Components (.ext-input)
+// =============================================================================
+.ext-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: $ext-body;
+  color: var(--ext-text-primary);
+  background: var(--ext-input-bg);
+  border: 1px solid var(--ext-input-border);
+  border-radius: $ext-radius-md;
+  transition: border-color $ext-duration-fast $ext-ease-out,
+              box-shadow $ext-duration-fast $ext-ease-out;
+
+  &::placeholder {
+    color: var(--ext-text-muted);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--ext-border-focus);
+    box-shadow: 0 0 0 3px rgba(65, 105, 232, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  // Error state
+  &--error {
+    border-color: var(--ext-error);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+  }
+}
+
+.body--dark .ext-input {
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(141, 70, 235, 0.25);
+  }
+}
+
+// Input wrapper for labels and icons
+.ext-input-wrapper {
+  position: relative;
+
+  .ext-input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ext-text-muted);
+  }
+
+  &.has-icon-left .ext-input {
+    padding-left: 44px;
+  }
+}
+
+.ext-input-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: $ext-body-sm;
+  font-weight: 500;
+  color: var(--ext-text-secondary);
+}
+
+// =============================================================================
+// Container / Layout Components
+// =============================================================================
+.ext-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.ext-section {
+  padding: 48px 0;
+
+  &--lg {
+    padding: 80px 0;
+  }
+
+  &--sm {
+    padding: 32px 0;
+  }
+}
+
+// =============================================================================
+// Surface / Background Classes
+// =============================================================================
+.ext-surface {
+  background: var(--ext-bg-surface);
+}
+
+.ext-surface-elevated {
+  background: var(--ext-bg-elevated);
+}
+
+.ext-surface-muted {
+  background: var(--ext-bg-muted);
+}
+
+.ext-surface-glass {
+  background: var(--ext-bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+// Gradient backgrounds
+.ext-bg-nebula {
+  background: var(--ext-gradient-nebula);
+}
+
+.ext-bg-cosmic {
+  background: radial-gradient(ellipse at center, #{$ext-cosmic-700} 0%, #{$ext-cosmic-900} 70%);
+}
+
+// =============================================================================
+// Divider / Ribbon Components
+// =============================================================================
+.ext-divider {
+  height: 1px;
+  width: 100%;
+  background: var(--ext-border-default);
+  margin: 16px 0;
+}
+
+.ext-ribbon {
+  height: 4px;
+  width: 100%;
+  background: var(--ext-gradient-nebula);
+
+  &--thin {
+    height: 2px;
+  }
+
+  &--thick {
+    height: 6px;
+  }
+}
+
+// =============================================================================
+// Badge / Tag Components
+// =============================================================================
+.ext-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 4px;
+  font-size: $ext-caption;
+  font-weight: 600;
+  border-radius: $ext-radius-full;
+  background: var(--ext-bg-muted);
+  color: var(--ext-text-secondary);
+
+  &--primary {
+    background: rgba(65, 105, 232, 0.15);
+    color: $ext-blue;
+  }
+
+  &--success {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--ext-success);
+  }
+
+  &--warning {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--ext-warning);
+  }
+
+  &--error {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--ext-error);
+  }
+
+  &--gradient {
+    background: var(--ext-gradient-nebula);
+    color: #ffffff;
+  }
+}
+
+.body--dark .ext-badge {
+  &--primary {
+    background: rgba(65, 105, 232, 0.25);
+  }
+
+  &--success {
+    background: rgba(52, 211, 153, 0.25);
+  }
+
+  &--warning {
+    background: rgba(251, 191, 36, 0.25);
+  }
+
+  &--error {
+    background: rgba(248, 113, 113, 0.25);
+  }
+}
+
+// =============================================================================
+// Avatar Components
+// =============================================================================
+.ext-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--ext-bg-muted);
+  color: var(--ext-text-secondary);
+  font-weight: 600;
+
+  &--sm { width: 32px; height: 32px; font-size: $ext-caption; }
+  &--md { width: 40px; height: 40px; font-size: $ext-body-sm; }
+  &--lg { width: 56px; height: 56px; font-size: $ext-body; }
+  &--xl { width: 80px; height: 80px; font-size: $ext-h3; }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // Gradient ring
+  &--ring {
+    padding: 3px;
+    background: var(--ext-gradient-nebula);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: var(--ext-bg-surface);
+    }
+
+    img {
+      position: relative;
+      border-radius: 50%;
+    }
+  }
+}
+
+// =============================================================================
+// Table Styles
+// =============================================================================
+.ext-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--ext-bg-surface);
+  border-radius: $ext-radius-lg;
+  overflow: hidden;
+  box-shadow: var(--ext-shadow-md);
+
+  th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--ext-border-subtle);
+  }
+
+  th {
+    background: var(--ext-bg-elevated);
+    font-weight: 600;
+    color: var(--ext-text-secondary);
+    font-size: $ext-body-sm;
+  }
+
+  tbody tr {
+    transition: background $ext-duration-fast $ext-ease-out;
+
+    &:hover {
+      background: var(--ext-bg-muted);
+    }
+
+    &:last-child td {
+      border-bottom: none;
+    }
+  }
+}
+
+.body--dark .ext-table {
+  th {
+    background: var(--ext-bg-muted);
+  }
+}
+
+// =============================================================================
+// Navigation Components
+// =============================================================================
+.ext-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  color: var(--ext-text-secondary);
+  text-decoration: none;
+  border-radius: $ext-radius-md;
+  transition: all $ext-duration-fast $ext-ease-out;
+
+  &:hover {
+    color: var(--ext-text-primary);
+    background: var(--ext-bg-muted);
+  }
+
+  &--active {
+    color: var(--ext-text-primary);
+    background: var(--ext-bg-muted);
+    font-weight: 600;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 60%;
+      background: var(--ext-gradient-nebula-vertical);
+      border-radius: 0 2px 2px 0;
+    }
+  }
+}
+
+// =============================================================================
+// Dialog / Modal Styles
+// =============================================================================
+.ext-dialog {
+  background: var(--ext-bg-surface);
+  border-radius: $ext-radius-xl;
+  box-shadow: var(--ext-shadow-xl);
+  border: 1px solid var(--ext-border-default);
+  max-width: 500px;
+  width: 100%;
+}
+
+.ext-dialog__header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--ext-border-subtle);
+}
+
+.ext-dialog__body {
+  padding: 24px;
+}
+
+.ext-dialog__footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--ext-border-subtle);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.body--dark .ext-dialog {
+  background: var(--ext-bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+// =============================================================================
+// Tooltip Styles
+// =============================================================================
+.ext-tooltip {
+  padding: 8px 12px;
+  background: var(--ext-bg-elevated);
+  color: var(--ext-text-primary);
+  font-size: $ext-caption;
+  border-radius: $ext-radius-sm;
+  box-shadow: var(--ext-shadow-lg);
+  border: 1px solid var(--ext-border-default);
+}
+
+// =============================================================================
+// Animations
+// =============================================================================
+@keyframes ext-gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ext-glow-pulse {
+  0%, 100% { box-shadow: var(--ext-shadow-glow); }
+  50% { box-shadow: 0 0 40px rgba(141, 70, 235, 0.4), 0 0 80px rgba(232, 73, 183, 0.25); }
+}
+
+@keyframes ext-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.ext-animate-gradient {
+  background-size: 200% 200%;
+  animation: ext-gradient-shift 8s ease infinite;
+}
+
+.ext-animate-glow {
+  animation: ext-glow-pulse 3s ease-in-out infinite;
+}
+
+.ext-animate-float {
+  animation: ext-float 6s ease-in-out infinite;
+}
+
+// =============================================================================
+// Utility Classes
+// =============================================================================
+
+// Text colors
+.ext-text-primary { color: var(--ext-text-primary); }
+.ext-text-secondary { color: var(--ext-text-secondary); }
+.ext-text-muted { color: var(--ext-text-muted); }
+.ext-text-success { color: var(--ext-success); }
+.ext-text-warning { color: var(--ext-warning); }
+.ext-text-error { color: var(--ext-error); }
+.ext-text-info { color: var(--ext-info); }
+
+// Background colors
+.ext-bg-base { background: var(--ext-bg-base); }
+.ext-bg-surface { background: var(--ext-bg-surface); }
+.ext-bg-elevated { background: var(--ext-bg-elevated); }
+.ext-bg-muted { background: var(--ext-bg-muted); }
+
+// Border utilities
+.ext-border { border: 1px solid var(--ext-border-default); }
+.ext-border-subtle { border: 1px solid var(--ext-border-subtle); }
+.ext-border-strong { border: 1px solid var(--ext-border-strong); }
+
+// Border radius utilities
+.ext-rounded-xs { border-radius: $ext-radius-xs; }
+.ext-rounded-sm { border-radius: $ext-radius-sm; }
+.ext-rounded-md { border-radius: $ext-radius-md; }
+.ext-rounded-lg { border-radius: $ext-radius-lg; }
+.ext-rounded-xl { border-radius: $ext-radius-xl; }
+.ext-rounded-2xl { border-radius: $ext-radius-2xl; }
+.ext-rounded-full { border-radius: $ext-radius-full; }
+
+// Shadow utilities
+.ext-shadow-xs { box-shadow: var(--ext-shadow-xs); }
+.ext-shadow-sm { box-shadow: var(--ext-shadow-sm); }
+.ext-shadow-md { box-shadow: var(--ext-shadow-md); }
+.ext-shadow-lg { box-shadow: var(--ext-shadow-lg); }
+.ext-shadow-xl { box-shadow: var(--ext-shadow-xl); }
+.ext-shadow-glow { box-shadow: var(--ext-shadow-glow); }
+.ext-shadow-none { box-shadow: none; }
+
+// Transition utilities
+.ext-transition-fast { transition: all $ext-duration-fast $ext-ease-out; }
+.ext-transition-normal { transition: all $ext-duration-normal $ext-ease-out; }
+.ext-transition-slow { transition: all $ext-duration-slow $ext-ease-out; }
+
+// =============================================================================
+// Quasar Component Overrides (with .ext- prefix for opt-in)
+// =============================================================================
+.ext-q-card {
+  &.q-card {
+    background: var(--ext-bg-surface);
+    border-radius: $ext-radius-lg;
+    box-shadow: var(--ext-shadow-md);
+    border: 1px solid var(--ext-border-subtle);
+  }
+}
+
+.ext-q-btn {
+  &.q-btn {
+    border-radius: $ext-radius-md;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+}
+
+.ext-q-input {
+  .q-field__control {
+    border-radius: $ext-radius-md;
+    background: var(--ext-input-bg);
+
+    &::before {
+      border-color: var(--ext-input-border);
+    }
+  }
+}
+
+.body--dark {
+  .ext-q-card.q-card {
+    background: var(--ext-bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-color: var(--ext-border-default);
+  }
+}
+
+// =============================================================================
+// Page Layout Components
+// =============================================================================
+
+// Page wrapper with themed background
+.ext-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 0 24px 48px;
+  background: var(--ext-bg-base);
+  overflow-x: hidden;
+}
+
+// Page background with gradient and grid
+.ext-page-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ext-bg-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at top right, rgba($ext-purple, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba($ext-blue, 0.05) 0%, transparent 50%);
+}
+
+.ext-bg-grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: $ext-cosmic-600;
+}
+
+.body--dark {
+  .ext-bg-gradient {
+    background:
+      radial-gradient(ellipse at top right, rgba($ext-purple, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom left, rgba($ext-blue, 0.1) 0%, transparent 50%);
+  }
+
+  .ext-bg-grid {
+    color: $ext-cosmic-400;
+    opacity: 0.5;
+  }
+}
+
+// Page header component
+.ext-page-header {
+  position: relative;
+  z-index: 1;
+  // max-width: calc(100vw - 100px);
+  width: 100%;
+  // margin: 0 auto;
+  // padding: 48px 0 32px;
+}
+
+.ext-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.ext-header-text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.ext-header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+// Loading state
+.ext-loading-state {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+}
+
+// Placeholder state (for coming soon sections)
+.ext-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+  min-height: 300px;
+
+  p {
+    margin-top: 16px;
+    font-size: 1rem;
+  }
+}
+
+// Responsive page layout
+@media (max-width: 768px) {
+  // .ext-page-header {
+  //   padding: 32px 0 24px;
+  // }
+
+  .ext-header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ext-header-actions {
+    justify-content: stretch;
+
+    .ext-btn {
+      flex: 1;
+    }
+  }
+}
+
+// =============================================================================
+// Navigation Tabs
+// =============================================================================
+
+// Main navigation tabs (pill-style)
+.ext-nav-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--ext-bg-surface);
+  border-radius: $ext-radius-lg;
+  border: 1px solid var(--ext-border-subtle);
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.ext-nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: $ext-body-sm;
+  font-weight: 500;
+  color: var(--ext-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: $ext-radius-md;
+  cursor: pointer;
+  transition: all $ext-duration-fast $ext-ease-out;
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--ext-text-secondary);
+    background: var(--ext-bg-muted);
+  }
+
+  &.active {
+    color: #ffffff;
+    background: linear-gradient(135deg, $ext-blue, $ext-purple);
+    box-shadow: 0 2px 8px rgba($ext-purple, 0.25);
+  }
+}
+
+.body--dark {
+  .ext-nav-tabs {
+    background: var(--ext-bg-surface);
+    border-color: var(--ext-border-default);
+  }
+
+  .ext-nav-tab {
+    color: $ext-cosmic-400;
+
+    &:hover {
+      color: $ext-cosmic-200;
+      background: rgba($ext-cosmic-700, 0.5);
+    }
+
+    &.active {
+      color: #ffffff;
+    }
+  }
+}
+
+// Sub-navigation tabs (underline-style)
+.ext-sub-tabs {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ext-border-subtle);
+  margin-bottom: 16px;
+  overflow-x: auto;
+}
+
+.ext-sub-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ext-text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: $ext-radius-md;
+  cursor: pointer;
+  transition: all $ext-duration-fast $ext-ease-out;
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--ext-text-secondary);
+    background: var(--ext-bg-muted);
+  }
+
+  &.active {
+    color: $ext-purple;
+    background: rgba($ext-purple, 0.08);
+    border-color: rgba($ext-purple, 0.2);
+  }
+}
+
+.ext-tab-count {
+  padding: 2px 8px;
+  font-size: $ext-caption;
+  font-weight: 600;
+  background: var(--ext-bg-muted);
+  border-radius: 10px;
+  color: var(--ext-text-muted);
+
+  .ext-sub-tab.active & {
+    background: rgba($ext-purple, 0.15);
+    color: $ext-purple;
+  }
+}
+
+.body--dark {
+  .ext-sub-tabs {
+    border-bottom-color: var(--ext-border-default);
+  }
+
+  .ext-sub-tab {
+    color: $ext-cosmic-400;
+
+    &:hover {
+      color: $ext-cosmic-200;
+      background: rgba($ext-cosmic-700, 0.5);
+    }
+
+    &.active {
+      color: $ext-pink;
+      background: rgba($ext-purple, 0.15);
+      border-color: rgba($ext-purple, 0.3);
+    }
+  }
+
+  .ext-tab-count {
+    background: $ext-cosmic-700;
+    color: $ext-cosmic-300;
+
+    .ext-sub-tab.active & {
+      background: rgba($ext-purple, 0.25);
+      color: $ext-pink;
+    }
+  }
+}
+
+// Tab content panels
+.ext-tab-content {
+  position: relative;
+}
+
+.ext-panel {
+  &--full {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 340px);
+  }
+}
+
+.ext-table-container {
+  flex: 1;
+  overflow: auto;
+  background: var(--ext-bg-surface);
+  border-radius: $ext-radius-lg;
+  border: 1px solid var(--ext-border-subtle);
+}
+
+.body--dark {
+  .ext-table-container {
+    background: var(--ext-bg-surface);
+    border-color: var(--ext-border-default);
+  }
+}
+
+// Responsive tabs
+@media (max-width: 768px) {
+  .ext-nav-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+// =============================================================================
+// Stats Grid & Cards
+// =============================================================================
+
+.ext-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  // margin-bottom: 24px;
+}
+
+.ext-stat-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: var(--ext-bg-surface);
+  border: 1px solid var(--ext-border-subtle);
+  border-radius: $ext-radius-lg;
+  transition: all $ext-duration-fast $ext-ease-out;
+
+  &:hover {
+    border-color: var(--ext-border-default);
+    box-shadow: var(--ext-shadow-md);
+  }
+}
+
+.ext-stat-icon {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $ext-radius-lg;
+  color: #ffffff;
+
+  // Color variants
+  &.users,
+  &.blue {
+    background: linear-gradient(135deg, $ext-blue, darken($ext-blue, 10%));
+  }
+
+  &.skills,
+  &.purple {
+    background: linear-gradient(135deg, $ext-purple, darken($ext-purple, 10%));
+  }
+
+  &.campaigns,
+  &.pink {
+    background: linear-gradient(135deg, $ext-pink, darken($ext-pink, 10%));
+  }
+
+  &.lobs,
+  &.orange {
+    background: linear-gradient(135deg, $ext-orange, darken($ext-orange, 10%));
+  }
+
+  &.teal {
+    background: linear-gradient(135deg, #14b8a6, darken(#14b8a6, 10%));
+  }
+}
+
+.ext-stat-content {
+  flex: 1;
+}
+
+.ext-stat-value {
+  font-family: 'Sohne Breit', system-ui, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--ext-text-primary);
+  line-height: 1;
+}
+
+.ext-stat-label {
+  font-size: $ext-body-sm;
+  font-weight: 500;
+  color: var(--ext-text-secondary);
+  margin-top: 4px;
+}
+
+.ext-stat-detail {
+  font-size: $ext-caption;
+  color: var(--ext-text-muted);
+  margin-top: 2px;
+}
+
+.body--dark {
+  .ext-stat-card {
+    background: var(--ext-bg-surface);
+    border-color: var(--ext-border-default);
+
+    &:hover {
+      border-color: $ext-cosmic-600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .ext-stat-value {
+    color: #ffffff;
+  }
+
+  .ext-stat-label {
+    color: $ext-cosmic-300;
+  }
+
+  .ext-stat-detail {
+    color: $ext-cosmic-400;
+  }
+}
+
+@media (max-width: 768px) {
+  .ext-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// =============================================================================
+// Count Badge (for tables and lists)
+// =============================================================================
+
+.ext-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  padding: 2px 8px;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  background: linear-gradient(135deg, rgba($ext-blue, 0.1), rgba($ext-purple, 0.1));
+  color: $ext-purple;
+  border-radius: $ext-radius-sm;
+}
+
+.body--dark {
+  .ext-count-badge {
+    background: linear-gradient(135deg, rgba($ext-blue, 0.2), rgba($ext-purple, 0.2));
+    color: $ext-pink;
+  }
+}
+
+// =============================================================================
+// Card Header & Body (enhanced)
+// =============================================================================
+
+.ext-card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ext-border-subtle);
+}
+
+.ext-card-title {
+  margin: 0;
+  font-family: 'Sohne Breit', system-ui, sans-serif;
+  font-size: $ext-body;
+  font-weight: 600;
+  color: var(--ext-text-primary);
+}
+
+.ext-card-body {
+  padding: 0;
+
+  &--padded {
+    padding: 20px;
+  }
+}
+
+.body--dark {
+  .ext-card-header {
+    border-bottom-color: var(--ext-border-default);
+  }
+
+  .ext-card-title {
+    color: #ffffff;
+  }
+}
+
+// =============================================================================
+// Enhanced Table Styles (for use inside cards)
+// =============================================================================
+
+.ext-card .ext-table {
+  box-shadow: none;
+  border-radius: 0;
+
+  th {
+    background: var(--ext-bg-muted);
+  }
+}
+
+.body--dark .ext-card .ext-table {
+  th {
+    background: rgba($ext-cosmic-700, 0.5);
+    color: $ext-cosmic-300;
+    border-bottom-color: var(--ext-border-default);
+  }
+
+  td {
+    color: $ext-cosmic-200;
+    border-bottom-color: var(--ext-border-default);
+  }
+
+  tr:hover td {
+    background: rgba($ext-cosmic-700, 0.3);
+  }
+}
+
+// =============================================================================
+// Button Variants (outline style for page actions)
+// =============================================================================
+
+.ext-btn--outline {
+  background: var(--ext-bg-surface);
+  color: var(--ext-text-secondary);
+  border: 1px solid var(--ext-border-default);
+
+  &:hover:not(:disabled) {
+    border-color: $ext-purple;
+    color: $ext-purple;
+  }
+}
+
+.body--dark {
+  .ext-btn--outline {
+    background: var(--ext-bg-surface);
+    border-color: var(--ext-border-default);
+    color: $ext-cosmic-200;
+
+    &:hover:not(:disabled) {
+      border-color: $ext-purple;
+      color: $ext-pink;
+    }
+  }
+}
+

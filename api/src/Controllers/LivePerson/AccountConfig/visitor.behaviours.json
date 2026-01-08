@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1400596470,
+    "name": "Any behavior",
+    "description": "Default target audience, automatically created",
+    "isSystemDefault": true,
+    "systemDefault": true,
+    "conditionBoxTypes": [0]
+  },
+  {
+    "id": 1489569970,
+    "name": "Cart value decreased",
+    "description": "Customer removed a product from their cart",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [14]
+  },
+  {
+    "id": 1489611170,
+    "name": "Cart value above $2000",
+    "description": "Targeting visitors with high cart value",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [14]
+  },
+  {
+    "id": 1503935670,
+    "name": "After 10 seconds",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [6]
+  },
+  {
+    "id": 1830411070,
+    "name": "SDE=prod",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [13]
+  },
+  {
+    "id": 4330477773,
+    "name": "Hutchgo Agent",
+    "description": "",
+    "isSystemDefault": false,
+    "systemDefault": false,
+    "conditionBoxTypes": [5]
+  }
+]
