@@ -50,20 +50,31 @@ const firebaseProvider = {
   useFactory: (configService: ConfigService) => {
     // Parse Firebase service account from GOOGLE_SERVICE_ACCOUNT env variable (JSON string)
     const serviceAccountJson = configService.get<string>('GOOGLE_SERVICE_ACCOUNT');
-    const firebaseConfig = JSON.parse(serviceAccountJson) as admin.ServiceAccount;
 
-    return admin.initializeApp({
-      credential: admin.credential.cert(firebaseConfig),
-      databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
-      storageBucket: `${firebaseConfig.projectId}.appspot.com`,
-    });
+    // Firebase is optional - return null if not configured
+    if (!serviceAccountJson) {
+      console.log('[Firebase] No GOOGLE_SERVICE_ACCOUNT configured - Firebase disabled');
+      return null;
+    }
+
+    try {
+      const firebaseConfig = JSON.parse(serviceAccountJson) as admin.ServiceAccount;
+      return admin.initializeApp({
+        credential: admin.credential.cert(firebaseConfig),
+        databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
+        storageBucket: `${firebaseConfig.projectId}.appspot.com`,
+      });
+    } catch (error) {
+      console.error('[Firebase] Failed to parse GOOGLE_SERVICE_ACCOUNT:', error);
+      return null;
+    }
   },
 };
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../..', 'public'),
+      rootPath: join(__dirname, '..', 'public'),
       exclude: ['/api/(.*)', '/callback/(.*)'],
       serveRoot: '',
     }),
