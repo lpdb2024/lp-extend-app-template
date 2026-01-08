@@ -4,7 +4,6 @@ import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
-import * as admin from 'firebase-admin';
 import * as bodyParser from 'body-parser';
 import { Logger } from 'nestjs-pino';
 
@@ -18,23 +17,7 @@ async function bootstrap() {
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT');
-
-  // Parse Firebase service account from GOOGLE_SERVICE_ACCOUNT env variable (JSON string)
-  const serviceAccountJson = configService.get<string>('GOOGLE_SERVICE_ACCOUNT');
-  let firebaseConfig: admin.ServiceAccount;
-  try {
-    firebaseConfig = JSON.parse(serviceAccountJson) as admin.ServiceAccount;
-  } catch (err) {
-    console.error('Failed to parse GOOGLE_SERVICE_ACCOUNT environment variable as JSON');
-    process.exit(1);
-  }
-
-  admin.initializeApp({
-    credential: admin.credential.cert(firebaseConfig),
-    databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
-    storageBucket: `${firebaseConfig.projectId}.appspot.com`,
-  });
+  const port = configService.get<number>('PORT') || 8080;
 
   const config = new DocumentBuilder()
     .setTitle('LP Extend example')

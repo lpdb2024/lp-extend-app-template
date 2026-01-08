@@ -113,11 +113,29 @@ const firebaseProvider = {
       useFactory: (configService: ConfigService) => {
         // Parse service account from GOOGLE_SERVICE_ACCOUNT env variable
         const serviceAccountJson = configService.get<string>('GOOGLE_SERVICE_ACCOUNT');
-        const serviceAccount = JSON.parse(serviceAccountJson);
-        return {
-          projectId: serviceAccount.project_id,
-          credentials: serviceAccount,
-        };
+
+        // Firestore is optional - return empty config if not configured
+        if (!serviceAccountJson) {
+          console.log('[Firestore] No GOOGLE_SERVICE_ACCOUNT configured - Firestore disabled');
+          return {
+            projectId: '',
+            credentials: {},
+          };
+        }
+
+        try {
+          const serviceAccount = JSON.parse(serviceAccountJson);
+          return {
+            projectId: serviceAccount.project_id,
+            credentials: serviceAccount,
+          };
+        } catch (error) {
+          console.error('[Firestore] Failed to parse GOOGLE_SERVICE_ACCOUNT:', error);
+          return {
+            projectId: '',
+            credentials: {},
+          };
+        }
       },
     }),
 

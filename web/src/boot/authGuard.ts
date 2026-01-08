@@ -137,8 +137,15 @@ export default boot(({ router }) => {
       // STANDALONE MODE: Use Firebase/LP SSO auth
       // Initialize Firebase auth listener if still loading
       if (firebaseAuth.isLoading) {
+        if (logging) console.info("AuthGuard - Firebase auth still loading, waiting...");
         await firebaseAuth.initAuthListener();
       }
+
+      if (logging) console.info("AuthGuard - Firebase auth state:", {
+        isAuthenticated: firebaseAuth.isAuthenticated,
+        hasUser: !!firebaseAuth.user,
+        isLoading: firebaseAuth.isLoading
+      });
 
       // Check Firebase authentication first (primary auth method)
       const isFirebaseAuth = firebaseAuth.isAuthenticated && firebaseAuth.user;
@@ -243,11 +250,19 @@ export default boot(({ router }) => {
       const isLpExpired = isLpTokenExpired();
       const accountId = userStore.accountId;
 
+      if (logging) console.info("AuthGuard - LP token check:", {
+        isLpExpired,
+        accountId,
+        targetRoute: to.fullPath
+      });
+
       if (isLpExpired) {
         if (logging) console.info("AuthGuard - No valid auth, redirecting to login");
         // Redirect to login with the original destination as redirect param
         const redirectPath = to.fullPath === "/" ? undefined : to.fullPath;
-        return loginRoute(accountId, redirectPath);
+        const loginRedirect = loginRoute(accountId, redirectPath);
+        if (logging) console.info("AuthGuard - Redirecting to:", loginRedirect);
+        return loginRedirect;
       }
 
       // LP SSO auth - verify user exists
