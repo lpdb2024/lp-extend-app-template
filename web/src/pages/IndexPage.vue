@@ -68,6 +68,50 @@
       </button>
     </div>
 
+    <!-- SDK Demo: Skills Display -->
+    <div v-if="hasLpSession" class="ext-sdk-demo">
+      <div class="ext-section-header">
+        <div class="ext-section-icon lp">
+          <q-icon name="sym_o_code" size="20px" />
+        </div>
+        <h2 class="ext-h2">SDK Demo: LivePerson Skills</h2>
+        <q-btn
+          flat
+          dense
+          color="primary"
+          icon="sym_o_refresh"
+          label="Refresh"
+          :loading="skillsLoading"
+          @click="fetchSkills"
+        />
+      </div>
+
+      <div v-if="skillsLoading" class="ext-sdk-loading">
+        <q-spinner-dots size="32px" color="primary" />
+        <span>Fetching skills via SDK...</span>
+      </div>
+
+      <div v-else-if="skillsError" class="ext-sdk-error">
+        <q-icon name="sym_o_error" size="24px" color="negative" />
+        <span>{{ skillsError }}</span>
+      </div>
+
+      <div v-else-if="skills.length > 0" class="ext-sdk-result">
+        <div class="ext-sdk-stats">
+          <span class="ext-badge ext-badge--success">
+            <q-icon name="sym_o_check_circle" size="14px" />
+            {{ skills.length }} skills loaded via SDK
+          </span>
+        </div>
+        <pre class="ext-sdk-json">{{ JSON.stringify(skills, null, 2) }}</pre>
+      </div>
+
+      <div v-else class="ext-sdk-empty">
+        <q-icon name="sym_o_inbox" size="32px" color="grey" />
+        <span>No skills found</span>
+      </div>
+    </div>
+
     <!-- Loading State -->
     <div v-if="isLoading" class="ext-loading-state">
       <div class="ext-loading-spinner">
@@ -167,11 +211,18 @@ import AppCard from "src/components/AppCard.vue";
 import { getApplications } from "src/utils/common";
 import { APP_TYPES } from "src/router/routes";
 import ExtPageHeader from "src/components/common-ui/ExtPageHeader.vue";
+import { initSDK, getSDK, isSDKInitialized } from "src/services/LPExtendSDKService";
+import type { LPSkill } from "@lpextend/client-sdk";
 
 // type AppDefinition = ReturnType<typeof getApplications>[number];
 
 const router = useRouter();
 const { isAuthenticated, accountId, isInShellMode } = useAuth();
+
+// SDK Demo: Skills data
+const skills = ref<LPSkill[]>([]);
+const skillsLoading = ref(false);
+const skillsError = ref<string | null>(null);
 
 const search = ref("");
 const isLoading = ref(true);
@@ -218,6 +269,30 @@ const allFilteredApps = computed(() => [
   ...filteredExternalApps.value,
 ]);
 
+// SDK Demo: Fetch skills from LivePerson
+const fetchSkills = async () => {
+  skillsLoading.value = true;
+  skillsError.value = null;
+
+  try {
+    // Initialize SDK if not already done
+    // initSDK will get token from URL params (shellToken) or other sources
+    if (!isSDKInitialized()) {
+      await initSDK();
+    }
+
+    const sdk = getSDK();
+    const response = await sdk.skills.getAll();
+    skills.value = response.data || [];
+    console.log("[SDK Demo] Fetched skills:", skills.value);
+  } catch (error) {
+    console.error("[SDK Demo] Error fetching skills:", error);
+    skillsError.value = error instanceof Error ? error.message : "Failed to fetch skills";
+  } finally {
+    skillsLoading.value = false;
+  }
+};
+
 onMounted(async () => {
   isLoading.value = true;
 
@@ -226,6 +301,11 @@ onMounted(async () => {
     // In standalone mode, the auth composable handles initialization
     // Just wait a moment for auth to initialize
     await new Promise((resolve) => setTimeout(resolve, 100));
+
+    // SDK Demo: Automatically fetch skills if connected
+    if (hasLpSession.value && accountId.value) {
+      await fetchSkills();
+    }
   } finally {
     isLoading.value = false;
   }
@@ -555,6 +635,56 @@ $nebula-orange: #ff8c42;
   }
 }
 
+// SDK Demo section
+.ext-sdk-demo {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto 24px;
+  padding: 20px 24px;
+  background: white;
+  border: 1px solid $cosmic-100;
+  border-radius: 12px;
+}
+
+.ext-sdk-loading,
+.ext-sdk-error,
+.ext-sdk-empty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  color: $cosmic-600;
+}
+
+.ext-sdk-error {
+  color: #dc2626;
+  background: rgba(#dc2626, 0.05);
+  border-radius: 8px;
+}
+
+.ext-sdk-result {
+  margin-top: 16px;
+}
+
+.ext-sdk-stats {
+  margin-bottom: 12px;
+}
+
+.ext-sdk-json {
+  background: $cosmic-950;
+  color: #a5f3fc;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 0;
+}
+
 // Loading state
 .ext-loading-state {
   position: relative;
@@ -807,6 +937,21 @@ $nebula-orange: #ff8c42;
   .ext-empty-icon {
     background: rgba($cosmic-700, 0.5);
     color: $cosmic-400;
+  }
+
+  .ext-sdk-demo {
+    background: rgba($cosmic-800, 0.8);
+    border-color: $cosmic-700;
+  }
+
+  .ext-sdk-loading,
+  .ext-sdk-empty {
+    color: $cosmic-300;
+  }
+
+  .ext-sdk-json {
+    background: $cosmic-950;
+    border: 1px solid $cosmic-700;
   }
 }
 
