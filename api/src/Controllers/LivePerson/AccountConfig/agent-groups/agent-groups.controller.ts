@@ -16,7 +16,9 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -54,14 +56,14 @@ export class AgentGroupsController {
   @ApiResponse({
     status: 200,
     description: 'List of agent groups',
-    type: AgentGroupsResponseDto,
-  })
+      })
   async getAll(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: AgentGroupsQueryDto,
+    @Req() req: Request,
   ): Promise<AgentGroupsResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.agentGroupsService.getAll(accountId, token, {
       getUsers: query.getUsers,
@@ -88,15 +90,15 @@ export class AgentGroupsController {
   @ApiResponse({
     status: 200,
     description: 'The agent group',
-    type: AgentGroupResponseDto,
-  })
+      })
   @ApiResponse({ status: 404, description: 'Agent group not found' })
   async getById(
     @Param('accountId') accountId: string,
     @Param('groupId') groupId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<AgentGroupResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.agentGroupsService.getById(accountId, groupId, token);
 
@@ -124,16 +126,16 @@ export class AgentGroupsController {
   @ApiResponse({
     status: 201,
     description: 'Agent group created',
-    type: AgentGroupResponseDto,
-  })
+      })
   @ApiResponse({ status: 400, description: 'Invalid request body' })
   async create(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: CreateAgentGroupDto | CreateAgentGroupDto[],
+    @Req() req: Request,
   ): Promise<AgentGroupResponseDto | AgentGroupsResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (Array.isArray(body)) {
       const response = await this.agentGroupsService.createMany(
@@ -179,8 +181,7 @@ export class AgentGroupsController {
   @ApiResponse({
     status: 200,
     description: 'Agent group updated',
-    type: AgentGroupResponseDto,
-  })
+      })
   @ApiResponse({ status: 400, description: 'Invalid request or missing revision' })
   @ApiResponse({ status: 404, description: 'Agent group not found' })
   @ApiResponse({ status: 409, description: 'Revision mismatch (conflict)' })
@@ -190,8 +191,9 @@ export class AgentGroupsController {
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdateAgentGroupDto,
+    @Req() req: Request,
   ): Promise<AgentGroupResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
@@ -228,16 +230,16 @@ export class AgentGroupsController {
   @ApiResponse({
     status: 200,
     description: 'Agent groups updated',
-    type: AgentGroupsResponseDto,
-  })
+      })
   @ApiResponse({ status: 400, description: 'Invalid request or missing revision' })
   async updateMany(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: BulkUpdateAgentGroupsDto,
+    @Req() req: Request,
   ): Promise<AgentGroupsResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
@@ -281,8 +283,9 @@ export class AgentGroupsController {
     @Param('groupId') groupId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<void> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for deletes');
@@ -313,8 +316,9 @@ export class AgentGroupsController {
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: BulkDeleteAgentGroupsDto,
+    @Req() req: Request,
   ): Promise<void> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for deletes');
@@ -341,16 +345,24 @@ export class AgentGroupsController {
   async getRevision(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<{ revision: string | undefined }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = await this.agentGroupsService.getRevision(accountId, token);
     return { revision };
   }
 
   /**
-   * Extract token from authorization header
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
    */
-  private extractToken(authorization: string): string {
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

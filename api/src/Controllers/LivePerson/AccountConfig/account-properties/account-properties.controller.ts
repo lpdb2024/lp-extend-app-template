@@ -12,7 +12,9 @@ import {
   Param,
   Headers,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -49,8 +51,9 @@ export class AccountPropertiesController {
   async getAll(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<AccountPropertiesResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.accountPropertiesService.getAll(accountId, token);
 
@@ -76,8 +79,9 @@ export class AccountPropertiesController {
     @Param('accountId') accountId: string,
     @Param('propertyId') propertyId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<AccountPropertyResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.accountPropertiesService.getById(
       accountId,
@@ -112,8 +116,9 @@ export class AccountPropertiesController {
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: CreateAccountPropertyDto,
+    @Req() req: Request,
   ): Promise<AccountPropertyResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.accountPropertiesService.create(
       accountId,
@@ -151,8 +156,9 @@ export class AccountPropertiesController {
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdateAccountPropertyDto,
+    @Req() req: Request,
   ): Promise<AccountPropertyResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
@@ -172,7 +178,17 @@ export class AccountPropertiesController {
     };
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

@@ -14,7 +14,9 @@ import {
   Query,
   Headers,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -44,13 +46,14 @@ export class CampaignsController {
     description: 'Retrieve all campaigns for an account with optional filtering',
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiResponse({ status: 200, description: 'List of campaigns', type: CampaignListResponseDto })
+  @ApiResponse({ status: 200, description: 'List of campaigns' })
   async getCampaigns(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: CampaignQueryDto,
+    @Req() req: Request,
   ): Promise<CampaignListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.campaignsService.getCampaigns(
       accountId,
@@ -68,14 +71,15 @@ export class CampaignsController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'campaignId', description: 'Campaign ID' })
-  @ApiResponse({ status: 200, description: 'Campaign details', type: CampaignResponseDto })
+  @ApiResponse({ status: 200, description: 'Campaign details' })
   async getCampaignById(
     @Param('accountId') accountId: string,
     @Param('campaignId') campaignId: string,
     @Headers('authorization') authorization: string,
     @Query() query: CampaignQueryDto,
+    @Req() req: Request,
   ): Promise<CampaignResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.campaignsService.getCampaignById(
       accountId,
@@ -93,14 +97,15 @@ export class CampaignsController {
     description: 'Create a new campaign (initially unpublished)',
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiResponse({ status: 201, description: 'Created campaign', type: CampaignResponseDto })
+  @ApiResponse({ status: 201, description: 'Created campaign' })
   async createCampaign(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Body() body: CampaignCreateDto,
     @Query() query: CampaignQueryDto,
+    @Req() req: Request,
   ): Promise<CampaignResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.campaignsService.createCampaign(
       accountId,
@@ -120,7 +125,7 @@ export class CampaignsController {
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'campaignId', description: 'Campaign ID' })
   @ApiHeader({ name: 'If-Match', description: 'Current revision number', required: true })
-  @ApiResponse({ status: 200, description: 'Updated campaign', type: CampaignResponseDto })
+  @ApiResponse({ status: 200, description: 'Updated campaign' })
   async updateCampaign(
     @Param('accountId') accountId: string,
     @Param('campaignId') campaignId: string,
@@ -128,15 +133,16 @@ export class CampaignsController {
     @Headers('if-match') ifMatch: string,
     @Body() body: CampaignUpdateDto,
     @Query() query: CampaignQueryDto,
+    @Req() req: Request,
   ): Promise<CampaignResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     const response = await this.campaignsService.updateCampaign(
       accountId,
       campaignId,
       token,
-      body,
+      body as any,
       revision,
       query,
     );
@@ -158,8 +164,9 @@ export class CampaignsController {
     @Param('campaignId') campaignId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') ifMatch: string,
+    @Req() req: Request,
   ): Promise<{ success: boolean }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     await this.campaignsService.deleteCampaign(
@@ -182,12 +189,13 @@ export class CampaignsController {
     description: 'Get all campaigns with status=published',
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiResponse({ status: 200, description: 'List of published campaigns', type: CampaignListResponseDto })
+  @ApiResponse({ status: 200, description: 'List of published campaigns' })
   async getPublishedCampaigns(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<CampaignListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.campaignsService.getPublishedCampaigns(
       accountId,
@@ -205,14 +213,15 @@ export class CampaignsController {
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'campaignId', description: 'Campaign ID' })
   @ApiHeader({ name: 'If-Match', description: 'Current revision number', required: true })
-  @ApiResponse({ status: 200, description: 'Published campaign', type: CampaignResponseDto })
+  @ApiResponse({ status: 200, description: 'Published campaign' })
   async publishCampaign(
     @Param('accountId') accountId: string,
     @Param('campaignId') campaignId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') ifMatch: string,
+    @Req() req: Request,
   ): Promise<CampaignResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     const response = await this.campaignsService.publishCampaign(
@@ -233,14 +242,15 @@ export class CampaignsController {
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'campaignId', description: 'Campaign ID' })
   @ApiHeader({ name: 'If-Match', description: 'Current revision number', required: true })
-  @ApiResponse({ status: 200, description: 'Unpublished campaign', type: CampaignResponseDto })
+  @ApiResponse({ status: 200, description: 'Unpublished campaign' })
   async unpublishCampaign(
     @Param('accountId') accountId: string,
     @Param('campaignId') campaignId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') ifMatch: string,
+    @Req() req: Request,
   ): Promise<CampaignResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     const response = await this.campaignsService.unpublishCampaign(
@@ -253,7 +263,17 @@ export class CampaignsController {
     return { data: response.data };
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

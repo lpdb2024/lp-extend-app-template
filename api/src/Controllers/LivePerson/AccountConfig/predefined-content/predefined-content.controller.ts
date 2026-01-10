@@ -16,7 +16,9 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -46,13 +48,14 @@ export class PredefinedContentController {
     description: 'Retrieves all predefined content (canned responses) for the specified account',
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiResponse({ status: 200, description: 'List of predefined content', type: PredefinedContentListResponseDto })
+  @ApiResponse({ status: 200, description: 'List of predefined content' })
   async getAll(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: PredefinedContentQueryDto,
+    @Req() req: Request,
   ): Promise<PredefinedContentListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.predefinedContentService.getAll(accountId, token, {
       select: query.select,
@@ -77,8 +80,9 @@ export class PredefinedContentController {
   async getRevision(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<{ revision: string | undefined }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = await this.predefinedContentService.getRevision(accountId, token);
     return { revision };
   }
@@ -90,13 +94,14 @@ export class PredefinedContentController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'contentId', description: 'Predefined content ID' })
-  @ApiResponse({ status: 200, description: 'The predefined content', type: PredefinedContentResponseDto })
+  @ApiResponse({ status: 200, description: 'The predefined content' })
   async getById(
     @Param('accountId') accountId: string,
     @Param('contentId') contentId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<PredefinedContentResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.predefinedContentService.getById(accountId, contentId, token);
 
@@ -114,21 +119,22 @@ export class PredefinedContentController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: false })
-  @ApiResponse({ status: 201, description: 'Predefined content created', type: PredefinedContentResponseDto })
+  @ApiResponse({ status: 201, description: 'Predefined content created' })
   async create(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: CreatePredefinedContentDto | CreatePredefinedContentDto[],
+    @Req() req: Request,
   ): Promise<PredefinedContentResponseDto | PredefinedContentListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (Array.isArray(body)) {
-      const response = await this.predefinedContentService.createMany(accountId, token, body, revision);
+      const response = await this.predefinedContentService.createMany(accountId, token, body as any, revision);
       return { data: response.data, revision: response.revision };
     }
 
-    const response = await this.predefinedContentService.create(accountId, token, body, revision);
+    const response = await this.predefinedContentService.create(accountId, token, body as any, revision);
     return { data: response.data, revision: response.revision };
   }
 
@@ -140,21 +146,22 @@ export class PredefinedContentController {
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'contentId', description: 'Predefined content ID to update' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: true })
-  @ApiResponse({ status: 200, description: 'Predefined content updated', type: PredefinedContentResponseDto })
+  @ApiResponse({ status: 200, description: 'Predefined content updated' })
   async update(
     @Param('accountId') accountId: string,
     @Param('contentId') contentId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdatePredefinedContentDto,
+    @Req() req: Request,
   ): Promise<PredefinedContentResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
     }
 
-    const response = await this.predefinedContentService.update(accountId, contentId, token, body, revision);
+    const response = await this.predefinedContentService.update(accountId, contentId, token, body as any, revision);
     return { data: response.data, revision: response.revision };
   }
 
@@ -173,8 +180,9 @@ export class PredefinedContentController {
     @Param('contentId') contentId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<void> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for deletes');
@@ -183,7 +191,17 @@ export class PredefinedContentController {
     await this.predefinedContentService.remove(accountId, contentId, token, revision);
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

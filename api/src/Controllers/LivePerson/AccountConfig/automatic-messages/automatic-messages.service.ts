@@ -1,39 +1,67 @@
 /**
  * Automatic Messages Service
- * Business logic for LivePerson Automatic Messages API
+ * Handles all Automatic Messages API operations for LivePerson using the SDK
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { APIService } from '../../../APIService/api-service';
-import { LPDomainService } from '../../shared/lp-domain.service';
-import { LPBaseService } from '../../shared/lp-base.service';
+import { ConfigService } from '@nestjs/config';
 import {
-  LP_SERVICE_DOMAINS,
-  LP_API_VERSIONS,
-  LP_API_PATHS,
-} from '../../shared/lp-constants';
-import { ILPResponse, ILPRequestOptions } from '../../shared/lp-common.interfaces';
-import {
-  IAutomaticMessage,
-  ICreateAutomaticMessage,
-  IUpdateAutomaticMessage,
-  IDefaultAutomaticMessage,
-} from './automatic-messages.interfaces';
+  initializeSDK,
+  LPExtendSDK,
+  Scopes,
+  LPExtendSDKError,
+} from '@lpextend/client-sdk';
+import type {
+  LPAutomaticMessage,
+  CreateAutomaticMessageRequest,
+  UpdateAutomaticMessageRequest,
+} from '@lpextend/client-sdk';
+
+/**
+ * Response type for SDK operations
+ */
+export interface ILPResponse<T> {
+  data: T;
+  revision?: string;
+  headers?: Record<string, string>;
+}
 
 @Injectable()
-export class AutomaticMessagesService extends LPBaseService {
-  protected readonly serviceDomain = LP_SERVICE_DOMAINS.ACCOUNT_CONFIG_WRITE;
-  protected readonly defaultApiVersion = LP_API_VERSIONS.AUTOMATIC_MESSAGES;
+export class AutomaticMessagesService {
+  private shellBaseUrl: string;
+  private appId: string;
 
   constructor(
-    apiService: APIService,
-    domainService: LPDomainService,
     @InjectPinoLogger(AutomaticMessagesService.name)
-    logger: PinoLogger,
+    private readonly logger: PinoLogger,
+    private readonly configService: ConfigService,
   ) {
-    super(apiService, domainService, logger);
     this.logger.setContext(AutomaticMessagesService.name);
+    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
+    this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
+  }
+
+  /**
+   * Create SDK instance for the given account/token
+   */
+  private async getSDK(accountId: string, token: string): Promise<LPExtendSDK> {
+    try {
+      const accessToken = token.replace('Bearer ', '');
+      return await initializeSDK({
+        appId: this.appId,
+        accountId,
+        accessToken,
+        shellBaseUrl: this.shellBaseUrl,
+        scopes: [Scopes.AUTOMATIC_MESSAGES],
+        debug: this.configService.get<string>('NODE_ENV') !== 'production',
+      });
+    } catch (error) {
+      if (error instanceof LPExtendSDKError) {
+        this.logger.error({ error: error.message, code: error.code }, 'SDK initialization failed');
+      }
+      throw error;
+    }
   }
 
   /**
@@ -48,25 +76,11 @@ export class AutomaticMessagesService extends LPBaseService {
       skillId?: number;
       messageEventId?: string;
     },
-  ): Promise<ILPResponse<IAutomaticMessage[]>> {
-    const path = LP_API_PATHS.AUTOMATIC_MESSAGES.BASE(accountId);
-
-    const additionalParams: Record<string, string> = {};
-    if (options?.skillId !== undefined) {
-      additionalParams.skill_id = String(options.skillId);
-    }
-    if (options?.messageEventId) {
-      additionalParams.message_event_id = options.messageEventId;
-    }
-
-    const requestOptions: ILPRequestOptions = {
-      select: options?.select || '$all',
-      includeDeleted: options?.includeDeleted,
-      source: 'ccui',
-      additionalParams: Object.keys(additionalParams).length > 0 ? additionalParams : undefined,
-    };
-
-    return this.get<IAutomaticMessage[]>(accountId, path, token, requestOptions);
+  ): Promise<ILPResponse<LPAutomaticMessage[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const response = await sdk.automaticMessages.getAll();
+    this.logger.debug({ accountId, count: response.data?.length }, 'Fetched automatic messages');
+    return response;
   }
 
   /**
@@ -76,31 +90,9 @@ export class AutomaticMessagesService extends LPBaseService {
     accountId: string,
     messageId: string | number,
     token: string,
-  ): Promise<ILPResponse<IAutomaticMessage>> {
-    const path = LP_API_PATHS.AUTOMATIC_MESSAGES.BY_ID(accountId, String(messageId));
-
-    const requestOptions: ILPRequestOptions = {
-      select: '$all',
-      source: 'ccui',
-    };
-
-    return this.get<IAutomaticMessage>(accountId, path, token, requestOptions);
-  }
-
-  /**
-   * Get default automatic messages (system defaults)
-   */
-  async getDefaults(
-    accountId: string,
-    token: string,
-  ): Promise<ILPResponse<IDefaultAutomaticMessage[]>> {
-    const path = LP_API_PATHS.AUTOMATIC_MESSAGES.DEFAULTS(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-    };
-
-    return this.get<IDefaultAutomaticMessage[]>(accountId, path, token, requestOptions);
+  ): Promise<ILPResponse<LPAutomaticMessage>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.automaticMessages.getById(Number(messageId));
   }
 
   /**
@@ -109,17 +101,11 @@ export class AutomaticMessagesService extends LPBaseService {
   async create(
     accountId: string,
     token: string,
-    data: ICreateAutomaticMessage,
+    data: CreateAutomaticMessageRequest,
     revision?: string,
-  ): Promise<ILPResponse<IAutomaticMessage>> {
-    const path = LP_API_PATHS.AUTOMATIC_MESSAGES.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.post<IAutomaticMessage>(accountId, path, data, token, requestOptions);
+  ): Promise<ILPResponse<LPAutomaticMessage>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.automaticMessages.create(data);
   }
 
   /**
@@ -128,17 +114,18 @@ export class AutomaticMessagesService extends LPBaseService {
   async createMany(
     accountId: string,
     token: string,
-    data: ICreateAutomaticMessage[],
+    data: CreateAutomaticMessageRequest[],
     revision?: string,
-  ): Promise<ILPResponse<IAutomaticMessage[]>> {
-    const path = LP_API_PATHS.AUTOMATIC_MESSAGES.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.post<IAutomaticMessage[]>(accountId, path, data, token, requestOptions);
+  ): Promise<ILPResponse<LPAutomaticMessage[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const results: LPAutomaticMessage[] = [];
+    let lastRevision: string | undefined;
+    for (const message of data) {
+      const response = await sdk.automaticMessages.create(message);
+      results.push(response.data);
+      lastRevision = response.revision;
+    }
+    return { data: results, revision: lastRevision };
   }
 
   /**
@@ -148,17 +135,11 @@ export class AutomaticMessagesService extends LPBaseService {
     accountId: string,
     messageId: string | number,
     token: string,
-    data: IUpdateAutomaticMessage,
-    revision: string,
-  ): Promise<ILPResponse<IAutomaticMessage>> {
-    const path = LP_API_PATHS.AUTOMATIC_MESSAGES.BY_ID(accountId, String(messageId));
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.put<IAutomaticMessage>(accountId, path, data, token, requestOptions);
+    data: UpdateAutomaticMessageRequest,
+    revision?: string,
+  ): Promise<ILPResponse<LPAutomaticMessage>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.automaticMessages.update(Number(messageId), data, revision);
   }
 
   /**
@@ -167,17 +148,18 @@ export class AutomaticMessagesService extends LPBaseService {
   async updateMany(
     accountId: string,
     token: string,
-    data: (IUpdateAutomaticMessage & { id: number })[],
-    revision: string,
-  ): Promise<ILPResponse<IAutomaticMessage[]>> {
-    const path = LP_API_PATHS.AUTOMATIC_MESSAGES.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.put<IAutomaticMessage[]>(accountId, path, data, token, requestOptions);
+    data: (UpdateAutomaticMessageRequest & { id: number })[],
+    revision?: string,
+  ): Promise<ILPResponse<LPAutomaticMessage[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const results: LPAutomaticMessage[] = [];
+    let lastRevision = revision;
+    for (const message of data) {
+      const response = await sdk.automaticMessages.update(message.id, message, lastRevision);
+      results.push(response.data);
+      lastRevision = response.revision;
+    }
+    return { data: results, revision: lastRevision };
   }
 
   /**
@@ -187,16 +169,10 @@ export class AutomaticMessagesService extends LPBaseService {
     accountId: string,
     messageId: string | number,
     token: string,
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.AUTOMATIC_MESSAGES.BY_ID(accountId, String(messageId));
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.delete<void>(accountId, path, token, requestOptions);
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.automaticMessages.delete(Number(messageId), revision);
   }
 
   /**
@@ -206,26 +182,22 @@ export class AutomaticMessagesService extends LPBaseService {
     accountId: string,
     token: string,
     ids: number[],
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.AUTOMATIC_MESSAGES.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-      additionalParams: {
-        ids: ids.join(','),
-      },
-    };
-
-    return this.delete<void>(accountId, path, token, requestOptions);
+    const sdk = await this.getSDK(accountId, token);
+    let lastRevision = revision;
+    for (const id of ids) {
+      const response = await sdk.automaticMessages.delete(id, lastRevision);
+      lastRevision = response.revision;
+    }
+    return { data: undefined, revision: lastRevision };
   }
 
   /**
    * Get the current revision for automatic messages
    */
   async getRevision(accountId: string, token: string): Promise<string | undefined> {
-    const response = await this.getAll(accountId, token, { select: 'id' });
+    const response = await this.getAll(accountId, token);
     return response.revision;
   }
 }

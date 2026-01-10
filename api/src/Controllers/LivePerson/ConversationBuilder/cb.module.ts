@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConversationBuilderController } from './cb.controller';
 import { ConversationBuilderService } from './cb.service';
 import { HttpModule } from '@nestjs/axios';
-import { HelperModule } from '../HelperService/helper-service.module';
+import { HelperModule } from '../../HelperService/helper-service.module';
 
 @Module({
   controllers: [ConversationBuilderController],

@@ -16,15 +16,21 @@ export interface AuthTokenPayload {
   expiresAt: number;
 }
 
+export interface ShellSessionParams {
+  shellToken?: string;
+  accountId?: string;
+  shellOrigin?: string;
+}
+
 // Detect if running in shell iframe
 function isRunningInShell(): boolean {
   try {
     // Check if in iframe
     if (window.parent === window) return false;
 
-    // Check for shell query param
+    // Check for shell query param or shell token in URL
     const params = new URLSearchParams(window.location.search);
-    return params.get('shell') === 'true';
+    return params.get('shell') === 'true' || params.has('shellToken');
   } catch {
     return false;
   }
@@ -36,12 +42,31 @@ function getShellOrigin(): string {
   return params.get('shellOrigin') || import.meta.env.VITE_SHELL_ORIGIN || 'http://localhost:3000';
 }
 
+// Get shell session params from URL (passed by shell when loading child app)
+function getShellSessionParams(): ShellSessionParams {
+  const params = new URLSearchParams(window.location.search);
+  const result: ShellSessionParams = {};
+
+  const shellToken = params.get('shellToken');
+  if (shellToken) result.shellToken = shellToken;
+
+  const accountId = params.get('accountId');
+  if (accountId) result.accountId = accountId;
+
+  const shellOrigin = params.get('shellOrigin');
+  if (shellOrigin) result.shellOrigin = shellOrigin;
+
+  return result;
+}
+
 export function useShellBridge(config: ShellBridgeConfig) {
   const { appId } = config;
   const shellOrigin = config.shellOrigin || getShellOrigin();
+  const sessionParams = getShellSessionParams();
 
   const inShellMode = ref(isRunningInShell());
-  const shellToken = ref<string | null>(null);
+  const shellToken = ref<string | null>(sessionParams.shellToken || null);
+  const accountId = ref<string | null>(sessionParams.accountId || null);
   const tokenExpiresAt = ref<number>(0);
   const isConnected = ref(false);
   const error = ref<string | null>(null);
@@ -219,7 +244,16 @@ export function useShellBridge(config: ShellBridgeConfig) {
 
     isConnected.value = true;
 
-    // Request initial auth
+    // If shell token was provided via URL, we're already authenticated
+    if (shellToken.value) {
+      console.log('[ShellBridge] Using shell token from URL params');
+      // Set a reasonable expiry (15 minutes from now, matching shell token TTL)
+      tokenExpiresAt.value = Date.now() + 15 * 60 * 1000;
+      scheduleTokenRefresh(tokenExpiresAt.value);
+      return;
+    }
+
+    // Request initial auth via postMessage
     requestAuth().catch((err) => {
       console.error('[ShellBridge] Initial auth request failed:', err);
       error.value = err.message;
@@ -250,6 +284,7 @@ export function useShellBridge(config: ShellBridgeConfig) {
     isAuthenticated,
     isConnected,
     shellToken,
+    accountId,
     tokenExpiresAt,
     error,
 
@@ -260,5 +295,6 @@ export function useShellBridge(config: ShellBridgeConfig) {
 
     // Utility
     sendToShell,
+    getShellSessionParams: () => sessionParams,
   };
 }

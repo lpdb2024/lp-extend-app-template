@@ -14,7 +14,9 @@ import {
   Query,
   Headers,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -49,8 +51,9 @@ export class WindowConfigurationsController {
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: WindowConfigurationQueryDto,
+    @Req() req: Request,
   ): Promise<WindowConfigurationListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.windowConfigurationsService.getWindowConfigurations(
       accountId,
@@ -74,8 +77,9 @@ export class WindowConfigurationsController {
     @Param('windowId') windowId: string,
     @Headers('authorization') authorization: string,
     @Query() query: WindowConfigurationQueryDto,
+    @Req() req: Request,
   ): Promise<WindowConfigurationResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.windowConfigurationsService.getWindowConfigurationById(
       accountId,
@@ -99,8 +103,9 @@ export class WindowConfigurationsController {
     @Headers('authorization') authorization: string,
     @Body() body: WindowConfigurationCreateDto,
     @Query() query: WindowConfigurationQueryDto,
+    @Req() req: Request,
   ): Promise<WindowConfigurationResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.windowConfigurationsService.createWindowConfiguration(
       accountId,
@@ -128,8 +133,9 @@ export class WindowConfigurationsController {
     @Headers('if-match') ifMatch: string,
     @Body() body: WindowConfigurationUpdateDto,
     @Query() query: WindowConfigurationQueryDto,
+    @Req() req: Request,
   ): Promise<WindowConfigurationResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     const response = await this.windowConfigurationsService.updateWindowConfiguration(
@@ -158,8 +164,9 @@ export class WindowConfigurationsController {
     @Param('windowId') windowId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') ifMatch: string,
+    @Req() req: Request,
   ): Promise<{ success: boolean }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     await this.windowConfigurationsService.deleteWindowConfiguration(
@@ -172,7 +179,17 @@ export class WindowConfigurationsController {
     return { success: true };
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

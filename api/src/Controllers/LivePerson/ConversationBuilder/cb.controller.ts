@@ -1,6 +1,6 @@
 import { Controller, Get, Headers, Param, Post, Body, Put, ForbiddenException, Query } from '@nestjs/common';
 import { ConversationBuilderService } from './cb.service'
-import { API_ROUTES } from '../../constants/constants';
+import { API_ROUTES } from '../../../constants/constants';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -13,7 +13,7 @@ import {
   AddBotAgentDto,
 } from './cb.dto'
 import { VerifyUser } from 'src/Firebase/auth.service';
-import { LpToken } from '../CCIDP/cc-idp.interfaces';
+import type { SentinelLpToken } from '@lpextend/client-sdk';
 
 @ApiTags('Conversation Builder')
 @ApiBearerAuth()
@@ -45,7 +45,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/bots/:botId/logs')
   @ApiOperation({ summary: 'Get bot debug logs' })
   async getBotLogs(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('botId') botId: string
   ): Promise<any> | null {
@@ -62,7 +62,7 @@ export class ConversationBuilderController {
   @ApiQuery({ name: 'size', required: false, type: Number })
   @ApiQuery({ name: 'expand-all', required: false, type: Boolean })
   async getBotGroups(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Query('page') page: number = 1,
     @Query('size') size: number = 100,
@@ -81,7 +81,7 @@ export class ConversationBuilderController {
   @ApiQuery({ name: 'page', required: false, type: Number })
   @ApiQuery({ name: 'size', required: false, type: Number })
   async getBotsByGroup(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Query('bot-group-id') botGroupId: string = 'un_assigned',
     @Query('sort-by') sortBy: string = 'botName:asc',
@@ -98,7 +98,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/chatbots/:chatBotId')
   @ApiOperation({ summary: 'Get chatbot details by ID' })
   async getChatbotById(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('chatBotId') chatBotId: string
   ): Promise<any> {
@@ -112,7 +112,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/bots/:botId/dialogs')
   @ApiOperation({ summary: 'Get all dialogs for a bot' })
   async getDialogs(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('botId') botId: string
   ): Promise<any> {
@@ -126,7 +126,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/bots/:botId/interactions')
   @ApiOperation({ summary: 'Get all interactions for a bot' })
   async getInteractions(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('botId') botId: string
   ): Promise<any> {
@@ -140,7 +140,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/chatbots/:chatBotId/responders')
   @ApiOperation({ summary: 'Get all responders/integrations for a chatbot' })
   async getResponders(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('chatBotId') chatBotId: string
   ): Promise<any> {
@@ -154,7 +154,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/nlu/domains')
   @ApiOperation({ summary: 'Get all NLU domains' })
   async getNLUDomains(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string
   ): Promise<any> {
     if (!lpToken?.cbOrg || !lpToken?.cbToken) {
@@ -166,7 +166,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/nlu/domains/:domainId/intents')
   @ApiOperation({ summary: 'Get intents for a domain' })
   async getDomainIntents(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('domainId') domainId: string
   ): Promise<any> {
@@ -181,7 +181,7 @@ export class ConversationBuilderController {
   @ApiOperation({ summary: 'Get all knowledge bases' })
   @ApiQuery({ name: 'includeMetrics', required: false, type: Boolean })
   async getKnowledgeBases(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Query('includeMetrics') includeMetrics: boolean = true
   ): Promise<any> {
@@ -204,7 +204,7 @@ export class ConversationBuilderController {
   @ApiOperation({ summary: 'Get knowledge base by ID' })
   @ApiQuery({ name: 'includeMetrics', required: false, type: Boolean })
   async getKnowledgeBaseById(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('kbId') kbId: string,
     @Query('includeMetrics') includeMetrics: boolean = true
@@ -219,7 +219,7 @@ export class ConversationBuilderController {
   @ApiOperation({ summary: 'Get content sources for a knowledge base' })
   @ApiQuery({ name: 'includeKmsRecipeDetails', required: false, type: Boolean })
   async getKBContentSources(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('kbId') kbId: string,
     @Query('includeKmsRecipeDetails') includeKmsRecipeDetails: boolean = true
@@ -234,7 +234,7 @@ export class ConversationBuilderController {
   @ApiOperation({ summary: 'Get articles for a knowledge base' })
   @ApiQuery({ name: 'includeConflictingDetails', required: false, type: Boolean })
   async getKBArticles(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('kbId') kbId: string,
     @Query('includeConflictingDetails') includeConflictingDetails: boolean = true,
@@ -261,7 +261,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/bots/:botId/status')
   @ApiOperation({ summary: 'Get bot instance status' })
   async getBotInstanceStatus(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('botId') botId: string
   ): Promise<any> {
@@ -274,7 +274,7 @@ export class ConversationBuilderController {
   @Put('/:accountId/bots/:botId/start')
   @ApiOperation({ summary: 'Start a bot agent' })
   async startBotAgent(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('botId') botId: string,
     @Body() body: BotAgentActionDto
@@ -288,7 +288,7 @@ export class ConversationBuilderController {
   @Put('/:accountId/bots/:botId/stop')
   @ApiOperation({ summary: 'Stop a bot agent' })
   async stopBotAgent(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('botId') botId: string,
     @Body() body: BotAgentActionDto
@@ -302,7 +302,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/bot-users')
   @ApiOperation({ summary: 'Get all bot users for account' })
   async getBotUsers(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string
   ): Promise<any> {
     if (!lpToken?.cbOrg || !lpToken?.cbToken) {
@@ -315,7 +315,7 @@ export class ConversationBuilderController {
   @ApiOperation({ summary: 'Add bot agent to LP user' })
   @ApiQuery({ name: 'chatBotId', required: true, type: String })
   async addBotAgent(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('lpUserId') lpUserId: string,
     @Query('chatBotId') chatBotId: string,
@@ -331,7 +331,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/bots/:botId/global-functions')
   @ApiOperation({ summary: 'Get bot global functions' })
   async getGlobalFunctions(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('botId') botId: string
   ): Promise<any> {
@@ -345,7 +345,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/bot-environment')
   @ApiOperation({ summary: 'Get bot environment variables' })
   async getBotEnvironment(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string
   ): Promise<any> {
     if (!lpToken?.cbOrg || !lpToken?.cbToken) {
@@ -358,7 +358,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/lp-skills')
   @ApiOperation({ summary: 'Get LP skills for account' })
   async getLPSkills(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string
   ): Promise<any> {
     if (!lpToken?.cbOrg || !lpToken?.cbToken) {
@@ -371,7 +371,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/credentials')
   @ApiOperation({ summary: 'Get credentials for organization' })
   async getCredentials(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string
   ): Promise<any> {
     if (!lpToken?.cbOrg || !lpToken?.cbToken) {
@@ -384,7 +384,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/chatbots/:chatBotId/lp-app-credentials')
   @ApiOperation({ summary: 'Get LP app credentials for chatbot' })
   async getLPAppCredentials(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Param('chatBotId') chatBotId: string
   ): Promise<any> {
@@ -398,7 +398,7 @@ export class ConversationBuilderController {
   @Get('/:accountId/dialog-templates')
   @ApiOperation({ summary: 'Get dialog template summary' })
   async getDialogTemplateSummary(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string
   ): Promise<any> {
     if (!lpToken?.cbOrg || !lpToken?.cbToken) {
@@ -412,7 +412,7 @@ export class ConversationBuilderController {
   @ApiOperation({ summary: 'Get all bot agents status' })
   @ApiQuery({ name: 'environment', required: false, type: String })
   async getBotAgentsStatus(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Query('environment') environment: string = 'PRODUCTION'
   ): Promise<any> {
@@ -427,7 +427,7 @@ export class ConversationBuilderController {
   @ApiOperation({ summary: 'Get PCS bots status' })
   @ApiQuery({ name: 'showBotsData', required: false, type: Boolean })
   async getPCSBotsStatus(
-    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: LpToken,
+    @VerifyUser({ roles: ['OWNER', 'ADMIN'] }) lpToken: SentinelLpToken,
     @Param('accountId') accountId: string,
     @Query('showBotsData') showBotsData: boolean = true
   ): Promise<any> {

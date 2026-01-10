@@ -2,6 +2,20 @@
  * Proactive Messaging Service
  * Business logic for LivePerson Proactive Messaging API
  * Domain: proactive (computed from region)
+ *
+ * FUTURE WORK: Credential Handling
+ * ================================
+ * Currently, proactive credentials (client_id, client_secret) are retrieved from
+ * the app's credential storage via UsersService.getCredentials(). This requires
+ * users to manually configure credentials in App Settings.
+ *
+ * Planned change: Move to a login-based flow where:
+ * 1. User authenticates via LP SSO/Sentinel
+ * 2. Proactive credentials are included in the auth token data
+ * 3. Credentials are passed to SDK methods directly from auth context
+ *
+ * This will eliminate the need for separate credential storage and simplify
+ * the proactive API integration.
  */
 
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
@@ -55,9 +69,13 @@ export class ProactiveMessagingService {
   /**
    * Get AppJWT for Proactive Messaging API calls
    *
-   * Flow:
+   * FUTURE WORK: This method currently retrieves credentials from app storage.
+   * Will be refactored to receive credentials from auth context (login flow).
+   * See file header for details on planned credential handling changes.
+   *
+   * Current Flow:
    * 1. Check if AppJWT is cached (handled by HelperService)
-   * 2. Fetch proactive credentials from Firestore
+   * 2. Fetch proactive credentials from app credential storage
    * 3. Decrypt credentials
    * 4. Exchange for AppJWT via sentinel
    * 5. Cache and return token
@@ -69,7 +87,8 @@ export class ProactiveMessagingService {
     const fn = 'getProactiveAppJwt';
 
     try {
-      // Get credentials from Firestore (already decrypted by UsersService)
+      // FUTURE WORK: Replace credential retrieval from storage with auth context
+      // Credentials will be passed in from login flow instead of fetched here
       const credentials = await this.usersService.getCredentials(accountId);
 
       console.info('Proactive credentials:', credentials)

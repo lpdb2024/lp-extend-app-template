@@ -9,7 +9,7 @@ import * as lpm from 'lp-messaging-sdk';
 import { HttpService } from '@nestjs/axios';
 import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosResponse, AxiosError } from 'axios';
-import { HelperService } from '../HelperService/helper-service.service';
+import { HelperService } from '../../HelperService/helper-service.service';
 import {
   SkillDto,
   AccountConfigDto,
@@ -31,9 +31,10 @@ import {
   MessageScore,
 } from './conversation-cloud.interfaces';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { AccountConfigService } from '../AccountConfig/account-config.service';
+
 const ctx = helper.ctx;
 const context = 'ConversationCloudService';
+
 @Injectable()
 export class ConversationCloudService {
   constructor(
@@ -41,7 +42,6 @@ export class ConversationCloudService {
     private readonly logger: PinoLogger,
     private readonly httpService: HttpService,
     private readonly helperService: HelperService,
-    private readonly accountConfigService: AccountConfigService,
   ) {}
 
   async getPrompts(accountId: string, token: string): Promise<PromptDto[]> {
@@ -1193,6 +1193,17 @@ export class ConversationCloudService {
     }
   }
 
+  /**
+   * Deploy bot to handle conversation actions
+   *
+   * NOTE: Service worker configuration must be provided in the request body.
+   * Service workers are app-specific (stored in Firestore) and not part of the SDK.
+   * The caller is responsible for retrieving service worker config before calling this method.
+   *
+   * @param token - LP auth token
+   * @param accountId - LP account ID
+   * @param body - Request body containing conversations, action, and serviceWorkerConfig
+   */
   async deployBot(token: string, accountId: string, body: any): Promise<any> {
     interface AuthData {
       username: string;
@@ -1208,16 +1219,15 @@ export class ConversationCloudService {
     }
 
     try {
-      const { conversations, action } = body;
-      const serviceWorkerConfig =
-        await this.accountConfigService.getServiceWorkers(accountId, token);
-      // console.info('serviceWorkerConfig', serviceWorkerConfig)
+      const { conversations, action, serviceWorkerConfig } = body;
+
+      // Service worker config must be provided by the caller (from app's Firestore)
       if (!serviceWorkerConfig || serviceWorkerConfig.length === 0) {
-        throw new Error('Service Worker not found');
+        throw new Error('Service Worker configuration not provided. Please pass serviceWorkerConfig in the request body.');
       }
       const { user_id } = serviceWorkerConfig[0];
       if (!user_id) {
-        throw new Error('User ID not found');
+        throw new Error('User ID not found in service worker configuration');
       }
       const user = await this.getOneUser(accountId, user_id, token);
       console.info('user', user);

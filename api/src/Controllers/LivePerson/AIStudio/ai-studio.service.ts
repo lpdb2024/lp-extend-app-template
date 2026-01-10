@@ -6,7 +6,7 @@ import {
 import { HttpService } from '@nestjs/axios';
 import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosError } from 'axios';
-import { HelperService } from '../HelperService/helper-service.service';
+import { HelperService } from '../../HelperService/helper-service.service';
 import { helper } from 'src/utils/HelperService';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { createPromptlessFlow } from './promptlessFlow';

@@ -1,41 +1,79 @@
 /**
  * Engagements Service
- * Business logic for LivePerson Engagements API
+ * Handles all Engagements API operations for LivePerson using the SDK
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { APIService } from '../../../APIService/api-service';
-import { LPDomainService } from '../../shared/lp-domain.service';
-import { LPBaseService } from '../../shared/lp-base.service';
+import { ConfigService } from '@nestjs/config';
 import {
-  LP_SERVICE_DOMAINS,
-  LP_API_VERSIONS,
-  LP_API_PATHS,
-} from '../../shared/lp-constants';
-import { ILPResponse } from '../../shared/lp-common.interfaces';
-import {
-  IEngagement,
-  IEngagementCreateRequest,
-  IEngagementUpdateRequest,
-  IEngagementPartialUpdate,
-  IEngagementQuery,
-} from './engagements.interfaces';
+  initializeSDK,
+  LPExtendSDK,
+  Scopes,
+  LPExtendSDKError,
+} from '@lpextend/client-sdk';
+import type {
+  LPEngagement,
+  CreateEngagementRequest,
+  UpdateEngagementRequest,
+} from '@lpextend/client-sdk';
+
+/**
+ * Response type for SDK operations
+ */
+export interface ILPResponse<T> {
+  data: T;
+  revision?: string;
+  headers?: Record<string, string>;
+}
+
+/**
+ * Engagement query options
+ */
+export interface IEngagementQuery {
+  v?: string;
+  fields?: string | string[];
+  field_set?: string;
+  select?: string;
+  filter?: string;
+  include_deleted?: boolean;
+}
 
 @Injectable()
-export class EngagementsService extends LPBaseService {
-  protected readonly serviceDomain = LP_SERVICE_DOMAINS.ACCOUNT_CONFIG_READ;
-  protected readonly writeDomain = LP_SERVICE_DOMAINS.ACCOUNT_CONFIG_WRITE;
-  protected readonly defaultApiVersion = LP_API_VERSIONS.CAMPAIGNS;
+export class EngagementsService {
+  private shellBaseUrl: string;
+  private appId: string;
 
   constructor(
-    apiService: APIService,
-    domainService: LPDomainService,
     @InjectPinoLogger(EngagementsService.name)
-    logger: PinoLogger,
+    private readonly logger: PinoLogger,
+    private readonly configService: ConfigService,
   ) {
-    super(apiService, domainService, logger);
     this.logger.setContext(EngagementsService.name);
+    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
+    this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
+  }
+
+  /**
+   * Create SDK instance for the given account/token
+   */
+  private async getSDK(accountId: string, token: string): Promise<LPExtendSDK> {
+    try {
+      const accessToken = token.replace('Bearer ', '');
+      return await initializeSDK({
+        appId: this.appId,
+        accountId,
+        accessToken,
+        shellBaseUrl: this.shellBaseUrl,
+        scopes: [Scopes.ENGAGEMENTS, Scopes.CAMPAIGNS],
+        debug: this.configService.get<string>('NODE_ENV') !== 'production',
+      });
+    } catch (error) {
+      if (error instanceof LPExtendSDKError) {
+        this.logger.error({ error: error.message, code: error.code }, 'SDK initialization failed');
+      }
+      throw error;
+    }
   }
 
   /**
@@ -46,15 +84,11 @@ export class EngagementsService extends LPBaseService {
     campaignId: string,
     token: string,
     query?: IEngagementQuery,
-  ): Promise<ILPResponse<IEngagement[]>> {
-    const path = LP_API_PATHS.ENGAGEMENTS.BASE(accountId, campaignId);
-    const additionalParams = this.buildQueryParams(query);
-
-    this.logger.info({ accountId, campaignId }, 'Getting all engagements for campaign');
-
-    return this.get<IEngagement[]>(accountId, path, token, {
-      additionalParams,
-    });
+  ): Promise<ILPResponse<LPEngagement[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const response = await sdk.engagements.getByCampaign(Number(campaignId));
+    this.logger.info({ accountId, campaignId, count: response.data?.length }, 'Getting all engagements for campaign');
+    return response;
   }
 
   /**
@@ -66,18 +100,10 @@ export class EngagementsService extends LPBaseService {
     engagementId: string,
     token: string,
     query?: IEngagementQuery,
-  ): Promise<ILPResponse<IEngagement>> {
-    const path = LP_API_PATHS.ENGAGEMENTS.BY_ID(accountId, campaignId, engagementId);
-    const additionalParams = this.buildQueryParams(query);
-
-    this.logger.info(
-      { accountId, campaignId, engagementId },
-      'Getting engagement by ID',
-    );
-
-    return this.get<IEngagement>(accountId, path, token, {
-      additionalParams,
-    });
+  ): Promise<ILPResponse<LPEngagement>> {
+    const sdk = await this.getSDK(accountId, token);
+    this.logger.info({ accountId, campaignId, engagementId }, 'Getting engagement by ID');
+    return sdk.engagements.getById(Number(campaignId), Number(engagementId));
   }
 
   /**
@@ -87,49 +113,31 @@ export class EngagementsService extends LPBaseService {
     accountId: string,
     campaignId: string,
     token: string,
-    engagement: IEngagementCreateRequest,
+    engagement: CreateEngagementRequest,
     query?: IEngagementQuery,
-  ): Promise<ILPResponse<IEngagement>> {
-    const path = LP_API_PATHS.ENGAGEMENTS.BASE(accountId, campaignId);
-    const additionalParams = this.buildQueryParams(query);
-
-    this.logger.info(
-      { accountId, campaignId, engagementName: engagement.name },
-      'Creating engagement',
-    );
-
-    return this.post<IEngagement>(accountId, path, engagement, token, {
-      additionalParams,
-      useWriteDomain: true,
-    });
+  ): Promise<ILPResponse<LPEngagement>> {
+    const sdk = await this.getSDK(accountId, token);
+    this.logger.info({ accountId, campaignId, engagementName: engagement.name }, 'Creating engagement');
+    // Ensure campaignId is set on the engagement
+    const engagementData = { ...engagement, campaignId: Number(campaignId) };
+    return sdk.engagements.create(engagementData);
   }
 
   /**
    * Update an engagement
-   * Accepts either full or partial update payload
    */
   async updateEngagement(
     accountId: string,
     campaignId: string,
     engagementId: string,
     token: string,
-    engagement: IEngagementUpdateRequest | IEngagementPartialUpdate,
-    revision: string,
+    engagement: UpdateEngagementRequest,
+    revision?: string,
     query?: IEngagementQuery,
-  ): Promise<ILPResponse<IEngagement>> {
-    const path = LP_API_PATHS.ENGAGEMENTS.BY_ID(accountId, campaignId, engagementId);
-    const additionalParams = this.buildQueryParams(query);
-
-    this.logger.info(
-      { accountId, campaignId, engagementId },
-      'Updating engagement',
-    );
-
-    return this.put<IEngagement>(accountId, path, engagement, token, {
-      additionalParams,
-      revision,
-      useWriteDomain: true,
-    });
+  ): Promise<ILPResponse<LPEngagement>> {
+    const sdk = await this.getSDK(accountId, token);
+    this.logger.info({ accountId, campaignId, engagementId }, 'Updating engagement');
+    return sdk.engagements.update(Number(campaignId), Number(engagementId), engagement, revision);
   }
 
   /**
@@ -140,58 +148,11 @@ export class EngagementsService extends LPBaseService {
     campaignId: string,
     engagementId: string,
     token: string,
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.ENGAGEMENTS.BY_ID(accountId, campaignId, engagementId);
-    const additionalParams: Record<string, string> = {
-      v: this.defaultApiVersion,
-    };
-
-    this.logger.info(
-      { accountId, campaignId, engagementId },
-      'Deleting engagement',
-    );
-
-    return this.delete<void>(accountId, path, token, {
-      additionalParams,
-      revision,
-      useWriteDomain: true,
-    });
-  }
-
-  /**
-   * Build query parameters from query object
-   */
-  private buildQueryParams(query?: IEngagementQuery): Record<string, string> {
-    const params: Record<string, string> = {
-      v: query?.v || this.defaultApiVersion,
-    };
-
-    if (query?.fields) {
-      if (Array.isArray(query.fields)) {
-        params.fields = query.fields.join(',');
-      } else {
-        params.fields = query.fields;
-      }
-    }
-
-    if (query?.field_set) {
-      params.field_set = query.field_set;
-    }
-
-    if (query?.select) {
-      params.select = query.select;
-    }
-
-    if (query?.filter) {
-      params.filter = query.filter;
-    }
-
-    if (query?.include_deleted) {
-      params.include_deleted = 'true';
-    }
-
-    return params;
+    const sdk = await this.getSDK(accountId, token);
+    this.logger.info({ accountId, campaignId, engagementId }, 'Deleting engagement');
+    return sdk.engagements.delete(Number(campaignId), Number(engagementId), revision);
   }
 
   // ============================================
@@ -205,36 +166,25 @@ export class EngagementsService extends LPBaseService {
     accountId: string,
     campaignId: string,
     token: string,
-  ): Promise<ILPResponse<IEngagement[]>> {
-    return this.getEngagements(accountId, campaignId, token, {
-      field_set: 'all',
-      filter: 'enabled==true',
-    });
+  ): Promise<ILPResponse<LPEngagement[]>> {
+    const response = await this.getEngagements(accountId, campaignId, token);
+    const enabledEngagements = response.data.filter(e => e.status === 'active');
+    return { ...response, data: enabledEngagements };
   }
 
   /**
    * Perform a partial update on an engagement
-   * Gets current engagement first, merges changes, then updates
    */
   async partialUpdateEngagement(
     accountId: string,
     campaignId: string,
     engagementId: string,
     token: string,
-    changes: IEngagementPartialUpdate,
-    revision: string,
-  ): Promise<ILPResponse<IEngagement>> {
-    const path = LP_API_PATHS.ENGAGEMENTS.BY_ID(accountId, campaignId, engagementId);
-
-    this.logger.info(
-      { accountId, campaignId, engagementId, changes },
-      'Partially updating engagement',
-    );
-
-    return this.put<IEngagement>(accountId, path, changes, token, {
-      revision,
-      useWriteDomain: true,
-    });
+    changes: UpdateEngagementRequest,
+    revision?: string,
+  ): Promise<ILPResponse<LPEngagement>> {
+    this.logger.info({ accountId, campaignId, engagementId, changes }, 'Partially updating engagement');
+    return this.updateEngagement(accountId, campaignId, engagementId, token, changes, revision);
   }
 
   /**
@@ -245,16 +195,9 @@ export class EngagementsService extends LPBaseService {
     campaignId: string,
     engagementId: string,
     token: string,
-    revision: string,
-  ): Promise<ILPResponse<IEngagement>> {
-    return this.partialUpdateEngagement(
-      accountId,
-      campaignId,
-      engagementId,
-      token,
-      { enabled: true },
-      revision,
-    );
+    revision?: string,
+  ): Promise<ILPResponse<LPEngagement>> {
+    return this.partialUpdateEngagement(accountId, campaignId, engagementId, token, { status: 'active' }, revision);
   }
 
   /**
@@ -265,16 +208,9 @@ export class EngagementsService extends LPBaseService {
     campaignId: string,
     engagementId: string,
     token: string,
-    revision: string,
-  ): Promise<ILPResponse<IEngagement>> {
-    return this.partialUpdateEngagement(
-      accountId,
-      campaignId,
-      engagementId,
-      token,
-      { enabled: false },
-      revision,
-    );
+    revision?: string,
+  ): Promise<ILPResponse<LPEngagement>> {
+    return this.partialUpdateEngagement(accountId, campaignId, engagementId, token, { status: 'inactive' }, revision);
   }
 
   /**
@@ -286,15 +222,8 @@ export class EngagementsService extends LPBaseService {
     engagementId: string,
     skillId: number,
     token: string,
-    revision: string,
-  ): Promise<ILPResponse<IEngagement>> {
-    return this.partialUpdateEngagement(
-      accountId,
-      campaignId,
-      engagementId,
-      token,
-      { skillId },
-      revision,
-    );
+    revision?: string,
+  ): Promise<ILPResponse<LPEngagement>> {
+    return this.partialUpdateEngagement(accountId, campaignId, engagementId, token, { skillId }, revision);
   }
 }

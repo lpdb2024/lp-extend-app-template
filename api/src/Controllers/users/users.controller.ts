@@ -20,8 +20,7 @@ import { ERROR_RESPONSES } from '../../constants/constants';
 import { ICredentials, KVPObject } from 'src/interfaces/interfaces';
 import { Roles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
-import { UserDto } from '../AccountConfig/account-config.dto';
-// import { ConnectorDto } from '../Messaging/messaging.interfaces.dto';
+import { UserDto } from '../LivePerson/ConversationalCloud/conversation-cloud.dto';
 
 @Controller(API_ROUTES.USERS())
 export class UsersController {

@@ -40,7 +40,6 @@ import type {
 
 import type { AC_VALUE_TYPES } from "src/constants";
 import { ACTION_KEYS_AC, AC_ROUTES, getACValueType } from "src/constants";
-import { useFirebaseAuthStore } from "./store-firebase-auth";
 // import { colors } from 'quasar'
 
 // const { getPaletteColor } = colors
@@ -189,8 +188,7 @@ export const useACStore = defineStore("AccountConfigStore", {
       );
     },
     accountId(): string | null {
-      // return useUserStore().accountId || sessionStorage.getItem("accountId");
-      return useFirebaseAuthStore().activeLpAccountId
+      return useUserStore().accountId || sessionStorage.getItem("accountId");
     },
   },
   actions: {

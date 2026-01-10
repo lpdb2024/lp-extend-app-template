@@ -22,6 +22,9 @@ import { MessagingRestModule } from './MessagingRest/messaging-rest.module';
 import { PromptsModule } from './Prompts/prompts.module';
 import { ConversationOrchestratorModule } from './ConversationOrchestrator/conversation-orchestrator.module';
 import { FaaSModule } from './FaaS/faas.module';
+import { AIStudioModule } from './AIStudio/ai-studio.module';
+import { ConversationCloudModule } from './ConversationalCloud/conversation-cloud.module';
+import { ConversationBuilderModule } from './ConversationBuilder/cb.module';
 
 // Future imports as we build them:
 // import { EngagementHistoryModule } from './EngagementHistory/engagement-history.module';
@@ -47,6 +50,9 @@ import { FaaSModule } from './FaaS/faas.module';
     PromptsModule,
     ConversationOrchestratorModule,
     FaaSModule,
+    AIStudioModule,
+    ConversationCloudModule,
+    ConversationBuilderModule,
     // Add more domain modules here as they are implemented:
     // EngagementHistoryModule,
     // LoginModule,
@@ -70,6 +76,9 @@ import { FaaSModule } from './FaaS/faas.module';
     PromptsModule,
     ConversationOrchestratorModule,
     FaaSModule,
+    AIStudioModule,
+    ConversationCloudModule,
+    ConversationBuilderModule,
     // Export all domain modules
   ],
 })

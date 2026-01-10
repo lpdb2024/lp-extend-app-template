@@ -1,40 +1,79 @@
 /**
  * Campaigns Service
- * Business logic for LivePerson Campaigns API
+ * Handles all Campaigns API operations for LivePerson using the SDK
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { APIService } from '../../../APIService/api-service';
-import { LPDomainService } from '../../shared/lp-domain.service';
-import { LPBaseService } from '../../shared/lp-base.service';
+import { ConfigService } from '@nestjs/config';
 import {
-  LP_SERVICE_DOMAINS,
-  LP_API_VERSIONS,
-  LP_API_PATHS,
-} from '../../shared/lp-constants';
-import { ILPResponse } from '../../shared/lp-common.interfaces';
-import {
-  ICampaign,
-  ICampaignCreateRequest,
-  ICampaignUpdateRequest,
-  ICampaignQuery,
-} from './campaigns.interfaces';
+  initializeSDK,
+  LPExtendSDK,
+  Scopes,
+  LPExtendSDKError,
+} from '@lpextend/client-sdk';
+import type {
+  LPCampaign,
+  CreateCampaignRequest,
+  UpdateCampaignRequest,
+} from '@lpextend/client-sdk';
+
+/**
+ * Response type for SDK operations
+ */
+export interface ILPResponse<T> {
+  data: T;
+  revision?: string;
+  headers?: Record<string, string>;
+}
+
+/**
+ * Campaign query options
+ */
+export interface ICampaignQuery {
+  v?: string;
+  fields?: string | string[];
+  field_set?: string;
+  select?: string;
+  filter?: string;
+  include_deleted?: boolean;
+}
 
 @Injectable()
-export class CampaignsService extends LPBaseService {
-  protected readonly serviceDomain = LP_SERVICE_DOMAINS.ACCOUNT_CONFIG_READ;
-  protected readonly writeDomain = LP_SERVICE_DOMAINS.ACCOUNT_CONFIG_WRITE;
-  protected readonly defaultApiVersion = LP_API_VERSIONS.CAMPAIGNS;
+export class CampaignsService {
+  private shellBaseUrl: string;
+  private appId: string;
 
   constructor(
-    apiService: APIService,
-    domainService: LPDomainService,
     @InjectPinoLogger(CampaignsService.name)
-    logger: PinoLogger,
+    private readonly logger: PinoLogger,
+    private readonly configService: ConfigService,
   ) {
-    super(apiService, domainService, logger);
     this.logger.setContext(CampaignsService.name);
+    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
+    this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
+  }
+
+  /**
+   * Create SDK instance for the given account/token
+   */
+  private async getSDK(accountId: string, token: string): Promise<LPExtendSDK> {
+    try {
+      const accessToken = token.replace('Bearer ', '');
+      return await initializeSDK({
+        appId: this.appId,
+        accountId,
+        accessToken,
+        shellBaseUrl: this.shellBaseUrl,
+        scopes: [Scopes.CAMPAIGNS],
+        debug: this.configService.get<string>('NODE_ENV') !== 'production',
+      });
+    } catch (error) {
+      if (error instanceof LPExtendSDKError) {
+        this.logger.error({ error: error.message, code: error.code }, 'SDK initialization failed');
+      }
+      throw error;
+    }
   }
 
   /**
@@ -44,15 +83,11 @@ export class CampaignsService extends LPBaseService {
     accountId: string,
     token: string,
     query?: ICampaignQuery,
-  ): Promise<ILPResponse<ICampaign[]>> {
-    const path = LP_API_PATHS.CAMPAIGNS.BASE(accountId);
-    const additionalParams = this.buildQueryParams(query);
-
-    this.logger.info({ accountId }, 'Getting all campaigns');
-
-    return this.get<ICampaign[]>(accountId, path, token, {
-      additionalParams,
-    });
+  ): Promise<ILPResponse<LPCampaign[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const response = await sdk.campaigns.getAll();
+    this.logger.info({ accountId, count: response.data?.length }, 'Getting all campaigns');
+    return response;
   }
 
   /**
@@ -63,15 +98,10 @@ export class CampaignsService extends LPBaseService {
     campaignId: string,
     token: string,
     query?: ICampaignQuery,
-  ): Promise<ILPResponse<ICampaign>> {
-    const path = LP_API_PATHS.CAMPAIGNS.BY_ID(accountId, campaignId);
-    const additionalParams = this.buildQueryParams(query);
-
+  ): Promise<ILPResponse<LPCampaign>> {
+    const sdk = await this.getSDK(accountId, token);
     this.logger.info({ accountId, campaignId }, 'Getting campaign by ID');
-
-    return this.get<ICampaign>(accountId, path, token, {
-      additionalParams,
-    });
+    return sdk.campaigns.getById(Number(campaignId));
   }
 
   /**
@@ -80,21 +110,12 @@ export class CampaignsService extends LPBaseService {
   async createCampaign(
     accountId: string,
     token: string,
-    campaign: ICampaignCreateRequest,
+    campaign: CreateCampaignRequest,
     query?: ICampaignQuery,
-  ): Promise<ILPResponse<ICampaign>> {
-    const path = LP_API_PATHS.CAMPAIGNS.BASE(accountId);
-    const additionalParams = this.buildQueryParams(query);
-
-    this.logger.info(
-      { accountId, campaignName: campaign.name },
-      'Creating campaign',
-    );
-
-    return this.post<ICampaign>(accountId, path, campaign, token, {
-      additionalParams,
-      useWriteDomain: true,
-    });
+  ): Promise<ILPResponse<LPCampaign>> {
+    const sdk = await this.getSDK(accountId, token);
+    this.logger.info({ accountId, campaignName: campaign.name }, 'Creating campaign');
+    return sdk.campaigns.create(campaign);
   }
 
   /**
@@ -104,20 +125,13 @@ export class CampaignsService extends LPBaseService {
     accountId: string,
     campaignId: string,
     token: string,
-    campaign: ICampaignUpdateRequest,
-    revision: string,
+    campaign: UpdateCampaignRequest,
+    revision?: string,
     query?: ICampaignQuery,
-  ): Promise<ILPResponse<ICampaign>> {
-    const path = LP_API_PATHS.CAMPAIGNS.BY_ID(accountId, campaignId);
-    const additionalParams = this.buildQueryParams(query);
-
+  ): Promise<ILPResponse<LPCampaign>> {
+    const sdk = await this.getSDK(accountId, token);
     this.logger.info({ accountId, campaignId }, 'Updating campaign');
-
-    return this.put<ICampaign>(accountId, path, campaign, token, {
-      additionalParams,
-      revision,
-      useWriteDomain: true,
-    });
+    return sdk.campaigns.update(Number(campaignId), campaign, revision);
   }
 
   /**
@@ -127,57 +141,11 @@ export class CampaignsService extends LPBaseService {
     accountId: string,
     campaignId: string,
     token: string,
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.CAMPAIGNS.BY_ID(accountId, campaignId);
-    const additionalParams: Record<string, string> = {
-      v: this.defaultApiVersion,
-    };
-
+    const sdk = await this.getSDK(accountId, token);
     this.logger.info({ accountId, campaignId }, 'Deleting campaign');
-
-    return this.delete<void>(accountId, path, token, {
-      additionalParams,
-      revision,
-      useWriteDomain: true,
-    });
-  }
-
-  /**
-   * Build query parameters from query object
-   */
-  private buildQueryParams(query?: ICampaignQuery): Record<string, string> {
-    const params: Record<string, string> = {
-      v: query?.v || this.defaultApiVersion,
-    };
-
-    if (query?.fields) {
-      if (Array.isArray(query.fields)) {
-        // LP API accepts multiple fields params
-        // We'll join them for the query string
-        params.fields = query.fields.join(',');
-      } else {
-        params.fields = query.fields;
-      }
-    }
-
-    if (query?.field_set) {
-      params.field_set = query.field_set;
-    }
-
-    if (query?.select) {
-      params.select = query.select;
-    }
-
-    if (query?.filter) {
-      params.filter = query.filter;
-    }
-
-    if (query?.include_deleted) {
-      params.include_deleted = 'true';
-    }
-
-    return params;
+    return sdk.campaigns.delete(Number(campaignId), revision);
   }
 
   // ============================================
@@ -190,11 +158,10 @@ export class CampaignsService extends LPBaseService {
   async getPublishedCampaigns(
     accountId: string,
     token: string,
-  ): Promise<ILPResponse<ICampaign[]>> {
-    return this.getCampaigns(accountId, token, {
-      field_set: 'all',
-      filter: 'status==1',
-    });
+  ): Promise<ILPResponse<LPCampaign[]>> {
+    const response = await this.getCampaigns(accountId, token);
+    const publishedCampaigns = response.data.filter(c => c.status === 'active');
+    return { ...response, data: publishedCampaigns };
   }
 
   /**
@@ -204,46 +171,33 @@ export class CampaignsService extends LPBaseService {
     accountId: string,
     lobId: number,
     token: string,
-  ): Promise<ILPResponse<ICampaign[]>> {
-    return this.getCampaigns(accountId, token, {
-      field_set: 'all',
-      filter: `lobId==${lobId}`,
-    });
+  ): Promise<ILPResponse<LPCampaign[]>> {
+    const response = await this.getCampaigns(accountId, token);
+    const filteredCampaigns = response.data.filter(c => c.lobId === lobId);
+    return { ...response, data: filteredCampaigns };
   }
 
   /**
-   * Publish a campaign (set status to 1)
+   * Publish a campaign (set status to active)
    */
   async publishCampaign(
     accountId: string,
     campaignId: string,
     token: string,
-    revision: string,
-  ): Promise<ILPResponse<ICampaign>> {
-    return this.updateCampaign(
-      accountId,
-      campaignId,
-      token,
-      { status: 1 },
-      revision,
-    );
+    revision?: string,
+  ): Promise<ILPResponse<LPCampaign>> {
+    return this.updateCampaign(accountId, campaignId, token, { status: 'active' }, revision);
   }
 
   /**
-   * Unpublish a campaign (set status to 0)
+   * Unpublish a campaign (set status to inactive)
    */
   async unpublishCampaign(
     accountId: string,
     campaignId: string,
     token: string,
-    revision: string,
-  ): Promise<ILPResponse<ICampaign>> {
-    return this.updateCampaign(
-      accountId,
-      campaignId,
-      token,
-      { status: 0 },
-      revision,
-    );
+    revision?: string,
+  ): Promise<ILPResponse<LPCampaign>> {
+    return this.updateCampaign(accountId, campaignId, token, { status: 'inactive' }, revision);
   }
 }

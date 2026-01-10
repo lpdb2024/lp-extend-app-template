@@ -16,7 +16,9 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -46,13 +48,14 @@ export class WorkingHoursController {
     description: 'Retrieves all working hours configurations for the specified account',
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiResponse({ status: 200, description: 'List of working hours', type: WorkingHoursListResponseDto })
+  @ApiResponse({ status: 200, description: 'List of working hours' })
   async getAll(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: WorkingHoursQueryDto,
+    @Req() req: Request,
   ): Promise<WorkingHoursListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.workingHoursService.getAll(accountId, token, {
       select: query.select,
@@ -74,8 +77,9 @@ export class WorkingHoursController {
   async getRevision(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<{ revision: string | undefined }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = await this.workingHoursService.getRevision(accountId, token);
     return { revision };
   }
@@ -87,13 +91,14 @@ export class WorkingHoursController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'workingHoursId', description: 'Working hours ID' })
-  @ApiResponse({ status: 200, description: 'The working hours', type: WorkingHoursResponseDto })
+  @ApiResponse({ status: 200, description: 'The working hours' })
   async getById(
     @Param('accountId') accountId: string,
     @Param('workingHoursId') workingHoursId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<WorkingHoursResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.workingHoursService.getById(accountId, workingHoursId, token);
 
@@ -111,21 +116,22 @@ export class WorkingHoursController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: false })
-  @ApiResponse({ status: 201, description: 'Working hours created', type: WorkingHoursResponseDto })
+  @ApiResponse({ status: 201, description: 'Working hours created' })
   async create(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: CreateWorkingHoursDto | CreateWorkingHoursDto[],
+    @Req() req: Request,
   ): Promise<WorkingHoursResponseDto | WorkingHoursListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (Array.isArray(body)) {
-      const response = await this.workingHoursService.createMany(accountId, token, body, revision);
+      const response = await this.workingHoursService.createMany(accountId, token, body as any, revision);
       return { data: response.data, revision: response.revision };
     }
 
-    const response = await this.workingHoursService.create(accountId, token, body, revision);
+    const response = await this.workingHoursService.create(accountId, token, body as any, revision);
     return { data: response.data, revision: response.revision };
   }
 
@@ -137,21 +143,22 @@ export class WorkingHoursController {
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'workingHoursId', description: 'Working hours ID to update' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: true })
-  @ApiResponse({ status: 200, description: 'Working hours updated', type: WorkingHoursResponseDto })
+  @ApiResponse({ status: 200, description: 'Working hours updated' })
   async update(
     @Param('accountId') accountId: string,
     @Param('workingHoursId') workingHoursId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdateWorkingHoursDto,
+    @Req() req: Request,
   ): Promise<WorkingHoursResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
     }
 
-    const response = await this.workingHoursService.update(accountId, workingHoursId, token, body, revision);
+    const response = await this.workingHoursService.update(accountId, workingHoursId, token, body as any, revision);
     return { data: response.data, revision: response.revision };
   }
 
@@ -170,8 +177,9 @@ export class WorkingHoursController {
     @Param('workingHoursId') workingHoursId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<void> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for deletes');
@@ -180,7 +188,17 @@ export class WorkingHoursController {
     await this.workingHoursService.remove(accountId, workingHoursId, token, revision);
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

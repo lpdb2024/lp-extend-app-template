@@ -1,11 +1,25 @@
 import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
 import { CollectionReference } from '@google-cloud/firestore';
-import { ForbiddenException, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
-import { AppAuthRequest, AppUserDto, CCUserDto, Token } from 'src/Controllers/CCIDP/cc-idp.dto';
-import { accountCache } from 'src/utils/memCache';
-import { UserDto, ApiKeyDto, ApplicationSettingsDto } from 'src/Controllers/AccountConfig/account-config.dto';
+import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
+import type { SentinelAppUser, SentinelToken } from '@lpextend/client-sdk';
 import { helper } from 'src/utils/HelperService';
-// import { FirestoreCollectionProviders } from 'src/firestore/firestore.providers';
+
+// Collection name constants
+const APP_USERS_COLLECTION = 'app-users';
+const LP_TOKENS_COLLECTION = 'lp-tokens';
+const APP_SETTINGS_COLLECTION = 'app-settings';
+
+/**
+ * Application settings stored in Firestore
+ */
+interface ApplicationSettingsDto {
+  id?: string;
+  accountId: string;
+  settings: Record<string, any>;
+  createdAt?: number;
+  updatedAt?: number;
+}
+
 const { ctx } = helper;
 @Injectable()
 export class DBService {
@@ -13,22 +27,22 @@ export class DBService {
   constructor(
     @InjectPinoLogger(DBService.name)
     private readonly logger: PinoLogger,
-    @Inject(CCUserDto.collectionName)
-    private userCollection: CollectionReference<AppUserDto>,
-    @Inject(Token.collectionName)
-    private tokenCollection: CollectionReference<Token>,
-    @Inject(ApplicationSettingsDto.collectionName)
+    @Inject(APP_USERS_COLLECTION)
+    private userCollection: CollectionReference<SentinelAppUser>,
+    @Inject(LP_TOKENS_COLLECTION)
+    private tokenCollection: CollectionReference<SentinelToken>,
+    @Inject(APP_SETTINGS_COLLECTION)
     private applicationSettingsCollection: CollectionReference<ApplicationSettingsDto>,
   ) {}
   
-  async setUser (id: string, user: AppUserDto): Promise<AppUserDto> {
+  async setUser (id: string, user: SentinelAppUser): Promise<SentinelAppUser> {
     try {
       this.logger.info(`setUser - id: ${id}, user keys: ${Object.keys(user).join(', ')}`);
 
       // Clean the user object - remove undefined values which Firestore doesn't accept
       const cleanUser = Object.fromEntries(
         Object.entries(user).filter(([_, v]) => v !== undefined)
-      ) as AppUserDto;
+      ) as SentinelAppUser;
 
       const existingUser = await this.userCollection.doc(id).get();
       if (existingUser.exists) {
@@ -44,11 +58,11 @@ export class DBService {
     }
   }
 
-  async getUser (id: string): Promise<AppUserDto | null> {
+  async getUser (id: string): Promise<SentinelAppUser | null> {
     try {
       const userDoc = await this.userCollection.doc(id).get();
       if (userDoc.exists) {
-        return userDoc.data() as AppUserDto;
+        return userDoc.data() as SentinelAppUser;
       }
       return null;
     } catch (error) {
@@ -57,10 +71,10 @@ export class DBService {
     }
   }
 
-  async setToken (
+  async setSentinelToken (
     id: string,
-    token: Token
-  ): Promise<Token> {
+    token: SentinelToken
+  ): Promise<SentinelToken> {
     try {
       const tokenDoc = await this.tokenCollection.doc(id).get();
       if (tokenDoc.exists) {
@@ -68,7 +82,6 @@ export class DBService {
       } else {
         await this.tokenCollection.doc(id).set(token);
       }
-      accountCache
       return token;
     } catch (error) {
       this.logger.error('Error setting token:', error);

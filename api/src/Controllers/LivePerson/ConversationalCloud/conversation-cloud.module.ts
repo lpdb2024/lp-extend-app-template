@@ -1,14 +1,13 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConversationCloudController } from './conversation-cloud.controller';
 import { ConversationCloudService } from './conversation-cloud.service';
 import { HttpModule } from '@nestjs/axios';
-import { HelperModule } from '../HelperService/helper-service.module';
-import { AccountConfigModule } from '../AccountConfig/account-config.module';
+import { HelperModule } from '../../HelperService/helper-service.module';
+
 @Module({
   controllers: [ConversationCloudController],
   providers: [ConversationCloudService],
   imports: [
-    forwardRef(() => AccountConfigModule),
     HelperModule,
     HttpModule.register({
       timeout: 5000,

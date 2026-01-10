@@ -3,8 +3,7 @@ import axios from 'axios';
 import * as admin from 'firebase-admin';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { UserData } from 'src/Controllers/users/users.interfaces';
-import { Token } from 'src/Controllers/CCIDP/cc-idp.dto';
-import { LpToken } from 'src/Controllers/CCIDP/cc-idp.interfaces';
+import type { SentinelLpToken } from '@lpextend/client-sdk';
 
 
 @Injectable()
@@ -18,9 +17,9 @@ export class AuthService {
     const user = await admin.firestore().collection('users').doc(uid).get();
     return user.data() as UserData;
   }
-  async getLPToken (token: string): Promise<LpToken> { 
+  async getLPToken (token: string): Promise<SentinelLpToken> { 
     const lpTokenInfo = await admin.firestore().collection('lp_tokens').doc(token).get();
-    return lpTokenInfo.data() as LpToken;
+    return lpTokenInfo.data() as SentinelLpToken;
     // const lpTokenInfo = await admin.firestore().collection('tokens').where(admin.firestore.FieldPath.documentId(), '==', token).get();
   }
 

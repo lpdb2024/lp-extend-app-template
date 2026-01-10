@@ -22,6 +22,7 @@
   "dependencies": {
     "@google-cloud/firestore": "^7.8.0",
     "@keyv/redis": "^4.4.0",
+    "@lpextend/client-sdk": "file:../../lp-extend-client-sdk",
     "@nestjs/axios": "^3.0.2",
     "@nestjs/cache-manager": "^3.0.1",
     "@nestjs/common": "^10.0.0",

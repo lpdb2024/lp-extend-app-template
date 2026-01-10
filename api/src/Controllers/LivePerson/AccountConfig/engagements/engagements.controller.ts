@@ -14,7 +14,9 @@ import {
   Query,
   Headers,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -45,14 +47,15 @@ export class EngagementsController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'campaignId', description: 'Campaign ID' })
-  @ApiResponse({ status: 200, description: 'List of engagements', type: EngagementListResponseDto })
+  @ApiResponse({ status: 200, description: 'List of engagements' })
   async getEngagements(
     @Param('accountId') accountId: string,
     @Param('campaignId') campaignId: string,
     @Headers('authorization') authorization: string,
     @Query() query: EngagementQueryDto,
+    @Req() req: Request,
   ): Promise<EngagementListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.engagementsService.getEngagements(
       accountId,
@@ -72,15 +75,16 @@ export class EngagementsController {
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'campaignId', description: 'Campaign ID' })
   @ApiParam({ name: 'engagementId', description: 'Engagement ID' })
-  @ApiResponse({ status: 200, description: 'Engagement details', type: EngagementResponseDto })
+  @ApiResponse({ status: 200, description: 'Engagement details' })
   async getEngagementById(
     @Param('accountId') accountId: string,
     @Param('campaignId') campaignId: string,
     @Param('engagementId') engagementId: string,
     @Headers('authorization') authorization: string,
     @Query() query: EngagementQueryDto,
+    @Req() req: Request,
   ): Promise<EngagementResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.engagementsService.getEngagementById(
       accountId,
@@ -100,21 +104,22 @@ export class EngagementsController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'campaignId', description: 'Campaign ID' })
-  @ApiResponse({ status: 201, description: 'Created engagement', type: EngagementResponseDto })
+  @ApiResponse({ status: 201, description: 'Created engagement' })
   async createEngagement(
     @Param('accountId') accountId: string,
     @Param('campaignId') campaignId: string,
     @Headers('authorization') authorization: string,
     @Body() body: EngagementCreateDto,
     @Query() query: EngagementQueryDto,
+    @Req() req: Request,
   ): Promise<EngagementResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.engagementsService.createEngagement(
       accountId,
       campaignId,
       token,
-      body,
+      body as any,
       query,
     );
 
@@ -130,7 +135,7 @@ export class EngagementsController {
   @ApiParam({ name: 'campaignId', description: 'Campaign ID' })
   @ApiParam({ name: 'engagementId', description: 'Engagement ID' })
   @ApiHeader({ name: 'If-Match', description: 'Current revision number', required: true })
-  @ApiResponse({ status: 200, description: 'Updated engagement', type: EngagementResponseDto })
+  @ApiResponse({ status: 200, description: 'Updated engagement' })
   async updateEngagement(
     @Param('accountId') accountId: string,
     @Param('campaignId') campaignId: string,
@@ -139,8 +144,9 @@ export class EngagementsController {
     @Headers('if-match') ifMatch: string,
     @Body() body: EngagementUpdateDto,
     @Query() query: EngagementQueryDto,
+    @Req() req: Request,
   ): Promise<EngagementResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     const response = await this.engagementsService.updateEngagement(
@@ -148,7 +154,7 @@ export class EngagementsController {
       campaignId,
       engagementId,
       token,
-      body,
+      body as any,
       revision,
       query,
     );
@@ -172,8 +178,9 @@ export class EngagementsController {
     @Param('engagementId') engagementId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') ifMatch: string,
+    @Req() req: Request,
   ): Promise<{ success: boolean }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     await this.engagementsService.deleteEngagement(
@@ -200,15 +207,16 @@ export class EngagementsController {
   @ApiParam({ name: 'campaignId', description: 'Campaign ID' })
   @ApiParam({ name: 'engagementId', description: 'Engagement ID' })
   @ApiHeader({ name: 'If-Match', description: 'Current revision number', required: true })
-  @ApiResponse({ status: 200, description: 'Enabled engagement', type: EngagementResponseDto })
+  @ApiResponse({ status: 200, description: 'Enabled engagement' })
   async enableEngagement(
     @Param('accountId') accountId: string,
     @Param('campaignId') campaignId: string,
     @Param('engagementId') engagementId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') ifMatch: string,
+    @Req() req: Request,
   ): Promise<EngagementResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     const response = await this.engagementsService.enableEngagement(
@@ -231,15 +239,16 @@ export class EngagementsController {
   @ApiParam({ name: 'campaignId', description: 'Campaign ID' })
   @ApiParam({ name: 'engagementId', description: 'Engagement ID' })
   @ApiHeader({ name: 'If-Match', description: 'Current revision number', required: true })
-  @ApiResponse({ status: 200, description: 'Disabled engagement', type: EngagementResponseDto })
+  @ApiResponse({ status: 200, description: 'Disabled engagement' })
   async disableEngagement(
     @Param('accountId') accountId: string,
     @Param('campaignId') campaignId: string,
     @Param('engagementId') engagementId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') ifMatch: string,
+    @Req() req: Request,
   ): Promise<EngagementResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     const response = await this.engagementsService.disableEngagement(
@@ -253,7 +262,17 @@ export class EngagementsController {
     return { data: response.data };
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

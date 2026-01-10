@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import Bottleneck from 'bottleneck';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { catchError, firstValueFrom, lastValueFrom } from 'rxjs';
+import { catchError, firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class APIService {

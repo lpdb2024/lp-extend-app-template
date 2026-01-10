@@ -16,7 +16,9 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -51,8 +53,9 @@ export class LobsController {
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: LobsQueryDto,
+    @Req() req: Request,
   ): Promise<LobsResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.lobsService.getAll(accountId, token, {
       select: query.select,
@@ -74,8 +77,9 @@ export class LobsController {
   async getRevision(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<{ revision: string | undefined }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = await this.lobsService.getRevision(accountId, token);
     return { revision };
   }
@@ -92,8 +96,9 @@ export class LobsController {
     @Param('accountId') accountId: string,
     @Param('lobId') lobId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<LobResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.lobsService.getById(accountId, lobId, token);
 
@@ -117,8 +122,9 @@ export class LobsController {
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: CreateLobDto | CreateLobDto[],
+    @Req() req: Request,
   ): Promise<LobResponseDto | LobsResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (Array.isArray(body)) {
       const response = await this.lobsService.createMany(accountId, token, body, revision);
@@ -144,8 +150,9 @@ export class LobsController {
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdateLobDto,
+    @Req() req: Request,
   ): Promise<LobResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
@@ -170,8 +177,9 @@ export class LobsController {
     @Param('lobId') lobId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<void> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for deletes');
@@ -180,7 +188,17 @@ export class LobsController {
     await this.lobsService.remove(accountId, lobId, token, revision);
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

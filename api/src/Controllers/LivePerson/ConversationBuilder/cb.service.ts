@@ -6,27 +6,18 @@ import {
 } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { catchError, firstValueFrom } from 'rxjs';
-import { AxiosResponse, AxiosError } from 'axios';
-import { HelperService } from '../HelperService/helper-service.service';
-import { cache } from 'src/utils/memCache';
-import { jwtDecode } from "jwt-decode";
+import { AxiosError } from 'axios';
+import { HelperService } from '../../HelperService/helper-service.service';
 import {
-  AppAuthRequest,
-  TokenDetails,
-  Token,
   CBAuthInfoDto
-} from './cb.dto'
-import { CollectionReference } from '@google-cloud/firestore';
+} from './cb.dto';
 import { LpToken } from './cb.interfaces'
-import { authenticate } from 'passport';
 
 @Injectable()
 export class ConversationBuilderService {  
   private logger: Logger = new Logger(ConversationBuilderService.name);
 
   constructor(
-    @Inject(LpToken.collectionName)
-    private tokenCollection: CollectionReference<LpToken>,
     private readonly httpService: HttpService,
     private readonly helperService: HelperService
   ) {}

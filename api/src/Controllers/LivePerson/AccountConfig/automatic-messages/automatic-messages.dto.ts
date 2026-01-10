@@ -14,10 +14,7 @@ import {
   IsObject,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import {
-  IAutomaticMessage,
-  IDefaultAutomaticMessage,
-} from './automatic-messages.interfaces';
+import type { LPAutomaticMessage } from '@lpextend/client-sdk';
 import {
   ILocalizedData,
   IAutoMessageAttributes,
@@ -168,29 +165,22 @@ export class AutomaticMessagesQueryDto {
 /**
  * Automatic message response DTO
  */
-export class AutomaticMessageResponseDto {
-  @ApiProperty({ description: 'Automatic message data' })
-  data: IAutomaticMessage;
-
-  @ApiPropertyOptional({ description: 'Current revision for optimistic locking' })
+export interface AutomaticMessageResponseDto {
+  data: LPAutomaticMessage;
   revision?: string;
 }
 
 /**
  * Automatic messages list response DTO
  */
-export class AutomaticMessagesListResponseDto {
-  @ApiProperty({ description: 'List of automatic messages', type: [Object] })
-  data: IAutomaticMessage[];
-
-  @ApiPropertyOptional({ description: 'Current revision for optimistic locking' })
+export interface AutomaticMessagesListResponseDto {
+  data: LPAutomaticMessage[];
   revision?: string;
 }
 
 /**
  * Default automatic messages response DTO
  */
-export class DefaultAutomaticMessagesResponseDto {
-  @ApiProperty({ description: 'List of default automatic messages', type: [Object] })
-  data: IDefaultAutomaticMessage[];
+export interface DefaultAutomaticMessagesResponseDto {
+  data: LPAutomaticMessage[];
 }

@@ -3,44 +3,74 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { AxiosError, AxiosResponse } from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { firstValueFrom, catchError } from 'rxjs';
-import {
-  AppAuthRequest,
-  Token,
-  AppUserDto,
-  CCUserDto,
-} from 'src/Controllers/CCIDP/cc-idp.dto';
+import type {
+  SentinelAuthRequest,
+  SentinelTokenExchange,
+  SentinelAppUser,
+  SentinelLpToken,
+  CBAuthInfo,
+  LPUser,
+} from '@lpextend/client-sdk';
+import { initializeSDK, Scopes } from '@lpextend/client-sdk';
 import { HelperService } from 'src/Controllers/HelperService/helper-service.service';
 import { cache } from 'src/utils/memCache';
 import { CollectionReference } from '@google-cloud/firestore';
-import { AccountConfigService } from 'src/Controllers/AccountConfig/account-config.service';
-import { LpToken } from 'src/Controllers/CCIDP/cc-idp.interfaces';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { CBAuthInfoDto } from 'src/Controllers/ConversationBuilderOld/cb.dto';
-// import { UserDto } from 'src/Controllers/AccountConfig/account-config.dto';
-// import { TaskRequestDto } from 'src/Controllers/ConversationSimulator/conv-simulator.dto';
+
+// Collection name constants
+const LP_TOKEN_COLLECTION = 'lp-tokens';
+const APP_USERS_COLLECTION = 'app-users';
 
 @Injectable()
 export class AuthService {
+  private shellBaseUrl: string;
+  private appId: string;
+
   constructor(
     @InjectPinoLogger(AuthService.name)
     private readonly logger: PinoLogger,
     private helperService: HelperService,
-    private readonly accountConfigService: AccountConfigService,
     private readonly httpService: HttpService,
-    @Inject(LpToken.collectionName)
-    private tokenCollection: CollectionReference<LpToken>,
-    @Inject(CCUserDto.collectionName)
-    private userCollection: CollectionReference<AppUserDto>,
-  ) {}
+    private readonly configService: ConfigService,
+    @Inject(LP_TOKEN_COLLECTION)
+    private tokenCollection: CollectionReference<SentinelLpToken>,
+    @Inject(APP_USERS_COLLECTION)
+    private userCollection: CollectionReference<SentinelAppUser>,
+  ) {
+    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
+    this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
+  }
+
+  /**
+   * Get LP user via SDK
+   */
+  private async getLPUser(accountId: string, userId: string, accessToken: string): Promise<LPUser | null> {
+    try {
+      const sdk = await initializeSDK({
+        appId: this.appId,
+        accountId,
+        accessToken,
+        shellBaseUrl: this.shellBaseUrl,
+        scopes: [Scopes.USERS],
+        debug: this.configService.get<string>('NODE_ENV') !== 'production',
+      });
+      const { data } = await sdk.users.getById(userId);
+      return data;
+    } catch (error) {
+      this.logger.error({ accountId, userId, error: error?.message }, 'Failed to get LP user via SDK');
+      return null;
+    }
+  }
 
   async getToken(
     accountId: string,
-    body: AppAuthRequest,
-  ): Promise<Token> | null {
+    body: SentinelAuthRequest,
+  ): Promise<SentinelTokenExchange> | null {
     try {
       const domain = await this.helperService.getDomain(accountId, 'sentinel');
       const url = `https://${domain}/sentinel/api/account/${accountId}/token?v=2.0`;
@@ -48,7 +78,7 @@ export class AuthService {
 
       const { data } = await firstValueFrom(
         this.httpService
-          .post<Token>(url, auth_string, {
+          .post<SentinelTokenExchange>(url, auth_string, {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
             },
@@ -60,24 +90,24 @@ export class AuthService {
             }),
           ),
       );
-      const decoded = jwtDecode(data.idToken);
+      const decoded = jwtDecode(data.id_token);
       const token = {
-        access_token: data.accessToken,
-        refresh_token: data.refreshToken || null,
-        id_token: data.idToken,
-        expires_in: data.expiresIn,
+        access_token: data.access_token,
+        refresh_token: data.refresh_token || null,
+        id_token: data.id_token,
+        expires_in: data.expires_in,
         expiry: '',
         timestamp: '',
-        id: data.accessToken,
+        id: data.access_token,
         accountId,
         uid: decoded.sub,
-        token: data.idToken,
+        token: data.id_token,
         cbToken: null,
         cbOrg: null,
         userData: null,
       };
 
-      const exp = new Date(Date.now() + data.expiresIn * 1000);
+      const exp = new Date(Date.now() + data.expires_in * 1000);
       token.expiry = `${exp.getDate()}-${exp.getMonth() + 1}-${exp.getFullYear()} ${exp.getHours()}:${exp.getMinutes()}`;
       const now = new Date();
       token.timestamp = `${now.getDate()}-${now.getMonth() + 1}-${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`;
@@ -94,12 +124,8 @@ export class AuthService {
         await doc.ref.delete();
       });
 
-      cache.add(data.accessToken, token, data.expiresIn);
-      const ccUser = await this.accountConfigService.getOneUser(
-        accountId,
-        decoded.sub,
-        data.accessToken,
-      );
+      cache.add(data.access_token, token, data.expires_in);
+      const ccUser = await this.getLPUser(accountId, decoded.sub, data.access_token);
       if (!ccUser) {
         this.logger.warn(
           `Conversation Cloud User not found for user: ${decoded.sub}`,
@@ -108,17 +134,16 @@ export class AuthService {
       }
       const appUserDoc = await this.userCollection.doc(decoded.sub).get();
       if (!appUserDoc.exists) {
-        const user: AppUserDto = {
-          ...ccUser,
+        const user: Partial<SentinelAppUser> = {
           roles: ['ADMIN'],
           id: decoded.sub,
-          email: ccUser.email,
+          email: ccUser.email || '',
           accountId: accountId,
           createdAt: Date.now(),
           createdBy: decoded.sub,
-          displayName: ccUser.fullName,
+          displayName: ccUser.fullName || ccUser.loginName || '',
           isLPA: false,
-          photoUrl: ccUser.pictureUrl || '',
+          photoUrl: (ccUser as any).pictureUrl || '',
           permissions: [],
           termsAgreed: false,
           updatedAt: Date.now(),
@@ -126,14 +151,14 @@ export class AuthService {
           installedApps: ['CORE'],
           appPermissions: [],
         };
-        await this.userCollection.doc(decoded.sub).set(user);
+        await this.userCollection.doc(decoded.sub).set(user as any);
       }
       // Authenticate with Conversation Builder
       try {
         this.logger.info({ accountId }, 'Starting CB authentication...');
         const cbAuth = await this.authenticateConversationBuilder(
           accountId,
-          data.accessToken,
+          data.access_token,
         );
         this.logger.info(
           {
@@ -179,7 +204,7 @@ export class AuthService {
         );
       }
 
-      token.id = data.accessToken;
+      token.id = data.access_token;
       this.logger.info(
         {
           accountId,
@@ -188,7 +213,7 @@ export class AuthService {
         },
         'Storing token to Firestore',
       );
-      await this.tokenCollection.doc(data.accessToken).set(token);
+      await this.tokenCollection.doc(data.access_token).set(token);
 
       // Return enhanced data with cbToken and cbOrg
       const response = {
@@ -229,8 +254,8 @@ export class AuthService {
     });
     // if (isLocal) {
     if (authenticated) {
-      res.cookie('cc_auth', authenticated.accessToken, { signed: true });
-      res.cookie('cc_user', authenticated.idToken, { signed: true });
+      res.cookie('cc_auth', authenticated.access_token, { signed: true });
+      res.cookie('cc_user', authenticated.id_token, { signed: true });
       // res.redirect(`http://localhost:8080/app/${state}`);
       res.redirect(`${route}${state}`);
     } else {
@@ -277,7 +302,7 @@ export class AuthService {
   private async authenticateConversationBuilder(
     accountId: string,
     accessToken: string,
-  ): Promise<CBAuthInfoDto | null> {
+  ): Promise<CBAuthInfo | null> {
     this.logger.info({ accountId }, 'CB auth: Getting cbLeIntegrations domain');
     const domain = await this.helperService.getDomain(
       accountId,
@@ -299,7 +324,7 @@ export class AuthService {
 
     const { data } = await firstValueFrom(
       this.httpService
-        .get<CBAuthInfoDto>(url, {
+        .get<CBAuthInfo>(url, {
           headers: {
             Accept: 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
@@ -342,7 +367,7 @@ export class AuthService {
    * Get user by Firebase UID
    * Returns user profile with defaultAccountId and linkedAccountIds
    */
-  async getUserByFirebaseUid(firebaseUid: string): Promise<AppUserDto | null> {
+  async getUserByFirebaseUid(firebaseUid: string): Promise<SentinelAppUser | null> {
     if (!firebaseUid) {
       return null;
     }
@@ -350,7 +375,7 @@ export class AuthService {
     if (!userDoc.exists) {
       return null;
     }
-    return userDoc.data() as AppUserDto;
+    return userDoc.data() as SentinelAppUser;
   }
 
   /**
@@ -366,7 +391,7 @@ export class AuthService {
       throw new InternalServerErrorException('User not found');
     }
 
-    const user = userDoc.data() as AppUserDto;
+    const user = userDoc.data() as SentinelAppUser;
     const linkedAccounts = user.linkedAccountIds || [user.accountId];
 
     // Verify the account is in user's linked accounts
@@ -394,7 +419,7 @@ export class AuthService {
     const userDoc = await this.userCollection.doc(firebaseUid).get();
     if (!userDoc.exists) {
       // Create new user document for Firebase-only users
-      const newUser: Partial<AppUserDto> = {
+      const newUser: Partial<SentinelAppUser> = {
         id: firebaseUid,
         accountId: accountId,
         defaultAccountId: accountId,
@@ -408,11 +433,11 @@ export class AuthService {
         updatedAt: Date.now(),
         updatedBy: firebaseUid,
       };
-      await this.userCollection.doc(firebaseUid).set(newUser as AppUserDto);
+      await this.userCollection.doc(firebaseUid).set(newUser as SentinelAppUser);
       return { success: true, linkedAccountIds: [accountId] };
     }
 
-    const user = userDoc.data() as AppUserDto;
+    const user = userDoc.data() as SentinelAppUser;
     const linkedAccounts = user.linkedAccountIds || [user.accountId];
 
     if (!linkedAccounts.includes(accountId)) {

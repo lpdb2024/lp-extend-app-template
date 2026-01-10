@@ -17,32 +17,14 @@ import { LoggerModule } from 'nestjs-pino';
 import * as admin from 'firebase-admin';
 
 /* modules */
-// import { CatsModule } from './Controllers/cats/cats.module';
-import { AccountConfigModule } from './Controllers/AccountConfig/account-config.module';
-import { AccountConfigController } from './Controllers/AccountConfig/account-config.controller';
 import { HelperModule } from './Controllers/HelperService/helper-service.module';
 import { UsersModule } from './Controllers/users/users.module';
-import { UsersController } from './Controllers/users/users.controller';
 import { GoogleStorageModule } from './Controllers/GoogleStorage/googlestorage.module';
-import { GoogleStorageController } from './Controllers/GoogleStorage/googlestorage.controller';
-import { MessagingModule } from './Controllers/Messaging/messaging.module';
-import { CCIdpModule } from './Controllers/CCIDP/cc-idp.module';
 import { LLMTaskModule } from './Controllers/LLMTaskController/llm-task.module';
-import { CCAppMgtModule } from './Controllers/CCAppManagement/cc-app-manager.module';
-import { CCAppMgtController } from './Controllers/CCAppManagement/cc-app-manager.controller';
-import { ConnectorAPIModule } from './Controllers/ConnectorAPI/connector-api.module';
-import { ConversationBuilderModule } from './Controllers/ConversationBuilder/cb.module';
-import { ConversationBuilderController } from './Controllers/ConversationBuilder/cb.controller';
-// import { ConversationCloudModule } from './Controllers/ConversationalCloud/conversation-cloud.module';
-import { ConversationCloudController } from './Controllers/ConversationalCloud/conversation-cloud.controller';
-// import { DevtoolsModule } from '@nestjs/devtools-integration';
-import { AIStudioModule } from './Controllers/AIStudio/ai-studio.module';
 import { APIModule } from './Controllers/APIService/api.module';
 import { LivePersonModule } from './Controllers/LivePerson/liveperson.module';
 import { AuthModule } from './auth/auth.module';
-import { UserSettingsModule } from './Controllers/UserSettings/user-settings.module';
 import { AccountSettingsModule } from './Controllers/AccountSettings/account-settings.module';
-import { AIStudioController } from './Controllers/AIStudio/ai-studio.controller';
 
 const firebaseProvider = {
   provide: 'FIREBASE_APP',
@@ -140,20 +122,12 @@ const firebaseProvider = {
     }),
 
     HelperModule,
-    AIStudioModule,
-    ConversationBuilderModule,
     APIModule,
-    ConnectorAPIModule,
-    MessagingModule,
-    AccountConfigModule,
     GoogleStorageModule,
     UsersModule,
     LLMTaskModule,
-    CCIdpModule,
-    CCAppMgtModule,
     LivePersonModule,
     AuthModule,
-    UserSettingsModule,
     AccountSettingsModule
   ],
   controllers: [AppController],
@@ -170,16 +144,7 @@ export class AppModule implements NestModule {
         },
         '*v1/connector_api/*',
       )
-      .forRoutes(
-        AccountConfigController,
-        UsersController,
-        GoogleStorageController,
-        CCAppMgtController,
-        ConversationBuilderController,
-        ConversationCloudController,
-        AIStudioController
-        // AIStudioController handles its own auth - token passed directly to AI Studio APIs
-      );
+      .forRoutes({ path: 'api/*', method: RequestMethod.ALL });
 
     consumer
       .apply(LoggerMiddleware)

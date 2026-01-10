@@ -16,7 +16,9 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -46,13 +48,14 @@ export class SpecialOccasionsController {
     description: 'Retrieves all special occasions (holidays, etc.) for the specified account',
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiResponse({ status: 200, description: 'List of special occasions', type: SpecialOccasionsListResponseDto })
+  @ApiResponse({ status: 200, description: 'List of special occasions' })
   async getAll(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: SpecialOccasionsQueryDto,
+    @Req() req: Request,
   ): Promise<SpecialOccasionsListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.specialOccasionsService.getAll(accountId, token, {
       select: query.select,
@@ -74,8 +77,9 @@ export class SpecialOccasionsController {
   async getRevision(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<{ revision: string | undefined }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = await this.specialOccasionsService.getRevision(accountId, token);
     return { revision };
   }
@@ -87,13 +91,14 @@ export class SpecialOccasionsController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'occasionId', description: 'Special occasion ID' })
-  @ApiResponse({ status: 200, description: 'The special occasion', type: SpecialOccasionResponseDto })
+  @ApiResponse({ status: 200, description: 'The special occasion' })
   async getById(
     @Param('accountId') accountId: string,
     @Param('occasionId') occasionId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<SpecialOccasionResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.specialOccasionsService.getById(accountId, occasionId, token);
 
@@ -111,21 +116,22 @@ export class SpecialOccasionsController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: false })
-  @ApiResponse({ status: 201, description: 'Special occasion created', type: SpecialOccasionResponseDto })
+  @ApiResponse({ status: 201, description: 'Special occasion created' })
   async create(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: CreateSpecialOccasionDto | CreateSpecialOccasionDto[],
+    @Req() req: Request,
   ): Promise<SpecialOccasionResponseDto | SpecialOccasionsListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (Array.isArray(body)) {
-      const response = await this.specialOccasionsService.createMany(accountId, token, body, revision);
+      const response = await this.specialOccasionsService.createMany(accountId, token, body as any, revision);
       return { data: response.data, revision: response.revision };
     }
 
-    const response = await this.specialOccasionsService.create(accountId, token, body, revision);
+    const response = await this.specialOccasionsService.create(accountId, token, body as any, revision);
     return { data: response.data, revision: response.revision };
   }
 
@@ -137,21 +143,22 @@ export class SpecialOccasionsController {
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'occasionId', description: 'Special occasion ID to update' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: true })
-  @ApiResponse({ status: 200, description: 'Special occasion updated', type: SpecialOccasionResponseDto })
+  @ApiResponse({ status: 200, description: 'Special occasion updated' })
   async update(
     @Param('accountId') accountId: string,
     @Param('occasionId') occasionId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdateSpecialOccasionDto,
+    @Req() req: Request,
   ): Promise<SpecialOccasionResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
     }
 
-    const response = await this.specialOccasionsService.update(accountId, occasionId, token, body, revision);
+    const response = await this.specialOccasionsService.update(accountId, occasionId, token, body as any, revision);
     return { data: response.data, revision: response.revision };
   }
 
@@ -170,8 +177,9 @@ export class SpecialOccasionsController {
     @Param('occasionId') occasionId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<void> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for deletes');
@@ -180,7 +188,17 @@ export class SpecialOccasionsController {
     await this.specialOccasionsService.remove(accountId, occasionId, token, revision);
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

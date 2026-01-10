@@ -12,7 +12,9 @@ import {
   Headers,
   Query,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -54,8 +56,9 @@ export class AccountFeaturesController {
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query('excludeLegacy') excludeLegacy?: string,
+    @Req() req?: Request,
   ): Promise<AccountFeaturesResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const exclude = excludeLegacy !== 'false';
 
     const response = await this.accountFeaturesService.getAll(accountId, token, exclude);
@@ -87,8 +90,9 @@ export class AccountFeaturesController {
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdateFeaturesDto,
+    @Req() req: Request,
   ): Promise<AccountFeaturesResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
@@ -107,7 +111,17 @@ export class AccountFeaturesController {
     };
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

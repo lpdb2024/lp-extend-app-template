@@ -13,7 +13,7 @@ import {
   MaxLength,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import { IWorkingHours, IWorkingHoursItem } from './working-hours.interfaces';
+import type { LPWorkingHours } from '@lpextend/client-sdk';
 
 /**
  * DateTime with timezone DTO
@@ -31,7 +31,7 @@ export class DateTimeWithZoneDto {
 /**
  * Working hours item DTO
  */
-export class WorkingHoursItemDto implements IWorkingHoursItem {
+export class WorkingHoursItemDto {
   @ApiProperty({ description: 'Start time', type: DateTimeWithZoneDto })
   @ValidateNested()
   @Type(() => DateTimeWithZoneDto)
@@ -128,21 +128,15 @@ export class WorkingHoursQueryDto {
 /**
  * Working hours response DTO
  */
-export class WorkingHoursResponseDto {
-  @ApiProperty({ description: 'Working hours data' })
-  data: IWorkingHours;
-
-  @ApiPropertyOptional({ description: 'Current revision for optimistic locking' })
+export interface WorkingHoursResponseDto {
+  data: LPWorkingHours;
   revision?: string;
 }
 
 /**
  * Working hours list response DTO
  */
-export class WorkingHoursListResponseDto {
-  @ApiProperty({ description: 'List of working hours', type: [Object] })
-  data: IWorkingHours[];
-
-  @ApiPropertyOptional({ description: 'Current revision for optimistic locking' })
+export interface WorkingHoursListResponseDto {
+  data: LPWorkingHours[];
   revision?: string;
 }

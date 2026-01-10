@@ -13,6 +13,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import type { LPAgentGroup } from '@lpextend/client-sdk';
 
 /**
  * Agent Group DTO - represents an agent group entity
@@ -36,9 +37,10 @@ export class AgentGroupDto {
   @IsNumber()
   parentGroupId?: number | null;
 
-  @ApiProperty({ description: 'Whether the group is enabled' })
+  @ApiPropertyOptional({ description: 'Whether the group is enabled' })
+  @IsOptional()
   @IsBoolean()
-  isEnabled: boolean;
+  isEnabled?: boolean;
 
   @ApiPropertyOptional({ description: 'Whether the group is deleted' })
   @IsOptional()
@@ -175,30 +177,15 @@ export class BulkDeleteAgentGroupsDto {
 /**
  * Agent Groups Response DTO
  */
-export class AgentGroupsResponseDto {
-  @ApiProperty({ type: [AgentGroupWithMembersDto], description: 'Array of agent groups' })
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => AgentGroupWithMembersDto)
-  data: AgentGroupWithMembersDto[];
-
-  @ApiPropertyOptional({ description: 'Revision for optimistic locking' })
-  @IsOptional()
-  @IsString()
+export interface AgentGroupsResponseDto {
+  data: LPAgentGroup[];
   revision?: string;
 }
 
 /**
  * Single Agent Group Response DTO
  */
-export class AgentGroupResponseDto {
-  @ApiProperty({ type: AgentGroupDto, description: 'The agent group data' })
-  @ValidateNested()
-  @Type(() => AgentGroupDto)
-  data: AgentGroupDto;
-
-  @ApiPropertyOptional({ description: 'Revision for optimistic locking' })
-  @IsOptional()
-  @IsString()
+export interface AgentGroupResponseDto {
+  data: LPAgentGroup;
   revision?: string;
 }

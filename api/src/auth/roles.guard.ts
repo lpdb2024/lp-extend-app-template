@@ -1,8 +1,16 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Roles } from './roles.decorator';
-import { Profile } from 'src/Controllers/AccountConfig/account-config.dto';
 import { LE_USER_ROLES } from 'src/constants/constants';
+
+// Local type definition for LP Profile
+interface Profile {
+  id: number;
+  name: string;
+  description?: string;
+  dateUpdated?: string;
+  isAssignedToLPA?: boolean;
+}
 
 // Map from Firestore short role names to LP profile names
 const ROLE_NAME_MAP: Record<string, string> = {

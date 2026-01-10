@@ -1,31 +1,62 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Request, Response } from 'express';
 import * as admin from 'firebase-admin';
-import { LpToken } from 'src/Controllers/CCIDP/cc-idp.interfaces';
-import { AccountConfigService } from 'src/Controllers/AccountConfig/account-config.service';
-import { UserDto } from 'src/Controllers/AccountConfig/account-config.dto';
+import type { SentinelLpToken, SentinelAppUser } from '@lpextend/client-sdk';
 import { helper } from 'src/utils/HelperService';
-import { AppUserDto } from 'src/Controllers/CCIDP/cc-idp.dto';
 import {
   ShellTokenService,
   ShellTokenPayload,
 } from './shell-token.service';
+import { initializeSDK, Scopes } from '@lpextend/client-sdk';
+
+// Collection name constants
+const LP_TOKEN_COLLECTION = 'lp-tokens';
+const APP_USERS_COLLECTION = 'app-users';
+
 const { ctx } = helper;
 const context = 'AUTH_MIDDLEWARE';
+
+/**
+ * Response from shell LP token endpoint
+ */
+interface ShellSentinelLpTokenResponse {
+  accessToken: string;
+  expiresAt: number;
+  accountId: string;
+  userId: string;
+  user?: {
+    id: string;
+    fullName?: string;
+    email?: string;
+    loginName?: string;
+    profileIds?: number[];
+    skillIds?: number[];
+  };
+}
+
+// Cache for LP tokens retrieved from shell (keyed by accountId:userId)
+const lpTokenCache = new Map<string, { token: ShellSentinelLpTokenResponse; expiresAt: number }>();
+
 interface CustomRequest extends Request {
   token?: any;
   user?: any;
   firebaseUid?: string;
   shellToken?: ShellTokenPayload;
   isShellAuth?: boolean;
+  lpAccessToken?: string;
 }
 
 @Injectable()
 export class PreAuthMiddleware implements NestMiddleware {
   private shellTokenService: ShellTokenService;
+  private shellBaseUrl: string;
+  private appId: string;
 
-  constructor(private accountConfigService: AccountConfigService) {
+  constructor(private configService: ConfigService) {
     this.shellTokenService = new ShellTokenService();
+    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
+    this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
   }
 
   cookieAuth(req: any) {
@@ -45,13 +76,13 @@ export class PreAuthMiddleware implements NestMiddleware {
     return bearer;
   }
 
-  async getLPToken(token: string): Promise<LpToken> {
+  async getLPToken(token: string): Promise<SentinelLpToken> {
     const lpTokenInfo = await admin
       .firestore()
       .collection('lp_tokens')
       .doc(token)
       .get();
-    return lpTokenInfo.data() as LpToken;
+    return lpTokenInfo.data() as SentinelLpToken;
   }
 
   /**
@@ -59,8 +90,8 @@ export class PreAuthMiddleware implements NestMiddleware {
    * Returns user data if valid, null otherwise
    */
   async verifyFirebaseToken(idToken: string, accountId?: string): Promise<{
-    token: Partial<LpToken>;
-    user: AppUserDto;
+    token: Partial<SentinelLpToken>;
+    user: SentinelAppUser;
     accessToken: string;
     firebaseUid: string;
   } | null> {
@@ -70,7 +101,7 @@ export class PreAuthMiddleware implements NestMiddleware {
       const firebaseUid = decodedToken.uid;
 
       // Get user from Firestore
-      const userCollection = admin.firestore().collection(AppUserDto.collectionName);
+      const userCollection = admin.firestore().collection(APP_USERS_COLLECTION);
       const userDoc = await userCollection.doc(firebaseUid).get();
 
       if (!userDoc.exists) {
@@ -78,13 +109,13 @@ export class PreAuthMiddleware implements NestMiddleware {
         return null;
       }
 
-      const user = userDoc.data() as AppUserDto;
+      const user = userDoc.data() as SentinelAppUser;
 
       // Use the accountId from URL params, or fallback to user's default
       const effectiveAccountId = accountId || user.defaultAccountId || user.accountId;
 
       // Create a synthetic token object for compatibility
-      const syntheticToken: Partial<LpToken> = {
+      const syntheticToken: Partial<SentinelLpToken> = {
         uid: firebaseUid,
         accountId: effectiveAccountId,
         id: firebaseUid,
@@ -111,7 +142,16 @@ export class PreAuthMiddleware implements NestMiddleware {
     user: null;
   } | null> {
     try {
-      await this.accountConfigService.getAllUsers(accountId, token);
+      // Use SDK directly to validate the token by fetching users
+      const sdk = await initializeSDK({
+        appId: this.appId,
+        accountId,
+        accessToken: token,
+        shellBaseUrl: this.shellBaseUrl,
+        scopes: [Scopes.USERS],
+        debug: this.configService.get<string>('NODE_ENV') !== 'production',
+      });
+      await sdk.users.getAll();
       // if user is able to retrieve users, then token is valid...
       return {
         accessToken: token,
@@ -138,7 +178,7 @@ export class PreAuthMiddleware implements NestMiddleware {
 
   async getAuthenticationToken(
     req: any,
-  ): Promise<{ token: any; user: AppUserDto; accessToken: string; firebaseUid?: string }> {
+  ): Promise<{ token: any; user: SentinelAppUser; accessToken: string; firebaseUid?: string }> {
     const fn = 'getAuthenticationToken';
     const response = {
       token: null,
@@ -195,13 +235,13 @@ export class PreAuthMiddleware implements NestMiddleware {
       // const ccuser = await this.accountConfigService.getOneUser(
       const userCollection = admin
         .firestore()
-        .collection(AppUserDto.collectionName);
+        .collection(APP_USERS_COLLECTION);
       //   accountId,
       //   uid,
       //   authToken,
       // );
       // const storedUser = await this.dbService.getUser(decoded.sub);
-      console.info(...ctx(context, fn, { uid, collectionName: AppUserDto.collectionName, lookingUpUserDoc: true }));
+      console.info(...ctx(context, fn, { uid, collectionName: APP_USERS_COLLECTION, lookingUpUserDoc: true }));
       const ccuser = await userCollection.doc(uid).get();
       if (!ccuser.exists) {
         console.error(
@@ -221,7 +261,7 @@ export class PreAuthMiddleware implements NestMiddleware {
       console.info(...ctx(context, fn, { uid, userFound: true }));
       return {
         token,
-        user: ccuser.data() as AppUserDto,
+        user: ccuser.data() as SentinelAppUser,
         accessToken: authType === 'bearer' ? authToken : token.access_token,
       };
     } catch (error) {
@@ -249,11 +289,20 @@ export class PreAuthMiddleware implements NestMiddleware {
     error?: string;
   }> {
     const shellToken = req.headers['x-shell-token'] as string;
+    console.info('[PreAuthMiddleware] Checking shell token:', {
+      hasShellToken: !!shellToken,
+      tokenPreview: shellToken ? shellToken.substring(0, 50) + '...' : null,
+    });
     if (!shellToken) {
       return { valid: false, error: 'No shell token' };
     }
 
     const result = this.shellTokenService.verifyToken(shellToken);
+    console.info('[PreAuthMiddleware] Shell token verification result:', {
+      valid: result.valid,
+      error: result.error,
+      hasPayload: !!result.payload,
+    });
     if (result.valid) {
       console.info('[PreAuthMiddleware] Shell token verified:', {
         appId: result.payload?.appId,
@@ -265,6 +314,87 @@ export class PreAuthMiddleware implements NestMiddleware {
     return result;
   }
 
+  /**
+   * Fetch LP token from shell backend
+   * Uses cache to avoid repeated requests
+   */
+  async fetchSentinelLpTokenFromShell(
+    shellToken: string,
+    accountId: string,
+    userId: string,
+  ): Promise<ShellSentinelLpTokenResponse | null> {
+    const fn = 'fetchSentinelLpTokenFromShell';
+    const cacheKey = `${accountId}:${userId}`;
+
+    // Check cache first
+    const cached = lpTokenCache.get(cacheKey);
+    if (cached && cached.expiresAt > Date.now() + 60000) {
+      // Token valid for at least 1 more minute
+      console.info(...ctx(context, fn, { accountId, userId, cached: true }));
+      return cached.token;
+    }
+
+    try {
+      const response = await fetch(
+        `${this.shellBaseUrl}/api/v1/shell/token/${accountId}/lp-token`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Shell-Token': shellToken,
+          },
+          body: JSON.stringify({
+            appId: this.appId,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error(...ctx(context, fn, {
+          accountId,
+          userId,
+          status: response.status,
+          error: errorData.message || 'Failed to fetch LP token from shell',
+        }));
+        return null;
+      }
+
+      const tokenData: ShellSentinelLpTokenResponse = await response.json();
+
+      // Only cache if we got a valid accessToken
+      if (tokenData.accessToken) {
+        lpTokenCache.set(cacheKey, {
+          token: tokenData,
+          expiresAt: tokenData.expiresAt,
+        });
+      } else {
+        console.warn(...ctx(context, fn, {
+          accountId,
+          userId,
+          warning: 'Shell returned LP token without accessToken - not caching',
+          tokenKeys: Object.keys(tokenData),
+        }));
+      }
+
+      console.info(...ctx(context, fn, {
+        accountId,
+        userId,
+        expiresAt: new Date(tokenData.expiresAt).toISOString(),
+        hasAccessToken: !!tokenData.accessToken,
+      }));
+
+      return tokenData;
+    } catch (error) {
+      console.error(...ctx(context, fn, {
+        accountId,
+        userId,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      }));
+      return null;
+    }
+  }
+
   async use(req: CustomRequest, res: Response, next: () => void) {
     const isRoot = req.path === '/';
 
@@ -274,15 +404,52 @@ export class PreAuthMiddleware implements NestMiddleware {
       console.info('[PreAuthMiddleware] Using shell authentication');
       req.shellToken = shellResult.payload;
       req.isShellAuth = true;
-      // Create a synthetic token object for compatibility with existing code
-      req.token = {
-        uid: shellResult.payload.sub,
-        accountId: shellResult.payload.accountId,
-        id: shellResult.payload.sub,
-        appId: shellResult.payload.appId,
-        scopes: shellResult.payload.scopes,
-      };
-      // User info will need to be fetched separately if needed
+
+      // Fetch the LP token from the shell for API calls
+      const rawShellToken = req.headers['x-shell-token'] as string;
+      const lpTokenData = await this.fetchSentinelLpTokenFromShell(
+        rawShellToken,
+        shellResult.payload.accountId,
+        shellResult.payload.sub,
+      );
+
+      if (lpTokenData) {
+        console.info('[PreAuthMiddleware] LP token data received:', {
+          hasAccessToken: !!lpTokenData.accessToken,
+          accessTokenPreview: lpTokenData.accessToken ? lpTokenData.accessToken.substring(0, 30) + '...' : null,
+          expiresAt: lpTokenData.expiresAt,
+          accountId: lpTokenData.accountId,
+          userId: lpTokenData.userId,
+        });
+        req.lpAccessToken = lpTokenData.accessToken;
+        // Create a token object with LP access token for API calls
+        // Note: Set both access_token and accessToken for compatibility
+        req.token = {
+          uid: shellResult.payload.sub,
+          accountId: shellResult.payload.accountId,
+          id: shellResult.payload.sub,
+          appId: shellResult.payload.appId,
+          scopes: shellResult.payload.scopes,
+          access_token: lpTokenData.accessToken,
+          accessToken: lpTokenData.accessToken,
+        };
+        // Include user info if returned from shell
+        if (lpTokenData.user) {
+          req.user = lpTokenData.user;
+        }
+      } else {
+        // Fallback: create synthetic token without LP access token
+        // API calls requiring LP token will fail, but app can still function
+        console.warn('[PreAuthMiddleware] Could not fetch LP token from shell');
+        req.token = {
+          uid: shellResult.payload.sub,
+          accountId: shellResult.payload.accountId,
+          id: shellResult.payload.sub,
+          appId: shellResult.payload.appId,
+          scopes: shellResult.payload.scopes,
+        };
+      }
+
       req.firebaseUid = shellResult.payload.sub;
       return next();
     }

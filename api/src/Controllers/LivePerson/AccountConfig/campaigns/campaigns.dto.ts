@@ -16,11 +16,8 @@ import {
   Max,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import {
-  ICampaign,
-  CampaignType,
-  CampaignStatus,
-} from './campaigns.interfaces';
+import type { LPCampaign } from '@lpextend/client-sdk';
+import { CampaignType, CampaignStatus } from './campaigns.interfaces';
 
 /**
  * Control group DTO
@@ -279,15 +276,15 @@ export class CampaignUpdateDto {
 /**
  * Campaign response DTO
  */
-export class CampaignResponseDto {
-  @ApiProperty({ description: 'Campaign data' })
-  data: ICampaign;
+export interface CampaignResponseDto {
+  data: LPCampaign;
+  revision?: string;
 }
 
 /**
  * Campaign list response DTO
  */
-export class CampaignListResponseDto {
-  @ApiProperty({ description: 'List of campaigns', type: [Object] })
-  data: ICampaign[];
+export interface CampaignListResponseDto {
+  data: LPCampaign[];
+  revision?: string;
 }

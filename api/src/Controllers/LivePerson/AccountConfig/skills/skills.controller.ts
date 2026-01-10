@@ -16,7 +16,9 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -39,7 +41,7 @@ import {
 
 @ApiTags('Account Config - Skills')
 @ApiBearerAuth()
-@Controller('api/v2/account-config/:accountId/skills')
+@Controller('api/v1/account-config/:accountId/skills')
 export class SkillsController {
   constructor(private readonly skillsService: SkillsService) {}
 
@@ -49,13 +51,14 @@ export class SkillsController {
     description: 'Retrieves all skills for the specified account',
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiResponse({ status: 200, description: 'List of skills', type: SkillsResponseDto })
+  @ApiResponse({ status: 200, description: 'List of skills' })
   async getAll(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: SkillsQueryDto,
+    @Req() req: Request,
   ): Promise<SkillsResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.skillsService.getAll(accountId, token, {
       select: query.select,
@@ -77,8 +80,9 @@ export class SkillsController {
   async getRevision(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<{ revision: string | undefined }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = await this.skillsService.getRevision(accountId, token);
     return { revision };
   }
@@ -90,13 +94,14 @@ export class SkillsController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'skillId', description: 'Skill ID' })
-  @ApiResponse({ status: 200, description: 'The skill', type: SkillResponseDto })
+  @ApiResponse({ status: 200, description: 'The skill' })
   async getById(
     @Param('accountId') accountId: string,
     @Param('skillId') skillId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<SkillResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.skillsService.getById(accountId, skillId, token);
 
@@ -114,14 +119,15 @@ export class SkillsController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: false })
-  @ApiResponse({ status: 201, description: 'Skill created', type: SkillResponseDto })
+  @ApiResponse({ status: 201, description: 'Skill created' })
   async create(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: CreateSkillDto | CreateSkillDto[],
+    @Req() req: Request,
   ): Promise<SkillResponseDto | SkillsResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (Array.isArray(body)) {
       const response = await this.skillsService.createMany(accountId, token, body, revision);
@@ -140,15 +146,16 @@ export class SkillsController {
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'skillId', description: 'Skill ID to update' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: true })
-  @ApiResponse({ status: 200, description: 'Skill updated', type: SkillResponseDto })
+  @ApiResponse({ status: 200, description: 'Skill updated' })
   async update(
     @Param('accountId') accountId: string,
     @Param('skillId') skillId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdateSkillDto,
+    @Req() req: Request,
   ): Promise<SkillResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
@@ -173,8 +180,9 @@ export class SkillsController {
     @Param('skillId') skillId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<void> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for deletes');
@@ -195,8 +203,9 @@ export class SkillsController {
     @Param('accountId') accountId: string,
     @Param('skillId') skillId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<SkillDependenciesDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     return this.skillsService.checkDependencies(accountId, Number(skillId), token);
   }
 
@@ -213,12 +222,23 @@ export class SkillsController {
     @Param('skillId') skillId: string,
     @Headers('authorization') authorization: string,
     @Body() body: SmartDeleteSkillDto,
+    @Req() req: Request,
   ): Promise<SmartDeleteResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     return this.skillsService.smartDelete(accountId, Number(skillId), token, body.mode);
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

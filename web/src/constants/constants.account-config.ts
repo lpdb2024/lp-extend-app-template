@@ -44,7 +44,7 @@ const AC_ROUTES_V1 = {
 // =============================================================================
 // v2 Routes (New strongly-typed LivePerson API structure)
 // =============================================================================
-const AC_ROUTES_V2_BASE = (accountId: string) => `${V2}/account-config/${accountId}`;
+const AC_ROUTES_V2_BASE = (accountId: string) => `${V1}/account-config/${accountId}`;
 
 const AC_ROUTES_V2 = {
   BASE: AC_ROUTES_V2_BASE,

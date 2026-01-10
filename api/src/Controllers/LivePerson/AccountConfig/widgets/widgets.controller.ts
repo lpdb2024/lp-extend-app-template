@@ -16,7 +16,9 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -51,8 +53,9 @@ export class WidgetsController {
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: WidgetsQueryDto,
+    @Req() req: Request,
   ): Promise<WidgetsResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.widgetsService.getAll(accountId, token, {
       select: query.select,
@@ -74,8 +77,9 @@ export class WidgetsController {
   async getRevision(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<{ revision: string | undefined }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = await this.widgetsService.getRevision(accountId, token);
     return { revision };
   }
@@ -92,8 +96,9 @@ export class WidgetsController {
     @Param('accountId') accountId: string,
     @Param('widgetId') widgetId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<WidgetResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.widgetsService.getById(accountId, widgetId, token);
 
@@ -117,8 +122,9 @@ export class WidgetsController {
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: CreateWidgetDto,
+    @Req() req: Request,
   ): Promise<WidgetResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.widgetsService.create(accountId, token, body, revision);
     return { data: response.data, revision: response.revision };
@@ -139,8 +145,9 @@ export class WidgetsController {
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdateWidgetDto,
+    @Req() req: Request,
   ): Promise<WidgetResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
@@ -165,8 +172,9 @@ export class WidgetsController {
     @Param('widgetId') widgetId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<void> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for deletes');
@@ -175,7 +183,17 @@ export class WidgetsController {
     await this.widgetsService.remove(accountId, widgetId, token, revision);
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

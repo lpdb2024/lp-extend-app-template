@@ -1,25 +1,28 @@
 /**
  * Skills Service
- * Handles all Skills API operations for LivePerson
+ * Handles all Skills API operations for LivePerson using the SDK
  */
 
 import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { APIService } from '../../../APIService/api-service';
-import { LPDomainService } from '../../shared/lp-domain.service';
-import { LPBaseService } from '../../shared/lp-base.service';
+import { ConfigService } from '@nestjs/config';
 import {
-  LP_SERVICE_DOMAINS,
-  LP_API_VERSIONS,
-  LP_API_PATHS,
-} from '../../shared/lp-constants';
-import { ILPResponse, ILPRequestOptions } from '../../shared/lp-common.interfaces';
-import {
-  ISkill,
-  ICreateSkillRequest,
-  IUpdateSkillRequest,
-} from './skills.interfaces';
+  initializeSDK,
+  LPExtendSDK,
+  Scopes,
+  LPExtendSDKError,
+} from '@lpextend/client-sdk';
+import type { LPSkill, CreateSkillRequest, UpdateSkillRequest } from '@lpextend/client-sdk';
 import { UsersService } from '../users/users.service';
+
+/**
+ * Response type for SDK operations
+ */
+export interface ILPResponse<T> {
+  data: T;
+  revision?: string;
+  headers?: Record<string, string>;
+}
 
 /**
  * Skill dependency info for deletion
@@ -44,20 +47,42 @@ export interface ISmartDeleteResponse {
 }
 
 @Injectable()
-export class SkillsService extends LPBaseService {
-  protected readonly serviceDomain = LP_SERVICE_DOMAINS.ACCOUNT_CONFIG_WRITE;
-  protected readonly defaultApiVersion = LP_API_VERSIONS.SKILLS;
+export class SkillsService {
+  private shellBaseUrl: string;
+  private appId: string;
 
   constructor(
-    apiService: APIService,
-    domainService: LPDomainService,
     @InjectPinoLogger(SkillsService.name)
-    logger: PinoLogger,
+    private readonly logger: PinoLogger,
+    private readonly configService: ConfigService,
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
   ) {
-    super(apiService, domainService, logger);
     this.logger.setContext(SkillsService.name);
+    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
+    this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
+  }
+
+  /**
+   * Create SDK instance for the given account/token
+   */
+  private async getSDK(accountId: string, token: string): Promise<LPExtendSDK> {
+    try {
+      const accessToken = token.replace('Bearer ', '');
+      return await initializeSDK({
+        appId: this.appId,
+        accountId,
+        accessToken,
+        shellBaseUrl: this.shellBaseUrl,
+        scopes: [Scopes.SKILLS, Scopes.USERS],
+        debug: this.configService.get<string>('NODE_ENV') !== 'production',
+      });
+    } catch (error) {
+      if (error instanceof LPExtendSDKError) {
+        this.logger.error({ error: error.message, code: error.code }, 'SDK initialization failed');
+      }
+      throw error;
+    }
   }
 
   /**
@@ -70,16 +95,11 @@ export class SkillsService extends LPBaseService {
       select?: string;
       includeDeleted?: boolean;
     },
-  ): Promise<ILPResponse<ISkill[]>> {
-    const path = LP_API_PATHS.SKILLS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      select: options?.select || '$all',
-      includeDeleted: options?.includeDeleted,
-      source: 'ccui',
-    };
-
-    return this.get<ISkill[]>(accountId, path, token, requestOptions);
+  ): Promise<ILPResponse<LPSkill[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const response = await sdk.skills.getAll();
+    this.logger.info({ accountId, count: response.data?.length }, 'Fetched skills');
+    return response;
   }
 
   /**
@@ -89,15 +109,9 @@ export class SkillsService extends LPBaseService {
     accountId: string,
     skillId: string | number,
     token: string,
-  ): Promise<ILPResponse<ISkill>> {
-    const path = LP_API_PATHS.SKILLS.BY_ID(accountId, String(skillId));
-
-    const requestOptions: ILPRequestOptions = {
-      select: '$all',
-      source: 'ccui',
-    };
-
-    return this.get<ISkill>(accountId, path, token, requestOptions);
+  ): Promise<ILPResponse<LPSkill>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.skills.getById(Number(skillId));
   }
 
   /**
@@ -106,17 +120,11 @@ export class SkillsService extends LPBaseService {
   async create(
     accountId: string,
     token: string,
-    data: ICreateSkillRequest,
+    data: CreateSkillRequest,
     revision?: string,
-  ): Promise<ILPResponse<ISkill>> {
-    const path = LP_API_PATHS.SKILLS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.post<ISkill>(accountId, path, data, token, requestOptions);
+  ): Promise<ILPResponse<LPSkill>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.skills.create(data);
   }
 
   /**
@@ -125,17 +133,19 @@ export class SkillsService extends LPBaseService {
   async createMany(
     accountId: string,
     token: string,
-    data: ICreateSkillRequest[],
+    data: CreateSkillRequest[],
     revision?: string,
-  ): Promise<ILPResponse<ISkill[]>> {
-    const path = LP_API_PATHS.SKILLS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.post<ISkill[]>(accountId, path, data, token, requestOptions);
+  ): Promise<ILPResponse<LPSkill[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    // Create skills one by one and collect results
+    const results: LPSkill[] = [];
+    let lastRevision: string | undefined;
+    for (const skill of data) {
+      const response = await sdk.skills.create(skill);
+      results.push(response.data);
+      lastRevision = response.revision;
+    }
+    return { data: results, revision: lastRevision };
   }
 
   /**
@@ -145,17 +155,11 @@ export class SkillsService extends LPBaseService {
     accountId: string,
     skillId: string | number,
     token: string,
-    data: IUpdateSkillRequest,
-    revision: string,
-  ): Promise<ILPResponse<ISkill>> {
-    const path = LP_API_PATHS.SKILLS.BY_ID(accountId, String(skillId));
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.put<ISkill>(accountId, path, data, token, requestOptions);
+    data: UpdateSkillRequest,
+    revision?: string,
+  ): Promise<ILPResponse<LPSkill>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.skills.update(Number(skillId), data, revision);
   }
 
   /**
@@ -164,17 +168,18 @@ export class SkillsService extends LPBaseService {
   async updateMany(
     accountId: string,
     token: string,
-    data: (IUpdateSkillRequest & { id: number })[],
-    revision: string,
-  ): Promise<ILPResponse<ISkill[]>> {
-    const path = LP_API_PATHS.SKILLS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.put<ISkill[]>(accountId, path, data, token, requestOptions);
+    data: (UpdateSkillRequest & { id: number })[],
+    revision?: string,
+  ): Promise<ILPResponse<LPSkill[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const results: LPSkill[] = [];
+    let lastRevision = revision;
+    for (const skill of data) {
+      const response = await sdk.skills.update(skill.id, skill, lastRevision);
+      results.push(response.data);
+      lastRevision = response.revision;
+    }
+    return { data: results, revision: lastRevision };
   }
 
   /**
@@ -184,16 +189,10 @@ export class SkillsService extends LPBaseService {
     accountId: string,
     skillId: string | number,
     token: string,
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.SKILLS.BY_ID(accountId, String(skillId));
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.delete<void>(accountId, path, token, requestOptions);
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.skills.delete(Number(skillId), revision);
   }
 
   /**
@@ -203,26 +202,22 @@ export class SkillsService extends LPBaseService {
     accountId: string,
     token: string,
     ids: number[],
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.SKILLS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-      additionalParams: {
-        ids: ids.join(','),
-      },
-    };
-
-    return this.delete<void>(accountId, path, token, requestOptions);
+    const sdk = await this.getSDK(accountId, token);
+    let lastRevision = revision;
+    for (const id of ids) {
+      const response = await sdk.skills.delete(id, lastRevision);
+      lastRevision = response.revision;
+    }
+    return { data: undefined, revision: lastRevision };
   }
 
   /**
    * Get the current revision for skills
    */
   async getRevision(accountId: string, token: string): Promise<string | undefined> {
-    const response = await this.getAll(accountId, token, { select: 'id' });
+    const response = await this.getAll(accountId, token);
     return response.revision;
   }
 
@@ -332,16 +327,6 @@ export class SkillsService extends LPBaseService {
     // Now delete the skill
     try {
       const revision = await this.getRevision(accountId, token);
-      if (!revision) {
-        return {
-          success: false,
-          message: 'Could not get revision for skill deletion',
-          dependencies,
-          usersUpdated,
-          usersFailed,
-        };
-      }
-
       await this.remove(accountId, skillId, token, revision);
 
       this.logger.info({

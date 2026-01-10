@@ -1,6 +1,7 @@
 /**
  * Skills API DTOs
  * NestJS class-based DTOs with validation decorators
+ * Uses SDK types for responses
  */
 
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -13,22 +14,26 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import type { LPSkill } from '@lpextend/client-sdk';
 
 /**
  * Skill Routing Configuration DTO
  */
 export class SkillRoutingConfigurationDto {
-  @ApiProperty({ description: 'Routing priority' })
+  @ApiPropertyOptional({ description: 'Routing priority' })
+  @IsOptional()
   @IsNumber()
-  priority: number;
+  priority?: number;
 
-  @ApiProperty({ description: 'Split percentage for routing' })
+  @ApiPropertyOptional({ description: 'Split percentage for routing' })
+  @IsOptional()
   @IsNumber()
-  splitPercentage: number;
+  splitPercentage?: number;
 
-  @ApiProperty({ description: 'Target agent group ID' })
+  @ApiPropertyOptional({ description: 'Target agent group ID' })
+  @IsOptional()
   @IsNumber()
-  agentGroupId: number;
+  agentGroupId?: number;
 }
 
 /**
@@ -41,77 +46,9 @@ export class SkillTransferEntryDto {
 }
 
 /**
- * Skill DTO - represents a skill entity
+ * Alias for SDK skill type for response compatibility
  */
-export class SkillDto {
-  @ApiProperty({ description: 'Unique identifier for the skill' })
-  @IsNumber()
-  id: number;
-
-  @ApiProperty({ description: 'Name of the skill' })
-  @IsString()
-  name: string;
-
-  @ApiPropertyOptional({ description: 'Description of the skill' })
-  @IsOptional()
-  @IsString()
-  description?: string;
-
-  @ApiPropertyOptional({ description: 'Display order of the skill' })
-  @IsOptional()
-  @IsNumber()
-  skillOrder?: number;
-
-  @ApiPropertyOptional({ description: 'Working hours schedule ID' })
-  @IsOptional()
-  @IsNumber()
-  workingHoursId?: number;
-
-  @ApiPropertyOptional({ description: 'Special occasion schedule ID' })
-  @IsOptional()
-  @IsNumber()
-  specialOccasionId?: number;
-
-  @ApiPropertyOptional({ description: 'Maximum wait time in seconds' })
-  @IsOptional()
-  @IsNumber()
-  maxWaitTime?: number;
-
-  @ApiPropertyOptional({ description: 'Whether the skill is deleted' })
-  @IsOptional()
-  @IsBoolean()
-  deleted?: boolean;
-
-  @ApiPropertyOptional({ description: 'Last update timestamp' })
-  @IsOptional()
-  @IsString()
-  dateUpdated?: string;
-
-  @ApiPropertyOptional({ description: 'Whether transfers are allowed' })
-  @IsOptional()
-  @IsBoolean()
-  canTransfer?: boolean;
-
-  @ApiPropertyOptional({ type: [SkillTransferEntryDto], description: 'List of skills that can be transferred to' })
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => SkillTransferEntryDto)
-  skillTransferList?: SkillTransferEntryDto[];
-
-  @ApiPropertyOptional({ type: [Number], description: 'Line of business IDs' })
-  @IsOptional()
-  @IsArray()
-  @IsNumber({}, { each: true })
-  lobIds?: number[];
-
-  @ApiPropertyOptional({ type: [SkillRoutingConfigurationDto], description: 'Routing configuration' })
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => SkillRoutingConfigurationDto)
-  skillRoutingConfiguration?: SkillRoutingConfigurationDto[];
-}
+export type SkillDto = LPSkill;
 
 /**
  * Create Skill Request DTO
@@ -255,31 +192,16 @@ export class SkillsQueryDto {
 /**
  * Skills Response DTO
  */
-export class SkillsResponseDto {
-  @ApiProperty({ type: [SkillDto], description: 'Array of skills' })
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => SkillDto)
-  data: SkillDto[];
-
-  @ApiPropertyOptional({ description: 'Revision for optimistic locking' })
-  @IsOptional()
-  @IsString()
+export interface SkillsResponseDto {
+  data: LPSkill[];
   revision?: string;
 }
 
 /**
  * Single Skill Response DTO
  */
-export class SkillResponseDto {
-  @ApiProperty({ type: SkillDto, description: 'The skill data' })
-  @ValidateNested()
-  @Type(() => SkillDto)
-  data: SkillDto;
-
-  @ApiPropertyOptional({ description: 'Revision for optimistic locking' })
-  @IsOptional()
-  @IsString()
+export interface SkillResponseDto {
+  data: LPSkill;
   revision?: string;
 }
 

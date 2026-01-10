@@ -16,7 +16,9 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -51,8 +53,9 @@ export class AppInstallationsController {
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: AppInstallationsQueryDto,
+    @Req() req: Request,
   ): Promise<AppInstallationsResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.appInstallationsService.getAll(accountId, token, {
       select: query.select,
@@ -74,8 +77,9 @@ export class AppInstallationsController {
   async getRevision(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<{ revision: string | undefined }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = await this.appInstallationsService.getRevision(accountId, token);
     return { revision };
   }
@@ -92,8 +96,9 @@ export class AppInstallationsController {
     @Param('accountId') accountId: string,
     @Param('appId') appId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<AppInstallationResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.appInstallationsService.getById(accountId, appId, token);
 
@@ -117,8 +122,9 @@ export class AppInstallationsController {
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: CreateAppInstallationDto,
+    @Req() req: Request,
   ): Promise<AppInstallationResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.appInstallationsService.create(accountId, token, body, revision);
     return { data: response.data, revision: response.revision };
@@ -139,8 +145,9 @@ export class AppInstallationsController {
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdateAppInstallationDto,
+    @Req() req: Request,
   ): Promise<AppInstallationResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
@@ -163,8 +170,9 @@ export class AppInstallationsController {
     @Param('appId') appId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<AppInstallationResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required');
@@ -187,8 +195,9 @@ export class AppInstallationsController {
     @Param('appId') appId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<AppInstallationResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required');
@@ -213,8 +222,9 @@ export class AppInstallationsController {
     @Param('appId') appId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<void> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for deletes');
@@ -223,7 +233,17 @@ export class AppInstallationsController {
     await this.appInstallationsService.remove(accountId, appId, token, revision);
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

@@ -2,16 +2,18 @@ import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { UserData } from 'src/Controllers/users/users.interfaces';
-import { LpToken } from 'src/Controllers/CCIDP/cc-idp.interfaces';
-import { AccountConfigService } from 'src/Controllers/AccountConfig/account-config.service';
-import { HelperService } from 'src/Controllers/HelperService/helper-service.service';
-import { HttpService } from '@nestjs/axios';
+import type { SentinelLpToken } from '@lpextend/client-sdk';
 
 import { LE_USER_ROLES } from 'src/constants/constants';
-import {
-  Profile,
-  ServiceWorkerData,
-} from 'src/Controllers/AccountConfig/account-config.dto';
+
+// Local type definitions (previously from AccountConfig)
+interface Profile {
+  id: number;
+  name: string;
+  description?: string;
+  dateUpdated?: string;
+  isAssignedToLPA?: boolean;
+}
 
 // Map from Firestore short role names to LP profile names
 const ROLE_NAME_MAP: Record<string, string> = {
@@ -43,12 +45,15 @@ function userHasRole(user: any, roles: string[]): boolean {
 }
 import { ConfigService } from '@nestjs/config';
 import { PinoLogger } from 'nestjs-pino';
-import { AppSettingsDTO, UserSettingsDTO } from 'src/Controllers/AccountConfig/account-config.dto';
-import { APIService } from 'src/Controllers/APIService/api-service';
+
+// Local collection name constants for Firestore
+const APP_SETTINGS_COLLECTION = 'app-settings';
+const USER_SETTINGS_COLLECTION = 'user-settings';
+const SERVICE_WORKERS_COLLECTION = 'service-workers';
 
 @Injectable()
 export class AuthService {
-  constructor(private accountConfigService: AccountConfigService) {}
+  constructor() {}
 
   cookieAuth(req: any) {
     const auth = req.signedCookies['cc_auth'];
@@ -62,7 +67,7 @@ export class AuthService {
   async getAuthenticationToken(
     req: any,
     res?: any,
-  ): Promise<{ token: LpToken; user: UserData }> {
+  ): Promise<{ token: SentinelLpToken; user: UserData }> {
     const cookieAuth = (req: any) => {
       const auth = req.signedCookies['cc_auth'];
       const user = req.signedCookies['cc_user'];
@@ -76,7 +81,6 @@ export class AuthService {
 
     const { auth } = cookieAuth(req);
     const authToken = bearer ? bearer : auth;
-    const accountId = req?.params?.accountId;
     if (!authToken) {
       return res ? res.status(401).send('Unauthorized') : null;
     }
@@ -87,14 +91,11 @@ export class AuthService {
     */
 
     const token = await this.getLPToken(authToken);
-    const user = await this.accountConfigService.getOneUser(
-      accountId,
-      token.uid,
-      authToken,
-    );
     if (!token) {
       return res ? res.status(401).send('Unauthorized') : null;
     }
+    // User data is stored in the token from login
+    const user = token.userData;
     if (!user) {
       return res ? res.status(401).send('Unauthorized') : null;
     }
@@ -106,13 +107,13 @@ export class AuthService {
     return user.data() as UserData;
   }
 
-  async getLPToken(token: string): Promise<LpToken> {
+  async getLPToken(token: string): Promise<SentinelLpToken> {
     const lpTokenInfo = await admin
       .firestore()
       .collection('lp_tokens')
       .doc(token)
       .get();
-    return lpTokenInfo.data() as LpToken;
+    return lpTokenInfo.data() as SentinelLpToken;
   }
 
   async createUser(data: any) {
@@ -123,31 +124,7 @@ export class AuthService {
 
 export const VerifyPermissionsFireBase = createParamDecorator(
   async (_data: unknown, ctx: ExecutionContext) => {
-    const logger = new PinoLogger({ pinoHttp: {}, renameContext: 'false' });
-    const httpService = new HttpService();
-
-    const configService = new ConfigService();
-    const applicationSettingsCollection = admin
-      .firestore()
-      .collection(AppSettingsDTO.collectionName);
-    const userSettingsCollection = admin
-      .firestore()
-      .collection(UserSettingsDTO.collectionName);
-    const serviceWorksCollection = admin
-      .firestore()
-      .collection(ServiceWorkerData.collectionName);
-    const apiService = new APIService(httpService);
-    const helperService = new HelperService(logger, apiService);
-    const accountConfigService = new AccountConfigService(
-      new PinoLogger({ pinoHttp: {}, renameContext: 'false' }),
-      helperService,
-      configService,
-      apiService,
-      applicationSettingsCollection as any, // Cast as needed for CollectionReference<AppSettingsDTO>
-      userSettingsCollection as any, // Cast as needed for CollectionReference<UserSettingsDTO>
-      serviceWorksCollection as any, // Cast as needed for CollectionReference<ServiceWorkerData>
-    );
-    const authService = new AuthService(accountConfigService);
+    const authService = new AuthService();
     const { roles, permissions } = _data as {
       roles: string[];
       permissions: string[];
@@ -249,7 +226,7 @@ export const VerifyFirebaseToken = createParamDecorator(
 export interface DualAuthResult {
   type: 'firebase' | 'lp_sso';
   firebaseUid?: string;
-  lpToken?: LpToken;
+  lpToken?: SentinelLpToken;
   user?: any;
   accountId?: string;
   isLPA?: boolean;
@@ -321,7 +298,7 @@ export const VerifyDualAuth = createParamDecorator(
         .get();
 
       if (lpTokenDoc.exists) {
-        const lpToken = lpTokenDoc.data() as LpToken;
+        const lpToken = lpTokenDoc.data() as SentinelLpToken;
         return {
           type: 'lp_sso',
           lpToken,
@@ -344,7 +321,7 @@ export const VerifyDualAuth = createParamDecorator(
  * Returns the LP token object
  */
 export const VerifyLPToken = createParamDecorator(
-  async (_data: unknown, ctx: ExecutionContext): Promise<LpToken | null> => {
+  async (_data: unknown, ctx: ExecutionContext): Promise<SentinelLpToken | null> => {
     const request = ctx.switchToHttp().getRequest();
 
     // If PreAuthMiddleware set token and it's LP (no firebaseUid)
@@ -366,7 +343,7 @@ export const VerifyLPToken = createParamDecorator(
         .get();
 
       if (lpTokenDoc.exists) {
-        return lpTokenDoc.data() as LpToken;
+        return lpTokenDoc.data() as SentinelLpToken;
       }
     } catch (error) {
       console.error('LP token lookup failed:', error);
@@ -378,36 +355,13 @@ export const VerifyLPToken = createParamDecorator(
 
 export const VerifyPermissions = createParamDecorator(
   async (_data: unknown, ctx: ExecutionContext) => {
-    const httpService = new HttpService();
-    const logger = new PinoLogger({ pinoHttp: {}, renameContext: 'false' });
-    const applicationSettingsCollection = admin
-      .firestore()
-      .collection(AppSettingsDTO.collectionName);
-    const userSettingsCollection = admin
-      .firestore()
-      .collection(UserSettingsDTO.collectionName);
-    const serviceWorksCollection = admin
-      .firestore()
-      .collection(ServiceWorkerData.collectionName);
-    const apiService = new APIService(httpService);
-    const helperService = new HelperService(logger, apiService);
-    const accountConfigService = new AccountConfigService(
-      new PinoLogger({ pinoHttp: {}, renameContext: 'false' }),
-      helperService,
-      new ConfigService(),
-      apiService,
-      applicationSettingsCollection as any, // Cast as needed for CollectionReference<AppSettingsDTO>
-      userSettingsCollection as any, // Cast as needed for CollectionReference<UserSettingsDTO>
-      serviceWorksCollection as any, // Cast as needed for CollectionReference<ServiceWorkerData>
-    );
-    const authService = new AuthService(accountConfigService);
+    const authService = new AuthService();
 
     const { roles, permissions } = _data as {
       roles: string[];
       permissions: string[];
     };
     const request = ctx.switchToHttp().getRequest();
-    // console.info('VerifyPermissions request', request.user);
     const bearer = request?.headers?.authorization?.replace('Bearer ', '');
     const token = await authService.getLPToken(bearer);
 
@@ -417,27 +371,18 @@ export const VerifyPermissions = createParamDecorator(
 
     console.info(['VerifyPermissions', 'token', token]);
     const user = request.user || token.userData;
-    // const user =
-    //   token.userData ||
-    //   (
-    //     await admin
-    //       .firestore()
-    //       .collection('lp_tokens')
-    //       .doc(token?.accessToken)
-    //       .get()
-    //   ).data();
     console.info('user', user);
     if (
       roles &&
       roles.length > 0 &&
-      !roles.some((role) => user.roles.includes(role))
+      !roles.some((role) => user.roles?.includes(role))
     ) {
       return null;
     }
     if (
       permissions &&
       permissions.length > 0 &&
-      !permissions.some((permission) => user.permissions.includes(permission))
+      !permissions.some((permission) => user.permissions?.includes(permission))
     ) {
       return null;
     }

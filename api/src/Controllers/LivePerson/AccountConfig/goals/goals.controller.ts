@@ -14,7 +14,9 @@ import {
   Query,
   Headers,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -49,8 +51,9 @@ export class GoalsController {
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: GoalQueryDto,
+    @Req() req: Request,
   ): Promise<GoalListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.goalsService.getGoals(accountId, token, query);
 
@@ -70,8 +73,9 @@ export class GoalsController {
     @Param('goalId') goalId: string,
     @Headers('authorization') authorization: string,
     @Query() query: GoalQueryDto,
+    @Req() req: Request,
   ): Promise<GoalResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.goalsService.getGoalById(
       accountId,
@@ -95,8 +99,9 @@ export class GoalsController {
     @Headers('authorization') authorization: string,
     @Body() body: GoalCreateDto,
     @Query() query: GoalQueryDto,
+    @Req() req: Request,
   ): Promise<GoalResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.goalsService.createGoal(
       accountId,
@@ -124,8 +129,9 @@ export class GoalsController {
     @Headers('if-match') ifMatch: string,
     @Body() body: GoalUpdateDto,
     @Query() query: GoalQueryDto,
+    @Req() req: Request,
   ): Promise<GoalResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     const response = await this.goalsService.updateGoal(
@@ -154,8 +160,9 @@ export class GoalsController {
     @Param('goalId') goalId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') ifMatch: string,
+    @Req() req: Request,
   ): Promise<{ success: boolean }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     await this.goalsService.deleteGoal(accountId, goalId, token, revision);
@@ -163,7 +170,17 @@ export class GoalsController {
     return { success: true };
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

@@ -39,6 +39,10 @@ let messageHandler: ((event: MessageEvent) => void) | null = null;
 let refreshTimer: ReturnType<typeof setTimeout> | null = null;
 let initialized = false;
 
+// Promise that resolves when initial auth is ready
+let initialAuthResolve: (() => void) | null = null;
+let initialAuthPromise: Promise<void> | null = null;
+
 /**
  * Detect if running inside LP Extend shell
  */
@@ -254,9 +258,12 @@ function clearRefreshTimer() {
 /**
  * Initialize the shell auth service
  * Call this early in app initialization
+ * Returns a promise that resolves when initial auth is ready
  */
-export function initShellAuth(): void {
-  if (initialized) return;
+export function initShellAuth(): Promise<void> {
+  if (initialized) {
+    return initialAuthPromise || Promise.resolve();
+  }
   initialized = true;
 
   const detection = detectShellMode();
@@ -264,6 +271,11 @@ export function initShellAuth(): void {
   if (detection.inShell && detection.context) {
     authMode.value = 'shell';
     shellContext.value = detection.context;
+
+    // Create promise for initial auth
+    initialAuthPromise = new Promise<void>((resolve) => {
+      initialAuthResolve = resolve;
+    });
 
     // Set up message listener
     messageHandler = handleShellMessage;
@@ -278,14 +290,29 @@ export function initShellAuth(): void {
     isConnected.value = true;
 
     // Request initial token
-    requestTokenViaPostMessage().catch((err) => {
-      console.warn('[ShellAuth] Initial token request failed, will retry on demand:', err);
-    });
+    requestTokenViaPostMessage()
+      .then(() => {
+        console.log('[ShellAuth] Initial token received');
+        if (initialAuthResolve) {
+          initialAuthResolve();
+          initialAuthResolve = null;
+        }
+      })
+      .catch((err) => {
+        console.warn('[ShellAuth] Initial token request failed:', err);
+        // Still resolve to not block the app, but auth will fail
+        if (initialAuthResolve) {
+          initialAuthResolve();
+          initialAuthResolve = null;
+        }
+      });
 
     console.log('[ShellAuth] Initialized in SHELL mode', detection.context);
+    return initialAuthPromise;
   } else {
     authMode.value = 'standalone';
     console.log('[ShellAuth] Initialized in STANDALONE mode');
+    return Promise.resolve();
   }
 }
 
@@ -370,3 +397,18 @@ export const isShellAuthenticated = computed(() => {
   if (authMode.value !== 'shell') return false;
   return !!shellToken.value && Date.now() < shellTokenExpiry.value;
 });
+
+/**
+ * Wait for shell auth to be ready
+ * In shell mode, waits for initial token. In standalone mode, resolves immediately.
+ */
+export async function waitForShellAuth(): Promise<void> {
+  if (authMode.value === 'standalone') {
+    return;
+  }
+  if (initialAuthPromise) {
+    return initialAuthPromise;
+  }
+  // If not initialized yet, init and wait
+  return initShellAuth();
+}

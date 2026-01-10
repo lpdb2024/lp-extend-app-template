@@ -15,16 +15,13 @@ import {
   MinLength,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import {
-  IPredefinedContent,
-  IPredefinedContentData,
-} from './predefined-content.interfaces';
+import type { LPPredefinedContent } from '@lpextend/client-sdk';
 import { IHotkey } from '../../shared/lp-common.interfaces';
 
 /**
  * Content data entry DTO
  */
-export class PredefinedContentDataDto implements IPredefinedContentData {
+export class PredefinedContentDataDto {
   @ApiProperty({ description: 'Message content' })
   @IsString()
   msg: string;
@@ -165,21 +162,15 @@ export class PredefinedContentQueryDto {
 /**
  * Predefined content response DTO
  */
-export class PredefinedContentResponseDto {
-  @ApiProperty({ description: 'Predefined content data' })
-  data: IPredefinedContent;
-
-  @ApiPropertyOptional({ description: 'Current revision for optimistic locking' })
+export interface PredefinedContentResponseDto {
+  data: LPPredefinedContent;
   revision?: string;
 }
 
 /**
  * Predefined content list response DTO
  */
-export class PredefinedContentListResponseDto {
-  @ApiProperty({ description: 'List of predefined content', type: [Object] })
-  data: IPredefinedContent[];
-
-  @ApiPropertyOptional({ description: 'Current revision for optimistic locking' })
+export interface PredefinedContentListResponseDto {
+  data: LPPredefinedContent[];
   revision?: string;
 }

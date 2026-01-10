@@ -1,38 +1,67 @@
 /**
  * LOBs Service
- * Business logic for LivePerson LOBs (Lines of Business) API
+ * Handles all LOBs (Lines of Business) API operations for LivePerson using the SDK
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { APIService } from '../../../APIService/api-service';
-import { LPDomainService } from '../../shared/lp-domain.service';
-import { LPBaseService } from '../../shared/lp-base.service';
+import { ConfigService } from '@nestjs/config';
 import {
-  LP_SERVICE_DOMAINS,
-  LP_API_VERSIONS,
-  LP_API_PATHS,
-} from '../../shared/lp-constants';
-import { ILPResponse, ILPRequestOptions } from '../../shared/lp-common.interfaces';
-import {
-  ILob,
-  ICreateLob,
-  IUpdateLob,
-} from './lobs.interfaces';
+  initializeSDK,
+  LPExtendSDK,
+  Scopes,
+  LPExtendSDKError,
+} from '@lpextend/client-sdk';
+import type {
+  LPLOB,
+  CreateLOBRequest,
+  UpdateLOBRequest,
+} from '@lpextend/client-sdk';
+
+/**
+ * Response type for SDK operations
+ */
+export interface ILPResponse<T> {
+  data: T;
+  revision?: string;
+  headers?: Record<string, string>;
+}
 
 @Injectable()
-export class LobsService extends LPBaseService {
-  protected readonly serviceDomain = LP_SERVICE_DOMAINS.ACCOUNT_CONFIG_WRITE;
-  protected readonly defaultApiVersion = LP_API_VERSIONS.LOBS;
+export class LobsService {
+  private shellBaseUrl: string;
+  private appId: string;
 
   constructor(
-    apiService: APIService,
-    domainService: LPDomainService,
     @InjectPinoLogger(LobsService.name)
-    logger: PinoLogger,
+    private readonly logger: PinoLogger,
+    private readonly configService: ConfigService,
   ) {
-    super(apiService, domainService, logger);
     this.logger.setContext(LobsService.name);
+    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
+    this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
+  }
+
+  /**
+   * Create SDK instance for the given account/token
+   */
+  private async getSDK(accountId: string, token: string): Promise<LPExtendSDK> {
+    try {
+      const accessToken = token.replace('Bearer ', '');
+      return await initializeSDK({
+        appId: this.appId,
+        accountId,
+        accessToken,
+        shellBaseUrl: this.shellBaseUrl,
+        scopes: [Scopes.LOBS],
+        debug: this.configService.get<string>('NODE_ENV') !== 'production',
+      });
+    } catch (error) {
+      if (error instanceof LPExtendSDKError) {
+        this.logger.error({ error: error.message, code: error.code }, 'SDK initialization failed');
+      }
+      throw error;
+    }
   }
 
   /**
@@ -45,16 +74,11 @@ export class LobsService extends LPBaseService {
       select?: string;
       includeDeleted?: boolean;
     },
-  ): Promise<ILPResponse<ILob[]>> {
-    const path = LP_API_PATHS.LOBS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      select: options?.select || '$all',
-      includeDeleted: options?.includeDeleted,
-      source: 'ccui',
-    };
-
-    return this.get<ILob[]>(accountId, path, token, requestOptions);
+  ): Promise<ILPResponse<LPLOB[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const response = await sdk.lobs.getAll();
+    this.logger.debug({ accountId, count: response.data?.length }, 'Fetched LOBs');
+    return response;
   }
 
   /**
@@ -64,15 +88,9 @@ export class LobsService extends LPBaseService {
     accountId: string,
     lobId: string | number,
     token: string,
-  ): Promise<ILPResponse<ILob>> {
-    const path = LP_API_PATHS.LOBS.BY_ID(accountId, String(lobId));
-
-    const requestOptions: ILPRequestOptions = {
-      select: '$all',
-      source: 'ccui',
-    };
-
-    return this.get<ILob>(accountId, path, token, requestOptions);
+  ): Promise<ILPResponse<LPLOB>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.lobs.getById(Number(lobId));
   }
 
   /**
@@ -81,17 +99,11 @@ export class LobsService extends LPBaseService {
   async create(
     accountId: string,
     token: string,
-    data: ICreateLob,
+    data: CreateLOBRequest,
     revision?: string,
-  ): Promise<ILPResponse<ILob>> {
-    const path = LP_API_PATHS.LOBS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.post<ILob>(accountId, path, data, token, requestOptions);
+  ): Promise<ILPResponse<LPLOB>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.lobs.create(data);
   }
 
   /**
@@ -100,17 +112,18 @@ export class LobsService extends LPBaseService {
   async createMany(
     accountId: string,
     token: string,
-    data: ICreateLob[],
+    data: CreateLOBRequest[],
     revision?: string,
-  ): Promise<ILPResponse<ILob[]>> {
-    const path = LP_API_PATHS.LOBS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.post<ILob[]>(accountId, path, data, token, requestOptions);
+  ): Promise<ILPResponse<LPLOB[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const results: LPLOB[] = [];
+    let lastRevision: string | undefined;
+    for (const lob of data) {
+      const response = await sdk.lobs.create(lob);
+      results.push(response.data);
+      lastRevision = response.revision;
+    }
+    return { data: results, revision: lastRevision };
   }
 
   /**
@@ -120,17 +133,11 @@ export class LobsService extends LPBaseService {
     accountId: string,
     lobId: string | number,
     token: string,
-    data: IUpdateLob,
-    revision: string,
-  ): Promise<ILPResponse<ILob>> {
-    const path = LP_API_PATHS.LOBS.BY_ID(accountId, String(lobId));
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.put<ILob>(accountId, path, data, token, requestOptions);
+    data: UpdateLOBRequest,
+    revision?: string,
+  ): Promise<ILPResponse<LPLOB>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.lobs.update(Number(lobId), data, revision);
   }
 
   /**
@@ -139,17 +146,18 @@ export class LobsService extends LPBaseService {
   async updateMany(
     accountId: string,
     token: string,
-    data: (IUpdateLob & { id: number })[],
-    revision: string,
-  ): Promise<ILPResponse<ILob[]>> {
-    const path = LP_API_PATHS.LOBS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.put<ILob[]>(accountId, path, data, token, requestOptions);
+    data: (UpdateLOBRequest & { id: number })[],
+    revision?: string,
+  ): Promise<ILPResponse<LPLOB[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const results: LPLOB[] = [];
+    let lastRevision = revision;
+    for (const lob of data) {
+      const response = await sdk.lobs.update(lob.id, lob, lastRevision);
+      results.push(response.data);
+      lastRevision = response.revision;
+    }
+    return { data: results, revision: lastRevision };
   }
 
   /**
@@ -159,16 +167,10 @@ export class LobsService extends LPBaseService {
     accountId: string,
     lobId: string | number,
     token: string,
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.LOBS.BY_ID(accountId, String(lobId));
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.delete<void>(accountId, path, token, requestOptions);
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.lobs.delete(Number(lobId), revision);
   }
 
   /**
@@ -178,26 +180,22 @@ export class LobsService extends LPBaseService {
     accountId: string,
     token: string,
     ids: number[],
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.LOBS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-      additionalParams: {
-        ids: ids.join(','),
-      },
-    };
-
-    return this.delete<void>(accountId, path, token, requestOptions);
+    const sdk = await this.getSDK(accountId, token);
+    let lastRevision = revision;
+    for (const id of ids) {
+      const response = await sdk.lobs.delete(id, lastRevision);
+      lastRevision = response.revision;
+    }
+    return { data: undefined, revision: lastRevision };
   }
 
   /**
    * Get the current revision for LOBs
    */
   async getRevision(accountId: string, token: string): Promise<string | undefined> {
-    const response = await this.getAll(accountId, token, { select: 'id' });
+    const response = await this.getAll(accountId, token);
     return response.revision;
   }
 }

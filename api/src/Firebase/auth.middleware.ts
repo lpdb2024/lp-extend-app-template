@@ -1,13 +1,12 @@
 import { Injectable, Inject, NestMiddleware } from '@nestjs/common';
 import { Request, Response } from 'express';
-import * as admin from 'firebase-admin';
 import { AuthService } from './auth.service';
-import { jwtDecode } from "jwt-decode";
-// const bypass = true;
 import { cache } from 'src/utils/memCache';
 import { CollectionReference } from '@google-cloud/firestore';
-import { LpToken } from 'src/Controllers/CCIDP/cc-idp.interfaces';
-import { AccountConfigService } from 'src/Controllers/AccountConfig/account-config.service';
+import type { SentinelLpToken } from '@lpextend/client-sdk';
+
+// Collection name constant
+const LP_TOKENS_COLLECTION = 'lp-tokens';
 
 interface CustomRequest extends Request {
   token?: {
@@ -21,14 +20,12 @@ interface CustomRequest extends Request {
 @Injectable()
 export class PreAuthMiddleware implements NestMiddleware {
   constructor(
-    @Inject(LpToken.collectionName)
-    private tokenCollection: CollectionReference<LpToken>,
+    @Inject(LP_TOKENS_COLLECTION)
+    private tokenCollection: CollectionReference<SentinelLpToken>,
     private authService: AuthService,
-    private accountConfigService: AccountConfigService
-
   ) {}
 
-  async returnIdToken (access_token: string): Promise<LpToken | null> { 
+  async returnIdToken (access_token: string): Promise<SentinelLpToken | null> { 
     const idToken = cache.get(access_token);
     if (idToken) {
       return idToken;

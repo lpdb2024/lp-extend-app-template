@@ -7,7 +7,7 @@ import {
   MessageRecord,
   MessageScore,
   SDEs,
-} from 'src/Controllers/ConversationalCloud/conversation-cloud.interfaces';
+} from 'src/Controllers/LivePerson/ConversationalCloud/conversation-cloud.interfaces';
 import { time } from 'console';
 import { decrypt, encrypt } from 'src/utils/encryption';
 import * as crypto from 'crypto';

@@ -13,7 +13,8 @@ import {
   MaxLength,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import { ISpecialOccasion, ISpecialOccasionItem, ISpecialOccasionMeta } from './special-occasions.interfaces';
+import type { LPSpecialOccasion } from '@lpextend/client-sdk';
+import { ISpecialOccasionItem, ISpecialOccasionMeta } from './special-occasions.interfaces';
 
 /**
  * DateTime with timezone DTO
@@ -146,21 +147,15 @@ export class SpecialOccasionsQueryDto {
 /**
  * Special occasion response DTO
  */
-export class SpecialOccasionResponseDto {
-  @ApiProperty({ description: 'Special occasion data' })
-  data: ISpecialOccasion;
-
-  @ApiPropertyOptional({ description: 'Current revision for optimistic locking' })
+export interface SpecialOccasionResponseDto {
+  data: LPSpecialOccasion;
   revision?: string;
 }
 
 /**
  * Special occasions list response DTO
  */
-export class SpecialOccasionsListResponseDto {
-  @ApiProperty({ description: 'List of special occasions', type: [Object] })
-  data: ISpecialOccasion[];
-
-  @ApiPropertyOptional({ description: 'Current revision for optimistic locking' })
+export interface SpecialOccasionsListResponseDto {
+  data: LPSpecialOccasion[];
   revision?: string;
 }

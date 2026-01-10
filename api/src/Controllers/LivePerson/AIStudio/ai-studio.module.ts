@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AIStudioController } from './ai-studio.controller';
 import { AIStudioService } from './ai-studio.service';
 import { HttpModule } from '@nestjs/axios';
-import { HelperModule } from '../HelperService/helper-service.module';
+import { HelperModule } from '../../HelperService/helper-service.module';
 
 @Module({
   controllers: [AIStudioController],

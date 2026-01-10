@@ -1,38 +1,67 @@
 /**
  * Predefined Content Service
- * Business logic for LivePerson Predefined Content API
+ * Handles all Predefined Content API operations for LivePerson using the SDK
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { APIService } from '../../../APIService/api-service';
-import { LPDomainService } from '../../shared/lp-domain.service';
-import { LPBaseService } from '../../shared/lp-base.service';
+import { ConfigService } from '@nestjs/config';
 import {
-  LP_SERVICE_DOMAINS,
-  LP_API_VERSIONS,
-  LP_API_PATHS,
-} from '../../shared/lp-constants';
-import { ILPResponse, ILPRequestOptions } from '../../shared/lp-common.interfaces';
-import {
-  IPredefinedContent,
-  ICreatePredefinedContent,
-  IUpdatePredefinedContent,
-} from './predefined-content.interfaces';
+  initializeSDK,
+  LPExtendSDK,
+  Scopes,
+  LPExtendSDKError,
+} from '@lpextend/client-sdk';
+import type {
+  LPPredefinedContent,
+  CreatePredefinedContentRequest,
+  UpdatePredefinedContentRequest,
+} from '@lpextend/client-sdk';
+
+/**
+ * Response type for SDK operations
+ */
+export interface ILPResponse<T> {
+  data: T;
+  revision?: string;
+  headers?: Record<string, string>;
+}
 
 @Injectable()
-export class PredefinedContentService extends LPBaseService {
-  protected readonly serviceDomain = LP_SERVICE_DOMAINS.ACCOUNT_CONFIG_WRITE;
-  protected readonly defaultApiVersion = LP_API_VERSIONS.PREDEFINED_CONTENT;
+export class PredefinedContentService {
+  private shellBaseUrl: string;
+  private appId: string;
 
   constructor(
-    apiService: APIService,
-    domainService: LPDomainService,
     @InjectPinoLogger(PredefinedContentService.name)
-    logger: PinoLogger,
+    private readonly logger: PinoLogger,
+    private readonly configService: ConfigService,
   ) {
-    super(apiService, domainService, logger);
     this.logger.setContext(PredefinedContentService.name);
+    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
+    this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
+  }
+
+  /**
+   * Create SDK instance for the given account/token
+   */
+  private async getSDK(accountId: string, token: string): Promise<LPExtendSDK> {
+    try {
+      const accessToken = token.replace('Bearer ', '');
+      return await initializeSDK({
+        appId: this.appId,
+        accountId,
+        accessToken,
+        shellBaseUrl: this.shellBaseUrl,
+        scopes: [Scopes.PREDEFINED_CONTENT],
+        debug: this.configService.get<string>('NODE_ENV') !== 'production',
+      });
+    } catch (error) {
+      if (error instanceof LPExtendSDKError) {
+        this.logger.error({ error: error.message, code: error.code }, 'SDK initialization failed');
+      }
+      throw error;
+    }
   }
 
   /**
@@ -48,28 +77,11 @@ export class PredefinedContentService extends LPBaseService {
       categoryIds?: string;
       enabled?: boolean;
     },
-  ): Promise<ILPResponse<IPredefinedContent[]>> {
-    const path = LP_API_PATHS.PREDEFINED_CONTENT.BASE(accountId);
-
-    const additionalParams: Record<string, string> = {};
-    if (options?.skillIds) {
-      additionalParams.skill_ids = options.skillIds;
-    }
-    if (options?.categoryIds) {
-      additionalParams.category_ids = options.categoryIds;
-    }
-    if (options?.enabled !== undefined) {
-      additionalParams.enabled = String(options.enabled);
-    }
-
-    const requestOptions: ILPRequestOptions = {
-      select: options?.select || '$all',
-      includeDeleted: options?.includeDeleted,
-      source: 'ccui',
-      additionalParams: Object.keys(additionalParams).length > 0 ? additionalParams : undefined,
-    };
-
-    return this.get<IPredefinedContent[]>(accountId, path, token, requestOptions);
+  ): Promise<ILPResponse<LPPredefinedContent[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const response = await sdk.predefinedContent.getAll();
+    this.logger.debug({ accountId, count: response.data?.length }, 'Fetched predefined content');
+    return response;
   }
 
   /**
@@ -79,15 +91,9 @@ export class PredefinedContentService extends LPBaseService {
     accountId: string,
     contentId: string | number,
     token: string,
-  ): Promise<ILPResponse<IPredefinedContent>> {
-    const path = LP_API_PATHS.PREDEFINED_CONTENT.BY_ID(accountId, String(contentId));
-
-    const requestOptions: ILPRequestOptions = {
-      select: '$all',
-      source: 'ccui',
-    };
-
-    return this.get<IPredefinedContent>(accountId, path, token, requestOptions);
+  ): Promise<ILPResponse<LPPredefinedContent>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.predefinedContent.getById(Number(contentId));
   }
 
   /**
@@ -96,17 +102,11 @@ export class PredefinedContentService extends LPBaseService {
   async create(
     accountId: string,
     token: string,
-    data: ICreatePredefinedContent,
+    data: CreatePredefinedContentRequest,
     revision?: string,
-  ): Promise<ILPResponse<IPredefinedContent>> {
-    const path = LP_API_PATHS.PREDEFINED_CONTENT.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.post<IPredefinedContent>(accountId, path, data, token, requestOptions);
+  ): Promise<ILPResponse<LPPredefinedContent>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.predefinedContent.create(data);
   }
 
   /**
@@ -115,17 +115,18 @@ export class PredefinedContentService extends LPBaseService {
   async createMany(
     accountId: string,
     token: string,
-    data: ICreatePredefinedContent[],
+    data: CreatePredefinedContentRequest[],
     revision?: string,
-  ): Promise<ILPResponse<IPredefinedContent[]>> {
-    const path = LP_API_PATHS.PREDEFINED_CONTENT.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.post<IPredefinedContent[]>(accountId, path, data, token, requestOptions);
+  ): Promise<ILPResponse<LPPredefinedContent[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const results: LPPredefinedContent[] = [];
+    let lastRevision: string | undefined;
+    for (const content of data) {
+      const response = await sdk.predefinedContent.create(content);
+      results.push(response.data);
+      lastRevision = response.revision;
+    }
+    return { data: results, revision: lastRevision };
   }
 
   /**
@@ -135,17 +136,11 @@ export class PredefinedContentService extends LPBaseService {
     accountId: string,
     contentId: string | number,
     token: string,
-    data: IUpdatePredefinedContent,
-    revision: string,
-  ): Promise<ILPResponse<IPredefinedContent>> {
-    const path = LP_API_PATHS.PREDEFINED_CONTENT.BY_ID(accountId, String(contentId));
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.put<IPredefinedContent>(accountId, path, data, token, requestOptions);
+    data: UpdatePredefinedContentRequest,
+    revision?: string,
+  ): Promise<ILPResponse<LPPredefinedContent>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.predefinedContent.update(Number(contentId), data, revision);
   }
 
   /**
@@ -154,17 +149,18 @@ export class PredefinedContentService extends LPBaseService {
   async updateMany(
     accountId: string,
     token: string,
-    data: (IUpdatePredefinedContent & { id: number })[],
-    revision: string,
-  ): Promise<ILPResponse<IPredefinedContent[]>> {
-    const path = LP_API_PATHS.PREDEFINED_CONTENT.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.put<IPredefinedContent[]>(accountId, path, data, token, requestOptions);
+    data: (UpdatePredefinedContentRequest & { id: number })[],
+    revision?: string,
+  ): Promise<ILPResponse<LPPredefinedContent[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const results: LPPredefinedContent[] = [];
+    let lastRevision = revision;
+    for (const content of data) {
+      const response = await sdk.predefinedContent.update(content.id, content, lastRevision);
+      results.push(response.data);
+      lastRevision = response.revision;
+    }
+    return { data: results, revision: lastRevision };
   }
 
   /**
@@ -174,16 +170,10 @@ export class PredefinedContentService extends LPBaseService {
     accountId: string,
     contentId: string | number,
     token: string,
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.PREDEFINED_CONTENT.BY_ID(accountId, String(contentId));
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-    };
-
-    return this.delete<void>(accountId, path, token, requestOptions);
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.predefinedContent.delete(Number(contentId), revision);
   }
 
   /**
@@ -193,26 +183,22 @@ export class PredefinedContentService extends LPBaseService {
     accountId: string,
     token: string,
     ids: number[],
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.PREDEFINED_CONTENT.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-      revision,
-      additionalParams: {
-        ids: ids.join(','),
-      },
-    };
-
-    return this.delete<void>(accountId, path, token, requestOptions);
+    const sdk = await this.getSDK(accountId, token);
+    let lastRevision = revision;
+    for (const id of ids) {
+      const response = await sdk.predefinedContent.delete(id, lastRevision);
+      lastRevision = response.revision;
+    }
+    return { data: undefined, revision: lastRevision };
   }
 
   /**
    * Get the current revision for predefined content
    */
   async getRevision(accountId: string, token: string): Promise<string | undefined> {
-    const response = await this.getAll(accountId, token, { select: 'id' });
+    const response = await this.getAll(accountId, token);
     return response.revision;
   }
 }

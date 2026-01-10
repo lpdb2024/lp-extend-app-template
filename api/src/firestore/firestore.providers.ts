@@ -2,33 +2,28 @@ import {
   UsersDocument,
   CredentialsDocument,
 } from 'src/Controllers/users/users.interfaces';
-import { LpToken } from 'src/Controllers/CCIDP/cc-idp.interfaces';
-import { AppUserDto } from 'src/Controllers/CCIDP/cc-idp.dto';
-
-import {
-  ServiceWorkerData,
-  ApplicationSettingsDto,
-  AppSettingsDTO,
-  UserSettingsDTO,
-} from 'src/Controllers/AccountConfig/account-config.dto';
 
 import { AccountSettingsDTO } from 'src/Controllers/AccountSettings/account-settings.dto';
+import { LpToken } from 'src/Controllers/LivePerson/ConversationBuilder/cb.interfaces';
 
-import { EncryptedApiKeyDto } from 'src/Controllers/CCAppManagement/cc-app-manager.interfaces.dto';
-
+// Collection name constants
+const APP_USERS_COLLECTION = 'app-users';
+const LP_TOKENS_COLLECTION = 'lp-tokens';
+const APP_SETTINGS_COLLECTION = 'app-settings';
+const SERVICE_WORKERS_COLLECTION = 'service-workers';
+const USER_SETTINGS_COLLECTION = 'user-settings';
 
 export const FirestoreDatabaseProvider = 'firestoredb';
 export const FirestoreOptionsProvider = 'firestoreOptions';
 export const FirestoreCollectionProviders: string[] = [
   UsersDocument.collectionName,
   CredentialsDocument.collectionName,
-  LpToken.collectionName,
-  AppUserDto.collectionName,
-  ServiceWorkerData.collectionName,
-  ApplicationSettingsDto.collectionName,
-  AppSettingsDTO.collectionName,
-  UserSettingsDTO.collectionName,
-  EncryptedApiKeyDto.collectionName,
-  // Account settings collection
   AccountSettingsDTO.collectionName,
+  // App collections
+  APP_USERS_COLLECTION,
+  LP_TOKENS_COLLECTION,
+  LpToken.collectionName, // 'lp_tokens' - used by ConversationBuilderService
+  APP_SETTINGS_COLLECTION,
+  SERVICE_WORKERS_COLLECTION,
+  USER_SETTINGS_COLLECTION,
 ];

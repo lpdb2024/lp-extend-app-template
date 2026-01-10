@@ -14,7 +14,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type, Transform } from 'class-transformer';
-import { IUser } from './users.interfaces';
+import type { LPUser } from '@lpextend/client-sdk';
 
 /**
  * User Profile DTO
@@ -391,22 +391,16 @@ export class UsersQueryDto {
 /**
  * Users Response DTO
  */
-export class UsersResponseDto {
-  @ApiProperty({ description: 'Array of users' })
-  data: IUser[];
-
-  @ApiPropertyOptional({ description: 'Revision for optimistic locking' })
+export interface UsersResponseDto {
+  data: LPUser[];
   revision?: string;
 }
 
 /**
  * Single User Response DTO
  */
-export class UserResponseDto {
-  @ApiProperty({ description: 'The user data' })
-  data: IUser;
-
-  @ApiPropertyOptional({ description: 'Revision for optimistic locking' })
+export interface UserResponseDto {
+  data: LPUser;
   revision?: string;
 }
 
@@ -456,7 +450,7 @@ export class BatchUpdateUsersDto {
  */
 export class BatchUpdateUsersResponseDto {
   @ApiPropertyOptional({ description: 'Updated users' })
-  users?: IUser[];
+  users?: LPUser[];
 
   @ApiPropertyOptional({ description: 'Success status' })
   success?: boolean;

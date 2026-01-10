@@ -1,4 +1,0 @@
-export enum AllowAppKeyTargets {
-  LP_MESSAGING = 'LP_MESSAGING',
-  ACCOUNT_MANAGEMENT = 'ACCOUNT_MANAGEMENT',
-}

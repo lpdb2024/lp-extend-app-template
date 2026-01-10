@@ -16,7 +16,9 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -32,10 +34,6 @@ import {
   UsersQueryDto,
   UsersResponseDto,
   UserResponseDto,
-  ResetPasswordDto,
-  BatchUpdateUsersDto,
-  BatchUpdateUsersResponseDto,
-  BatchRemoveSkillDto,
 } from './users.dto';
 
 @ApiTags('Account Config - Users')
@@ -50,13 +48,14 @@ export class UsersController {
     description: 'Retrieves all users for the specified account',
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiResponse({ status: 200, description: 'List of users', type: UsersResponseDto })
+  @ApiResponse({ status: 200, description: 'List of users' })
   async getAll(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: UsersQueryDto,
+    @Req() req: Request,
   ): Promise<UsersResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.usersService.getAll(accountId, token, {
       select: query.select,
@@ -78,8 +77,9 @@ export class UsersController {
   async getRevision(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<{ revision: string | undefined }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = await this.usersService.getRevision(accountId, token);
     return { revision };
   }
@@ -91,13 +91,14 @@ export class UsersController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'userId', description: 'User ID' })
-  @ApiResponse({ status: 200, description: 'The user', type: UserResponseDto })
+  @ApiResponse({ status: 200, description: 'The user' })
   async getById(
     @Param('accountId') accountId: string,
     @Param('userId') userId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<UserResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.usersService.getById(accountId, userId, token);
 
@@ -115,21 +116,22 @@ export class UsersController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: false })
-  @ApiResponse({ status: 201, description: 'User created', type: UserResponseDto })
+  @ApiResponse({ status: 201, description: 'User created' })
   async create(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: CreateUserDto | CreateUserDto[],
+    @Req() req: Request,
   ): Promise<UserResponseDto | UsersResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (Array.isArray(body)) {
-      const response = await this.usersService.createMany(accountId, token, body, revision);
+      const response = await this.usersService.createMany(accountId, token, body as any, revision);
       return { data: response.data, revision: response.revision };
     }
 
-    const response = await this.usersService.create(accountId, token, body, revision);
+    const response = await this.usersService.create(accountId, token, body as any, revision);
     return { data: response.data, revision: response.revision };
   }
 
@@ -141,43 +143,27 @@ export class UsersController {
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'userId', description: 'User ID to update' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: true })
-  @ApiResponse({ status: 200, description: 'User updated', type: UserResponseDto })
+  @ApiResponse({ status: 200, description: 'User updated' })
   async update(
     @Param('accountId') accountId: string,
     @Param('userId') userId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdateUserDto,
+    @Req() req: Request,
   ): Promise<UserResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
     }
 
-    const response = await this.usersService.update(accountId, userId, token, body, revision);
+    const response = await this.usersService.update(accountId, userId, token, body as any, revision);
     return { data: response.data, revision: response.revision };
   }
 
-  @Post(':userId/reset-password')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Reset user password',
-    description: 'Resets a user\'s password',
-  })
-  @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiParam({ name: 'userId', description: 'User ID' })
-  @ApiResponse({ status: 200, description: 'Password reset successful' })
-  async resetPassword(
-    @Param('accountId') accountId: string,
-    @Param('userId') userId: string,
-    @Headers('authorization') authorization: string,
-    @Body() body: ResetPasswordDto,
-  ): Promise<{ success: boolean }> {
-    const token = this.extractToken(authorization);
-    await this.usersService.resetPassword(accountId, userId, token, body.newPassword);
-    return { success: true };
-  }
+  // Note: resetPassword endpoint removed - not supported by SDK
+  // TODO: Re-add if SDK adds support for password reset
 
   @Delete(':userId')
   @HttpCode(HttpStatus.NO_CONTENT)
@@ -194,8 +180,9 @@ export class UsersController {
     @Param('userId') userId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<void> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for deletes');
@@ -204,62 +191,21 @@ export class UsersController {
     await this.usersService.remove(accountId, userId, token, revision);
   }
 
-  // ============================================
-  // Batch Operations
-  // ============================================
+  // Note: Batch operations removed - not yet supported by SDK
+  // TODO: Re-add if SDK adds support for batch operations
+  // The service has removeSkillFromUsers which can be used as an alternative
 
-  @Post('batch')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Batch update users',
-    description: 'Update multiple users at once using LP batch API. Allows adding/removing field values in bulk.',
-  })
-  @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiResponse({ status: 200, description: 'Batch update successful', type: BatchUpdateUsersResponseDto })
-  async batchUpdate(
-    @Param('accountId') accountId: string,
-    @Headers('authorization') authorization: string,
-    @Body() body: BatchUpdateUsersDto,
-  ): Promise<BatchUpdateUsersResponseDto> {
-    const token = this.extractToken(authorization);
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
 
-    const response = await this.usersService.batchUpdate(accountId, token, body);
-
-    return {
-      users: response.data.users,
-      success: true,
-    };
-  }
-
-  @Post('batch/remove-skill')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Remove skill from multiple users',
-    description: 'Convenience endpoint to remove a skill from multiple users at once using LP batch API.',
-  })
-  @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiResponse({ status: 200, description: 'Skill removed from users', type: BatchUpdateUsersResponseDto })
-  async batchRemoveSkill(
-    @Param('accountId') accountId: string,
-    @Headers('authorization') authorization: string,
-    @Body() body: BatchRemoveSkillDto,
-  ): Promise<BatchUpdateUsersResponseDto> {
-    const token = this.extractToken(authorization);
-
-    const response = await this.usersService.batchRemoveSkillFromUsers(
-      accountId,
-      token,
-      body.skillId,
-      body.userIds,
-    );
-
-    return {
-      users: response.data.users,
-      success: true,
-    };
-  }
-
-  private extractToken(authorization: string): string {
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

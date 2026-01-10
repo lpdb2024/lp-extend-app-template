@@ -16,7 +16,9 @@ import {
   HttpCode,
   HttpStatus,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -46,13 +48,14 @@ export class ProfilesController {
     description: 'Retrieves all profiles for the specified account',
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
-  @ApiResponse({ status: 200, description: 'List of profiles', type: ProfilesResponseDto })
+  @ApiResponse({ status: 200, description: 'List of profiles' })
   async getAll(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: ProfilesQueryDto,
+    @Req() req: Request,
   ): Promise<ProfilesResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.profilesService.getAll(accountId, token, {
       select: query.select,
@@ -74,8 +77,9 @@ export class ProfilesController {
   async getRevision(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<{ revision: string | undefined }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = await this.profilesService.getRevision(accountId, token);
     return { revision };
   }
@@ -87,13 +91,14 @@ export class ProfilesController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'profileId', description: 'Profile ID' })
-  @ApiResponse({ status: 200, description: 'The profile', type: ProfileResponseDto })
+  @ApiResponse({ status: 200, description: 'The profile' })
   async getById(
     @Param('accountId') accountId: string,
     @Param('profileId') profileId: string,
     @Headers('authorization') authorization: string,
+    @Req() req: Request,
   ): Promise<ProfileResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.profilesService.getById(accountId, profileId, token);
 
@@ -111,21 +116,22 @@ export class ProfilesController {
   })
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: false })
-  @ApiResponse({ status: 201, description: 'Profile created', type: ProfileResponseDto })
+  @ApiResponse({ status: 201, description: 'Profile created' })
   async create(
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: CreateProfileDto | CreateProfileDto[],
+    @Req() req: Request,
   ): Promise<ProfileResponseDto | ProfilesResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (Array.isArray(body)) {
-      const response = await this.profilesService.createMany(accountId, token, body, revision);
+      const response = await this.profilesService.createMany(accountId, token, body as any, revision);
       return { data: response.data, revision: response.revision };
     }
 
-    const response = await this.profilesService.create(accountId, token, body, revision);
+    const response = await this.profilesService.create(accountId, token, body as any, revision);
     return { data: response.data, revision: response.revision };
   }
 
@@ -137,21 +143,22 @@ export class ProfilesController {
   @ApiParam({ name: 'accountId', description: 'LivePerson account ID' })
   @ApiParam({ name: 'profileId', description: 'Profile ID to update' })
   @ApiHeader({ name: 'If-Match', description: 'Revision for optimistic locking', required: true })
-  @ApiResponse({ status: 200, description: 'Profile updated', type: ProfileResponseDto })
+  @ApiResponse({ status: 200, description: 'Profile updated' })
   async update(
     @Param('accountId') accountId: string,
     @Param('profileId') profileId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
     @Body() body: UpdateProfileDto,
+    @Req() req: Request,
   ): Promise<ProfileResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for updates');
     }
 
-    const response = await this.profilesService.update(accountId, profileId, token, body, revision);
+    const response = await this.profilesService.update(accountId, profileId, token, body as any, revision);
     return { data: response.data, revision: response.revision };
   }
 
@@ -170,8 +177,9 @@ export class ProfilesController {
     @Param('profileId') profileId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') revision: string,
+    @Req() req: Request,
   ): Promise<void> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     if (!revision) {
       throw new BadRequestException('If-Match header (revision) is required for deletes');
@@ -180,7 +188,17 @@ export class ProfilesController {
     await this.profilesService.remove(accountId, profileId, token, revision);
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

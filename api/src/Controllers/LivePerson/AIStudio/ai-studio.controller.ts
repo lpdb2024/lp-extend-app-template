@@ -1,7 +1,7 @@
 import { Controller, Get, Headers, Param, Post, Body, Put, Delete, Query, Patch } from '@nestjs/common';
 import { AIStudioService } from './ai-studio.service';
-import { API_ROUTES, MANAGER_ROLES } from '../../constants/constants';
-import { RolesGuard } from '../../auth/roles.guard';
+import { API_ROUTES, MANAGER_ROLES } from '../../../constants/constants';
+import { RolesGuard } from '../../../auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { UseGuards } from '@nestjs/common';
 import {

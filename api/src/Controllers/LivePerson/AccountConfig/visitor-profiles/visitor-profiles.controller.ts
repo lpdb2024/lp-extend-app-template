@@ -14,7 +14,9 @@ import {
   Query,
   Headers,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -49,8 +51,9 @@ export class VisitorProfilesController {
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: VisitorProfileQueryDto,
+    @Req() req: Request,
   ): Promise<VisitorProfileListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.visitorProfilesService.getVisitorProfiles(
       accountId,
@@ -74,8 +77,9 @@ export class VisitorProfilesController {
     @Param('profileId') profileId: string,
     @Headers('authorization') authorization: string,
     @Query() query: VisitorProfileQueryDto,
+    @Req() req: Request,
   ): Promise<VisitorProfileResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.visitorProfilesService.getVisitorProfileById(
       accountId,
@@ -99,8 +103,9 @@ export class VisitorProfilesController {
     @Headers('authorization') authorization: string,
     @Body() body: VisitorProfileCreateDto,
     @Query() query: VisitorProfileQueryDto,
+    @Req() req: Request,
   ): Promise<VisitorProfileResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.visitorProfilesService.createVisitorProfile(
       accountId,
@@ -128,8 +133,9 @@ export class VisitorProfilesController {
     @Headers('if-match') ifMatch: string,
     @Body() body: VisitorProfileUpdateDto,
     @Query() query: VisitorProfileQueryDto,
+    @Req() req: Request,
   ): Promise<VisitorProfileResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     const response = await this.visitorProfilesService.updateVisitorProfile(
@@ -158,8 +164,9 @@ export class VisitorProfilesController {
     @Param('profileId') profileId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') ifMatch: string,
+    @Req() req: Request,
   ): Promise<{ success: boolean }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     await this.visitorProfilesService.deleteVisitorProfile(
@@ -172,7 +179,17 @@ export class VisitorProfilesController {
     return { success: true };
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

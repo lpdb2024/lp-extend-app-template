@@ -14,8 +14,8 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
+import type { LPEngagement } from '@lpextend/client-sdk';
 import {
-  IEngagement,
   EngagementChannel,
   EngagementType,
   EngagementSubType,
@@ -379,15 +379,15 @@ export class EngagementUpdateDto {
 /**
  * Engagement response DTO
  */
-export class EngagementResponseDto {
-  @ApiProperty({ description: 'Engagement data' })
-  data: IEngagement;
+export interface EngagementResponseDto {
+  data: LPEngagement;
+  revision?: string;
 }
 
 /**
  * Engagement list response DTO
  */
-export class EngagementListResponseDto {
-  @ApiProperty({ description: 'List of engagements', type: [Object] })
-  data: IEngagement[];
+export interface EngagementListResponseDto {
+  data: LPEngagement[];
+  revision?: string;
 }

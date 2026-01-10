@@ -16,12 +16,12 @@ import {
   IsArray,
 } from 'class-validator';
 import { Type, Transform } from 'class-transformer';
-import { IProfile, IProfilePermissions, IProfilePermission, IProfilePermissionGroup } from './profiles.interfaces';
+import type { LPProfile } from '@lpextend/client-sdk';
 
 /**
  * Permission DTO
  */
-export class ProfilePermissionDto implements IProfilePermission {
+export class ProfilePermissionDto {
   @ApiProperty({ description: 'Whether the permission is enabled' })
   @IsBoolean()
   isEnabled: boolean;
@@ -67,7 +67,7 @@ export class CreateProfileDto {
   @ApiPropertyOptional({ description: 'Profile permissions object' })
   @IsOptional()
   @IsObject()
-  permissions?: IProfilePermissions;
+  permissions?: Record<string, any>;
 }
 
 /**
@@ -95,7 +95,7 @@ export class UpdateProfileDto {
   @ApiPropertyOptional({ description: 'Profile permissions object' })
   @IsOptional()
   @IsObject()
-  permissions?: IProfilePermissions;
+  permissions?: Record<string, any>;
 }
 
 /**
@@ -117,21 +117,15 @@ export class ProfilesQueryDto {
 /**
  * Profile response DTO
  */
-export class ProfileResponseDto {
-  @ApiProperty({ description: 'Profile data' })
-  data: IProfile;
-
-  @ApiPropertyOptional({ description: 'Current revision for optimistic locking' })
+export interface ProfileResponseDto {
+  data: LPProfile;
   revision?: string;
 }
 
 /**
  * Profiles list response DTO
  */
-export class ProfilesResponseDto {
-  @ApiProperty({ description: 'List of profiles', type: [Object] })
-  data: IProfile[];
-
-  @ApiPropertyOptional({ description: 'Current revision for optimistic locking' })
+export interface ProfilesResponseDto {
+  data: LPProfile[];
   revision?: string;
 }

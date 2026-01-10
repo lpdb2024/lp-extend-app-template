@@ -17,8 +17,8 @@ import {
 // import { CatsService } from './cats.service';
 import { ConversationCloudService } from './conversation-cloud.service';
 // import { Response as Res } from 'express';
-import { API_ROUTES, MANAGER_ROLES } from '../../constants/constants';
-import { RolesGuard } from '../../auth/roles.guard';
+import { API_ROUTES, MANAGER_ROLES } from '../../../constants/constants';
+import { RolesGuard } from '../../../auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { UseGuards } from '@nestjs/common';
 import { USER_ROLES } from 'src/constants/constants';
@@ -39,7 +39,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AxiosResponse } from 'axios';
-import { LpToken } from '../CCIDP/cc-idp.interfaces';
+import type { SentinelLpToken } from '@lpextend/client-sdk';
 import { helper } from 'src/utils/HelperService';
 import { VerifyToken } from 'src/auth/auth.decorators';
 import { ConversationHistoryRecord } from './conversation-cloud.interfaces';
@@ -52,7 +52,7 @@ export class ConversationCloudController {
   @Get(':accountId/prompts')
   async getPrompts(
     @Param('accountId') accountId: string,
-    @VerifyToken({ roles: MANAGER_ROLES }) token: LpToken,
+    @VerifyToken({ roles: MANAGER_ROLES }) token: SentinelLpToken,
   ): Promise<any> | null {
     if (!token) {
       throw new Error('No token found');
@@ -66,7 +66,7 @@ export class ConversationCloudController {
   @Post(':accountId/messaging-interactions')
   async getMessagingIteractions(
     @Param('accountId') accountId: string,
-    @VerifyToken({ roles: MANAGER_ROLES }) token: LpToken,
+    @VerifyToken({ roles: MANAGER_ROLES }) token: SentinelLpToken,
     @Body() body: MsgIntRequest,
     @Query('firstOnly') firstOnly: boolean,
   ): Promise<any> | null {
@@ -81,7 +81,7 @@ export class ConversationCloudController {
   @Post(':accountId/conversations')
   async getConversationsByIds(
     @Param('accountId') accountId: string,
-    @VerifyToken({ roles: MANAGER_ROLES }) token: LpToken,
+    @VerifyToken({ roles: MANAGER_ROLES }) token: SentinelLpToken,
     @Body() body: { conversationIds: string[] },
   ): Promise<ConversationHistoryRecord[]> {
     if (!body.conversationIds || body.conversationIds.length === 0) {
@@ -97,7 +97,7 @@ export class ConversationCloudController {
   @Get(':accountId/messaging-interactions/:conversationId')
   async getMessagingIteractionBy(
     @Param('accountId') accountId: string,
-    @VerifyToken({ roles: MANAGER_ROLES }) token: LpToken,
+    @VerifyToken({ roles: MANAGER_ROLES }) token: SentinelLpToken,
     @Param('conversationId') conversationId: string,
   ): Promise<any> | null {
     return this.service.getOneMessagingInteraction(
@@ -120,7 +120,7 @@ export class ConversationCloudController {
   async getMessagingIteractionById(
     @Param('accountId') accountId: string,
     @Param('conversationId') conversationId: string,
-    @VerifyToken({ roles: MANAGER_ROLES }) token: LpToken,
+    @VerifyToken({ roles: MANAGER_ROLES }) token: SentinelLpToken,
   ): Promise<any> {
     return this.service.messagingHistoryProxyOneConversation(
       accountId,
@@ -134,7 +134,7 @@ export class ConversationCloudController {
   async getAgentStats(
     @Param('accountId') accountId: string,
     @Param('agentId') agentId: string,
-    @VerifyToken({ roles: MANAGER_ROLES }) token: LpToken,
+    @VerifyToken({ roles: MANAGER_ROLES }) token: SentinelLpToken,
   ): Promise<any> {
     return this.service.getAgentStats(
       helper.insertBearer(token.accessToken),

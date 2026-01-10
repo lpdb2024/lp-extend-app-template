@@ -14,7 +14,9 @@ import {
   Query,
   Headers,
   BadRequestException,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import {
   ApiTags,
   ApiOperation,
@@ -49,8 +51,9 @@ export class VisitorBehaviorsController {
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query() query: VisitorBehaviorQueryDto,
+    @Req() req: Request,
   ): Promise<VisitorBehaviorListResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.visitorBehaviorsService.getVisitorBehaviors(
       accountId,
@@ -74,8 +77,9 @@ export class VisitorBehaviorsController {
     @Param('behaviorId') behaviorId: string,
     @Headers('authorization') authorization: string,
     @Query() query: VisitorBehaviorQueryDto,
+    @Req() req: Request,
   ): Promise<VisitorBehaviorResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.visitorBehaviorsService.getVisitorBehaviorById(
       accountId,
@@ -99,8 +103,9 @@ export class VisitorBehaviorsController {
     @Headers('authorization') authorization: string,
     @Body() body: VisitorBehaviorCreateDto,
     @Query() query: VisitorBehaviorQueryDto,
+    @Req() req: Request,
   ): Promise<VisitorBehaviorResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
 
     const response = await this.visitorBehaviorsService.createVisitorBehavior(
       accountId,
@@ -128,8 +133,9 @@ export class VisitorBehaviorsController {
     @Headers('if-match') ifMatch: string,
     @Body() body: VisitorBehaviorUpdateDto,
     @Query() query: VisitorBehaviorQueryDto,
+    @Req() req: Request,
   ): Promise<VisitorBehaviorResponseDto> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     const response = await this.visitorBehaviorsService.updateVisitorBehavior(
@@ -158,8 +164,9 @@ export class VisitorBehaviorsController {
     @Param('behaviorId') behaviorId: string,
     @Headers('authorization') authorization: string,
     @Headers('if-match') ifMatch: string,
+    @Req() req: Request,
   ): Promise<{ success: boolean }> {
-    const token = this.extractToken(authorization);
+    const token = this.extractToken(authorization, req);
     const revision = this.extractRevision(ifMatch);
 
     await this.visitorBehaviorsService.deleteVisitorBehavior(
@@ -172,7 +179,17 @@ export class VisitorBehaviorsController {
     return { success: true };
   }
 
-  private extractToken(authorization: string): string {
+  /**
+   * Extract token from Authorization header or shell auth
+   * Supports both direct Bearer auth and shell token auth (via middleware)
+   */
+  private extractToken(authorization: string, req?: any): string {
+    // First check if shell auth provided token via middleware
+    if (req?.token?.accessToken) {
+      return req.token.accessToken;
+    }
+
+    // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }

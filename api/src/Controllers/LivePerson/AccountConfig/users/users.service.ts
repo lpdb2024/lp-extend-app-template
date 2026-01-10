@@ -1,40 +1,83 @@
 /**
  * Users Service
- * Handles all Users API operations for LivePerson
+ * Handles all Users API operations for LivePerson using the SDK
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { APIService } from '../../../APIService/api-service';
-import { LPDomainService } from '../../shared/lp-domain.service';
-import { LPBaseService } from '../../shared/lp-base.service';
+import { ConfigService } from '@nestjs/config';
 import {
-  LP_SERVICE_DOMAINS,
-  LP_API_VERSIONS,
-  LP_API_PATHS,
-} from '../../shared/lp-constants';
-import { ILPResponse, ILPRequestOptions } from '../../shared/lp-common.interfaces';
-import {
-  IUser,
-  ICreateUserRequest,
-  IUpdateUserRequest,
-  IBatchUpdateUsersRequest,
-  IBatchUpdateUsersResponse,
-} from './users.interfaces';
+  initializeSDK,
+  LPExtendSDK,
+  Scopes,
+  LPExtendSDKError,
+} from '@lpextend/client-sdk';
+import type { LPUser, CreateUserRequest, UpdateUserRequest } from '@lpextend/client-sdk';
+
+/**
+ * Response type for SDK operations
+ */
+export interface ILPResponse<T> {
+  data: T;
+  revision?: string;
+  headers?: Record<string, string>;
+}
+
+/**
+ * Batch update request for users
+ */
+export interface IBatchUpdateUsersRequest {
+  ids: (string | number)[];
+  fields: {
+    name: string;
+    value: any[];
+    operation: 'add' | 'remove' | 'replace';
+  }[];
+}
+
+/**
+ * Batch update response
+ */
+export interface IBatchUpdateUsersResponse {
+  success: boolean;
+  results?: any[];
+}
 
 @Injectable()
-export class UsersService extends LPBaseService {
-  protected readonly serviceDomain = LP_SERVICE_DOMAINS.ACCOUNT_CONFIG_WRITE;
-  protected readonly defaultApiVersion = LP_API_VERSIONS.USERS;
+export class UsersService {
+  private shellBaseUrl: string;
+  private appId: string;
 
   constructor(
-    apiService: APIService,
-    domainService: LPDomainService,
     @InjectPinoLogger(UsersService.name)
-    logger: PinoLogger,
+    private readonly logger: PinoLogger,
+    private readonly configService: ConfigService,
   ) {
-    super(apiService, domainService, logger);
     this.logger.setContext(UsersService.name);
+    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
+    this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
+  }
+
+  /**
+   * Create SDK instance for the given account/token
+   */
+  private async getSDK(accountId: string, token: string): Promise<LPExtendSDK> {
+    try {
+      const accessToken = token.replace('Bearer ', '');
+      return await initializeSDK({
+        appId: this.appId,
+        accountId,
+        accessToken,
+        shellBaseUrl: this.shellBaseUrl,
+        scopes: [Scopes.USERS, Scopes.SKILLS],
+        debug: this.configService.get<string>('NODE_ENV') !== 'production',
+      });
+    } catch (error) {
+      if (error instanceof LPExtendSDKError) {
+        this.logger.error({ error: error.message, code: error.code }, 'SDK initialization failed');
+      }
+      throw error;
+    }
   }
 
   /**
@@ -47,16 +90,11 @@ export class UsersService extends LPBaseService {
       select?: string;
       includeDeleted?: boolean;
     },
-  ): Promise<ILPResponse<IUser[]>> {
-    const path = LP_API_PATHS.USERS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      select: options?.select || '$all',
-      includeDeleted: options?.includeDeleted,
-      source: 'ccui',
-    };
-
-    return this.get<IUser[]>(accountId, path, token, requestOptions);
+  ): Promise<ILPResponse<LPUser[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const response = await sdk.users.getAll();
+    this.logger.debug({ accountId, count: response.data?.length }, 'Fetched users');
+    return response;
   }
 
   /**
@@ -66,15 +104,9 @@ export class UsersService extends LPBaseService {
     accountId: string,
     userId: string,
     token: string,
-  ): Promise<ILPResponse<IUser>> {
-    const path = LP_API_PATHS.USERS.BY_ID(accountId, userId);
-
-    const requestOptions: ILPRequestOptions = {
-      select: '$all',
-      source: 'ccui',
-    };
-
-    return this.get<IUser>(accountId, path, token, requestOptions);
+  ): Promise<ILPResponse<LPUser>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.users.getById(userId);
   }
 
   /**
@@ -83,24 +115,11 @@ export class UsersService extends LPBaseService {
   async create(
     accountId: string,
     token: string,
-    data: ICreateUserRequest,
+    data: CreateUserRequest,
     revision?: string,
-  ): Promise<ILPResponse<IUser>> {
-    const path = LP_API_PATHS.USERS.BASE(accountId);
-
-    // Users API uses v5.0 for creation
-    const requestOptions: ILPRequestOptions = {
-      version: '5.0',
-      source: 'ccui',
-      revision,
-    };
-
-    const createData = {
-      ...data,
-      isEnabled: data.isEnabled ?? true,
-    };
-
-    return this.post<IUser>(accountId, path, createData, token, requestOptions);
+  ): Promise<ILPResponse<LPUser>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.users.create(data);
   }
 
   /**
@@ -109,23 +128,18 @@ export class UsersService extends LPBaseService {
   async createMany(
     accountId: string,
     token: string,
-    data: ICreateUserRequest[],
+    data: CreateUserRequest[],
     revision?: string,
-  ): Promise<ILPResponse<IUser[]>> {
-    const path = LP_API_PATHS.USERS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      version: '5.0',
-      source: 'ccui',
-      revision,
-    };
-
-    const createData = data.map((user) => ({
-      ...user,
-      isEnabled: user.isEnabled ?? true,
-    }));
-
-    return this.post<IUser[]>(accountId, path, createData, token, requestOptions);
+  ): Promise<ILPResponse<LPUser[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const results: LPUser[] = [];
+    let lastRevision: string | undefined;
+    for (const user of data) {
+      const response = await sdk.users.create(user);
+      results.push(response.data);
+      lastRevision = response.revision;
+    }
+    return { data: results, revision: lastRevision };
   }
 
   /**
@@ -135,18 +149,11 @@ export class UsersService extends LPBaseService {
     accountId: string,
     userId: string,
     token: string,
-    data: IUpdateUserRequest,
-    revision: string,
-  ): Promise<ILPResponse<IUser>> {
-    const path = LP_API_PATHS.USERS.BY_ID(accountId, userId);
-
-    const requestOptions: ILPRequestOptions = {
-      version: '5.0',
-      source: 'ccui',
-      revision,
-    };
-
-    return this.put<IUser>(accountId, path, data, token, requestOptions);
+    data: UpdateUserRequest,
+    revision?: string,
+  ): Promise<ILPResponse<LPUser>> {
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.users.update(userId, data, revision);
   }
 
   /**
@@ -155,18 +162,18 @@ export class UsersService extends LPBaseService {
   async updateMany(
     accountId: string,
     token: string,
-    data: (IUpdateUserRequest & { id: string })[],
-    revision: string,
-  ): Promise<ILPResponse<IUser[]>> {
-    const path = LP_API_PATHS.USERS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      version: '5.0',
-      source: 'ccui',
-      revision,
-    };
-
-    return this.put<IUser[]>(accountId, path, data, token, requestOptions);
+    data: (UpdateUserRequest & { id: string })[],
+    revision?: string,
+  ): Promise<ILPResponse<LPUser[]>> {
+    const sdk = await this.getSDK(accountId, token);
+    const results: LPUser[] = [];
+    let lastRevision = revision;
+    for (const user of data) {
+      const response = await sdk.users.update(user.id, user, lastRevision);
+      results.push(response.data);
+      lastRevision = response.revision;
+    }
+    return { data: results, revision: lastRevision };
   }
 
   /**
@@ -176,17 +183,10 @@ export class UsersService extends LPBaseService {
     accountId: string,
     userId: string,
     token: string,
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.USERS.BY_ID(accountId, userId);
-
-    const requestOptions: ILPRequestOptions = {
-      version: '5.0',
-      source: 'ccui',
-      revision,
-    };
-
-    return this.delete<void>(accountId, path, token, requestOptions);
+    const sdk = await this.getSDK(accountId, token);
+    return sdk.users.delete(userId, revision);
   }
 
   /**
@@ -196,45 +196,22 @@ export class UsersService extends LPBaseService {
     accountId: string,
     token: string,
     ids: string[],
-    revision: string,
+    revision?: string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.USERS.BASE(accountId);
-
-    const requestOptions: ILPRequestOptions = {
-      version: '5.0',
-      source: 'ccui',
-      revision,
-      additionalParams: {
-        ids: ids.join(','),
-      },
-    };
-
-    return this.delete<void>(accountId, path, token, requestOptions);
-  }
-
-  /**
-   * Reset user password
-   */
-  async resetPassword(
-    accountId: string,
-    userId: string,
-    token: string,
-    newPassword: string,
-  ): Promise<ILPResponse<void>> {
-    const path = `${LP_API_PATHS.USERS.BY_ID(accountId, userId)}/resetPassword`;
-
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-    };
-
-    return this.post<void>(accountId, path, { newPassword }, token, requestOptions);
+    const sdk = await this.getSDK(accountId, token);
+    let lastRevision = revision;
+    for (const id of ids) {
+      const response = await sdk.users.delete(id, lastRevision);
+      lastRevision = response.revision;
+    }
+    return { data: undefined, revision: lastRevision };
   }
 
   /**
    * Get the current revision for users
    */
   async getRevision(accountId: string, token: string): Promise<string | undefined> {
-    const response = await this.getAll(accountId, token, { select: 'id' });
+    const response = await this.getAll(accountId, token);
     return response.revision;
   }
 
@@ -245,8 +222,8 @@ export class UsersService extends LPBaseService {
     accountId: string,
     token: string,
     skillId: number,
-  ): Promise<IUser[]> {
-    const response = await this.getAll(accountId, token, { select: '$all' });
+  ): Promise<LPUser[]> {
+    const response = await this.getAll(accountId, token);
     return response.data.filter(
       (user) => user.skillIds && user.skillIds.includes(skillId),
     );
@@ -261,15 +238,13 @@ export class UsersService extends LPBaseService {
     userId: string,
     token: string,
     skillId: number,
-  ): Promise<ILPResponse<IUser>> {
+  ): Promise<ILPResponse<LPUser>> {
+    const sdk = await this.getSDK(accountId, token);
+
     // Fetch the full user to get current state
-    const userResponse = await this.getById(accountId, userId, token);
+    const userResponse = await sdk.users.getById(userId);
     const user = userResponse.data;
     const revision = userResponse.revision;
-
-    if (!revision) {
-      throw new Error('Could not get revision for user update');
-    }
 
     // Remove the skill from skillIds - also filter out any null/undefined values
     const updatedSkillIds = (user.skillIds || [])
@@ -277,30 +252,24 @@ export class UsersService extends LPBaseService {
 
     // Filter null values from all ID arrays - LP API rejects null values
     const safeProfileIds = (user.profileIds || []).filter((id): id is number => id != null);
-    const safeLobIds = (user.lobIds || []).filter((id): id is number => id != null);
 
-    // Build update payload with required id field
-    // LP API requires id in the body for PUT requests
-    const updatePayload = {
-      id: userId,
+    // Build update payload
+    const updatePayload: UpdateUserRequest = {
       skillIds: updatedSkillIds,
       profileIds: safeProfileIds,
-      lobIds: safeLobIds,
     };
 
     this.logger.info({
       fn: 'removeSkillFromUser',
-      message: 'Removing skill from user - MINIMAL PAYLOAD',
+      message: 'Removing skill from user',
       accountId,
       userId,
       skillId,
       originalSkillIds: user.skillIds,
       updatedSkillIds,
-      payloadKeys: Object.keys(updatePayload),
-      payload: JSON.stringify(updatePayload),
     });
 
-    return this.update(accountId, userId, token, updatePayload, revision);
+    return sdk.users.update(userId, updatePayload, revision);
   }
 
   /**
@@ -342,102 +311,49 @@ export class UsersService extends LPBaseService {
   }
 
   /**
-   * Batch update users using LP's batch API
-   * Allows adding/removing field values in bulk
-   *
-   * Example: Remove skill 123 from users [1, 2, 3]:
-   * batchUpdate(accountId, token, {
-   *   ids: [1, 2, 3],
-   *   fields: [{ name: 'skillIds', value: [123], operation: 'remove' }]
-   * })
+   * Add a skill to multiple users
    */
-  async batchUpdate(
+  async addSkillToUsers(
     accountId: string,
     token: string,
-    request: IBatchUpdateUsersRequest,
-  ): Promise<ILPResponse<IBatchUpdateUsersResponse>> {
-    const path = LP_API_PATHS.USERS.BATCH(accountId);
-
-    this.logger.info({
-      fn: 'batchUpdate',
-      message: 'Batch updating users',
-      accountId,
-      userCount: request.ids.length,
-      fields: request.fields,
-    });
-
-    // LP batch API uses v4.0
-    const requestOptions: ILPRequestOptions = {
-      version: '4.0',
-      source: 'ccui',
+    skillId: number,
+    userIds: string[],
+  ): Promise<{ success: string[]; failed: { userId: string; error: string }[] }> {
+    const sdk = await this.getSDK(accountId, token);
+    const results = {
+      success: [] as string[],
+      failed: [] as { userId: string; error: string }[],
     };
 
-    return this.post<IBatchUpdateUsersResponse>(
-      accountId,
-      path,
-      request,
-      token,
-      requestOptions,
-    );
-  }
+    for (const userId of userIds) {
+      try {
+        const userResponse = await sdk.users.getById(userId);
+        const user = userResponse.data;
+        const skillIds = user.skillIds || [];
 
-  /**
-   * Remove a skill from multiple users using batch API
-   * This is a convenience method that uses batchUpdate internally
-   */
-  async batchRemoveSkillFromUsers(
-    accountId: string,
-    token: string,
-    skillId: number,
-    userIds: (string | number)[],
-  ): Promise<ILPResponse<IBatchUpdateUsersResponse>> {
-    this.logger.info({
-      fn: 'batchRemoveSkillFromUsers',
-      message: 'Batch removing skill from users',
-      accountId,
-      skillId,
-      userCount: userIds.length,
-      userIds,
-    });
+        if (!skillIds.includes(skillId)) {
+          await sdk.users.update(userId, {
+            skillIds: [...skillIds, skillId],
+          }, userResponse.revision);
+        }
 
-    return this.batchUpdate(accountId, token, {
-      ids: userIds,
-      fields: [
-        {
-          name: 'skillIds',
-          value: [skillId],
-          operation: 'remove',
-        },
-      ],
-    });
-  }
+        results.success.push(userId);
+      } catch (error) {
+        results.failed.push({
+          userId,
+          error: error.message || 'Unknown error',
+        });
+        this.logger.error({
+          fn: 'addSkillToUsers',
+          message: 'Failed to add skill to user',
+          accountId,
+          userId,
+          skillId,
+          error: error.message,
+        });
+      }
+    }
 
-  /**
-   * Add a skill to multiple users using batch API
-   */
-  async batchAddSkillToUsers(
-    accountId: string,
-    token: string,
-    skillId: number,
-    userIds: (string | number)[],
-  ): Promise<ILPResponse<IBatchUpdateUsersResponse>> {
-    this.logger.info({
-      fn: 'batchAddSkillToUsers',
-      message: 'Batch adding skill to users',
-      accountId,
-      skillId,
-      userCount: userIds.length,
-    });
-
-    return this.batchUpdate(accountId, token, {
-      ids: userIds,
-      fields: [
-        {
-          name: 'skillIds',
-          value: [skillId],
-          operation: 'add',
-        },
-      ],
-    });
+    return results;
   }
 }
