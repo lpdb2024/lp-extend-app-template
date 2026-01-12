@@ -15,8 +15,8 @@ import type {
   SentinelLpToken,
   CBAuthInfo,
   LPUser,
-} from '@lpextend/client-sdk';
-import { initializeSDK, Scopes } from '@lpextend/client-sdk';
+} from '@lpextend/node-sdk';
+import { initializeSDK, Scopes } from '@lpextend/node-sdk';
 import { HelperService } from 'src/Controllers/HelperService/helper-service.service';
 import { cache } from 'src/utils/memCache';
 import { CollectionReference } from '@google-cloud/firestore';

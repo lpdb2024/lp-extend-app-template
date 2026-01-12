@@ -11,9 +11,17 @@ import {
   LPExtendSDK,
   Scopes,
   LPExtendSDKError,
-} from '@lpextend/client-sdk';
-import type { LPSkill, CreateSkillRequest, UpdateSkillRequest } from '@lpextend/client-sdk';
+} from '@lpextend/node-sdk';
+import type { LPSkill, CreateSkillRequest, UpdateSkillRequest } from '@lpextend/node-sdk';
 import { UsersService } from '../users/users.service';
+
+/**
+ * Token info from controller
+ */
+export interface TokenInfo {
+  accessToken: string;
+  extendToken?: string;
+}
 
 /**
  * Response type for SDK operations
@@ -65,18 +73,44 @@ export class SkillsService {
 
   /**
    * Create SDK instance for the given account/token
+   * Uses extendToken (preferred) when available for shell verification,
+   * falls back to direct accessToken otherwise.
    */
-  private async getSDK(accountId: string, token: string): Promise<LPExtendSDK> {
+  private async getSDK(accountId: string, token: TokenInfo | string): Promise<LPExtendSDK> {
     try {
-      const accessToken = token.replace('Bearer ', '');
-      return await initializeSDK({
-        appId: this.appId,
+      // Handle both new TokenInfo object and legacy string format
+      const tokenInfo: TokenInfo = typeof token === 'string'
+        ? { accessToken: token.replace('Bearer ', '') }
+        : token;
+
+      // Use extendToken for SDK if available (preferred - SDK verifies with shell)
+      // Otherwise fall back to direct accessToken
+      const sdkConfig = tokenInfo.extendToken
+        ? {
+            appId: this.appId,
+            accountId,
+            extendToken: tokenInfo.extendToken,
+            shellBaseUrl: this.shellBaseUrl,
+            scopes: [Scopes.SKILLS, Scopes.USERS],
+            debug: this.configService.get<string>('NODE_ENV') !== 'production',
+          }
+        : {
+            appId: this.appId,
+            accountId,
+            accessToken: tokenInfo.accessToken.replace('Bearer ', ''),
+            shellBaseUrl: this.shellBaseUrl,
+            scopes: [Scopes.SKILLS, Scopes.USERS],
+            debug: this.configService.get<string>('NODE_ENV') !== 'production',
+          };
+
+      this.logger.debug({
+        fn: 'getSDK',
         accountId,
-        accessToken,
-        shellBaseUrl: this.shellBaseUrl,
-        scopes: [Scopes.SKILLS, Scopes.USERS],
-        debug: this.configService.get<string>('NODE_ENV') !== 'production',
-      });
+        hasExtendToken: !!tokenInfo.extendToken,
+        hasAccessToken: !!tokenInfo.accessToken,
+      }, 'Initializing SDK');
+
+      return await initializeSDK(sdkConfig);
     } catch (error) {
       if (error instanceof LPExtendSDKError) {
         this.logger.error({ error: error.message, code: error.code }, 'SDK initialization failed');
@@ -90,7 +124,7 @@ export class SkillsService {
    */
   async getAll(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: {
       select?: string;
       includeDeleted?: boolean;
@@ -108,7 +142,7 @@ export class SkillsService {
   async getById(
     accountId: string,
     skillId: string | number,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<LPSkill>> {
     const sdk = await this.getSDK(accountId, token);
     return sdk.skills.getById(Number(skillId));
@@ -119,7 +153,7 @@ export class SkillsService {
    */
   async create(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateSkillRequest,
     revision?: string,
   ): Promise<ILPResponse<LPSkill>> {
@@ -132,7 +166,7 @@ export class SkillsService {
    */
   async createMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateSkillRequest[],
     revision?: string,
   ): Promise<ILPResponse<LPSkill[]>> {
@@ -154,7 +188,7 @@ export class SkillsService {
   async update(
     accountId: string,
     skillId: string | number,
-    token: string,
+    token: TokenInfo | string,
     data: UpdateSkillRequest,
     revision?: string,
   ): Promise<ILPResponse<LPSkill>> {
@@ -167,7 +201,7 @@ export class SkillsService {
    */
   async updateMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: (UpdateSkillRequest & { id: number })[],
     revision?: string,
   ): Promise<ILPResponse<LPSkill[]>> {
@@ -188,7 +222,7 @@ export class SkillsService {
   async remove(
     accountId: string,
     skillId: string | number,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<void>> {
     const sdk = await this.getSDK(accountId, token);
@@ -200,7 +234,7 @@ export class SkillsService {
    */
   async removeMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     ids: number[],
     revision?: string,
   ): Promise<ILPResponse<void>> {
@@ -216,7 +250,7 @@ export class SkillsService {
   /**
    * Get the current revision for skills
    */
-  async getRevision(accountId: string, token: string): Promise<string | undefined> {
+  async getRevision(accountId: string, token: TokenInfo | string): Promise<string | undefined> {
     const response = await this.getAll(accountId, token);
     return response.revision;
   }
@@ -227,7 +261,7 @@ export class SkillsService {
   async checkDependencies(
     accountId: string,
     skillId: number,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ISkillDependencies> {
     // Get the skill info
     const skillResponse = await this.getById(accountId, skillId, token);
@@ -271,7 +305,7 @@ export class SkillsService {
   async smartDelete(
     accountId: string,
     skillId: number,
-    token: string,
+    token: TokenInfo | string,
     mode: 'check' | 'force',
   ): Promise<ISmartDeleteResponse> {
     // First, check dependencies

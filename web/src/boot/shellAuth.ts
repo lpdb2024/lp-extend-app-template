@@ -1,7 +1,7 @@
 /**
  * Shell Auth Boot File
  *
- * Initializes the unified LpAppAuth SDK early in app startup.
+ * Initializes the @lpextend/client-sdk early in app startup.
  * This detects if the app is running in an LP Extend shell iframe
  * and configures the appropriate auth strategy (shell or independent).
  *
@@ -12,11 +12,12 @@
 
 import { boot } from 'quasar/wrappers';
 import { ref, computed } from 'vue';
-import { getAppAuthInstance, isAuthInitialized } from 'src/composables/useAuth';
-import type { AuthStrategy } from 'src/sdk';
-
-// Also keep the legacy shell-auth service for backward compatibility
-import { initShellAuth, shellAuthState, isInShellMode as legacyIsInShellMode } from 'src/services/shell-auth.service';
+import {
+  getAppAuthInstance,
+  initAppAuth,
+  isAppAuthInitialized,
+  type AuthStrategy,
+} from '@lpextend/client-sdk';
 
 // Reactive state for global access
 const authStrategy = ref<AuthStrategy>((import.meta.env.VITE_AUTH_STRATEGY as AuthStrategy) || 'independent');
@@ -26,31 +27,30 @@ const isInShellMode = computed(() => {
 });
 
 export default boot(({ app }) => {
-  // Initialize legacy shell auth for backward compatibility
-  initShellAuth();
+  const bootStart = Date.now();
+  console.log('[ShellAuthBoot] Starting auth init...', bootStart);
 
   // Get the LpAppAuth instance (will be initialized)
   const auth = getAppAuthInstance();
 
-  // Initialize auth early
-  auth.init().then((authenticated) => {
+  // Initialize auth early - this sets isInitialized when complete
+  void initAppAuth().then((authenticated: boolean) => {
+    const elapsed = Date.now() - bootStart;
     if (authenticated) {
-      console.log('[ShellAuthBoot] User is authenticated');
+      console.log(`[ShellAuthBoot] User is authenticated (${elapsed}ms)`);
     } else {
-      console.log('[ShellAuthBoot] User is not authenticated');
+      console.log(`[ShellAuthBoot] User is not authenticated (${elapsed}ms)`);
     }
-  }).catch((error) => {
-    console.error('[ShellAuthBoot] Auth initialization failed:', error);
+  }).catch((error: Error) => {
+    const elapsed = Date.now() - bootStart;
+    console.error(`[ShellAuthBoot] Auth initialization failed (${elapsed}ms):`, error);
   });
 
   // Make auth state available globally via provide/inject
   app.provide('authStrategy', authStrategy);
   app.provide('isInShellMode', isInShellMode);
-  app.provide('isAuthInitialized', isAuthInitialized);
-
-  // Also provide legacy shell auth state for backward compatibility
-  app.provide('shellAuthState', shellAuthState);
-  app.provide('legacyIsInShellMode', legacyIsInShellMode);
+  app.provide('isAuthInitialized', isAppAuthInitialized);
+  app.provide('appAuth', auth);
 
   // Log current mode
   const strategyLabel = authStrategy.value === 'shell' ? 'SHELL' : 'INDEPENDENT';

@@ -16,7 +16,7 @@ import {
   Max,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import type { LPCampaign } from '@lpextend/client-sdk';
+import type { LPCampaign } from '@lpextend/node-sdk';
 import { CampaignType, CampaignStatus } from './campaigns.interfaces';
 
 /**

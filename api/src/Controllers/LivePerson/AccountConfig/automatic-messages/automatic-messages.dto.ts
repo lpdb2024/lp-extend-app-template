@@ -14,7 +14,7 @@ import {
   IsObject,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import type { LPAutomaticMessage } from '@lpextend/client-sdk';
+import type { LPAutomaticMessage } from '@lpextend/node-sdk';
 import {
   ILocalizedData,
   IAutoMessageAttributes,

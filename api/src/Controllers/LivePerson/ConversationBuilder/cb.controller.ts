@@ -13,7 +13,7 @@ import {
   AddBotAgentDto,
 } from './cb.dto'
 import { VerifyUser } from 'src/Firebase/auth.service';
-import type { SentinelLpToken } from '@lpextend/client-sdk';
+import type { SentinelLpToken } from '@lpextend/node-sdk';
 
 @ApiTags('Conversation Builder')
 @ApiBearerAuth()

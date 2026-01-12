@@ -14,7 +14,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import type { LPSkill } from '@lpextend/client-sdk';
+import type { LPSkill } from '@lpextend/node-sdk';
 
 /**
  * Skill Routing Configuration DTO

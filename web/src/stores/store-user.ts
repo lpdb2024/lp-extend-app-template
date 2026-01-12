@@ -9,11 +9,8 @@ import ErrorService from "src/services/ErrorService";
 const handleRequestError = ErrorService.handleRequestError.bind(ErrorService);
 import { jwtDecode } from "jwt-decode";
 import { defineStore } from "pinia";
-// import { encrypt } from 'src/functions/common'
-
+import { useSessionStore } from './store-session';
 import { Dark } from "quasar";
-// import type {
-//   ROLES} from 'src/constants';
 import type { ROLES } from "src/constants";
 import { ACTION_KEYS, API_ROUTES, USER_ROUTES } from "src/constants";
 import type {
@@ -258,9 +255,9 @@ export const useUserStore = defineStore("users", {
         });
         window.sessionStorage.setItem("sub", data.decoded.sub);
 
-        // Also set LP session in firebase auth store for UI state sync
-        const { useFirebaseAuthStore } = await import('./store-firebase-auth');
-        const firebaseAuth = useFirebaseAuthStore();
+        // Also set LP session in session store for UI state sync
+
+        const sessionStore = useSessionStore();
 
         console.info('[LP Auth] Setting LP session:', {
           accountId,
@@ -270,15 +267,13 @@ export const useUserStore = defineStore("users", {
           expiresInMinutes: Math.round((AUTH.expiresAt - Date.now()) / 60000),
         });
 
-        firebaseAuth.setLpSession({
+        // Save LP connection in session store
+        sessionStore.saveLpConnection({
           accountId: accountId,
-          accessToken: AUTH.accessToken,
-          tokenExpiry: AUTH.expiresAt,
-          lpUserId: data.decoded?.sub || null,
+          lastAccess: Date.now(),
           isLPA: data.decoded?.isLPA || false,
-          cbToken: data.cbToken || undefined,
-          cbOrg: data.cbOrg || undefined,
         });
+        sessionStore.switchLpAccount(accountId);
 
         await this.getSelf();
         return data;

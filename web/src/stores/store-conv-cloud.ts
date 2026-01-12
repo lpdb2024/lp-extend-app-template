@@ -44,7 +44,7 @@ import type {
   EncyptedKey,
   PayloadFilters,
 } from "src/interfaces";
-import { useFirebaseAuthStore } from "./store-firebase-auth";
+import { useUserStore } from "./store-user";
 
 interface IState {
   articles: KAIArticle[];
@@ -145,8 +145,7 @@ export const useConvCloudStore = defineStore("convCloud", {
   getters: {
     accountId(): string | null {
       // return useUserStore().accountId || sessionStorage.getItem("accountId");
-      console.info("getting accountId from firebase store", useFirebaseAuthStore().activeLpAccountId);
-      return useFirebaseAuthStore().activeLpAccountId
+      return useUserStore().accountId || sessionStorage.getItem('accountId')
     },
     logs(state) {
       return state.botLogs.logs;

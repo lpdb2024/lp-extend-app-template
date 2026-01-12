@@ -15,7 +15,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import type { LPPredefinedContent } from '@lpextend/client-sdk';
+import type { LPPredefinedContent } from '@lpextend/node-sdk';
 import { IHotkey } from '../../shared/lp-common.interfaces';
 
 /**

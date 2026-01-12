@@ -28,7 +28,6 @@ import { helper } from 'src/utils/HelperService';
 import {
   ConversationHistoryRecord,
   ConversationHistoryResponse,
-  MessageScore,
 } from './conversation-cloud.interfaces';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 

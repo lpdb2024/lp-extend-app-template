@@ -5,6 +5,7 @@
 // Author: Brandt Stevenson
 // =============================================================================
 
+@use "sass:color";
 @import 'quasar.variables.scss';
 @import 'extend-theme.scss';
 
@@ -86,7 +87,7 @@ $darkmode_bg_url: 'https://storage.googleapis.com/lp-extend-au/assets/extend-nrg
     }
   }
   .q-page-container{
-      padding-left: 72px;
+      padding-left: 0px;
     }
 }
 
@@ -1340,7 +1341,7 @@ $nebula-teal: #14b8a6;
     background: linear-gradient(
       135deg,
       $nebula-blue,
-      darken($nebula-blue, 10%)
+      color.adjust($nebula-blue, $lightness: -10%)
     );
   }
 
@@ -1348,7 +1349,7 @@ $nebula-teal: #14b8a6;
     background: linear-gradient(
       135deg,
       $nebula-purple,
-      darken($nebula-purple, 10%)
+      color.adjust($nebula-purple, $lightness: -10%)
     );
   }
 
@@ -1356,7 +1357,7 @@ $nebula-teal: #14b8a6;
     background: linear-gradient(
       135deg,
       $nebula-pink,
-      darken($nebula-pink, 10%)
+      color.adjust($nebula-pink, $lightness: -10%)
     );
   }
 
@@ -1364,7 +1365,7 @@ $nebula-teal: #14b8a6;
     background: linear-gradient(
       135deg,
       $nebula-orange,
-      darken($nebula-orange, 10%)
+      color.adjust($nebula-orange, $lightness: -10%)
     );
   }
 }

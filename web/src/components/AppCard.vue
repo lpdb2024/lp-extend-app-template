@@ -87,6 +87,8 @@ const handleClick = () => {
 </script>
 
 <style scoped lang="scss">
+@use "sass:color";
+
 // Theme colors
 $cosmic-900: #0c1035;
 $cosmic-800: #12184a;
@@ -188,7 +190,7 @@ $nebula-orange: #ff8c42;
     background: linear-gradient(
       135deg,
       $nebula-blue,
-      darken($nebula-blue, 10%)
+      color.adjust($nebula-blue, $lightness: -10%)
     );
   }
 
@@ -212,7 +214,7 @@ $nebula-orange: #ff8c42;
     background: linear-gradient(
       135deg,
       $nebula-pink,
-      darken($nebula-pink, 10%)
+      color.adjust($nebula-pink, $lightness: -10%)
     );
   }
 
@@ -220,7 +222,7 @@ $nebula-orange: #ff8c42;
     background: linear-gradient(
       135deg,
       $nebula-purple,
-      darken($nebula-purple, 10%)
+      color.adjust($nebula-purple, $lightness: -10%)
     );
   }
 
@@ -269,7 +271,7 @@ $nebula-orange: #ff8c42;
 
   &--external {
     background: rgba($nebula-orange, 0.1);
-    color: darken($nebula-orange, 10%);
+    color: color.adjust($nebula-orange, $lightness: -10%);
   }
 }
 

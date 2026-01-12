@@ -13,7 +13,7 @@ import {
   MaxLength,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import type { LPSpecialOccasion } from '@lpextend/client-sdk';
+import type { LPSpecialOccasion } from '@lpextend/node-sdk';
 import { ISpecialOccasionItem, ISpecialOccasionMeta } from './special-occasions.interfaces';
 
 /**

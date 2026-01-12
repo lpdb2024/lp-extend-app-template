@@ -1,57 +1,8 @@
-import type { AppEnvVar } from "src/interfaces";
-
 export const APP_NAME = "Extend";
 
 export const LE_BACKGROUND_URL =
   "https://lpcdn.lpsnmedia.net/le/apps/agent-workspace/1.51.0-release_1166406301/img/dark-theme-background.3175f99.png";
 
-export enum APP_ENV {
-  LOCAL = "local",
-  QA = "QA",
-  ALPHA = "Alpha",
-  GCP_QA = "GCP_QA",
-  GCP_ALPHA = "GCP_Alpha",
-  GCP_PROD_AU = "GCP_Prod_AU",
-  GCP_PROD_EU = "GCP_Prod_EU",
-  GCP_PROD_US = "GCP_Prod_US",
-}
-export const FIREBASE_CONF = {
-  DEV: {
-    apiKey: process.env.FIREBASE_DEV_API_KEY,
-    authDomain: process.env.FIREBASE_DEV_AUTH_DOMAIN,
-    projectId: process.env.FIREBASE_DEV_PROJECT_ID,
-    storageBucket: process.env.FIREBASE_DEV_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_DEV_MESSAGING_SENDER_ID,
-    appId: process.env.FIREBASE_DEV_APP_ID,
-    measurementId: process.env.FIREBASE_DEV_MEASUREMENT_ID,
-  },
-};
-export const initConfig = (lpEnv: APP_ENV): AppEnvVar => {
-  switch (lpEnv) {
-    case APP_ENV.LOCAL:
-      console.info(FIREBASE_CONF.DEV);
-      return {
-        env: APP_ENV.LOCAL,
-        phase: "DEFAULT",
-        datacenter: "sy",
-        grid: "qa",
-        firebase: FIREBASE_CONF.DEV,
-      };
-    default:
-      return {
-        env: APP_ENV.LOCAL,
-        phase: "DEFAULT",
-        datacenter: "sy",
-        grid: "qa",
-        firebase: FIREBASE_CONF.DEV,
-      };
-  }
-};
-export const HOST_MAP: Record<string, AppEnvVar> = {
-  localhost: initConfig(APP_ENV.LOCAL),
-  "127.0.0.1": initConfig(APP_ENV.LOCAL),
-};
-export const DEFAULT_APP_ENV = initConfig(APP_ENV.LOCAL);
 
 export const APP_TRACE_ID = "X-Request-ID";
 

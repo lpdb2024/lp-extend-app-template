@@ -37,7 +37,7 @@ const routes: RouteRecordRaw[] = [
         name: ROUTE_NAMES.LOGIN,
         meta: { title: ROUTE_TITLES[ROUTE_NAMES.LOGIN], isPreAuth: true },
         path: "",
-        component: () => import("src/pages/LoginPageExtend.vue"),
+        component: () => import("src/pages/login/LoginPageLpOnly.vue"),
       },
     ],
   },

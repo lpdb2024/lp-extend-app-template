@@ -15,7 +15,6 @@ export default defineConfig((ctx) => {
     boot: [
       "piniaPersist", // Must be first to restore persisted state before other boots use stores
       "shellAuth", // Must be early to detect shell mode before auth guard runs
-      "firebase",
       "i18n",
       "authGuard",
       "plugins",

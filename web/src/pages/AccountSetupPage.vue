@@ -63,19 +63,19 @@
             <!-- Left Column: User Info & Account Input -->
             <div class="ext-setup-main">
               <!-- User Info Card -->
-              <div v-if="firebaseAuth.user" class="ext-card ext-user-card">
+              <div v-if="sessionStore.preferences" class="ext-card ext-user-card">
                 <div class="ext-card-header">
                   <h3 class="ext-h4">Your Profile</h3>
                 </div>
                 <div class="ext-card-body">
                   <div class="ext-user-info">
                     <div class="ext-avatar">
-                      <img v-if="firebaseAuth.user.photoURL" :src="firebaseAuth.user.photoURL" alt="User avatar" />
+                      <img v-if="sessionStore.preferences.photoUrl" :src="sessionStore.preferences.photoUrl" alt="User avatar" />
                       <q-icon v-else name="sym_o_person" size="40px" />
                     </div>
                     <div class="ext-user-details">
-                      <div class="ext-h5">{{ firebaseAuth.userDisplayName }}</div>
-                      <div class="ext-body-sm ext-text-secondary">{{ firebaseAuth.userEmail }}</div>
+                      <div class="ext-h5">{{ sessionStore.userDisplayName }}</div>
+                      <div class="ext-body-sm ext-text-secondary">{{ sessionStore.userEmail }}</div>
                     </div>
                   </div>
                 </div>
@@ -191,19 +191,19 @@
                       v-for="acc in linkedAccounts"
                       :key="acc"
                       class="ext-account-item"
-                      :class="{ 'ext-account-item--default': acc === firebaseAuth.defaultAccountId }"
+                      :class="{ 'ext-account-item--default': acc === sessionStore.defaultAccountId }"
                       @click="setAsDefault(acc)"
                     >
                       <div class="ext-account-icon">
                         <q-icon
-                          :name="acc === firebaseAuth.defaultAccountId ? 'sym_o_star' : 'sym_o_business'"
-                          :class="acc === firebaseAuth.defaultAccountId ? 'ext-text-warning' : ''"
+                          :name="acc === sessionStore.defaultAccountId ? 'sym_o_star' : 'sym_o_business'"
+                          :class="acc === sessionStore.defaultAccountId ? 'ext-text-warning' : ''"
                           size="20px"
                         />
                       </div>
                       <div class="ext-account-info">
                         <div class="ext-account-id">{{ acc }}</div>
-                        <div v-if="acc === firebaseAuth.defaultAccountId" class="ext-account-label">
+                        <div v-if="acc === sessionStore.defaultAccountId" class="ext-account-label">
                           Default Account
                         </div>
                       </div>
@@ -252,7 +252,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useFirebaseAuthStore } from 'src/stores/store-firebase-auth'
+import { useSessionStore } from 'src/stores/store-session'
 import { useUserStore } from 'src/stores/store-user'
 import { Notify } from 'quasar'
 import { ROUTE_NAMES } from 'src/constants/constants'
@@ -260,7 +260,7 @@ import ExtPageHeader from 'src/components/common-ui/ExtPageHeader.vue'
 
 const router = useRouter()
 const route = useRoute()
-const firebaseAuth = useFirebaseAuthStore()
+const sessionStore = useSessionStore()
 const userStore = useUserStore()
 
 const accountId = ref('')
@@ -268,7 +268,7 @@ const isLoading = ref(false)
 const error = ref('')
 const connectionMode = ref<'link' | 'sso'>('link')
 
-const linkedAccounts = computed(() => firebaseAuth.linkedAccounts)
+const linkedAccounts = computed(() => sessionStore.linkedAccounts)
 
 const handleConnect = () => {
   if (connectionMode.value === 'link') {
@@ -278,29 +278,10 @@ const handleConnect = () => {
   }
 }
 
-onMounted(async () => {
-  // Auto-redirect and attempt LP login if user has a default account connected
-  if (firebaseAuth.defaultAccountId && linkedAccounts.value.length > 0) {
+onMounted(() => {
+  // If already authenticated with LP and has a default account, redirect
+  if (sessionStore.hasActiveLpSession && sessionStore.defaultAccountId) {
     const redirect = route.query.redirect as string
-
-    // Check if we need to attempt auto LP login
-    if (!firebaseAuth.hasActiveLpSession && !firebaseAuth.autoLoginAttempted) {
-      // Attempt auto LP login via popup
-      isLoading.value = true
-      const success = await firebaseAuth.attemptAutoLpLogin()
-      isLoading.value = false
-
-      if (success) {
-        Notify.create({
-          type: 'positive',
-          message: 'Connected to LivePerson',
-          timeout: 2000,
-        })
-      }
-      // Continue to redirect regardless of SSO result
-    }
-
-    // Redirect to destination
     if (redirect) {
       void router.push(redirect)
     } else {
@@ -322,33 +303,29 @@ const linkAccount = async () => {
     // First, get LP domains to verify the account exists
     await userStore.getlpDomains(accountId.value)
 
-    // Link the account via backend
-    const success = await firebaseAuth.linkLpAccount(accountId.value)
+    // Link the account
+    sessionStore.linkLpAccount(accountId.value)
 
-    if (success) {
-      Notify.create({
-        type: 'positive',
-        message: 'Account linked successfully',
-        caption: `Account ${accountId.value} has been linked`,
-      })
+    Notify.create({
+      type: 'positive',
+      message: 'Account linked successfully',
+      caption: `Account ${accountId.value} has been linked`,
+    })
 
-      // Set as default if it's the first account
-      if (linkedAccounts.value.length === 1 || !firebaseAuth.defaultAccountId) {
-        await firebaseAuth.setDefaultAccount(accountId.value)
-      }
+    // Set as default if it's the first account
+    if (linkedAccounts.value.length === 1 || !sessionStore.defaultAccountId) {
+      sessionStore.setDefaultAccount(accountId.value)
+    }
 
-      // Redirect if there was a redirect query
-      const redirect = route.query.redirect as string
-      if (redirect) {
-        void router.push(redirect)
-      } else {
-        void router.push({
-          name: ROUTE_NAMES.APPS,
-          params: { accountId: accountId.value },
-        })
-      }
+    // Redirect if there was a redirect query
+    const redirect = route.query.redirect as string
+    if (redirect) {
+      void router.push(redirect)
     } else {
-      error.value = firebaseAuth.error || 'Failed to link account'
+      void router.push({
+        name: ROUTE_NAMES.APPS,
+        params: { accountId: accountId.value },
+      })
     }
   } catch (err) {
     console.error('Error linking account:', err)
@@ -359,24 +336,13 @@ const linkAccount = async () => {
   }
 }
 
-const setAsDefault = async (accId: string) => {
-  isLoading.value = true
-  try {
-    await firebaseAuth.setDefaultAccount(accId)
-    Notify.create({
-      type: 'positive',
-      message: 'Default account updated',
-      caption: `${accId} is now your default account`,
-    })
-  } catch (err) {
-    console.error('Error setting default:', err)
-    Notify.create({
-      type: 'negative',
-      message: 'Failed to set default account',
-    })
-  } finally {
-    isLoading.value = false
-  }
+const setAsDefault = (accId: string) => {
+  sessionStore.setDefaultAccount(accId)
+  Notify.create({
+    type: 'positive',
+    message: 'Default account updated',
+    caption: `${accId} is now your default account`,
+  })
 }
 
 const goToAccount = (accId: string) => {
@@ -425,7 +391,7 @@ const goHome = () => {
 }
 
 const signOut = async () => {
-  await firebaseAuth.logout()
+  await sessionStore.logout()
   void router.push({ name: ROUTE_NAMES.LOGIN })
 }
 </script>

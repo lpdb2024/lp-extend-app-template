@@ -14,7 +14,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import type { LPEngagement } from '@lpextend/client-sdk';
+import type { LPEngagement } from '@lpextend/node-sdk';
 import {
   EngagementChannel,
   EngagementType,

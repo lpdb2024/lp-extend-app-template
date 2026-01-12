@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as admin from 'firebase-admin';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { UserData } from 'src/Controllers/users/users.interfaces';
-import type { SentinelLpToken } from '@lpextend/client-sdk';
+import type { SentinelLpToken } from '@lpextend/node-sdk';
 
 
 @Injectable()

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { UserData } from 'src/Controllers/users/users.interfaces';
-import type { SentinelLpToken } from '@lpextend/client-sdk';
+import type { SentinelLpToken } from '@lpextend/node-sdk';
 
 import { LE_USER_ROLES } from 'src/constants/constants';
 

@@ -200,8 +200,8 @@
           <q-item-section side>
             <q-avatar size="36px" class="profile-avatar">
               <img
-                v-if="firebaseAuth.user?.photoURL"
-                :src="firebaseAuth.user.photoURL"
+                v-if="sessionStore.preferences.photoUrl"
+                :src="sessionStore.preferences.photoUrl"
               />
               <q-icon v-else name="sym_o_person" size="20px" />
             </q-avatar>
@@ -210,15 +210,15 @@
               anchor="center right"
               self="center left"
             >
-              {{ firebaseAuth.userDisplayName || "User" }}
+              {{ sessionStore.userDisplayName || "User" }}
             </q-tooltip>
           </q-item-section>
           <q-item-section v-if="!appStore.miniState">
             <q-item-label class="text-weight-medium profile-name">
-              {{ firebaseAuth.userDisplayName || "User" }}
+              {{ sessionStore.userDisplayName || "User" }}
             </q-item-label>
             <q-item-label caption class="profile-email">
-              {{ firebaseAuth.userEmail }}
+              {{ sessionStore.userEmail }}
             </q-item-label>
           </q-item-section>
           <q-menu anchor="top right" self="bottom right">
@@ -337,7 +337,7 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { Notify } from "quasar";
-import { useFirebaseAuthStore } from "src/stores/store-firebase-auth";
+import { useSessionStore } from "src/stores/store-session";
 import { useUserStore } from "src/stores/store-user";
 import { useAppStore } from "src/stores/store-app";
 import { ROUTE_NAMES } from "src/constants";
@@ -351,7 +351,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const router = useRouter();
-const firebaseAuth = useFirebaseAuthStore();
+const sessionStore = useSessionStore();
 const userStore = useUserStore();
 const appStore = useAppStore();
 
@@ -423,9 +423,9 @@ const showAccountDialog = ref(false);
 const accountIdInput = ref("");
 const isConnecting = ref(false);
 
-const hasLpSession = computed(() => firebaseAuth.hasActiveLpSession);
-const currentLpAccountId = computed(() => firebaseAuth.currentLpAccountId);
-const linkedAccounts = computed(() => firebaseAuth.linkedAccounts);
+const hasLpSession = computed(() => sessionStore.hasActiveLpSession);
+const currentLpAccountId = computed(() => sessionStore.currentLpAccountId);
+const linkedAccounts = computed(() => sessionStore.linkedAccounts);
 
 const currentAccountLabel = computed(() => {
   if (currentLpAccountId.value) {
@@ -498,12 +498,14 @@ const goToAccountSetup = () => {
 };
 
 const handleLogout = async () => {
-  await firebaseAuth.logout();
+  await sessionStore.logout();
   void router.push({ name: ROUTE_NAMES.LOGIN });
 };
 </script>
 
 <style scoped lang="scss">
+@use "sass:color";
+
 // Color variables - Light mode
 $light-bg: #f8f9fc;
 $light-bg-hover: #f0f2f8;
@@ -572,7 +574,7 @@ $dark-accent-secondary: #31ccec;
 }
 
 .body--dark .app-drawer {
-  background: linear-gradient(180deg, $dark-bg 0%, darken($dark-bg, 2%) 100%);
+  background: linear-gradient(180deg, $dark-bg 0%, color.adjust($dark-bg, $lightness: -2%) 100%);
   border-right: 1px solid rgba($dark-accent, 0.1);
 
   &::before {

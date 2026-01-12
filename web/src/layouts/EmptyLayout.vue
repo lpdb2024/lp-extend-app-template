@@ -2,7 +2,7 @@
   <q-layout
     view="lHh Lpr lFf"
     class="ff-inter"
-    id="fullpage-layout"
+    id="main-layout"
     :class="{ '--mini-state': appStore.miniState }"
   >
     <q-page-container v-if="!!navRoutes && !!ready" class="ext-font-display">
@@ -20,22 +20,18 @@
 
 <script setup lang="ts">
 import { nextTick } from "vue";
-import { ROUTE_NAMES } from "src/constants";
 import { useACStore } from "src/stores/store-ac";
 import { useUserStore } from "src/stores/store-user";
-import { useFirebaseAuthStore } from "src/stores/store-firebase-auth";
 import { onBeforeMount, onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
-import ExternalApp from "src/pages/ExternalApp.vue";
 import type { AccountConfigItem, SettingGeneral } from "src/interfaces";
 import { SettingProperty } from "src/constants";
 import { useAppStore } from "src/stores/store-app";
-import { isInShellMode, shellAuthState } from "src/services/shell-auth.service";
+import { getAppAuthInstance } from "@lpextend/client-sdk";
 const { style, navRoutes } = storeToRefs(useUserStore());
-const firebaseAuth = useFirebaseAuthStore();
 
-const router = useRouter();
+const route = useRoute();
 
 const appStore = useAppStore();
 const ready = ref(false);
@@ -45,100 +41,39 @@ onMounted(async () => {
 });
 
 onBeforeMount(async () => {
+  const auth = getAppAuthInstance();
+
   // SHELL MODE: If running in LP Extend iframe, skip account checks
   // Shell provides authentication via token and account context
-  if (isInShellMode.value) {
-    console.log("[EmptyLayout] Running in shell mode, using shell context");
+  if (auth.isInShell()) {
+    console.log("[MainLayout] Running in shell mode, using shell context");
 
     // Use accountId from shell context
-    const shellAccountId = shellAuthState.context.value?.accountId;
+    const shellAccountId = auth.getAccountId();
     if (shellAccountId) {
       useAppStore().setaccountId(shellAccountId);
       useUserStore().setaccountId(shellAccountId);
       console.log(
-        "[EmptyLayout] Set accountId from shell context:",
+        "[MainLayout] Set accountId from shell context:",
         shellAccountId
       );
     }
-
-    // Initialize navRoutes for shell mode
-    const isDev = import.meta.env.MODE === "development";
-    const allRoutes = router.getRoutes();
-    navRoutes.value =
-      allRoutes.filter((route) => {
-        return (
-          route.meta.type === "external" ||
-          route.meta.isNav ||
-          route.meta.active ||
-          (route.meta.activeDev && isDev)
-        );
-      }) || [];
 
     // In shell mode, we trust the shell for auth - don't redirect to login
     return;
   }
 
-  // STANDALONE MODE: Normal account/auth checks
-  const isDev = import.meta.env.MODE === "development";
-  const accountId = firebaseAuth.activeLpAccountId;
+  // Get accountId from route query params (child app loads in iframe with accountId query)
+  const accountId = route.query.accountId ? String(route.query.accountId) : "";
 
-  // Initialize navRoutes regardless of auth state (needed to render page)
-  const allRoutes = router.getRoutes();
-  navRoutes.value =
-    allRoutes.filter((route) => {
-      return (
-        route.meta.type === "external" ||
-        route.meta.isNav ||
-        route.meta.active ||
-        (route.meta.activeDev && isDev)
-      );
-    }) || [];
-
-  // If no accountId, the authGuard will handle redirects
-  // Just let the page render - authGuard handles auth
-  if (!accountId) {
-    console.log("[EmptyLayout] No accountId set, authGuard will handle redirects");
-    return;
+  if (accountId) {
+    useAppStore().setaccountId(accountId);
+    useUserStore().setaccountId(accountId);
+    console.log("[MainLayout] Set accountId from route query:", accountId);
   }
 
-  useAppStore().setaccountId(accountId);
-  useUserStore().setaccountId(accountId); // Also set in user store for store-ac.ts
-  interface RouteMeta {
-    title?: string;
-    active?: boolean;
-    type?: string;
-    isNav?: boolean;
-    activeDev?: boolean;
-    external?: boolean;
-    [key: string]: unknown;
-  }
-
-  const installApps: RouteMeta[] = [];
-  for (const routeMeta of installApps || []) {
-    if (
-      !routeMeta.title ||
-      typeof routeMeta.title !== "string" ||
-      !routeMeta.active
-    ) {
-      continue;
-    }
-    console.log("routeMeta", routeMeta);
-    router.addRoute(ROUTE_NAMES.APP, {
-      name: routeMeta.title,
-      path: `${routeMeta?.title?.toLowerCase()?.replace(/\s/g, "-")}`,
-      component: ExternalApp,
-      meta: {
-        ...routeMeta,
-        external: true,
-      },
-    });
-  }
   // Check if user has an active LP session before making LP-specific API calls
-  // Firebase auth alone is NOT enough to call LP APIs - we need LP SSO token
-  const hasLpSession = firebaseAuth.hasActiveLpSession;
-
-  // Only check legacy token if it's not expired
-  // The legacy accessToken may be stale in localStorage even when session is invalid
+  // Use shell auth service or legacy token check
   const userStore = useUserStore();
   const legacyToken = userStore.getToken();
   const legacyTokenExp = userStore.auth?.exp;
@@ -149,20 +84,15 @@ onBeforeMount(async () => {
   );
 
   console.info("[MainLayout] LP session check:", {
-    hasLpSession,
     hasValidLegacyToken,
     legacyTokenExists: !!legacyToken,
   });
 
-  if (!hasLpSession && !hasValidLegacyToken) {
-    // User is Firebase-authenticated but doesn't have LP access
-    // This is OK - they can still see the app, but LP features will be disabled
+  if (!hasValidLegacyToken) {
+    // No LP session - user can still see the app, but LP features will be disabled
     console.info(
       "No LP session - skipping LP API calls. User can access non-LP features."
     );
-
-    // No need to set user - the v-if condition no longer requires it
-    // Firebase-authenticated users can see the app without LP session
 
     // Don't try to fetch LP data, just let the app render
     // The UI should show LP features as disabled/greyed out
@@ -201,7 +131,6 @@ onBeforeMount(async () => {
     }
   } catch (error) {
     console.error("Error loading LP data:", error);
-    // Don't redirect to login - user is still Firebase-authenticated
     // Just continue without LP data
   }
 });

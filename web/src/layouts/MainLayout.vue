@@ -27,19 +27,18 @@ import AppDrawer from "src/layouts/AppDrawer.vue";
 import { ROUTE_NAMES } from "src/constants";
 import { useACStore } from "src/stores/store-ac";
 import { useUserStore } from "src/stores/store-user";
-import { useFirebaseAuthStore } from "src/stores/store-firebase-auth";
 import { onBeforeMount, onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import ExternalApp from "src/pages/ExternalApp.vue";
 import type { AccountConfigItem, SettingGeneral } from "src/interfaces";
 import { SettingProperty } from "src/constants";
 import { useAppStore } from "src/stores/store-app";
-import { isInShellMode, shellAuthState } from "src/services/shell-auth.service";
+import { getAppAuthInstance } from "@lpextend/client-sdk";
 const { style, navRoutes } = storeToRefs(useUserStore());
-const firebaseAuth = useFirebaseAuthStore();
 
 const router = useRouter();
+const route = useRoute();
 
 const appStore = useAppStore();
 const ready = ref(false);
@@ -49,13 +48,15 @@ onMounted(async () => {
 });
 
 onBeforeMount(async () => {
+  const auth = getAppAuthInstance();
+
   // SHELL MODE: If running in LP Extend iframe, skip account checks
   // Shell provides authentication via token and account context
-  if (isInShellMode.value) {
+  if (auth.isInShell()) {
     console.log("[MainLayout] Running in shell mode, using shell context");
 
     // Use accountId from shell context
-    const shellAccountId = shellAuthState.context.value?.accountId;
+    const shellAccountId = auth.getAccountId();
     if (shellAccountId) {
       useAppStore().setaccountId(shellAccountId);
       useUserStore().setaccountId(shellAccountId);
@@ -73,33 +74,17 @@ onBeforeMount(async () => {
   // hasActiveLpSession
   // activeLpAccountId
   const isDev = import.meta.env.MODE === "development";
-  // const accountId = _route.params.accountId
-  //   ? String(_route.params.accountId)
-  //   : "";
-  const accountId = firebaseAuth.activeLpAccountId;
 
-  // If no accountId in route, check if user needs to set up their account
-  if (!accountId) {
-    // Check if we have a Firebase user but no LP account set up
-    if (firebaseAuth.isAuthenticated && !firebaseAuth.defaultAccountId) {
-      await router.push({ name: ROUTE_NAMES.ACCOUNT_SETUP });
-      return;
-    }
-    // If we have a default account, redirect there
-    if (firebaseAuth.defaultAccountId) {
-      await router.push({
-        name: ROUTE_NAMES.APP,
-        params: { accountId: firebaseAuth.defaultAccountId },
-      });
-      return;
-    }
-    // No Firebase auth either - go to login
-    await router.push({ name: ROUTE_NAMES.LOGIN });
-    return;
+  // Get accountId from route query params (child app loads in iframe with accountId query)
+  const accountId = route.query.accountId
+    ? String(route.query.accountId)
+    : "";
+
+  if (accountId) {
+    useAppStore().setaccountId(accountId);
+    useUserStore().setaccountId(accountId);
+    console.log("[MainLayout] Set accountId from route query:", accountId);
   }
-
-  useAppStore().setaccountId(accountId);
-  useUserStore().setaccountId(accountId); // Also set in user store for store-ac.ts
   interface RouteMeta {
     title?: string;
     active?: boolean;
@@ -143,11 +128,7 @@ onBeforeMount(async () => {
     }) || [];
 
   // Check if user has an active LP session before making LP-specific API calls
-  // Firebase auth alone is NOT enough to call LP APIs - we need LP SSO token
-  const hasLpSession = firebaseAuth.hasActiveLpSession;
-
-  // Only check legacy token if it's not expired
-  // The legacy accessToken may be stale in localStorage even when session is invalid
+  // Use shell auth service or legacy token check
   const userStore = useUserStore();
   const legacyToken = userStore.getToken();
   const legacyTokenExp = userStore.auth?.exp;
@@ -158,20 +139,15 @@ onBeforeMount(async () => {
   );
 
   console.info("[MainLayout] LP session check:", {
-    hasLpSession,
     hasValidLegacyToken,
     legacyTokenExists: !!legacyToken,
   });
 
-  if (!hasLpSession && !hasValidLegacyToken) {
-    // User is Firebase-authenticated but doesn't have LP access
-    // This is OK - they can still see the app, but LP features will be disabled
+  if (!hasValidLegacyToken) {
+    // No LP session - user can still see the app, but LP features will be disabled
     console.info(
       "No LP session - skipping LP API calls. User can access non-LP features."
     );
-
-    // No need to set user - the v-if condition no longer requires it
-    // Firebase-authenticated users can see the app without LP session
 
     // Don't try to fetch LP data, just let the app render
     // The UI should show LP features as disabled/greyed out
@@ -210,7 +186,6 @@ onBeforeMount(async () => {
     }
   } catch (error) {
     console.error("Error loading LP data:", error);
-    // Don't redirect to login - user is still Firebase-authenticated
     // Just continue without LP data
   }
 });

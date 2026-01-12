@@ -1,7 +1,7 @@
 import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
 import { CollectionReference } from '@google-cloud/firestore';
 import { Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
-import type { SentinelAppUser, SentinelToken } from '@lpextend/client-sdk';
+import type { SentinelAppUser, SentinelToken } from '@lpextend/node-sdk';
 import { helper } from 'src/utils/HelperService';
 
 // Collection name constants

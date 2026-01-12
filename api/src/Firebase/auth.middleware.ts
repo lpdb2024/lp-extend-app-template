@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { cache } from 'src/utils/memCache';
 import { CollectionReference } from '@google-cloud/firestore';
-import type { SentinelLpToken } from '@lpextend/client-sdk';
+import type { SentinelLpToken } from '@lpextend/node-sdk';
 
 // Collection name constant
 const LP_TOKENS_COLLECTION = 'lp-tokens';

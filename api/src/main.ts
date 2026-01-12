@@ -38,7 +38,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  app.enableCors();
+  // Enable CORS with credentials support for cookie-based auth
+  app.enableCors({
+    origin: true, // Reflect request origin - in production, set to specific origins
+    credentials: true, // Allow cookies to be sent cross-origin
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -48,7 +52,9 @@ async function bootstrap() {
       },
     }),
   );
-  app.use(cookieParser());
+  // Cookie parser with secret for signed cookies (should match shell's COOKIE_SECRET)
+  const cookieSecret = configService.get<string>('COOKIE_SECRET') || 'lp-extend-default-secret-change-in-production';
+  app.use(cookieParser(cookieSecret));
   console.log(`listening on port ${port}`);
   await app.listen(port);
 }

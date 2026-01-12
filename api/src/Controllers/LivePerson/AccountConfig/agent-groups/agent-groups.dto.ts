@@ -13,7 +13,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import type { LPAgentGroup } from '@lpextend/client-sdk';
+import type { LPAgentGroup } from '@lpextend/node-sdk';
 
 /**
  * Agent Group DTO - represents an agent group entity

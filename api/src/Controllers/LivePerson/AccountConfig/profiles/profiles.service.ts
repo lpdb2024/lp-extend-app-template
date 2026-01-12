@@ -11,12 +11,12 @@ import {
   LPExtendSDK,
   Scopes,
   LPExtendSDKError,
-} from '@lpextend/client-sdk';
+} from '@lpextend/node-sdk';
 import type {
   LPProfile,
   CreateProfileRequest,
   UpdateProfileRequest,
-} from '@lpextend/client-sdk';
+} from '@lpextend/node-sdk';
 
 /**
  * Response type for SDK operations

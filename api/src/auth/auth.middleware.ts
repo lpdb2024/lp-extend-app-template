@@ -2,13 +2,18 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request, Response } from 'express';
 import * as admin from 'firebase-admin';
-import type { SentinelLpToken, SentinelAppUser } from '@lpextend/client-sdk';
+import type { SentinelLpToken, SentinelAppUser } from '@lpextend/node-sdk';
 import { helper } from 'src/utils/HelperService';
 import {
   ShellTokenService,
   ShellTokenPayload,
 } from './shell-token.service';
-import { initializeSDK, Scopes } from '@lpextend/client-sdk';
+import {
+  ExtendJWTService,
+  ExtendJWTPayload,
+  EXTEND_AUTH_COOKIE,
+} from './extend-jwt.service';
+import { initializeSDK, Scopes } from '@lpextend/node-sdk';
 
 // Collection name constants
 const LP_TOKEN_COLLECTION = 'lp-tokens';
@@ -45,16 +50,19 @@ interface CustomRequest extends Request {
   shellToken?: ShellTokenPayload;
   isShellAuth?: boolean;
   lpAccessToken?: string;
+  extendToken?: string; // Raw extend_auth cookie for SDK initialization
 }
 
 @Injectable()
 export class PreAuthMiddleware implements NestMiddleware {
   private shellTokenService: ShellTokenService;
+  private extendJWTService: ExtendJWTService;
   private shellBaseUrl: string;
   private appId: string;
 
   constructor(private configService: ConfigService) {
     this.shellTokenService = new ShellTokenService();
+    this.extendJWTService = new ExtendJWTService(configService);
     this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
     this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
   }
@@ -315,6 +323,40 @@ export class PreAuthMiddleware implements NestMiddleware {
   }
 
   /**
+   * Check for extend_auth cookie (set by LP Extend Shell)
+   * This cookie contains an encrypted JWT with LP access token
+   */
+  verifyExtendAuthCookie(req: CustomRequest): ExtendJWTPayload | null {
+    const fn = 'verifyExtendAuthCookie';
+
+    // Check for the extend_auth cookie (can be signed or unsigned depending on shell config)
+    const extendAuthCookie =
+      req.signedCookies?.[EXTEND_AUTH_COOKIE] ||
+      req.cookies?.[EXTEND_AUTH_COOKIE];
+
+    console.info(...ctx(context, fn, {
+      hasExtendAuthCookie: !!extendAuthCookie,
+      cookiePreview: extendAuthCookie ? extendAuthCookie.substring(0, 50) + '...' : null,
+    }));
+
+    if (!extendAuthCookie) {
+      return null;
+    }
+
+    const payload = this.extendJWTService.verifyExtendJWT(extendAuthCookie);
+    if (payload) {
+      console.info(...ctx(context, fn, {
+        verified: true,
+        userId: payload.lpUserId,
+        accountId: payload.lpAccountId,
+        hasAccessToken: !!payload.lpAccessToken,
+      }));
+    }
+
+    return payload;
+  }
+
+  /**
    * Fetch LP token from shell backend
    * Uses cache to avoid repeated requests
    */
@@ -451,6 +493,30 @@ export class PreAuthMiddleware implements NestMiddleware {
       }
 
       req.firebaseUid = shellResult.payload.sub;
+      return next();
+    }
+
+    // Check for extend_auth cookie (set by LP Extend Shell for direct browser access)
+    const rawExtendCookie =
+      req.signedCookies?.[EXTEND_AUTH_COOKIE] ||
+      req.cookies?.[EXTEND_AUTH_COOKIE];
+    const extendAuthPayload = this.verifyExtendAuthCookie(req);
+    if (extendAuthPayload) {
+      console.info('[PreAuthMiddleware] Using extend_auth cookie authentication');
+      req.isShellAuth = true;
+      req.lpAccessToken = extendAuthPayload.lpAccessToken;
+      req.extendToken = rawExtendCookie; // Pass raw cookie for SDK initialization
+      req.token = {
+        uid: extendAuthPayload.lpUserId,
+        accountId: extendAuthPayload.lpAccountId,
+        id: extendAuthPayload.lpUserId,
+        access_token: extendAuthPayload.lpAccessToken,
+        accessToken: extendAuthPayload.lpAccessToken,
+        isLPA: extendAuthPayload.isLPA,
+        cbToken: extendAuthPayload.cbToken,
+        cbOrg: extendAuthPayload.cbOrg,
+      };
+      req.firebaseUid = extendAuthPayload.lpUserId;
       return next();
     }
 

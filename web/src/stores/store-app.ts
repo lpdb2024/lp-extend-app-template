@@ -8,16 +8,8 @@ import type { KVPObject, RouteMeta } from "src/interfaces";
 import { colors } from "quasar";
 import { AC_ROUTES, ACTION_KEYS, V2 } from "src/constants";
 import ApiService from "src/services/ApiService";
-import { useFirebaseAuthStore } from "./store-firebase-auth";
 
 const { getPaletteColor } = colors;
-// import {
-//   ACTION_KEYS
-// } from 'src/constants/constants'
-
-// const cache = new LocalStorageCache()
-
-// Account setting document structure (matches backend)
 export interface AccountSettingDocument {
   id?: string;
   name: string;
@@ -184,41 +176,6 @@ export const useAppStore = defineStore("appStore", {
       }
       return data;
     },
-    // ==========================================================================
-    // User-level settings (tied to Firebase UID, not LP account)
-    // ==========================================================================
-
-    async getGithubSettings(): Promise<{ pat: string; repo: string; branch: string } | null> {
-      const firebaseAuth = useFirebaseAuthStore();
-      const userId = firebaseAuth.user?.uid;
-      if (!userId) return null;
-
-      try {
-        const url = `${V2}/user-settings/${userId}/github`;
-        const { data } = await ApiService.get<{ pat: string; repo: string; branch: string }>(
-          url,
-          ACTION_KEYS.USER_SETTINGS_GET
-        );
-        return data || null;
-      } catch (error) {
-        console.warn("Failed to get GitHub settings:", error);
-        return null;
-      }
-    },
-
-    async setGithubSettings(github: { pat: string; repo: string; branch: string }) {
-      const firebaseAuth = useFirebaseAuthStore();
-      const userId = firebaseAuth.user?.uid;
-      if (!userId) throw new Error("No Firebase user found");
-
-      const url = `${V2}/user-settings/${userId}/github`;
-      const { data } = await ApiService.put<{ github: typeof github }>(
-        url,
-        github,
-        ACTION_KEYS.USER_SETTINGS_UPDATE
-      );
-      return data;
-    },
 
     // ==========================================================================
     // Account-level settings (per LP account)
@@ -268,15 +225,12 @@ export const useAppStore = defineStore("appStore", {
       label: string,
       value: string
     ): Promise<AccountSettingDocument> {
-      const firebaseAuth = useFirebaseAuthStore();
-      const userId = firebaseAuth.user?.uid || "unknown";
 
       const url = `${V2}/account-settings/${accountId}`;
       const { data } = await ApiService.put<AccountSettingDocument>(
         url,
         { name, label, value },
-        ACTION_KEYS.APP_SETTINGS_UPDATE,
-        { "x-user-id": userId }
+        ACTION_KEYS.APP_SETTINGS_UPDATE
       );
 
       // Update local state

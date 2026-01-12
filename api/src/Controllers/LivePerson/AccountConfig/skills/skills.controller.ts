@@ -229,19 +229,23 @@ export class SkillsController {
   }
 
   /**
-   * Extract token from Authorization header or shell auth
-   * Supports both direct Bearer auth and shell token auth (via middleware)
+   * Token info returned by extractToken
    */
-  private extractToken(authorization: string, req?: any): string {
+  private extractToken(authorization: string, req?: any): { accessToken: string; extendToken?: string } {
     // First check if shell auth provided token via middleware
     if (req?.token?.accessToken) {
-      return req.token.accessToken;
+      return {
+        accessToken: req.token.accessToken,
+        extendToken: req.extendToken, // Raw extend_auth cookie for SDK
+      };
     }
 
     // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }
-    return authorization.replace(/^Bearer\s+/i, '');
+    return {
+      accessToken: authorization.replace(/^Bearer\s+/i, ''),
+    };
   }
 }

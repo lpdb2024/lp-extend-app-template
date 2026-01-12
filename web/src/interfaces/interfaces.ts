@@ -10,15 +10,7 @@ import type { APP_TYPES, CATEGORIES } from "src/router/routes";
 
 import type { ISkillInfo } from "./";
 
-import type { APP_ENV, ROLES, SettingProperty } from "src/constants";
-
-export interface AppEnvVar {
-  env: APP_ENV;
-  phase: string;
-  datacenter: string;
-  grid: string;
-  firebase: any;
-}
+import type { ROLES, SettingProperty } from "src/constants";
 
 export interface AppDefinition {
   name: string;

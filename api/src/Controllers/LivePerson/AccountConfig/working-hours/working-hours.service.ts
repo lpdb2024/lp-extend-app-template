@@ -11,12 +11,12 @@ import {
   LPExtendSDK,
   Scopes,
   LPExtendSDKError,
-} from '@lpextend/client-sdk';
+} from '@lpextend/node-sdk';
 import type {
   LPWorkingHours,
   CreateWorkingHoursRequest,
   UpdateWorkingHoursRequest,
-} from '@lpextend/client-sdk';
+} from '@lpextend/node-sdk';
 
 /**
  * Response type for SDK operations

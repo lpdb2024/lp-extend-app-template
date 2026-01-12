@@ -6,7 +6,6 @@
 
 import { defineStore } from 'pinia'
 import { useUserStore } from './store-user'
-import { useFirebaseAuthStore } from './store-firebase-auth'
 import ApiService from 'src/services/ApiService'
 import ErrorService from 'src/services/ErrorService'
 import { Notify } from 'quasar'
@@ -191,7 +190,7 @@ export const usePromptsStore = defineStore('prompts', {
   getters: {
     // Account ID helper
     accountId(): string | null {
-      return useUserStore().accountId || useFirebaseAuthStore().activeLpAccountId || sessionStorage.getItem('accountId')
+      return useUserStore().accountId || sessionStorage.getItem('accountId')
     },
 
     // Get prompt by ID

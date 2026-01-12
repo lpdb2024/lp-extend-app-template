@@ -39,7 +39,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AxiosResponse } from 'axios';
-import type { SentinelLpToken } from '@lpextend/client-sdk';
+import type { SentinelLpToken } from '@lpextend/node-sdk';
 import { helper } from 'src/utils/HelperService';
 import { VerifyToken } from 'src/auth/auth.decorators';
 import { ConversationHistoryRecord } from './conversation-cloud.interfaces';

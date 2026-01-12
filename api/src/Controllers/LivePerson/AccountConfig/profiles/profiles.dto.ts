@@ -16,7 +16,7 @@ import {
   IsArray,
 } from 'class-validator';
 import { Type, Transform } from 'class-transformer';
-import type { LPProfile } from '@lpextend/client-sdk';
+import type { LPProfile } from '@lpextend/node-sdk';
 
 /**
  * Permission DTO

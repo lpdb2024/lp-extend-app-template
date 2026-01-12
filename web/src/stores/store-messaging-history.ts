@@ -5,7 +5,6 @@
  */
 
 import { defineStore } from 'pinia';
-import { useFirebaseAuthStore } from './store-firebase-auth';
 import ApiService from 'src/services/ApiService';
 import ErrorService from 'src/services/ErrorService';
 import { LP_MESSAGING_HISTORY_ROUTES, LP_V2_ACTION_KEYS } from 'src/constants';
@@ -13,6 +12,7 @@ import type {
   ConversationHistoryRecords,
   ConversationHistoryResponse,
 } from 'src/interfaces';
+import { useUserStore } from './store-user';
 
 const handleRequestError = ErrorService.handleRequestError.bind(ErrorService);
 
@@ -192,7 +192,7 @@ export const useMessagingHistoryStore = defineStore('messagingHistory', {
 
   getters: {
     accountId(): string | null {
-      return useFirebaseAuthStore().activeLpAccountId;
+      return useUserStore().accountId || sessionStorage.getItem('accountId')
     },
 
     hasConversations(): boolean {

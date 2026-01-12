@@ -5,6 +5,8 @@
 // See extend-theme.md for full documentation
 // =============================================================================
 
+@use "sass:color";
+
 // =============================================================================
 // Font Face Definitions
 // =============================================================================
@@ -1381,26 +1383,26 @@ $ext-duration-slow: 400ms;
   // Color variants
   &.users,
   &.blue {
-    background: linear-gradient(135deg, $ext-blue, darken($ext-blue, 10%));
+    background: linear-gradient(135deg, $ext-blue, color.adjust($ext-blue, $lightness: -10%));
   }
 
   &.skills,
   &.purple {
-    background: linear-gradient(135deg, $ext-purple, darken($ext-purple, 10%));
+    background: linear-gradient(135deg, $ext-purple, color.adjust($ext-purple, $lightness: -10%));
   }
 
   &.campaigns,
   &.pink {
-    background: linear-gradient(135deg, $ext-pink, darken($ext-pink, 10%));
+    background: linear-gradient(135deg, $ext-pink, color.adjust($ext-pink, $lightness: -10%));
   }
 
   &.lobs,
   &.orange {
-    background: linear-gradient(135deg, $ext-orange, darken($ext-orange, 10%));
+    background: linear-gradient(135deg, $ext-orange, color.adjust($ext-orange, $lightness: -10%));
   }
 
   &.teal {
-    background: linear-gradient(135deg, #14b8a6, darken(#14b8a6, 10%));
+    background: linear-gradient(135deg, #14b8a6, color.adjust(#14b8a6, $lightness: -10%));
   }
 }
 

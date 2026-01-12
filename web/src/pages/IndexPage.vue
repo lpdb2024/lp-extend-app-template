@@ -117,13 +117,17 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useAuth } from "src/composables/useAuth";
+import { getAppAuthInstance } from "@lpextend/client-sdk";
 import { ROUTE_NAMES } from "src/constants";
 import ExtPageHeader from "src/components/common-ui/ExtPageHeader.vue";
 import { useACStore } from "src/stores/store-ac";
 
 const router = useRouter();
-const { isAuthenticated, accountId, isInShellMode } = useAuth();
+const auth = getAppAuthInstance();
+// Create reactive wrappers around SDK methods
+const isAuthenticated = computed(() => auth.isAuthenticated());
+const accountId = computed(() => auth.getAccountId());
+const isInShellMode = computed(() => auth.isInShell());
 const acStore = useACStore();
 
 // Skills data from store
@@ -153,7 +157,7 @@ const fetchSkills = async () => {
 
     // Use Pinia store to fetch skills
     await acStore.getSkills();
-    console.log("[Store] Fetched skills:", skills.value);
+    console.log("[Store] Fetched skills:", skills.value, Date.now());
   } catch (error) {
     console.error("[Store] Error fetching skills:", error);
     skillsError.value =

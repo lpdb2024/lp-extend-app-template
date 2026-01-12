@@ -39,7 +39,7 @@
       <q-space></q-space>
       <!-- LP Account Selector -->
       <div
-        v-if="firebaseAuth.isAuthenticated"
+        v-if="sessionStore.isAuthenticated"
         class="lp-account-section q-mr-md"
       >
         <q-btn
@@ -68,11 +68,11 @@
       </q-btn>
 
       <!-- User Menu -->
-      <q-btn v-if="firebaseAuth.isAuthenticated" flat round>
+      <q-btn v-if="sessionStore.isAuthenticated" flat round>
         <q-avatar size="36px">
           <img
-            v-if="firebaseAuth.user?.photoURL"
-            :src="firebaseAuth.user.photoURL"
+            v-if="sessionStore.preferences.photoUrl"
+            :src="sessionStore.preferences.photoUrl"
           />
           <q-icon v-else name="person" />
         </q-avatar>
@@ -81,10 +81,10 @@
             <q-item>
               <q-item-section>
                 <q-item-label class="text-weight-bold">
-                  {{ firebaseAuth.userDisplayName }}
+                  {{ sessionStore.userDisplayName }}
                 </q-item-label>
                 <q-item-label caption>{{
-                  firebaseAuth.userEmail
+                  sessionStore.userEmail
                 }}</q-item-label>
               </q-item-section>
             </q-item>
@@ -294,7 +294,7 @@
 <script setup lang="ts">
 import { ROUTE_NAMES, /* ROLES, */ APP_NAME } from "src/constants";
 import { ref, onMounted, watch, computed } from "vue";
-import { useFirebaseAuthStore } from "src/stores/store-firebase-auth";
+import { useSessionStore } from "src/stores/store-session";
 import { useAppStore } from "src/stores/store-app";
 import { useUserStore } from "src/stores/store-user";
 import { storeToRefs } from "pinia";
@@ -304,7 +304,7 @@ defineEmits(["toggleLeftDrawer"]);
 const val = ref("Hello from template.vue");
 import { useRoute, useRouter } from "vue-router";
 
-const firebaseAuth = useFirebaseAuthStore();
+const sessionStore = useSessionStore();
 const $q = useQuasar();
 const router = useRouter();
 const route = useRoute();
@@ -337,7 +337,7 @@ const toggleDarkMode = () => {
 // };
 
 const handleLogout = async () => {
-  await firebaseAuth.logout();
+  await sessionStore.logout();
   void router.push({ name: ROUTE_NAMES.LOGIN });
 };
 
@@ -356,11 +356,11 @@ const showAccountDialog = ref(false);
 const accountIdInput = ref("");
 const isConnecting = ref(false);
 
-const hasLpSession = computed(() => firebaseAuth.hasActiveLpSession);
-const currentLpAccountId = computed(() => firebaseAuth.currentLpAccountId);
-const linkedAccounts = computed(() => firebaseAuth.linkedAccounts);
+const hasLpSession = computed(() => sessionStore.hasActiveLpSession);
+const currentLpAccountId = computed(() => sessionStore.currentLpAccountId);
+const linkedAccounts = computed(() => sessionStore.linkedAccounts);
 const hasExpiredSession = computed(
-  () => !hasLpSession.value && !!firebaseAuth.lpSession
+  () => !hasLpSession.value && !!sessionStore.activeLpAccountId
 );
 
 const openAccountDialog = () => {

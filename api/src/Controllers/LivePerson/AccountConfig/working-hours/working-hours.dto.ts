@@ -13,7 +13,7 @@ import {
   MaxLength,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import type { LPWorkingHours } from '@lpextend/client-sdk';
+import type { LPWorkingHours } from '@lpextend/node-sdk';
 
 /**
  * DateTime with timezone DTO

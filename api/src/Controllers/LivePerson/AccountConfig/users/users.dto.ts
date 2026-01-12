@@ -14,7 +14,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type, Transform } from 'class-transformer';
-import type { LPUser } from '@lpextend/client-sdk';
+import type { LPUser } from '@lpextend/node-sdk';
 
 /**
  * User Profile DTO

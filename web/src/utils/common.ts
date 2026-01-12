@@ -26,7 +26,6 @@ export const getAppInfo = () => {
 // import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import CryptoJS from 'crypto-js'
 import AES from 'crypto-js/aes'
-import { useFirebaseAuthStore } from 'src/stores/store-firebase-auth'
 
 export const copyItem = (a: string, useNotify: boolean) => {
   copyToClipboard(a)
@@ -498,16 +497,6 @@ export const findJSON = (msg: string): string | null => {
 export const color = (colorA: string, colorB: string) => {
   return Dark.isActive ? colorA : colorB
 }
-
-export const getLPAccountId = () => {
-  const activeLpAccountId = useFirebaseAuthStore().activeLpAccountId
-  return activeLpAccountId
-}
-
-// interface ApplicationMeta {
-//   isNav: boolean
-//   category: string
-// }
 
 
 export function getApplications (): RouteRecordNormalized[] {

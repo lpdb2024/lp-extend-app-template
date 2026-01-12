@@ -11,8 +11,16 @@ import {
   LPExtendSDK,
   Scopes,
   LPExtendSDKError,
-} from '@lpextend/client-sdk';
-import type { LPUser, CreateUserRequest, UpdateUserRequest } from '@lpextend/client-sdk';
+} from '@lpextend/node-sdk';
+import type { LPUser, CreateUserRequest, UpdateUserRequest } from '@lpextend/node-sdk';
+
+/**
+ * Token info from controller
+ */
+export interface TokenInfo {
+  accessToken: string;
+  extendToken?: string;
+}
 
 /**
  * Response type for SDK operations
@@ -60,18 +68,44 @@ export class UsersService {
 
   /**
    * Create SDK instance for the given account/token
+   * Uses extendToken (preferred) when available for shell verification,
+   * falls back to direct accessToken otherwise.
    */
-  private async getSDK(accountId: string, token: string): Promise<LPExtendSDK> {
+  private async getSDK(accountId: string, token: TokenInfo | string): Promise<LPExtendSDK> {
     try {
-      const accessToken = token.replace('Bearer ', '');
-      return await initializeSDK({
-        appId: this.appId,
+      // Handle both new TokenInfo object and legacy string format
+      const tokenInfo: TokenInfo = typeof token === 'string'
+        ? { accessToken: token.replace('Bearer ', '') }
+        : token;
+
+      // Use extendToken for SDK if available (preferred - SDK verifies with shell)
+      // Otherwise fall back to direct accessToken
+      const sdkConfig = tokenInfo.extendToken
+        ? {
+            appId: this.appId,
+            accountId,
+            extendToken: tokenInfo.extendToken,
+            shellBaseUrl: this.shellBaseUrl,
+            scopes: [Scopes.USERS, Scopes.SKILLS],
+            debug: this.configService.get<string>('NODE_ENV') !== 'production',
+          }
+        : {
+            appId: this.appId,
+            accountId,
+            accessToken: tokenInfo.accessToken.replace('Bearer ', ''),
+            shellBaseUrl: this.shellBaseUrl,
+            scopes: [Scopes.USERS, Scopes.SKILLS],
+            debug: this.configService.get<string>('NODE_ENV') !== 'production',
+          };
+
+      this.logger.debug({
+        fn: 'getSDK',
         accountId,
-        accessToken,
-        shellBaseUrl: this.shellBaseUrl,
-        scopes: [Scopes.USERS, Scopes.SKILLS],
-        debug: this.configService.get<string>('NODE_ENV') !== 'production',
-      });
+        hasExtendToken: !!tokenInfo.extendToken,
+        hasAccessToken: !!tokenInfo.accessToken,
+      }, 'Initializing SDK');
+
+      return await initializeSDK(sdkConfig);
     } catch (error) {
       if (error instanceof LPExtendSDKError) {
         this.logger.error({ error: error.message, code: error.code }, 'SDK initialization failed');
@@ -85,7 +119,7 @@ export class UsersService {
    */
   async getAll(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: {
       select?: string;
       includeDeleted?: boolean;
@@ -103,7 +137,7 @@ export class UsersService {
   async getById(
     accountId: string,
     userId: string,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<LPUser>> {
     const sdk = await this.getSDK(accountId, token);
     return sdk.users.getById(userId);
@@ -114,7 +148,7 @@ export class UsersService {
    */
   async create(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateUserRequest,
     revision?: string,
   ): Promise<ILPResponse<LPUser>> {
@@ -127,7 +161,7 @@ export class UsersService {
    */
   async createMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateUserRequest[],
     revision?: string,
   ): Promise<ILPResponse<LPUser[]>> {
@@ -148,7 +182,7 @@ export class UsersService {
   async update(
     accountId: string,
     userId: string,
-    token: string,
+    token: TokenInfo | string,
     data: UpdateUserRequest,
     revision?: string,
   ): Promise<ILPResponse<LPUser>> {
@@ -161,7 +195,7 @@ export class UsersService {
    */
   async updateMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: (UpdateUserRequest & { id: string })[],
     revision?: string,
   ): Promise<ILPResponse<LPUser[]>> {
@@ -182,7 +216,7 @@ export class UsersService {
   async remove(
     accountId: string,
     userId: string,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<void>> {
     const sdk = await this.getSDK(accountId, token);
@@ -194,7 +228,7 @@ export class UsersService {
    */
   async removeMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     ids: string[],
     revision?: string,
   ): Promise<ILPResponse<void>> {
@@ -210,7 +244,7 @@ export class UsersService {
   /**
    * Get the current revision for users
    */
-  async getRevision(accountId: string, token: string): Promise<string | undefined> {
+  async getRevision(accountId: string, token: TokenInfo | string): Promise<string | undefined> {
     const response = await this.getAll(accountId, token);
     return response.revision;
   }
@@ -220,7 +254,7 @@ export class UsersService {
    */
   async getUsersWithSkill(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     skillId: number,
   ): Promise<LPUser[]> {
     const response = await this.getAll(accountId, token);
@@ -236,7 +270,7 @@ export class UsersService {
   async removeSkillFromUser(
     accountId: string,
     userId: string,
-    token: string,
+    token: TokenInfo | string,
     skillId: number,
   ): Promise<ILPResponse<LPUser>> {
     const sdk = await this.getSDK(accountId, token);
@@ -278,7 +312,7 @@ export class UsersService {
    */
   async removeSkillFromUsers(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     skillId: number,
     userIds: string[],
   ): Promise<{ success: string[]; failed: { userId: string; error: string }[] }> {
@@ -315,7 +349,7 @@ export class UsersService {
    */
   async addSkillToUsers(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     skillId: number,
     userIds: string[],
   ): Promise<{ success: string[]; failed: { userId: string; error: string }[] }> {

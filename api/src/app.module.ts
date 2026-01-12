@@ -20,7 +20,6 @@ import * as admin from 'firebase-admin';
 import { HelperModule } from './Controllers/HelperService/helper-service.module';
 import { UsersModule } from './Controllers/users/users.module';
 import { GoogleStorageModule } from './Controllers/GoogleStorage/googlestorage.module';
-import { LLMTaskModule } from './Controllers/LLMTaskController/llm-task.module';
 import { APIModule } from './Controllers/APIService/api.module';
 import { LivePersonModule } from './Controllers/LivePerson/liveperson.module';
 import { AuthModule } from './auth/auth.module';
@@ -125,7 +124,6 @@ const firebaseProvider = {
     APIModule,
     GoogleStorageModule,
     UsersModule,
-    LLMTaskModule,
     LivePersonModule,
     AuthModule,
     AccountSettingsModule
