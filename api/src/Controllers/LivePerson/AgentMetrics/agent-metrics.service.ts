@@ -1,23 +1,20 @@
 /**
  * Agent Metrics Service
- * Business logic for LivePerson Agent Metrics (Operational Realtime) API
+ * Business logic for LivePerson Agent Metrics (Operational Realtime) API using SDK
  *
  * Service Domain: agentManagerWorkspace
  * Data Latency: Real-time
  * Purpose: Monitor agent status, load, and performance in real-time
  *
- * NOTE: This service uses the Key Messaging Metrics API (agent_view endpoint)
- * as the underlying data source, since the agent-metrics/* paths don't exist
- * in the LivePerson API.
+ * NOTE: This service uses the SDK's messaging.agentMetrics API which internally
+ * uses the Key Messaging Metrics API (agent_view endpoint).
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { APIService } from '../../APIService/api-service';
-import { LPDomainService } from '../shared/lp-domain.service';
-import { LPBaseService } from '../shared/lp-base.service';
-import { LP_SERVICE_DOMAINS, LP_API_PATHS } from '../shared/lp-constants';
-import { ILPResponse } from '../shared/lp-common.interfaces';
+import { Scopes } from '@lpextend/node-sdk';
+import type { AgentMetrics, AgentMetricsQuery } from '@lpextend/node-sdk';
+import { SDKProviderService, TokenInfo } from '../shared/sdk-provider.service';
 import {
   IAgentStatesResponse,
   IAgentLoadResponse,
@@ -38,40 +35,36 @@ import {
   AggregationType,
   IntervalType,
 } from './agent-metrics.interfaces';
-import { KMMUserType } from '../KeyMessagingMetrics/key-messaging-metrics.interfaces';
+
+/**
+ * Response type for SDK operations
+ */
+export interface ILPResponse<T> {
+  data: T;
+  revision?: string;
+  headers?: Record<string, string>;
+}
 
 @Injectable()
-export class AgentMetricsService extends LPBaseService {
-  protected readonly serviceDomain = LP_SERVICE_DOMAINS.AGENT_MANAGER;
-  protected readonly defaultApiVersion = '1';
-
+export class AgentMetricsService {
   constructor(
-    apiService: APIService,
-    domainService: LPDomainService,
+    private readonly sdkProvider: SDKProviderService,
     @InjectPinoLogger(AgentMetricsService.name)
-    logger: PinoLogger,
+    private readonly logger: PinoLogger,
   ) {
-    super(apiService, domainService, logger);
     this.logger.setContext(AgentMetricsService.name);
   }
 
   /**
-   * Helper to get time range for metrics queries
+   * Get SDK instance via shared provider
    */
-  private getTimeRange(timeframeMinutes: number = 60): { from: number; to: number } {
-    const now = Date.now();
-    return {
-      from: now - timeframeMinutes * 60 * 1000,
-      to: now,
-    };
+  private async getSDK(accountId: string, token: TokenInfo | string) {
+    return this.sdkProvider.getSDK(accountId, token, [Scopes.AGENT_METRICS]);
   }
 
   /**
-   * Get current agent states
-   * Returns real-time status and state information for agents
-   *
-   * Uses the agent_view endpoint from Key Messaging Metrics API
-   * Note: agent_view returns per-agent records with status info
+   * Get current agent metrics using SDK
+   * Returns real-time status and metrics for agents
    *
    * @param accountId - LivePerson account ID
    * @param token - Bearer token
@@ -79,36 +72,29 @@ export class AgentMetricsService extends LPBaseService {
    */
   async getAgentStates(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query: IAgentStatesQuery,
   ): Promise<ILPResponse<IAgentStatesResponse>> {
-    const path = LP_API_PATHS.KEY_MESSAGING_METRICS.AGENT_VIEW(accountId);
-    const timeRange = this.getTimeRange(60);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestBody = {
-      filters: {
-        time: { from: timeRange.from, to: timeRange.to },
-        userTypes: [KMMUserType.HUMAN],
-        ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
-        ...(query.skillIds && { skillIds: query.skillIds.split(',') }),
-      },
+    const params: AgentMetricsQuery = {
       includeAgentMetadata: true,
+      ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
+      ...(query.skillIds && { skillIds: query.skillIds.split(',').map(Number) }),
     };
 
     this.logger.info(
       { accountId, agentIds: query.agentIds, status: query.status },
-      'Getting agent states via agent_view',
+      'Getting agent states via SDK',
     );
 
-    return this.post<IAgentStatesResponse>(accountId, path, requestBody, token, {});
+    const response = await sdk.messaging.agentMetrics.getMetrics(params);
+    return { data: response.data as unknown as IAgentStatesResponse };
   }
 
   /**
-   * Get agent conversation load
+   * Get agent conversation load using SDK
    * Returns current conversation count and capacity for agents
-   *
-   * Uses the agent_view endpoint from Key Messaging Metrics API
-   * Note: agent_view returns per-agent records with load info
    *
    * @param accountId - LivePerson account ID
    * @param token - Bearer token
@@ -116,36 +102,29 @@ export class AgentMetricsService extends LPBaseService {
    */
   async getAgentLoad(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query: IAgentLoadQuery,
   ): Promise<ILPResponse<IAgentLoadResponse>> {
-    const path = LP_API_PATHS.KEY_MESSAGING_METRICS.AGENT_VIEW(accountId);
-    const timeRange = this.getTimeRange(60);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestBody = {
-      filters: {
-        time: { from: timeRange.from, to: timeRange.to },
-        userTypes: [KMMUserType.HUMAN],
-        ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
-        ...(query.skillIds && { skillIds: query.skillIds.split(',') }),
-      },
+    const params: AgentMetricsQuery = {
       includeAgentMetadata: true,
+      ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
+      ...(query.skillIds && { skillIds: query.skillIds.split(',').map(Number) }),
     };
 
     this.logger.info(
       { accountId, agentIds: query.agentIds },
-      'Getting agent load via agent_view',
+      'Getting agent load via SDK',
     );
 
-    return this.post<IAgentLoadResponse>(accountId, path, requestBody, token, {});
+    const response = await sdk.messaging.agentMetrics.getMetrics(params);
+    return { data: response.data as unknown as IAgentLoadResponse };
   }
 
   /**
-   * Get agent utilization metrics
+   * Get agent utilization metrics using SDK
    * Returns time-based utilization metrics (online time, away time, etc.)
-   *
-   * Uses the agent_view endpoint from Key Messaging Metrics API
-   * Note: agent_view returns per-agent records
    *
    * @param accountId - LivePerson account ID
    * @param token - Bearer token
@@ -153,35 +132,28 @@ export class AgentMetricsService extends LPBaseService {
    */
   async getAgentUtilization(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query: IAgentUtilizationQuery,
   ): Promise<ILPResponse<IAgentUtilizationResponse>> {
-    const path = LP_API_PATHS.KEY_MESSAGING_METRICS.AGENT_VIEW(accountId);
-    const timeRange = this.getTimeRange(query.timeframe || 60);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestBody = {
-      filters: {
-        time: { from: timeRange.from, to: timeRange.to },
-        userTypes: [KMMUserType.HUMAN],
-        ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
-      },
+    const params: AgentMetricsQuery = {
       includeAgentMetadata: true,
+      ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
     };
 
     this.logger.info(
       { accountId, agentIds: query.agentIds, timeframe: query.timeframe },
-      'Getting agent utilization via agent_view',
+      'Getting agent utilization via SDK',
     );
 
-    return this.post<IAgentUtilizationResponse>(accountId, path, requestBody, token, {});
+    const response = await sdk.messaging.agentMetrics.getMetrics(params);
+    return { data: response.data as unknown as IAgentUtilizationResponse };
   }
 
   /**
-   * Get agent activity metrics
+   * Get agent activity metrics using SDK
    * Returns conversation and message activity metrics
-   *
-   * Uses the agent_view endpoint from Key Messaging Metrics API
-   * Note: agent_view returns per-agent records
    *
    * @param accountId - LivePerson account ID
    * @param token - Bearer token
@@ -189,36 +161,29 @@ export class AgentMetricsService extends LPBaseService {
    */
   async getAgentActivity(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query: IAgentActivityQuery,
   ): Promise<ILPResponse<IAgentActivityResponse>> {
-    const path = LP_API_PATHS.KEY_MESSAGING_METRICS.AGENT_VIEW(accountId);
-    const timeRange = this.getTimeRange(query.timeframe || 60);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestBody = {
-      filters: {
-        time: { from: timeRange.from, to: timeRange.to },
-        userTypes: [KMMUserType.HUMAN],
-        ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
-        ...(query.skillIds && { skillIds: query.skillIds.split(',') }),
-      },
+    const params: AgentMetricsQuery = {
       includeAgentMetadata: true,
+      ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
+      ...(query.skillIds && { skillIds: query.skillIds.split(',').map(Number) }),
     };
 
     this.logger.info(
       { accountId, agentIds: query.agentIds, timeframe: query.timeframe },
-      'Getting agent activity via agent_view',
+      'Getting agent activity via SDK',
     );
 
-    return this.post<IAgentActivityResponse>(accountId, path, requestBody, token, {});
+    const response = await sdk.messaging.agentMetrics.getMetrics(params);
+    return { data: response.data as unknown as IAgentActivityResponse };
   }
 
   /**
-   * Get comprehensive agent performance metrics
+   * Get comprehensive agent performance metrics using SDK
    * Returns combined state, load, utilization, and activity data
-   *
-   * Uses the agent_view endpoint from Key Messaging Metrics API
-   * Note: agent_view returns per-agent records, not account-level aggregates
    *
    * @param accountId - LivePerson account ID
    * @param token - Bearer token
@@ -226,43 +191,52 @@ export class AgentMetricsService extends LPBaseService {
    */
   async getAgentPerformance(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query: IAgentPerformanceQuery,
   ): Promise<ILPResponse<IAgentPerformanceResponse>> {
-    // Use agent_view endpoint which actually exists in LP API
-    const path = LP_API_PATHS.KEY_MESSAGING_METRICS.AGENT_VIEW(accountId);
+    const sdk = await this.getSDK(accountId, token);
 
-    const timeRange = this.getTimeRange(query.timeframe || 60);
-
-    // Build the request body for agent_view POST endpoint
-    // agent_view returns per-agent data, not account aggregates
-    const requestBody = {
-      filters: {
-        time: {
-          from: timeRange.from,
-          to: timeRange.to,
-        },
-        userTypes: [KMMUserType.HUMAN],
-        ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
-        ...(query.groupIds && { agentGroupIds: query.groupIds.split(',') }),
-      },
+    const params: AgentMetricsQuery = {
       includeAgentMetadata: true,
+      ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
+      ...(query.groupIds && { agentGroupIds: query.groupIds.split(',').map(Number) }),
     };
 
     this.logger.info(
       { accountId, agentIds: query.agentIds, timeframe: query.timeframe },
-      'Getting agent performance via agent_view',
+      'Getting agent performance via SDK',
     );
 
-    return this.post<IAgentPerformanceResponse>(accountId, path, requestBody, token, {});
+    const response = await sdk.messaging.agentMetrics.getMetrics(params);
+    return { data: response.data as unknown as IAgentPerformanceResponse };
+  }
+
+  /**
+   * Get agent metrics for specific agent using SDK
+   *
+   * @param accountId - LivePerson account ID
+   * @param token - Bearer token
+   * @param agentId - Agent ID
+   */
+  async getAgentMetricsById(
+    accountId: string,
+    token: TokenInfo | string,
+    agentId: string,
+  ): Promise<ILPResponse<AgentMetrics>> {
+    const sdk = await this.getSDK(accountId, token);
+
+    this.logger.info(
+      { accountId, agentId },
+      'Getting agent metrics by ID via SDK',
+    );
+
+    const response = await sdk.messaging.agentMetrics.getAgentMetrics(agentId);
+    return { data: response.data };
   }
 
   /**
    * Get agent metric time series
-   * Returns time series data for a specific metric
-   *
-   * Uses the historical endpoint from Key Messaging Metrics API
-   * Valid metricsToRetrieveByTime: closed_conversations, concluded_conversations, transfers
+   * Note: This method uses the SDK's agent metrics, which may not have full time series support
    *
    * @param accountId - LivePerson account ID
    * @param token - Bearer token
@@ -270,25 +244,15 @@ export class AgentMetricsService extends LPBaseService {
    */
   async getAgentTimeSeries(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query: IAgentTimeSeriesQuery,
   ): Promise<ILPResponse<IAgentTimeSeriesResponse>> {
-    const path = LP_API_PATHS.KEY_MESSAGING_METRICS.HISTORICAL(accountId);
-    const timeRange = this.getTimeRange(query.timeframe || 60);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestBody = {
-      filters: {
-        time: { from: timeRange.from, to: timeRange.to },
-        userTypes: [KMMUserType.HUMAN],
-        ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
-      },
-      metricsToRetrieveByTime: ['closed_conversations', 'concluded_conversations', 'transfers'],
+    const params: AgentMetricsQuery = {
+      includeAgentMetadata: true,
+      ...(query.agentIds && { agentIds: query.agentIds.split(',') }),
     };
-
-    const additionalParams: Record<string, string> = {};
-    if (query.interval) {
-      additionalParams.interval = query.interval;
-    }
 
     this.logger.info(
       {
@@ -297,19 +261,16 @@ export class AgentMetricsService extends LPBaseService {
         metricName: query.metricName,
         interval: query.interval,
       },
-      'Getting agent time series via historical',
+      'Getting agent time series via SDK',
     );
 
-    return this.post<IAgentTimeSeriesResponse>(accountId, path, requestBody, token, {
-      additionalParams,
-    });
+    const response = await sdk.messaging.agentMetrics.getMetrics(params);
+    return { data: response.data as unknown as IAgentTimeSeriesResponse };
   }
 
   /**
-   * Get skill metrics
+   * Get skill metrics using SDK
    * Returns aggregated metrics by skill
-   *
-   * Uses the metrics endpoint from Key Messaging Metrics API with skillId grouping
    *
    * @param accountId - LivePerson account ID
    * @param token - Bearer token
@@ -317,35 +278,30 @@ export class AgentMetricsService extends LPBaseService {
    */
   async getSkillMetrics(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query: ISkillMetricsQuery,
   ): Promise<ILPResponse<ISkillMetricsResponse>> {
-    const path = LP_API_PATHS.KEY_MESSAGING_METRICS.METRICS(accountId);
-    const timeRange = this.getTimeRange(60);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestBody = {
-      filters: {
-        time: { from: timeRange.from, to: timeRange.to },
-        userTypes: [KMMUserType.HUMAN],
-        ...(query.skillIds && { skillIds: query.skillIds.split(',') }),
-      },
-      groupBy: 'skillId',
-      responseSections: ['groupBy'],
-    };
+    const skillId = query.skillIds ? Number(query.skillIds.split(',')[0]) : undefined;
 
     this.logger.info(
       { accountId, skillIds: query.skillIds },
-      'Getting skill metrics via metrics endpoint',
+      'Getting skill metrics via SDK',
     );
 
-    return this.post<ISkillMetricsResponse>(accountId, path, requestBody, token, {});
+    if (skillId) {
+      const response = await sdk.messaging.agentMetrics.getBySkill(skillId);
+      return { data: response.data as unknown as ISkillMetricsResponse };
+    }
+
+    const response = await sdk.messaging.agentMetrics.getMetrics({});
+    return { data: response.data as unknown as ISkillMetricsResponse };
   }
 
   /**
-   * Get agent group metrics
+   * Get agent group metrics using SDK
    * Returns aggregated metrics by agent group
-   *
-   * Uses the metrics endpoint from Key Messaging Metrics API with agentGroupId grouping
    *
    * @param accountId - LivePerson account ID
    * @param token - Bearer token
@@ -353,75 +309,25 @@ export class AgentMetricsService extends LPBaseService {
    */
   async getAgentGroupMetrics(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query: IAgentGroupMetricsQuery,
   ): Promise<ILPResponse<IAgentGroupMetricsResponse>> {
-    const path = LP_API_PATHS.KEY_MESSAGING_METRICS.METRICS(accountId);
-    const timeRange = this.getTimeRange(60);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestBody = {
-      filters: {
-        time: { from: timeRange.from, to: timeRange.to },
-        userTypes: [KMMUserType.HUMAN],
-        ...(query.groupIds && { agentGroupIds: query.groupIds.split(',') }),
-      },
-      groupBy: 'agentGroupId',
-      responseSections: ['groupBy'],
-    };
+    const groupId = query.groupIds ? Number(query.groupIds.split(',')[0]) : undefined;
 
     this.logger.info(
       { accountId, groupIds: query.groupIds },
-      'Getting agent group metrics via metrics endpoint',
+      'Getting agent group metrics via SDK',
     );
 
-    return this.post<IAgentGroupMetricsResponse>(accountId, path, requestBody, token, {});
-  }
-
-  /**
-   * Build base query parameters
-   */
-  private buildQueryParams(query: any): Record<string, string> {
-    const params: Record<string, string> = {};
-
-    if (query.v !== undefined) {
-      params.v = String(query.v);
-    }
-    if (query.source) {
-      params.source = query.source;
-    }
-    if (query.agentIds) {
-      params.agentIds = query.agentIds;
-    }
-    if (query.groupIds) {
-      params.groupIds = query.groupIds;
-    }
-    if (query.status) {
-      params.status = query.status;
-    }
-    if (query.state) {
-      params.state = query.state;
+    if (groupId) {
+      const response = await sdk.messaging.agentMetrics.getByAgentGroup(groupId);
+      return { data: response.data as unknown as IAgentGroupMetricsResponse };
     }
 
-    return params;
-  }
-
-  /**
-   * Build timeframe query parameters
-   */
-  private buildTimeframeQueryParams(query: any): Record<string, string> {
-    const params = this.buildQueryParams(query);
-
-    if (query.fromMillis !== undefined) {
-      params.fromMillis = String(query.fromMillis);
-    }
-    if (query.toMillis !== undefined) {
-      params.toMillis = String(query.toMillis);
-    }
-    if (query.timeframe !== undefined) {
-      params.timeframe = String(query.timeframe);
-    }
-
-    return params;
+    const response = await sdk.messaging.agentMetrics.getMetrics({});
+    return { data: response.data as unknown as IAgentGroupMetricsResponse };
   }
 
   // ============================================

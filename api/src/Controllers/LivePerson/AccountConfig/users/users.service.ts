@@ -5,22 +5,9 @@
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { ConfigService } from '@nestjs/config';
-import {
-  initializeSDK,
-  LPExtendSDK,
-  Scopes,
-  LPExtendSDKError,
-} from '@lpextend/node-sdk';
+import { Scopes } from '@lpextend/node-sdk';
 import type { LPUser, CreateUserRequest, UpdateUserRequest } from '@lpextend/node-sdk';
-
-/**
- * Token info from controller
- */
-export interface TokenInfo {
-  accessToken: string;
-  extendToken?: string;
-}
+import { SDKProviderService, TokenInfo } from '../../shared/sdk-provider.service';
 
 /**
  * Response type for SDK operations
@@ -53,65 +40,19 @@ export interface IBatchUpdateUsersResponse {
 
 @Injectable()
 export class UsersService {
-  private shellBaseUrl: string;
-  private appId: string;
-
   constructor(
     @InjectPinoLogger(UsersService.name)
     private readonly logger: PinoLogger,
-    private readonly configService: ConfigService,
+    private readonly sdkProvider: SDKProviderService,
   ) {
     this.logger.setContext(UsersService.name);
-    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
-    this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
   }
 
   /**
-   * Create SDK instance for the given account/token
-   * Uses extendToken (preferred) when available for shell verification,
-   * falls back to direct accessToken otherwise.
+   * Get SDK instance via shared provider
    */
-  private async getSDK(accountId: string, token: TokenInfo | string): Promise<LPExtendSDK> {
-    try {
-      // Handle both new TokenInfo object and legacy string format
-      const tokenInfo: TokenInfo = typeof token === 'string'
-        ? { accessToken: token.replace('Bearer ', '') }
-        : token;
-
-      // Use extendToken for SDK if available (preferred - SDK verifies with shell)
-      // Otherwise fall back to direct accessToken
-      const sdkConfig = tokenInfo.extendToken
-        ? {
-            appId: this.appId,
-            accountId,
-            extendToken: tokenInfo.extendToken,
-            shellBaseUrl: this.shellBaseUrl,
-            scopes: [Scopes.USERS, Scopes.SKILLS],
-            debug: this.configService.get<string>('NODE_ENV') !== 'production',
-          }
-        : {
-            appId: this.appId,
-            accountId,
-            accessToken: tokenInfo.accessToken.replace('Bearer ', ''),
-            shellBaseUrl: this.shellBaseUrl,
-            scopes: [Scopes.USERS, Scopes.SKILLS],
-            debug: this.configService.get<string>('NODE_ENV') !== 'production',
-          };
-
-      this.logger.debug({
-        fn: 'getSDK',
-        accountId,
-        hasExtendToken: !!tokenInfo.extendToken,
-        hasAccessToken: !!tokenInfo.accessToken,
-      }, 'Initializing SDK');
-
-      return await initializeSDK(sdkConfig);
-    } catch (error) {
-      if (error instanceof LPExtendSDKError) {
-        this.logger.error({ error: error.message, code: error.code }, 'SDK initialization failed');
-      }
-      throw error;
-    }
+  private async getSDK(accountId: string, token: TokenInfo | string) {
+    return this.sdkProvider.getSDK(accountId, token, [Scopes.USERS, Scopes.SKILLS]);
   }
 
   /**

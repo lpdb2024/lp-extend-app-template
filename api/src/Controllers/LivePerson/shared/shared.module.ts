@@ -3,11 +3,13 @@
  * Provides common services used across all LP domain modules
  */
 
-import { Module } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { LPDomainService } from './lp-domain.service';
 import { APIService } from '../../APIService/api-service';
+import { SDKProviderService } from './sdk-provider.service';
 
+@Global()
 @Module({
   imports: [
     HttpModule.register({
@@ -15,7 +17,7 @@ import { APIService } from '../../APIService/api-service';
       maxRedirects: 5,
     }),
   ],
-  providers: [LPDomainService, APIService],
-  exports: [LPDomainService, APIService, HttpModule],
+  providers: [LPDomainService, APIService, SDKProviderService],
+  exports: [LPDomainService, APIService, HttpModule, SDKProviderService],
 })
 export class LPSharedModule {}

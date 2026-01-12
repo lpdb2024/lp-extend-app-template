@@ -54,7 +54,7 @@ export class ConversationsController {
     @Headers('authorization') authorization: string,
     @Body() body: ConversationSearchRequestDto,
     @Query() query: ConversationSearchQueryDto,
-  ): Promise<ConversationSearchResponseDto> {
+  ): Promise<any> {
     const token = this.extractToken(authorization);
 
     if (!body.start || body.start.from === undefined || body.start.to === undefined) {
@@ -64,8 +64,17 @@ export class ConversationsController {
     const response = await this.conversationsService.searchConversations(
       accountId,
       token,
-      body,
-      query,
+      {
+        start: body.start,
+        status: body.status as ('OPEN' | 'CLOSE')[] | undefined,
+        skillIds: body.skillIds,
+        agentIds: body.agentIds,
+        keyword: body.keyword,
+        contentToRetrieve: body.contentToRetrieve as any,
+        sort: (query.sort as any) || undefined,
+        offset: query.offset,
+        limit: undefined,
+      },
     );
 
     return response.data;
@@ -86,7 +95,7 @@ export class ConversationsController {
     @Headers('authorization') authorization: string,
     @Body() body: GetConversationByIdRequestDto,
     @Query('source') source?: string,
-  ): Promise<ConversationResponseDto> {
+  ): Promise<any> {
     const token = this.extractToken(authorization);
 
     if (!body.conversationId && !body.conversationIds?.length) {
@@ -97,14 +106,23 @@ export class ConversationsController {
       throw new BadRequestException('Maximum 100 conversation IDs allowed');
     }
 
-    const response = await this.conversationsService.getConversationById(
+    // Single conversation
+    if (body.conversationId) {
+      const response = await this.conversationsService.getConversationById(
+        accountId,
+        token,
+        body.conversationId,
+      );
+      return response.data;
+    }
+
+    // Multiple conversations
+    const response = await this.conversationsService.getConversationsByIds(
       accountId,
       token,
-      body,
-      source,
+      body.conversationIds!,
     );
-
-    return response.data;
+    return { conversationHistoryRecords: response.data };
   }
 
   @Post('by-consumer')
@@ -124,7 +142,7 @@ export class ConversationsController {
     @Headers('authorization') authorization: string,
     @Body() body: GetConversationsByConsumerRequestDto,
     @Query() query: ConsumerSearchQueryDto,
-  ): Promise<ConversationSearchResponseDto> {
+  ): Promise<any> {
     const token = this.extractToken(authorization);
 
     if (!body.consumer) {
@@ -138,11 +156,10 @@ export class ConversationsController {
     const response = await this.conversationsService.getConversationsByConsumer(
       accountId,
       token,
-      body,
+      body.consumer,
       {
-        offset: query.offset,
+        status: body.status as ('OPEN' | 'CLOSE')[] | undefined,
         limit: query.limit,
-        source: query.source,
       },
     );
 
@@ -161,8 +178,8 @@ export class ConversationsController {
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Query('limit') limit?: number,
-    @Body() body?: { skillIds?: number[]; agentIds?: string[]; contentToRetrieve?: string[] },
-  ): Promise<ConversationSearchResponseDto> {
+    @Body() body?: { skillIds?: number[]; agentIds?: string[] },
+  ): Promise<any> {
     const token = this.extractToken(authorization);
 
     const response = await this.conversationsService.getOpenConversations(
@@ -171,7 +188,6 @@ export class ConversationsController {
       {
         skillIds: body?.skillIds,
         agentIds: body?.agentIds,
-        contentToRetrieve: body?.contentToRetrieve,
         limit: limit ? Number(limit) : undefined,
       },
     );
@@ -193,8 +209,8 @@ export class ConversationsController {
     @Headers('authorization') authorization: string,
     @Query('daysBack') daysBack?: number,
     @Query('limit') limit?: number,
-    @Body() body?: { skillIds?: number[]; agentIds?: string[]; contentToRetrieve?: string[] },
-  ): Promise<ConversationSearchResponseDto> {
+    @Body() body?: { skillIds?: number[]; agentIds?: string[] },
+  ): Promise<any> {
     const token = this.extractToken(authorization);
 
     const response = await this.conversationsService.getRecentClosedConversations(
@@ -204,7 +220,6 @@ export class ConversationsController {
         daysBack: daysBack ? Number(daysBack) : undefined,
         skillIds: body?.skillIds,
         agentIds: body?.agentIds,
-        contentToRetrieve: body?.contentToRetrieve,
         limit: limit ? Number(limit) : undefined,
       },
     );
@@ -224,7 +239,7 @@ export class ConversationsController {
     @Param('accountId') accountId: string,
     @Param('conversationId') conversationId: string,
     @Headers('authorization') authorization: string,
-  ): Promise<ConversationResponseDto> {
+  ): Promise<any> {
     const token = this.extractToken(authorization);
 
     const response = await this.conversationsService.getConversationWithTranscript(
@@ -247,7 +262,7 @@ export class ConversationsController {
     @Param('accountId') accountId: string,
     @Headers('authorization') authorization: string,
     @Body() body: { keyword: string; startTime?: number; endTime?: number; status?: ('OPEN' | 'CLOSE')[]; limit?: number },
-  ): Promise<ConversationSearchResponseDto> {
+  ): Promise<any> {
     const token = this.extractToken(authorization);
 
     if (!body.keyword) {

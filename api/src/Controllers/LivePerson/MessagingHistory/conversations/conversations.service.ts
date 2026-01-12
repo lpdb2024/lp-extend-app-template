@@ -1,41 +1,42 @@
 /**
  * Messaging Interactions (History) Service
- * Business logic for LivePerson Messaging History API
+ * Business logic for LivePerson Messaging History API using SDK
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { APIService } from '../../../APIService/api-service';
-import { LPDomainService } from '../../shared/lp-domain.service';
-import { LPBaseService } from '../../shared/lp-base.service';
-import {
-  LP_SERVICE_DOMAINS,
-  LP_API_VERSIONS,
-  LP_API_PATHS,
-} from '../../shared/lp-constants';
-import { ILPResponse, ILPRequestOptions } from '../../shared/lp-common.interfaces';
-import {
-  IConversationSearchRequest,
-  IConversationSearchResponse,
-  IConversationResponse,
-  IGetConversationByIdRequest,
-  IGetConversationsByConsumerRequest,
-  IConversationSearchQuery,
-} from './conversations.interfaces';
+import { Scopes } from '@lpextend/node-sdk';
+import type {
+  MessagingHistoryQuery,
+  MessagingHistoryResponse,
+  MessagingConversation,
+} from '@lpextend/node-sdk';
+import { SDKProviderService, TokenInfo } from '../../shared/sdk-provider.service';
+
+/**
+ * Response type for SDK operations
+ */
+export interface ILPResponse<T> {
+  data: T;
+  revision?: string;
+  headers?: Record<string, string>;
+}
 
 @Injectable()
-export class ConversationsService extends LPBaseService {
-  protected readonly serviceDomain = LP_SERVICE_DOMAINS.MSG_HIST;
-  protected readonly defaultApiVersion = LP_API_VERSIONS.MSG_HIST_CONVERSATIONS;
-
+export class ConversationsService {
   constructor(
-    apiService: APIService,
-    domainService: LPDomainService,
+    private readonly sdkProvider: SDKProviderService,
     @InjectPinoLogger(ConversationsService.name)
-    logger: PinoLogger,
+    private readonly logger: PinoLogger,
   ) {
-    super(apiService, domainService, logger);
     this.logger.setContext(ConversationsService.name);
+  }
+
+  /**
+   * Get SDK instance via shared provider
+   */
+  private async getSDK(accountId: string, token: TokenInfo | string) {
+    return this.sdkProvider.getSDK(accountId, token, [Scopes.MESSAGING_HISTORY]);
   }
 
   /**
@@ -44,40 +45,18 @@ export class ConversationsService extends LPBaseService {
    */
   async searchConversations(
     accountId: string,
-    token: string,
-    body: IConversationSearchRequest,
-    query?: IConversationSearchQuery,
-  ): Promise<ILPResponse<IConversationSearchResponse>> {
-    const path = LP_API_PATHS.MSG_HIST.CONVERSATIONS(accountId);
-
-    const additionalParams: Record<string, string> = {};
-    if (query?.offset !== undefined) {
-      additionalParams.offset = String(query.offset);
-    }
-    additionalParams.limit = query?.limit !== undefined ? String(query.limit) : '100';
-    if (query?.sort) {
-      additionalParams.sort = query.sort;
-    }
-    if (query?.v !== undefined) {
-      additionalParams.v = String(query.v);
-    }
-    if (query?.source) {
-      additionalParams.source = query.source;
-    }
-    if (query?.rollover !== undefined) {
-      additionalParams.rollover = String(query.rollover);
-    }
-
-    const requestOptions: ILPRequestOptions = {
-      additionalParams: Object.keys(additionalParams).length > 0 ? additionalParams : undefined,
-    };
+    token: TokenInfo | string,
+    params: MessagingHistoryQuery,
+  ): Promise<ILPResponse<MessagingHistoryResponse>> {
+    const sdk = await this.getSDK(accountId, token);
 
     this.logger.info(
-      { accountId, startFrom: body.start?.from, startTo: body.start?.to },
+      { accountId, startFrom: params.start?.from, startTo: params.start?.to },
       'Searching conversations',
     );
 
-    return this.post<IConversationSearchResponse>(accountId, path, body, token, requestOptions);
+    const response = await sdk.messaging.history.query(params);
+    return { data: response.data };
   }
 
   /**
@@ -86,67 +65,88 @@ export class ConversationsService extends LPBaseService {
    */
   async getConversationById(
     accountId: string,
-    token: string,
-    body: IGetConversationByIdRequest,
-    source?: string,
-  ): Promise<ILPResponse<IConversationResponse>> {
-    const path = LP_API_PATHS.MSG_HIST.CONVERSATION_BY_ID(accountId);
+    token: TokenInfo | string,
+    conversationId: string,
+  ): Promise<ILPResponse<MessagingConversation>> {
+    const sdk = await this.getSDK(accountId, token);
 
-    const additionalParams: Record<string, string> = {};
-    if (source) {
-      additionalParams.source = source;
-    }
-
-    const requestOptions: ILPRequestOptions = {
-      additionalParams: Object.keys(additionalParams).length > 0 ? additionalParams : undefined,
-    };
-
-    const conversationCount = body.conversationIds?.length || (body.conversationId ? 1 : 0);
     this.logger.info(
-      { accountId, conversationCount },
-      'Getting conversation(s) by ID',
+      { accountId, conversationId },
+      'Getting conversation by ID',
     );
 
-    return this.post<IConversationResponse>(accountId, path, body, token, requestOptions);
+    const response = await sdk.messaging.history.getConversation(conversationId);
+    return { data: response.data };
+  }
+
+  /**
+   * Get multiple conversations by IDs (batch)
+   */
+  async getConversationsByIds(
+    accountId: string,
+    token: TokenInfo | string,
+    conversationIds: string[],
+  ): Promise<ILPResponse<MessagingConversation[]>> {
+    const sdk = await this.getSDK(accountId, token);
+
+    this.logger.info(
+      { accountId, count: conversationIds.length },
+      'Getting conversations by IDs',
+    );
+
+    const response = await sdk.messaging.history.getConversations(conversationIds);
+    return { data: response.data };
   }
 
   /**
    * Get conversations by consumer ID
-   * Retrieve all conversations for a specific consumer
    */
   async getConversationsByConsumer(
     accountId: string,
-    token: string,
-    body: IGetConversationsByConsumerRequest,
-    query?: {
-      offset?: number;
+    token: TokenInfo | string,
+    consumerId: string,
+    options?: {
+      status?: ('OPEN' | 'CLOSE')[];
       limit?: number;
-      source?: string;
     },
-  ): Promise<ILPResponse<IConversationSearchResponse>> {
-    const path = LP_API_PATHS.MSG_HIST.CONVERSATIONS_BY_CONSUMER(accountId);
+  ): Promise<ILPResponse<MessagingHistoryResponse>> {
+    const sdk = await this.getSDK(accountId, token);
+    const now = Date.now();
+    const thirtyDaysAgo = now - 30 * 24 * 60 * 60 * 1000;
 
-    const additionalParams: Record<string, string> = {};
-    if (query?.offset !== undefined) {
-      additionalParams.offset = String(query.offset);
-    }
-    if (query?.limit !== undefined) {
-      additionalParams.limit = String(query.limit);
-    }
-    if (query?.source) {
-      additionalParams.source = query.source;
-    }
-
-    const requestOptions: ILPRequestOptions = {
-      additionalParams: Object.keys(additionalParams).length > 0 ? additionalParams : undefined,
+    const params: MessagingHistoryQuery = {
+      start: { from: thirtyDaysAgo, to: now },
+      status: options?.status,
+      limit: options?.limit || 100,
+      // Note: Consumer filtering may need to be done at API level or post-processing
     };
 
     this.logger.info(
-      { accountId, consumerId: body.consumer },
-      'Getting conversations by consumer ID',
+      { accountId, consumerId },
+      'Getting conversations by consumer',
     );
 
-    return this.post<IConversationSearchResponse>(accountId, path, body, token, requestOptions);
+    const response = await sdk.messaging.history.query(params);
+    return { data: response.data };
+  }
+
+  /**
+   * Export conversations matching criteria
+   */
+  async exportConversations(
+    accountId: string,
+    token: TokenInfo | string,
+    params: MessagingHistoryQuery,
+  ): Promise<ILPResponse<MessagingHistoryResponse>> {
+    const sdk = await this.getSDK(accountId, token);
+
+    this.logger.info(
+      { accountId, startFrom: params.start?.from, startTo: params.start?.to },
+      'Exporting conversations',
+    );
+
+    const response = await sdk.messaging.history.export(params);
+    return { data: response.data };
   }
 
   /**
@@ -155,31 +155,25 @@ export class ConversationsService extends LPBaseService {
    */
   async getOpenConversations(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: {
       skillIds?: number[];
       agentIds?: string[];
-      contentToRetrieve?: string[];
       limit?: number;
     },
-  ): Promise<ILPResponse<IConversationSearchResponse>> {
+  ): Promise<ILPResponse<MessagingHistoryResponse>> {
     const now = Date.now();
     const thirtyDaysAgo = now - 30 * 24 * 60 * 60 * 1000;
 
-    const body: IConversationSearchRequest = {
-      start: {
-        from: thirtyDaysAgo,
-        to: now,
-      },
-      status: ['OPEN' as any],
-      ...(options?.skillIds && { skillIds: options.skillIds }),
-      ...(options?.agentIds && { agentIds: options.agentIds }),
-      ...(options?.contentToRetrieve && { contentToRetrieve: options.contentToRetrieve as any }),
+    const params: MessagingHistoryQuery = {
+      start: { from: thirtyDaysAgo, to: now },
+      status: ['OPEN'],
+      skillIds: options?.skillIds,
+      agentIds: options?.agentIds,
+      limit: options?.limit || 100,
     };
 
-    return this.searchConversations(accountId, token, body, {
-      limit: options?.limit || 100,
-    });
+    return this.searchConversations(accountId, token, params);
   }
 
   /**
@@ -188,34 +182,27 @@ export class ConversationsService extends LPBaseService {
    */
   async getRecentClosedConversations(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: {
       daysBack?: number;
       skillIds?: number[];
       agentIds?: string[];
-      contentToRetrieve?: string[];
       limit?: number;
     },
-  ): Promise<ILPResponse<IConversationSearchResponse>> {
+  ): Promise<ILPResponse<MessagingHistoryResponse>> {
     const now = Date.now();
     const daysBack = options?.daysBack || 7;
     const startTime = now - daysBack * 24 * 60 * 60 * 1000;
 
-    const body: IConversationSearchRequest = {
-      start: {
-        from: startTime,
-        to: now,
-      },
-      status: ['CLOSE' as any],
-      ...(options?.skillIds && { skillIds: options.skillIds }),
-      ...(options?.agentIds && { agentIds: options.agentIds }),
-      ...(options?.contentToRetrieve && { contentToRetrieve: options.contentToRetrieve as any }),
+    const params: MessagingHistoryQuery = {
+      start: { from: startTime, to: now },
+      status: ['CLOSE'],
+      skillIds: options?.skillIds,
+      agentIds: options?.agentIds,
+      limit: options?.limit || 100,
     };
 
-    return this.searchConversations(accountId, token, body, {
-      limit: options?.limit || 100,
-      sort: 'end:desc',
-    });
+    return this.searchConversations(accountId, token, params);
   }
 
   /**
@@ -224,24 +211,10 @@ export class ConversationsService extends LPBaseService {
    */
   async getConversationWithTranscript(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     conversationId: string,
-  ): Promise<ILPResponse<IConversationResponse>> {
-    const body: IGetConversationByIdRequest = {
-      conversationId,
-      contentToRetrieve: [
-        'messageRecords',
-        'agentParticipants',
-        'consumerParticipants',
-        'transfers',
-        'interactions',
-        'sdes',
-        'intents',
-        'summary',
-      ],
-    };
-
-    return this.getConversationById(accountId, token, body);
+  ): Promise<ILPResponse<MessagingConversation>> {
+    return this.getConversationById(accountId, token, conversationId);
   }
 
   /**
@@ -250,27 +223,28 @@ export class ConversationsService extends LPBaseService {
    */
   async searchByKeyword(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     keyword: string,
     options?: {
-      startTime: number;
+      startTime?: number;
       endTime?: number;
       status?: ('OPEN' | 'CLOSE')[];
       limit?: number;
     },
-  ): Promise<ILPResponse<IConversationSearchResponse>> {
-    const body: IConversationSearchRequest = {
+  ): Promise<ILPResponse<MessagingHistoryResponse>> {
+    const now = Date.now();
+    const defaultStartTime = now - 7 * 24 * 60 * 60 * 1000;
+
+    const params: MessagingHistoryQuery = {
       start: {
-        from: options?.startTime || Date.now() - 7 * 24 * 60 * 60 * 1000,
-        to: options?.endTime || Date.now(),
+        from: options?.startTime || defaultStartTime,
+        to: options?.endTime || now,
       },
       keyword,
-      ...(options?.status && { status: options.status as any }),
-      contentToRetrieve: ['messageRecords', 'agentParticipants', 'consumerParticipants'],
+      status: options?.status,
+      limit: options?.limit || 50,
     };
 
-    return this.searchConversations(accountId, token, body, {
-      limit: options?.limit || 50,
-    });
+    return this.searchConversations(accountId, token, params);
   }
 }

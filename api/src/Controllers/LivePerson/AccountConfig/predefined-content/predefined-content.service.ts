@@ -5,18 +5,13 @@
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { ConfigService } from '@nestjs/config';
-import {
-  initializeSDK,
-  LPExtendSDK,
-  Scopes,
-  LPExtendSDKError,
-} from '@lpextend/node-sdk';
+import { Scopes } from '@lpextend/node-sdk';
 import type {
   LPPredefinedContent,
   CreatePredefinedContentRequest,
   UpdatePredefinedContentRequest,
 } from '@lpextend/node-sdk';
+import { SDKProviderService, TokenInfo } from '../../shared/sdk-provider.service';
 
 /**
  * Response type for SDK operations
@@ -29,39 +24,19 @@ export interface ILPResponse<T> {
 
 @Injectable()
 export class PredefinedContentService {
-  private shellBaseUrl: string;
-  private appId: string;
-
   constructor(
     @InjectPinoLogger(PredefinedContentService.name)
     private readonly logger: PinoLogger,
-    private readonly configService: ConfigService,
+    private readonly sdkProvider: SDKProviderService,
   ) {
     this.logger.setContext(PredefinedContentService.name);
-    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
-    this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
   }
 
   /**
-   * Create SDK instance for the given account/token
+   * Get SDK instance via shared provider
    */
-  private async getSDK(accountId: string, token: string): Promise<LPExtendSDK> {
-    try {
-      const accessToken = token.replace('Bearer ', '');
-      return await initializeSDK({
-        appId: this.appId,
-        accountId,
-        accessToken,
-        shellBaseUrl: this.shellBaseUrl,
-        scopes: [Scopes.PREDEFINED_CONTENT],
-        debug: this.configService.get<string>('NODE_ENV') !== 'production',
-      });
-    } catch (error) {
-      if (error instanceof LPExtendSDKError) {
-        this.logger.error({ error: error.message, code: error.code }, 'SDK initialization failed');
-      }
-      throw error;
-    }
+  private async getSDK(accountId: string, token: TokenInfo | string) {
+    return this.sdkProvider.getSDK(accountId, token, [Scopes.PREDEFINED_CONTENT]);
   }
 
   /**

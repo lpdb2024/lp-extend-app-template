@@ -1,6 +1,6 @@
 /**
  * Agent Activity Service
- * Business logic for LivePerson Agent Activity API
+ * Business logic for LivePerson Agent Activity API using SDK
  *
  * Service Domain: agentActivityDomain
  * Data Latency: 1 hour SLA
@@ -9,11 +9,9 @@
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { APIService } from '../../APIService/api-service';
-import { LPDomainService } from '../shared/lp-domain.service';
-import { LPBaseService } from '../shared/lp-base.service';
-import { LP_SERVICE_DOMAINS, LP_API_PATHS } from '../shared/lp-constants';
-import { ILPResponse } from '../shared/lp-common.interfaces';
+import { Scopes } from '@lpextend/node-sdk';
+import type { AgentActivity, AgentActivityQuery } from '@lpextend/node-sdk';
+import { SDKProviderService, TokenInfo } from '../shared/sdk-provider.service';
 import {
   IStatusChangesResponse,
   IStatusChangesQuery,
@@ -24,23 +22,34 @@ import {
   IntervalDuration,
 } from './agent-activity.interfaces';
 
-@Injectable()
-export class AgentActivityService extends LPBaseService {
-  protected readonly serviceDomain = LP_SERVICE_DOMAINS.AGENT_ACTIVITY;
-  protected readonly defaultApiVersion = '2';
+/**
+ * Response type for SDK operations
+ */
+export interface ILPResponse<T> {
+  data: T;
+  revision?: string;
+  headers?: Record<string, string>;
+}
 
+@Injectable()
+export class AgentActivityService {
   constructor(
-    apiService: APIService,
-    domainService: LPDomainService,
+    private readonly sdkProvider: SDKProviderService,
     @InjectPinoLogger(AgentActivityService.name)
-    logger: PinoLogger,
+    private readonly logger: PinoLogger,
   ) {
-    super(apiService, domainService, logger);
     this.logger.setContext(AgentActivityService.name);
   }
 
   /**
-   * Get agent status changes (V2 - flat response)
+   * Get SDK instance via shared provider
+   */
+  private async getSDK(accountId: string, token: TokenInfo | string) {
+    return this.sdkProvider.getSDK(accountId, token, [Scopes.AGENT_ACTIVITY]);
+  }
+
+  /**
+   * Get agent status changes using SDK
    * Tracks agent login/logout and status transitions
    *
    * @param accountId - LivePerson account ID
@@ -49,24 +58,29 @@ export class AgentActivityService extends LPBaseService {
    */
   async getStatusChanges(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query: IStatusChangesQuery,
   ): Promise<ILPResponse<IStatusChangesResponse>> {
-    const path = LP_API_PATHS.AGENT_ACTIVITY.STATUS_CHANGES(accountId);
-    const additionalParams = this.buildStatusChangesParams(query);
+    const sdk = await this.getSDK(accountId, token);
+
+    const params: AgentActivityQuery = {
+      from: query.from ? new Date(query.from).getTime() : Date.now() - 24 * 60 * 60 * 1000,
+      to: query.to ? new Date(query.to).getTime() : Date.now(),
+      ...(query.agentId && { agentIds: [String(query.agentId)] }),
+      ...(query.groupId && { agentGroupIds: [query.groupId] }),
+    };
 
     this.logger.info(
       { accountId, source: query.source, from: query.from, to: query.to },
-      'Getting agent status changes',
+      'Getting agent status changes via SDK',
     );
 
-    return this.get<IStatusChangesResponse>(accountId, path, token, {
-      additionalParams,
-    });
+    const response = await sdk.messaging.agentActivity.query(params);
+    return { data: response.data as unknown as IStatusChangesResponse };
   }
 
   /**
-   * Get interval metrics
+   * Get interval metrics using SDK
    * Aggregated metrics at configurable intervals (15, 30, 60 min or 1 day)
    *
    * @param accountId - LivePerson account ID
@@ -75,11 +89,18 @@ export class AgentActivityService extends LPBaseService {
    */
   async getIntervalMetrics(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query: IIntervalMetricsQuery,
   ): Promise<ILPResponse<IIntervalMetricsResponse>> {
-    const path = LP_API_PATHS.AGENT_ACTIVITY.INTERVAL_METRICS(accountId);
-    const additionalParams = this.buildIntervalMetricsParams(query);
+    const sdk = await this.getSDK(accountId, token);
+
+    const params: AgentActivityQuery = {
+      from: query.from ? new Date(query.from).getTime() : (query.fromL || Date.now() - 24 * 60 * 60 * 1000),
+      to: query.to ? new Date(query.to).getTime() : (query.toL || Date.now()),
+      ...(query.agentId && { agentIds: [String(query.agentId)] }),
+      ...(query.agentGroupId && { agentGroupIds: [query.agentGroupId] }),
+      ...(query.skillId && { skillIds: [query.skillId] }),
+    };
 
     this.logger.info(
       {
@@ -87,123 +108,39 @@ export class AgentActivityService extends LPBaseService {
         source: query.source,
         grouping: query.grouping,
         metrics: query.metrics,
-        path
       },
-      'Getting interval metrics',
+      'Getting interval metrics via SDK',
     );
 
-    return this.get<IIntervalMetricsResponse>(accountId, path, token, {
-      additionalParams,
-    });
+    const response = await sdk.messaging.agentActivity.query(params);
+    return { data: response.data as unknown as IIntervalMetricsResponse };
   }
 
   /**
-   * Build query parameters for status changes endpoint
+   * Get agent activity for a specific agent using SDK
+   *
+   * @param accountId - LivePerson account ID
+   * @param token - Bearer token
+   * @param agentId - Agent ID
+   * @param from - Start timestamp (ms)
+   * @param to - End timestamp (ms)
    */
-  private buildStatusChangesParams(query: IStatusChangesQuery): Record<string, string> {
-    const params: Record<string, string> = {
-      source: query.source,
-    };
+  async getAgentActivityById(
+    accountId: string,
+    token: TokenInfo | string,
+    agentId: string,
+    from: number,
+    to: number,
+  ): Promise<ILPResponse<AgentActivity>> {
+    const sdk = await this.getSDK(accountId, token);
 
-    if (query.v) {
-      params.v = query.v;
-    }
+    this.logger.info(
+      { accountId, agentId, from, to },
+      'Getting agent activity by ID via SDK',
+    );
 
-    if (query.from) {
-      params.from = query.from;
-    }
-
-    if (query.to) {
-      params.to = query.to;
-    }
-
-    if (query.agentId !== undefined) {
-      params.agentId = query.agentId.toString();
-    }
-
-    if (query.groupId !== undefined) {
-      params.groupId = query.groupId.toString();
-    }
-
-    if (query.empId) {
-      params.empId = query.empId;
-    }
-
-    if (query.limit !== undefined) {
-      params.limit = query.limit.toString();
-    }
-
-    if (query.offset !== undefined) {
-      params.offset = query.offset.toString();
-    }
-
-    return params;
-  }
-
-  /**
-   * Build query parameters for interval metrics endpoint
-   */
-  private buildIntervalMetricsParams(query: IIntervalMetricsQuery): Record<string, string> {
-    const params: Record<string, string> = {
-      v: query.v,
-      source: query.source,
-      handleTimeModel: query.handleTimeModel,
-      metrics: query.metrics,
-    };
-
-    if (query.from) {
-      params.from = query.from;
-    }
-
-    if (query.to) {
-      params.to = query.to;
-    }
-
-    if (query.fromL !== undefined) {
-      params.fromL = query.fromL.toString();
-    }
-
-    if (query.toL !== undefined) {
-      params.toL = query.toL.toString();
-    }
-
-    if (query.pageSize !== undefined) {
-      params.pageSize = query.pageSize.toString();
-    }
-
-    if (query.pageKey) {
-      params.pageKey = query.pageKey;
-    }
-
-    if (query.intervalDuration !== undefined) {
-      params.intervalDuration = query.intervalDuration.toString();
-    }
-
-    if (query.grouping) {
-      params.grouping = query.grouping;
-    }
-
-    if (query.agentId !== undefined) {
-      params.agentId = query.agentId.toString();
-    }
-
-    if (query.skillId !== undefined) {
-      params.skillId = query.skillId.toString();
-    }
-
-    if (query.agentGroupId !== undefined) {
-      params.agentGroupId = query.agentGroupId.toString();
-    }
-
-    if (query.conversationId) {
-      params.conversationId = query.conversationId;
-    }
-
-    if (query.includeBotSkills !== undefined) {
-      params.includeBotSkills = query.includeBotSkills.toString();
-    }
-
-    return params;
+    const response = await sdk.messaging.agentActivity.getAgentActivity(agentId, from, to);
+    return { data: response.data };
   }
 
   // ============================================
@@ -215,7 +152,7 @@ export class AgentActivityService extends LPBaseService {
    */
   async getAgentSessions(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     source: string,
     from: string,
     to: string,
@@ -236,7 +173,7 @@ export class AgentActivityService extends LPBaseService {
    */
   async getGroupActivity(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     source: string,
     groupId: number,
     from: string,
@@ -257,7 +194,7 @@ export class AgentActivityService extends LPBaseService {
    */
   async getSkillHandleTime(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     source: string,
     from: string,
     to: string,
@@ -281,7 +218,7 @@ export class AgentActivityService extends LPBaseService {
    */
   async getAgentProductivity(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     source: string,
     from: string,
     to: string,

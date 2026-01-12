@@ -1,42 +1,50 @@
 /**
  * Prompts Service
- * Business logic for LivePerson Prompt Library API
+ * Business logic for LivePerson Prompt Library API using SDK
  * Domain: promptlibrary
  */
 
 import { Injectable } from '@nestjs/common';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
-import { APIService } from '../../APIService/api-service';
-import { LPDomainService } from '../shared/lp-domain.service';
-import { LPBaseService } from '../shared/lp-base.service';
-import {
-  LP_SERVICE_DOMAINS,
-  LP_API_VERSIONS,
-  LP_API_PATHS,
-} from '../shared/lp-constants';
-import { ILPResponse, ILPRequestOptions } from '../shared/lp-common.interfaces';
+import { Scopes } from '@lpextend/node-sdk';
+import type {
+  LPPrompt,
+  CreateLPPromptRequest,
+  UpdateLPPromptRequest,
+  LPLLMProviderSubscription,
+} from '@lpextend/node-sdk';
+import { SDKProviderService, TokenInfo } from '../shared/sdk-provider.service';
 import {
   IPrompt,
   ICreatePrompt,
   IUpdatePrompt,
   ILLMProviderSubscription,
-  IPromptsResponse,
-  ILLMProvidersResponse,
 } from './prompts.interfaces';
 
-@Injectable()
-export class PromptsService extends LPBaseService {
-  protected readonly serviceDomain = LP_SERVICE_DOMAINS.PROMPT_LIBRARY;
-  protected readonly defaultApiVersion = LP_API_VERSIONS.PROMPTS;
+/**
+ * Response type for SDK operations
+ */
+export interface ILPResponse<T> {
+  data: T;
+  revision?: string;
+  headers?: Record<string, string>;
+}
 
+@Injectable()
+export class PromptsService {
   constructor(
-    apiService: APIService,
-    domainService: LPDomainService,
+    private readonly sdkProvider: SDKProviderService,
     @InjectPinoLogger(PromptsService.name)
-    logger: PinoLogger,
+    private readonly logger: PinoLogger,
   ) {
-    super(apiService, domainService, logger);
     this.logger.setContext(PromptsService.name);
+  }
+
+  /**
+   * Get SDK instance via shared provider
+   */
+  private async getSDK(accountId: string, token: TokenInfo | string) {
+    return this.sdkProvider.getSDK(accountId, token, [Scopes.LP_PROMPTS]);
   }
 
   /**
@@ -44,24 +52,22 @@ export class PromptsService extends LPBaseService {
    */
   async getSystemPrompts(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: { source?: string },
   ): Promise<ILPResponse<IPrompt[]>> {
-    const path = LP_API_PATHS.PROMPTS.SYSTEM();
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestOptions: ILPRequestOptions = {
+    this.logger.info(
+      { accountId, source: options?.source || 'ccui' },
+      'Getting system prompts via SDK',
+    );
+
+    const response = await sdk.prompts.getSystemPrompts({
       source: options?.source || 'ccui',
-    };
-
-    // Make the request and extract prompts from response structure
-    const response = await this.get<IPromptsResponse>(accountId, path, token, requestOptions);
-
-    // The LP API returns { success, statusCode, successResult: { prompts: [...] } }
-    // We need to extract just the prompts array
-    const prompts = response.data?.successResult?.prompts || [];
+    });
 
     return {
-      data: prompts,
+      data: response.data as unknown as IPrompt[],
       revision: response.revision,
     };
   }
@@ -71,21 +77,22 @@ export class PromptsService extends LPBaseService {
    */
   async getAccountPrompts(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: { source?: string },
   ): Promise<ILPResponse<IPrompt[]>> {
-    const path = LP_API_PATHS.PROMPTS.ACCOUNT(accountId);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestOptions: ILPRequestOptions = {
+    this.logger.info(
+      { accountId, source: options?.source || 'ccui' },
+      'Getting account prompts via SDK',
+    );
+
+    const response = await sdk.prompts.getAccountPrompts({
       source: options?.source || 'ccui',
-    };
-
-    const response = await this.get<IPromptsResponse>(accountId, path, token, requestOptions);
-
-    const prompts = response.data?.successResult?.prompts || [];
+    });
 
     return {
-      data: prompts,
+      data: response.data as unknown as IPrompt[],
       revision: response.revision,
     };
   }
@@ -96,15 +103,21 @@ export class PromptsService extends LPBaseService {
   async getAccountPromptById(
     accountId: string,
     promptId: string,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<IPrompt>> {
-    const path = LP_API_PATHS.PROMPTS.ACCOUNT_BY_ID(accountId, promptId);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
+    this.logger.info(
+      { accountId, promptId },
+      'Getting account prompt by ID via SDK',
+    );
+
+    const response = await sdk.prompts.getById(promptId);
+
+    return {
+      data: response.data as unknown as IPrompt,
+      revision: response.revision,
     };
-
-    return this.get<IPrompt>(accountId, path, token, requestOptions);
   }
 
   /**
@@ -112,16 +125,22 @@ export class PromptsService extends LPBaseService {
    */
   async createAccountPrompt(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: ICreatePrompt,
   ): Promise<ILPResponse<IPrompt>> {
-    const path = LP_API_PATHS.PROMPTS.ACCOUNT(accountId);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
+    this.logger.info(
+      { accountId, promptName: data.name },
+      'Creating account prompt via SDK',
+    );
+
+    const response = await sdk.prompts.create(data as unknown as CreateLPPromptRequest);
+
+    return {
+      data: response.data as unknown as IPrompt,
+      revision: response.revision,
     };
-
-    return this.post<IPrompt>(accountId, path, data, token, requestOptions);
   }
 
   /**
@@ -130,16 +149,22 @@ export class PromptsService extends LPBaseService {
   async updateAccountPrompt(
     accountId: string,
     promptId: string,
-    token: string,
+    token: TokenInfo | string,
     data: IUpdatePrompt,
   ): Promise<ILPResponse<IPrompt>> {
-    const path = LP_API_PATHS.PROMPTS.ACCOUNT_BY_ID(accountId, promptId);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
+    this.logger.info(
+      { accountId, promptId },
+      'Updating account prompt via SDK',
+    );
+
+    const response = await sdk.prompts.update(promptId, data as unknown as UpdateLPPromptRequest);
+
+    return {
+      data: response.data as unknown as IPrompt,
+      revision: response.revision,
     };
-
-    return this.put<IPrompt>(accountId, path, data, token, requestOptions);
   }
 
   /**
@@ -148,15 +173,21 @@ export class PromptsService extends LPBaseService {
   async deleteAccountPrompt(
     accountId: string,
     promptId: string,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<void>> {
-    const path = LP_API_PATHS.PROMPTS.ACCOUNT_BY_ID(accountId, promptId);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
+    this.logger.info(
+      { accountId, promptId },
+      'Deleting account prompt via SDK',
+    );
+
+    const response = await sdk.prompts.delete(promptId);
+
+    return {
+      data: response.data,
+      revision: response.revision,
     };
-
-    return this.delete<void>(accountId, path, token, requestOptions);
   }
 
   /**
@@ -164,20 +195,19 @@ export class PromptsService extends LPBaseService {
    */
   async getLLMProviders(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<ILLMProviderSubscription[]>> {
-    const path = LP_API_PATHS.PROMPTS.LLM_PROVIDERS(accountId);
+    const sdk = await this.getSDK(accountId, token);
 
-    const requestOptions: ILPRequestOptions = {
-      source: 'ccui',
-    };
+    this.logger.info(
+      { accountId },
+      'Getting LLM providers via SDK',
+    );
 
-    const response = await this.get<ILLMProvidersResponse>(accountId, path, token, requestOptions);
-
-    const providers = response.data?.successResult?.provider_subscriptions || [];
+    const response = await sdk.prompts.getLLMProviders();
 
     return {
-      data: providers,
+      data: response.data as unknown as ILLMProviderSubscription[],
       revision: response.revision,
     };
   }
