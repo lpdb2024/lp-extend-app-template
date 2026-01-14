@@ -44,7 +44,7 @@ export class SpecialOccasionsService {
    */
   async getAll(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: {
       select?: string;
       includeDeleted?: boolean;
@@ -62,7 +62,7 @@ export class SpecialOccasionsService {
   async getById(
     accountId: string,
     occasionId: string | number,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<LPSpecialOccasion>> {
     const sdk = await this.getSDK(accountId, token);
     return sdk.specialOccasions.getById(Number(occasionId));
@@ -73,7 +73,7 @@ export class SpecialOccasionsService {
    */
   async create(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateSpecialOccasionRequest,
     revision?: string,
   ): Promise<ILPResponse<LPSpecialOccasion>> {
@@ -86,7 +86,7 @@ export class SpecialOccasionsService {
    */
   async createMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateSpecialOccasionRequest[],
     revision?: string,
   ): Promise<ILPResponse<LPSpecialOccasion[]>> {
@@ -107,7 +107,7 @@ export class SpecialOccasionsService {
   async update(
     accountId: string,
     occasionId: string | number,
-    token: string,
+    token: TokenInfo | string,
     data: UpdateSpecialOccasionRequest,
     revision?: string,
   ): Promise<ILPResponse<LPSpecialOccasion>> {
@@ -120,7 +120,7 @@ export class SpecialOccasionsService {
    */
   async updateMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: (UpdateSpecialOccasionRequest & { id: number })[],
     revision?: string,
   ): Promise<ILPResponse<LPSpecialOccasion[]>> {
@@ -141,7 +141,7 @@ export class SpecialOccasionsService {
   async remove(
     accountId: string,
     occasionId: string | number,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<void>> {
     const sdk = await this.getSDK(accountId, token);
@@ -153,7 +153,7 @@ export class SpecialOccasionsService {
    */
   async removeMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     ids: number[],
     revision?: string,
   ): Promise<ILPResponse<void>> {
@@ -169,7 +169,7 @@ export class SpecialOccasionsService {
   /**
    * Get the current revision for special occasions
    */
-  async getRevision(accountId: string, token: string): Promise<string | undefined> {
+  async getRevision(accountId: string, token: TokenInfo | string): Promise<string | undefined> {
     const response = await this.getAll(accountId, token);
     return response.revision;
   }

@@ -19,6 +19,7 @@ import {
   ICreateWidget,
   IUpdateWidget,
 } from './widgets.interfaces';
+import { TokenInfo } from '../../shared/sdk-provider.service';
 
 @Injectable()
 export class WidgetsService extends LPBaseService {
@@ -40,7 +41,7 @@ export class WidgetsService extends LPBaseService {
    */
   async getAll(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: {
       select?: string;
       return?: 'active' | 'all';
@@ -63,7 +64,7 @@ export class WidgetsService extends LPBaseService {
   async getById(
     accountId: string,
     widgetId: string | number,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<IWidget>> {
     const path = LP_API_PATHS.WIDGETS.BY_ID(accountId, String(widgetId));
 
@@ -80,7 +81,7 @@ export class WidgetsService extends LPBaseService {
    */
   async create(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: ICreateWidget,
     revision?: string,
   ): Promise<ILPResponse<IWidget>> {
@@ -100,7 +101,7 @@ export class WidgetsService extends LPBaseService {
   async update(
     accountId: string,
     widgetId: string | number,
-    token: string,
+    token: TokenInfo | string,
     data: IUpdateWidget,
     revision: string,
   ): Promise<ILPResponse<IWidget>> {
@@ -120,7 +121,7 @@ export class WidgetsService extends LPBaseService {
   async remove(
     accountId: string,
     widgetId: string | number,
-    token: string,
+    token: TokenInfo | string,
     revision: string,
   ): Promise<ILPResponse<void>> {
     const path = LP_API_PATHS.WIDGETS.BY_ID(accountId, String(widgetId));
@@ -136,7 +137,7 @@ export class WidgetsService extends LPBaseService {
   /**
    * Get the current revision for widgets
    */
-  async getRevision(accountId: string, token: string): Promise<string | undefined> {
+  async getRevision(accountId: string, token: TokenInfo | string): Promise<string | undefined> {
     const response = await this.getAll(accountId, token, { select: 'id' });
     return response.revision;
   }

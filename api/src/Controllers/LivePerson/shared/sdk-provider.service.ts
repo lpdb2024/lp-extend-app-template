@@ -65,6 +65,7 @@ export class SDKProviderService implements OnModuleDestroy {
   private readonly cache = new Map<string, CachedSDK>();
   private readonly shellBaseUrl: string;
   private readonly appId: string;
+  private readonly apiKey: string | undefined;
   private readonly cacheTtlMs: number;
   private cleanupInterval: NodeJS.Timeout | null = null;
 
@@ -74,9 +75,19 @@ export class SDKProviderService implements OnModuleDestroy {
     private readonly configService: ConfigService,
   ) {
     this.logger.setContext(SDKProviderService.name);
-    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL') || 'http://localhost:3001';
+    // Support both SHELL_BASE_URL and LPEXTEND_SHELL_URL for compatibility
+    this.shellBaseUrl = this.configService.get<string>('SHELL_BASE_URL')
+      || this.configService.get<string>('LPEXTEND_SHELL_URL')
+      || 'http://localhost:3000';
     this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
+    this.apiKey = this.configService.get<string>('LPEXTEND_API_KEY');
     this.cacheTtlMs = this.configService.get<number>('SDK_CACHE_TTL_MS') || DEFAULT_CACHE_TTL_MS;
+
+    this.logger.info({
+      shellBaseUrl: this.shellBaseUrl,
+      appId: this.appId,
+      hasApiKey: !!this.apiKey,
+    }, 'SDKProviderService initialized');
 
     // Start periodic cleanup
     this.startCleanupInterval();
@@ -133,23 +144,47 @@ export class SDKProviderService implements OnModuleDestroy {
     }, 'Initializing new SDK instance');
 
     try {
-      const sdkConfig = tokenInfo.extendToken
-        ? {
-            appId: this.appId,
-            accountId,
-            extendToken: tokenInfo.extendToken,
-            shellBaseUrl: this.shellBaseUrl,
-            scopes,
-            debug: this.configService.get<string>('NODE_ENV') !== 'production',
-          }
-        : {
-            appId: this.appId,
-            accountId,
-            accessToken: tokenInfo.accessToken.replace('Bearer ', ''),
-            shellBaseUrl: this.shellBaseUrl,
-            scopes,
-            debug: this.configService.get<string>('NODE_ENV') !== 'production',
-          };
+      // Build SDK config based on available credentials
+      // v2 auth (recommended): apiKey + extendToken
+      // Legacy: extendToken only, or direct accessToken
+      const isDebug = this.configService.get<string>('NODE_ENV') !== 'production';
+
+      let sdkConfig: any;
+      if (tokenInfo.extendToken && this.apiKey) {
+        // v2 API Key authentication (RECOMMENDED)
+        sdkConfig = {
+          appId: this.appId,
+          accountId,
+          apiKey: this.apiKey,
+          extendToken: tokenInfo.extendToken,
+          shellBaseUrl: this.shellBaseUrl,
+          scopes,
+          debug: isDebug,
+        };
+        this.logger.debug({ fn: 'getSDK', authMode: 'apiKey+extendToken' }, 'Using v2 API key auth');
+      } else if (tokenInfo.extendToken) {
+        // Legacy extendToken-only flow
+        sdkConfig = {
+          appId: this.appId,
+          accountId,
+          extendToken: tokenInfo.extendToken,
+          shellBaseUrl: this.shellBaseUrl,
+          scopes,
+          debug: isDebug,
+        };
+        this.logger.debug({ fn: 'getSDK', authMode: 'extendToken' }, 'Using legacy extendToken auth');
+      } else {
+        // Direct access token (standalone mode)
+        sdkConfig = {
+          appId: this.appId,
+          accountId,
+          accessToken: tokenInfo.accessToken.replace('Bearer ', ''),
+          shellBaseUrl: this.shellBaseUrl,
+          scopes,
+          debug: isDebug,
+        };
+        this.logger.debug({ fn: 'getSDK', authMode: 'accessToken' }, 'Using direct accessToken');
+      }
 
       const sdk = await initializeSDK(sdkConfig);
 

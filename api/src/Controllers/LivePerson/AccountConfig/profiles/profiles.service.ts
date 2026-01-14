@@ -44,7 +44,7 @@ export class ProfilesService {
    */
   async getAll(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: {
       select?: string;
       includeDeleted?: boolean;
@@ -62,7 +62,7 @@ export class ProfilesService {
   async getById(
     accountId: string,
     profileId: string | number,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<LPProfile>> {
     const sdk = await this.getSDK(accountId, token);
     return sdk.profiles.getById(Number(profileId));
@@ -73,7 +73,7 @@ export class ProfilesService {
    */
   async create(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateProfileRequest,
     revision?: string,
   ): Promise<ILPResponse<LPProfile>> {
@@ -86,7 +86,7 @@ export class ProfilesService {
    */
   async createMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateProfileRequest[],
     revision?: string,
   ): Promise<ILPResponse<LPProfile[]>> {
@@ -107,7 +107,7 @@ export class ProfilesService {
   async update(
     accountId: string,
     profileId: string | number,
-    token: string,
+    token: TokenInfo | string,
     data: UpdateProfileRequest,
     revision?: string,
   ): Promise<ILPResponse<LPProfile>> {
@@ -120,7 +120,7 @@ export class ProfilesService {
    */
   async updateMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: (UpdateProfileRequest & { id: number })[],
     revision?: string,
   ): Promise<ILPResponse<LPProfile[]>> {
@@ -141,7 +141,7 @@ export class ProfilesService {
   async remove(
     accountId: string,
     profileId: string | number,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<void>> {
     const sdk = await this.getSDK(accountId, token);
@@ -153,7 +153,7 @@ export class ProfilesService {
    */
   async removeMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     ids: number[],
     revision?: string,
   ): Promise<ILPResponse<void>> {
@@ -169,7 +169,7 @@ export class ProfilesService {
   /**
    * Get the current revision for profiles
    */
-  async getRevision(accountId: string, token: string): Promise<string | undefined> {
+  async getRevision(accountId: string, token: TokenInfo | string): Promise<string | undefined> {
     const response = await this.getAll(accountId, token);
     return response.revision;
   }

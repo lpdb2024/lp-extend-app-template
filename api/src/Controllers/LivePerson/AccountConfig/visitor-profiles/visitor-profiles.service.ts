@@ -20,6 +20,7 @@ import {
   IVisitorProfileUpdateRequest,
   IVisitorProfileQuery,
 } from './visitor-profiles.interfaces';
+import { TokenInfo } from '../../shared/sdk-provider.service';
 
 @Injectable()
 export class VisitorProfilesService extends LPBaseService {
@@ -42,7 +43,7 @@ export class VisitorProfilesService extends LPBaseService {
    */
   async getVisitorProfiles(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IVisitorProfileQuery,
   ): Promise<ILPResponse<IVisitorProfile[]>> {
     const path = LP_API_PATHS.VISITOR_PROFILES.BASE(accountId);
@@ -61,7 +62,7 @@ export class VisitorProfilesService extends LPBaseService {
   async getVisitorProfileById(
     accountId: string,
     profileId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IVisitorProfileQuery,
   ): Promise<ILPResponse<IVisitorProfile>> {
     const path = LP_API_PATHS.VISITOR_PROFILES.BY_ID(accountId, profileId);
@@ -79,7 +80,7 @@ export class VisitorProfilesService extends LPBaseService {
    */
   async createVisitorProfile(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     profile: IVisitorProfileCreateRequest,
     query?: IVisitorProfileQuery,
   ): Promise<ILPResponse<IVisitorProfile>> {
@@ -100,7 +101,7 @@ export class VisitorProfilesService extends LPBaseService {
   async updateVisitorProfile(
     accountId: string,
     profileId: string,
-    token: string,
+    token: TokenInfo | string,
     profile: IVisitorProfileUpdateRequest,
     revision: string,
     query?: IVisitorProfileQuery,
@@ -123,7 +124,7 @@ export class VisitorProfilesService extends LPBaseService {
   async deleteVisitorProfile(
     accountId: string,
     profileId: string,
-    token: string,
+    token: TokenInfo | string,
     revision: string,
   ): Promise<ILPResponse<void>> {
     const path = LP_API_PATHS.VISITOR_PROFILES.BY_ID(accountId, profileId);

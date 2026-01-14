@@ -19,6 +19,7 @@ import {
   IOnsiteLocationUpdateRequest,
   IOnsiteLocationQuery,
 } from './onsite-locations.interfaces';
+import { TokenInfo } from '../../shared/sdk-provider.service';
 
 @Injectable()
 export class OnsiteLocationsService extends LPBaseService {
@@ -49,7 +50,7 @@ export class OnsiteLocationsService extends LPBaseService {
    */
   async getOnsiteLocations(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IOnsiteLocationQuery,
   ): Promise<ILPResponse<IOnsiteLocation[]>> {
     const path = this.getBasePath(accountId);
@@ -68,7 +69,7 @@ export class OnsiteLocationsService extends LPBaseService {
   async getOnsiteLocationById(
     accountId: string,
     locationId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IOnsiteLocationQuery,
   ): Promise<ILPResponse<IOnsiteLocation>> {
     const path = this.getByIdPath(accountId, locationId);
@@ -86,7 +87,7 @@ export class OnsiteLocationsService extends LPBaseService {
    */
   async createOnsiteLocation(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     location: IOnsiteLocationCreateRequest,
     query?: IOnsiteLocationQuery,
   ): Promise<ILPResponse<IOnsiteLocation>> {
@@ -107,7 +108,7 @@ export class OnsiteLocationsService extends LPBaseService {
   async updateOnsiteLocation(
     accountId: string,
     locationId: string,
-    token: string,
+    token: TokenInfo | string,
     location: IOnsiteLocationUpdateRequest,
     revision: string,
     query?: IOnsiteLocationQuery,
@@ -130,7 +131,7 @@ export class OnsiteLocationsService extends LPBaseService {
   async deleteOnsiteLocation(
     accountId: string,
     locationId: string,
-    token: string,
+    token: TokenInfo | string,
     revision: string,
   ): Promise<ILPResponse<void>> {
     const path = this.getByIdPath(accountId, locationId);

@@ -44,7 +44,7 @@ export class WorkingHoursService {
    */
   async getAll(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: {
       select?: string;
       includeDeleted?: boolean;
@@ -62,7 +62,7 @@ export class WorkingHoursService {
   async getById(
     accountId: string,
     workingHoursId: string | number,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<LPWorkingHours>> {
     const sdk = await this.getSDK(accountId, token);
     return sdk.workingHours.getById(Number(workingHoursId));
@@ -73,7 +73,7 @@ export class WorkingHoursService {
    */
   async create(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateWorkingHoursRequest,
     revision?: string,
   ): Promise<ILPResponse<LPWorkingHours>> {
@@ -86,7 +86,7 @@ export class WorkingHoursService {
    */
   async createMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateWorkingHoursRequest[],
     revision?: string,
   ): Promise<ILPResponse<LPWorkingHours[]>> {
@@ -107,7 +107,7 @@ export class WorkingHoursService {
   async update(
     accountId: string,
     workingHoursId: string | number,
-    token: string,
+    token: TokenInfo | string,
     data: UpdateWorkingHoursRequest,
     revision?: string,
   ): Promise<ILPResponse<LPWorkingHours>> {
@@ -120,7 +120,7 @@ export class WorkingHoursService {
    */
   async updateMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: (UpdateWorkingHoursRequest & { id: number })[],
     revision?: string,
   ): Promise<ILPResponse<LPWorkingHours[]>> {
@@ -141,7 +141,7 @@ export class WorkingHoursService {
   async remove(
     accountId: string,
     workingHoursId: string | number,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<void>> {
     const sdk = await this.getSDK(accountId, token);
@@ -153,7 +153,7 @@ export class WorkingHoursService {
    */
   async removeMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     ids: number[],
     revision?: string,
   ): Promise<ILPResponse<void>> {
@@ -169,7 +169,7 @@ export class WorkingHoursService {
   /**
    * Get the current revision for working hours
    */
-  async getRevision(accountId: string, token: string): Promise<string | undefined> {
+  async getRevision(accountId: string, token: TokenInfo | string): Promise<string | undefined> {
     const response = await this.getAll(accountId, token);
     return response.revision;
   }

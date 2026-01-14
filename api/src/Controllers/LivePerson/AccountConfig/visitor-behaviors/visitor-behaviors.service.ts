@@ -19,6 +19,7 @@ import {
   IVisitorBehaviorUpdateRequest,
   IVisitorBehaviorQuery,
 } from './visitor-behaviors.interfaces';
+import { TokenInfo } from '../../shared/sdk-provider.service';
 
 @Injectable()
 export class VisitorBehaviorsService extends LPBaseService {
@@ -49,7 +50,7 @@ export class VisitorBehaviorsService extends LPBaseService {
    */
   async getVisitorBehaviors(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IVisitorBehaviorQuery,
   ): Promise<ILPResponse<IVisitorBehavior[]>> {
     const path = this.getBasePath(accountId);
@@ -68,7 +69,7 @@ export class VisitorBehaviorsService extends LPBaseService {
   async getVisitorBehaviorById(
     accountId: string,
     behaviorId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IVisitorBehaviorQuery,
   ): Promise<ILPResponse<IVisitorBehavior>> {
     const path = this.getByIdPath(accountId, behaviorId);
@@ -86,7 +87,7 @@ export class VisitorBehaviorsService extends LPBaseService {
    */
   async createVisitorBehavior(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     behavior: IVisitorBehaviorCreateRequest,
     query?: IVisitorBehaviorQuery,
   ): Promise<ILPResponse<IVisitorBehavior>> {
@@ -107,7 +108,7 @@ export class VisitorBehaviorsService extends LPBaseService {
   async updateVisitorBehavior(
     accountId: string,
     behaviorId: string,
-    token: string,
+    token: TokenInfo | string,
     behavior: IVisitorBehaviorUpdateRequest,
     revision: string,
     query?: IVisitorBehaviorQuery,
@@ -130,7 +131,7 @@ export class VisitorBehaviorsService extends LPBaseService {
   async deleteVisitorBehavior(
     accountId: string,
     behaviorId: string,
-    token: string,
+    token: TokenInfo | string,
     revision: string,
   ): Promise<ILPResponse<void>> {
     const path = this.getByIdPath(accountId, behaviorId);

@@ -20,6 +20,7 @@ import {
   IGoalUpdateRequest,
   IGoalQuery,
 } from './goals.interfaces';
+import { TokenInfo } from '../../shared/sdk-provider.service';
 
 @Injectable()
 export class GoalsService extends LPBaseService {
@@ -42,7 +43,7 @@ export class GoalsService extends LPBaseService {
    */
   async getGoals(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IGoalQuery,
   ): Promise<ILPResponse<IGoal[]>> {
     const path = LP_API_PATHS.GOALS.BASE(accountId);
@@ -61,7 +62,7 @@ export class GoalsService extends LPBaseService {
   async getGoalById(
     accountId: string,
     goalId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IGoalQuery,
   ): Promise<ILPResponse<IGoal>> {
     const path = LP_API_PATHS.GOALS.BY_ID(accountId, goalId);
@@ -79,7 +80,7 @@ export class GoalsService extends LPBaseService {
    */
   async createGoal(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     goal: IGoalCreateRequest,
     query?: IGoalQuery,
   ): Promise<ILPResponse<IGoal>> {
@@ -100,7 +101,7 @@ export class GoalsService extends LPBaseService {
   async updateGoal(
     accountId: string,
     goalId: string,
-    token: string,
+    token: TokenInfo | string,
     goal: IGoalUpdateRequest,
     revision: string,
     query?: IGoalQuery,
@@ -123,7 +124,7 @@ export class GoalsService extends LPBaseService {
   async deleteGoal(
     accountId: string,
     goalId: string,
-    token: string,
+    token: TokenInfo | string,
     revision: string,
   ): Promise<ILPResponse<void>> {
     const path = LP_API_PATHS.GOALS.BY_ID(accountId, goalId);

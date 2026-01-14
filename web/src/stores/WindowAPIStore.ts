@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { uuid } from "short-uuid";
 import { defineStore } from "pinia";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import ApiService from "src/services/ApiService";
-import AuthService from "src/services/AuthService";
+// import AuthService from "src/services/AuthService";
 import ErrorService from "src/services/ErrorService";
-const handleRequestError = ErrorService.handleRequestError.bind(ErrorService);
+// const handleRequestError = ErrorService.handleRequestError.bind(ErrorService);
 import { LocalStorageCache } from "src/services/StorageCache";
-import { AuthenticationProperties as auth0 } from "vue-auth0-plugin";
+// import { AuthenticationProperties as auth0 } from "vue-auth0-plugin";
 // import { Notify } from 'quasar'
 interface FrequentObject {
   [key: string]: number;
@@ -623,8 +623,17 @@ export const LPMessagingStore = defineStore("window-api-store", {
     },
     async returnAuthJWT() {
       try {
-        const claims = await auth0.getIdTokenClaims();
-        return claims ? claims.__raw : null;
+        // const claims = await auth0.getIdTokenClaims();
+        // return claims ? claims.__raw : null;
+
+        return new Promise<string | null>((resolve) => {
+          // placeholder async function to simulate fetching an auth JWT. uncomment above to use auth0
+          setTimeout(() => {
+            const fakeJWT =
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+            resolve(fakeJWT);
+          }, 500); // simulate network delay
+        });
       } catch (error) {
         return null;
       }

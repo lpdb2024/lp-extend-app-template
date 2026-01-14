@@ -16,6 +16,7 @@ import {
   IWindowConfigurationUpdateRequest,
   IWindowConfigurationQuery,
 } from './window-configurations.interfaces';
+import { TokenInfo } from '../../shared/sdk-provider.service';
 
 @Injectable()
 export class WindowConfigurationsService extends LPBaseService {
@@ -46,7 +47,7 @@ export class WindowConfigurationsService extends LPBaseService {
    */
   async getWindowConfigurations(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IWindowConfigurationQuery,
   ): Promise<ILPResponse<IWindowConfiguration[]>> {
     const path = this.getBasePath(accountId);
@@ -65,7 +66,7 @@ export class WindowConfigurationsService extends LPBaseService {
   async getWindowConfigurationById(
     accountId: string,
     windowId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IWindowConfigurationQuery,
   ): Promise<ILPResponse<IWindowConfiguration>> {
     const path = this.getByIdPath(accountId, windowId);
@@ -83,7 +84,7 @@ export class WindowConfigurationsService extends LPBaseService {
    */
   async createWindowConfiguration(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     config: IWindowConfigurationCreateRequest,
     query?: IWindowConfigurationQuery,
   ): Promise<ILPResponse<IWindowConfiguration>> {
@@ -104,7 +105,7 @@ export class WindowConfigurationsService extends LPBaseService {
   async updateWindowConfiguration(
     accountId: string,
     windowId: string,
-    token: string,
+    token: TokenInfo | string,
     config: IWindowConfigurationUpdateRequest,
     revision: string,
     query?: IWindowConfigurationQuery,
@@ -127,7 +128,7 @@ export class WindowConfigurationsService extends LPBaseService {
   async deleteWindowConfiguration(
     accountId: string,
     windowId: string,
-    token: string,
+    token: TokenInfo | string,
     revision: string,
   ): Promise<ILPResponse<void>> {
     const path = this.getByIdPath(accountId, windowId);

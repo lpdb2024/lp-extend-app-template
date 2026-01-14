@@ -22,6 +22,7 @@ import {
   ICreateAppInstallationRequest,
   IUpdateAppInstallationRequest,
 } from './app-installations.interfaces';
+import { TokenInfo } from '../../shared/sdk-provider.service';
 
 @Injectable()
 export class AppInstallationsService extends LPBaseService {
@@ -45,7 +46,7 @@ export class AppInstallationsService extends LPBaseService {
    */
   async getAll(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: {
       select?: string;
       includeDeleted?: boolean;
@@ -68,7 +69,7 @@ export class AppInstallationsService extends LPBaseService {
   async getById(
     accountId: string,
     appId: string,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<IAppInstallation>> {
     const path = LP_API_PATHS.APP_INSTALLATIONS.BY_ID(accountId, appId);
 
@@ -85,7 +86,7 @@ export class AppInstallationsService extends LPBaseService {
    */
   async create(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: ICreateAppInstallationRequest,
     revision?: string,
   ): Promise<ILPResponse<IAppInstallation>> {
@@ -110,7 +111,7 @@ export class AppInstallationsService extends LPBaseService {
   async update(
     accountId: string,
     appId: string,
-    token: string,
+    token: TokenInfo | string,
     data: IUpdateAppInstallationRequest,
     revision: string,
   ): Promise<ILPResponse<IAppInstallation>> {
@@ -130,7 +131,7 @@ export class AppInstallationsService extends LPBaseService {
   async remove(
     accountId: string,
     appId: string,
-    token: string,
+    token: TokenInfo | string,
     revision: string,
   ): Promise<ILPResponse<void>> {
     const path = LP_API_PATHS.APP_INSTALLATIONS.BY_ID(accountId, appId);
@@ -149,7 +150,7 @@ export class AppInstallationsService extends LPBaseService {
   async enable(
     accountId: string,
     appId: string,
-    token: string,
+    token: TokenInfo | string,
     revision: string,
   ): Promise<ILPResponse<IAppInstallation>> {
     return this.update(
@@ -167,7 +168,7 @@ export class AppInstallationsService extends LPBaseService {
   async disable(
     accountId: string,
     appId: string,
-    token: string,
+    token: TokenInfo | string,
     revision: string,
   ): Promise<ILPResponse<IAppInstallation>> {
     return this.update(
@@ -182,7 +183,7 @@ export class AppInstallationsService extends LPBaseService {
   /**
    * Get the current revision for app installations
    */
-  async getRevision(accountId: string, token: string): Promise<string | undefined> {
+  async getRevision(accountId: string, token: TokenInfo | string): Promise<string | undefined> {
     const response = await this.getAll(accountId, token, { select: 'id' });
     return response.revision;
   }

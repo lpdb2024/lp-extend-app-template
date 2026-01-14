@@ -16,6 +16,7 @@ import {
   IGrantedFeatures,
   IUpdateFeaturesPayload,
 } from './account-features.interfaces';
+import { TokenInfo } from '../../shared/sdk-provider.service';
 
 @Injectable()
 export class AccountFeaturesService extends LPBaseService {
@@ -37,7 +38,7 @@ export class AccountFeaturesService extends LPBaseService {
    */
   async getAll(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     excludeLegacy: boolean = true,
   ): Promise<ILPResponse<IGrantedFeatures>> {
     const path = `/api/account/${accountId}/configuration/provision/featureGrants`;
@@ -104,7 +105,7 @@ export class AccountFeaturesService extends LPBaseService {
    */
   async update(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: IUpdateFeaturesPayload,
     revision: string,
   ): Promise<ILPResponse<IGrantedFeatures>> {
@@ -146,7 +147,7 @@ export class AccountFeaturesService extends LPBaseService {
   /**
    * Get the current revision for account features
    */
-  async getRevision(accountId: string, token: string): Promise<string | undefined> {
+  async getRevision(accountId: string, token: TokenInfo | string): Promise<string | undefined> {
     const response = await this.getAll(accountId, token);
     return response.revision;
   }

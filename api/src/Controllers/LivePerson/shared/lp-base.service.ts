@@ -13,6 +13,22 @@ import { LP_SERVICE_DOMAINS, LP_HEADERS } from './lp-constants';
 import { ILPRequestOptions, ILPResponse } from './lp-common.interfaces';
 
 /**
+ * Token info type for authentication
+ * Can be either a simple string token or an object with accessToken and optional extendToken
+ */
+export type TokenInfo = { accessToken: string; extendToken?: string } | string;
+
+/**
+ * Extract access token from TokenInfo
+ */
+export function extractAccessToken(token: TokenInfo): string {
+  if (typeof token === 'string') {
+    return token;
+  }
+  return token.accessToken;
+}
+
+/**
  * Abstract base service for LivePerson API integrations
  * All domain-specific services should extend this class
  */
@@ -51,8 +67,9 @@ export abstract class LPBaseService {
   /**
    * Create authorization header from token
    */
-  protected getAuthHeader(token: string): Record<string, string> {
-    const cleanToken = token.replace(/^Bearer\s+/i, '');
+  protected getAuthHeader(token: TokenInfo): Record<string, string> {
+    const accessToken = extractAccessToken(token);
+    const cleanToken = accessToken.replace(/^Bearer\s+/i, '');
     return { Authorization: `Bearer ${cleanToken}` };
   }
 
@@ -102,7 +119,7 @@ export abstract class LPBaseService {
   protected async get<T>(
     accountId: string,
     path: string,
-    token: string,
+    token: TokenInfo,
     options?: ILPRequestOptions,
   ): Promise<ILPResponse<T>> {
     let fullUrl = '';
@@ -169,7 +186,7 @@ export abstract class LPBaseService {
     accountId: string,
     path: string,
     body: any,
-    token: string,
+    token: TokenInfo,
     options?: ILPRequestOptions,
   ): Promise<ILPResponse<T>> {
     try {
@@ -215,7 +232,7 @@ export abstract class LPBaseService {
     accountId: string,
     path: string,
     body: any,
-    token: string,
+    token: TokenInfo,
     options?: ILPRequestOptions,
   ): Promise<ILPResponse<T>> {
     try {
@@ -271,7 +288,7 @@ export abstract class LPBaseService {
   protected async delete<T>(
     accountId: string,
     path: string,
-    token: string,
+    token: TokenInfo,
     options?: ILPRequestOptions,
   ): Promise<ILPResponse<T>> {
     try {
@@ -316,7 +333,7 @@ export abstract class LPBaseService {
     accountId: string,
     path: string,
     body: any,
-    token: string,
+    token: TokenInfo,
     options?: ILPRequestOptions,
   ): Promise<ILPResponse<T>> {
     try {

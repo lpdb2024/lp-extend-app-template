@@ -57,7 +57,7 @@ export class EngagementsService {
   async getEngagements(
     accountId: string,
     campaignId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IEngagementQuery,
   ): Promise<ILPResponse<LPEngagement[]>> {
     const sdk = await this.getSDK(accountId, token);
@@ -73,7 +73,7 @@ export class EngagementsService {
     accountId: string,
     campaignId: string,
     engagementId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: IEngagementQuery,
   ): Promise<ILPResponse<LPEngagement>> {
     const sdk = await this.getSDK(accountId, token);
@@ -87,7 +87,7 @@ export class EngagementsService {
   async createEngagement(
     accountId: string,
     campaignId: string,
-    token: string,
+    token: TokenInfo | string,
     engagement: CreateEngagementRequest,
     query?: IEngagementQuery,
   ): Promise<ILPResponse<LPEngagement>> {
@@ -105,7 +105,7 @@ export class EngagementsService {
     accountId: string,
     campaignId: string,
     engagementId: string,
-    token: string,
+    token: TokenInfo | string,
     engagement: UpdateEngagementRequest,
     revision?: string,
     query?: IEngagementQuery,
@@ -122,7 +122,7 @@ export class EngagementsService {
     accountId: string,
     campaignId: string,
     engagementId: string,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<void>> {
     const sdk = await this.getSDK(accountId, token);
@@ -140,7 +140,7 @@ export class EngagementsService {
   async getEnabledEngagements(
     accountId: string,
     campaignId: string,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<LPEngagement[]>> {
     const response = await this.getEngagements(accountId, campaignId, token);
     const enabledEngagements = response.data.filter(e => e.status === 'active');
@@ -154,7 +154,7 @@ export class EngagementsService {
     accountId: string,
     campaignId: string,
     engagementId: string,
-    token: string,
+    token: TokenInfo | string,
     changes: UpdateEngagementRequest,
     revision?: string,
   ): Promise<ILPResponse<LPEngagement>> {
@@ -169,7 +169,7 @@ export class EngagementsService {
     accountId: string,
     campaignId: string,
     engagementId: string,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<LPEngagement>> {
     return this.partialUpdateEngagement(accountId, campaignId, engagementId, token, { status: 'active' }, revision);
@@ -182,7 +182,7 @@ export class EngagementsService {
     accountId: string,
     campaignId: string,
     engagementId: string,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<LPEngagement>> {
     return this.partialUpdateEngagement(accountId, campaignId, engagementId, token, { status: 'inactive' }, revision);
@@ -196,7 +196,7 @@ export class EngagementsService {
     campaignId: string,
     engagementId: string,
     skillId: number,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<LPEngagement>> {
     return this.partialUpdateEngagement(accountId, campaignId, engagementId, token, { skillId }, revision);

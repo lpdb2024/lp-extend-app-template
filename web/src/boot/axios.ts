@@ -23,21 +23,21 @@ const api = axios.create({
   withCredentials: true, // Send cookies with cross-origin requests (for extend_auth cookie)
 });
 
-// Request interceptor - add auth token
+// Request interceptor - add auth headers
 api.interceptors.request.use(
   (config) => {
     const auth = getAppAuthInstance();
 
-    // Add auth token if available
-    const token = auth.getAccessToken();
-    if (token) {
-      // Shell strategy uses X-Shell-Token header
-      if (auth.getStrategy() === 'shell') {
-        config.headers['X-Shell-Token'] = token;
-      }
-      // Always add Authorization header
-      config.headers['Authorization'] = `Bearer ${token}`;
-      console.log('[axios] Added auth headers');
+    // X-Extend-Token: ExtendJWT for backend to verify with shell
+    const extendToken = auth.getExtendToken();
+    if (extendToken) {
+      config.headers['X-Extend-Token'] = extendToken;
+    }
+
+    // Authorization: LP access token for direct LP API calls
+    const accessToken = auth.getAccessToken();
+    if (accessToken) {
+      config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
 
     return config;

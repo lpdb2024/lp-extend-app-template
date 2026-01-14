@@ -44,7 +44,7 @@ export class AutomaticMessagesService {
    */
   async getAll(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     options?: {
       select?: string;
       includeDeleted?: boolean;
@@ -64,7 +64,7 @@ export class AutomaticMessagesService {
   async getById(
     accountId: string,
     messageId: string | number,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<LPAutomaticMessage>> {
     const sdk = await this.getSDK(accountId, token);
     return sdk.automaticMessages.getById(Number(messageId));
@@ -75,7 +75,7 @@ export class AutomaticMessagesService {
    */
   async create(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateAutomaticMessageRequest,
     revision?: string,
   ): Promise<ILPResponse<LPAutomaticMessage>> {
@@ -88,7 +88,7 @@ export class AutomaticMessagesService {
    */
   async createMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: CreateAutomaticMessageRequest[],
     revision?: string,
   ): Promise<ILPResponse<LPAutomaticMessage[]>> {
@@ -109,7 +109,7 @@ export class AutomaticMessagesService {
   async update(
     accountId: string,
     messageId: string | number,
-    token: string,
+    token: TokenInfo | string,
     data: UpdateAutomaticMessageRequest,
     revision?: string,
   ): Promise<ILPResponse<LPAutomaticMessage>> {
@@ -122,7 +122,7 @@ export class AutomaticMessagesService {
    */
   async updateMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: (UpdateAutomaticMessageRequest & { id: number })[],
     revision?: string,
   ): Promise<ILPResponse<LPAutomaticMessage[]>> {
@@ -143,7 +143,7 @@ export class AutomaticMessagesService {
   async remove(
     accountId: string,
     messageId: string | number,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<void>> {
     const sdk = await this.getSDK(accountId, token);
@@ -155,7 +155,7 @@ export class AutomaticMessagesService {
    */
   async removeMany(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     ids: number[],
     revision?: string,
   ): Promise<ILPResponse<void>> {
@@ -171,7 +171,7 @@ export class AutomaticMessagesService {
   /**
    * Get the current revision for automatic messages
    */
-  async getRevision(accountId: string, token: string): Promise<string | undefined> {
+  async getRevision(accountId: string, token: TokenInfo | string): Promise<string | undefined> {
     const response = await this.getAll(accountId, token);
     return response.revision;
   }

@@ -56,7 +56,7 @@ export class CampaignsService {
    */
   async getCampaigns(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: ICampaignQuery,
   ): Promise<ILPResponse<LPCampaign[]>> {
     const sdk = await this.getSDK(accountId, token);
@@ -71,7 +71,7 @@ export class CampaignsService {
   async getCampaignById(
     accountId: string,
     campaignId: string,
-    token: string,
+    token: TokenInfo | string,
     query?: ICampaignQuery,
   ): Promise<ILPResponse<LPCampaign>> {
     const sdk = await this.getSDK(accountId, token);
@@ -84,7 +84,7 @@ export class CampaignsService {
    */
   async createCampaign(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     campaign: CreateCampaignRequest,
     query?: ICampaignQuery,
   ): Promise<ILPResponse<LPCampaign>> {
@@ -99,7 +99,7 @@ export class CampaignsService {
   async updateCampaign(
     accountId: string,
     campaignId: string,
-    token: string,
+    token: TokenInfo | string,
     campaign: UpdateCampaignRequest,
     revision?: string,
     query?: ICampaignQuery,
@@ -115,7 +115,7 @@ export class CampaignsService {
   async deleteCampaign(
     accountId: string,
     campaignId: string,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<void>> {
     const sdk = await this.getSDK(accountId, token);
@@ -132,7 +132,7 @@ export class CampaignsService {
    */
   async getPublishedCampaigns(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<LPCampaign[]>> {
     const response = await this.getCampaigns(accountId, token);
     const publishedCampaigns = response.data.filter(c => c.status === 'active');
@@ -145,7 +145,7 @@ export class CampaignsService {
   async getCampaignsByLob(
     accountId: string,
     lobId: number,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<LPCampaign[]>> {
     const response = await this.getCampaigns(accountId, token);
     const filteredCampaigns = response.data.filter(c => c.lobId === lobId);
@@ -158,7 +158,7 @@ export class CampaignsService {
   async publishCampaign(
     accountId: string,
     campaignId: string,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<LPCampaign>> {
     return this.updateCampaign(accountId, campaignId, token, { status: 'active' }, revision);
@@ -170,7 +170,7 @@ export class CampaignsService {
   async unpublishCampaign(
     accountId: string,
     campaignId: string,
-    token: string,
+    token: TokenInfo | string,
     revision?: string,
   ): Promise<ILPResponse<LPCampaign>> {
     return this.updateCampaign(accountId, campaignId, token, { status: 'inactive' }, revision);

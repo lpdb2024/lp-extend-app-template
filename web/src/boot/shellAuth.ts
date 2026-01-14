@@ -11,13 +11,16 @@
  */
 
 import { boot } from 'quasar/wrappers';
+import { Dark } from 'quasar';
 import { ref, computed } from 'vue';
 import {
   getAppAuthInstance,
   initAppAuth,
   isAppAuthInitialized,
+  onThemeChange,
   type AuthStrategy,
 } from '@lpextend/client-sdk';
+import { useAppStore } from 'src/stores/store-app';
 
 // Reactive state for global access
 const authStrategy = ref<AuthStrategy>((import.meta.env.VITE_AUTH_STRATEGY as AuthStrategy) || 'independent');
@@ -56,4 +59,11 @@ export default boot(({ app }) => {
   const strategyLabel = authStrategy.value === 'shell' ? 'SHELL' : 'INDEPENDENT';
   const modeLabel = auth.isInShell() ? 'iframe' : 'standalone';
   console.log(`[ShellAuthBoot] Auth strategy: ${strategyLabel}, Context: ${modeLabel}`);
+
+  // Listen for theme changes from shell
+  onThemeChange((dark: boolean) => {
+    console.log(`[ShellAuthBoot] Theme changed from shell: dark=${dark}`);
+    Dark.set(dark);
+    useAppStore().setDark(dark);
+  });
 });

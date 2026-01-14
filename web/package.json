@@ -14,7 +14,7 @@
     "postinstall": "quasar prepare"
   },
   "dependencies": {
-    "@lpextend/client-sdk": "^2.0.0",
+    "@lpextend/client-sdk": "latest",
     "@monaco-editor/loader": "^1.7.0",
     "@quasar/extras": "^1.16.4",
     "@tiptap/extension-image": "^2.10.4",

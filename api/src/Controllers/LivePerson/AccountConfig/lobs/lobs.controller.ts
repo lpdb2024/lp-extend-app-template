@@ -192,16 +192,22 @@ export class LobsController {
    * Extract token from Authorization header or shell auth
    * Supports both direct Bearer auth and shell token auth (via middleware)
    */
-  private extractToken(authorization: string, req?: any): string {
-    // First check if shell auth provided token via middleware
-    if (req?.token?.accessToken) {
-      return req.token.accessToken;
+  private extractToken(authorization: string, req?: any): { accessToken: string; extendToken?: string } {
+    // First check if shell auth provided token via middleware (LpExtendAuthMiddleware sets req.auth)
+    if (req?.auth?.lpAccessToken) {
+      return {
+        accessToken: req.auth.lpAccessToken,
+        extendToken: req.headers?.['x-extend-token'], // Raw ExtendJWT from header for SDK
+      };
     }
 
     // Fall back to Authorization header
     if (!authorization) {
       throw new BadRequestException('Authorization header is required');
     }
-    return authorization.replace(/^Bearer\s+/i, '');
+    return {
+      accessToken: authorization.replace(/^Bearer\s+/i, ''),
+      extendToken: req?.headers?.['x-extend-token'], // Also check header in fallback case
+    };
   }
 }

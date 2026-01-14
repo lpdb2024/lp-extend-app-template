@@ -9,7 +9,6 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerMiddleware } from './dependencies/logging.middleware';
 import { FirestoreModule } from './firestore/firestore.module';
-import { PreAuthMiddleware } from 'src/auth/auth.middleware';
 import { AuthService } from './Firebase/auth.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
@@ -24,6 +23,7 @@ import { APIModule } from './Controllers/APIService/api.module';
 import { LivePersonModule } from './Controllers/LivePerson/liveperson.module';
 import { AuthModule } from './auth/auth.module';
 import { AccountSettingsModule } from './Controllers/AccountSettings/account-settings.module';
+import { LpExtendAuthModule } from './auth/lpextend-auth.module';
 
 const firebaseProvider = {
   provide: 'FIREBASE_APP',
@@ -126,27 +126,23 @@ const firebaseProvider = {
     UsersModule,
     LivePersonModule,
     AuthModule,
-    AccountSettingsModule
+    AccountSettingsModule,
+    LpExtendAuthModule, // v2 API key-based auth for LP Extend shell integration
   ],
   controllers: [AppController],
   providers: [AppService, AuthService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(PreAuthMiddleware)
-      .exclude(
-        {
-          path: '/api/v1/connector_api/*',
-          method: RequestMethod.ALL,
-        },
-        '*v1/connector_api/*',
-      )
-      .forRoutes({ path: 'api/*', method: RequestMethod.ALL });
+    // LpExtendAuthModule applies its own middleware via NestModule.configure()
+    // All routes are protected by default via APP_GUARD
+    // Use @Public() decorator to make routes public
 
+    // Logging for all routes
     consumer
       .apply(LoggerMiddleware)
       .forRoutes({ path: '*', method: RequestMethod.ALL });
-    console.log('AppModule configure');
+
+    console.log('AppModule configured with LpExtendAuth (v2 API key auth)');
   }
 }

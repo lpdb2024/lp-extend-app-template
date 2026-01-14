@@ -19,6 +19,7 @@ import {
   ICreateAccountProperty,
   IUpdateAccountProperty,
 } from './account-properties.interfaces';
+import { TokenInfo } from '../../shared/sdk-provider.service';
 
 @Injectable()
 export class AccountPropertiesService extends LPBaseService {
@@ -40,7 +41,7 @@ export class AccountPropertiesService extends LPBaseService {
    */
   async getAll(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<IAccountProperty[]>> {
     const path = LP_API_PATHS.ACCOUNT_PROPERTIES.BASE(accountId);
 
@@ -57,7 +58,7 @@ export class AccountPropertiesService extends LPBaseService {
   async getById(
     accountId: string,
     propertyId: string,
-    token: string,
+    token: TokenInfo | string,
   ): Promise<ILPResponse<IAccountProperty>> {
     const path = LP_API_PATHS.ACCOUNT_PROPERTIES.BY_ID(accountId, propertyId);
 
@@ -73,7 +74,7 @@ export class AccountPropertiesService extends LPBaseService {
    */
   async create(
     accountId: string,
-    token: string,
+    token: TokenInfo | string,
     data: ICreateAccountProperty,
     revision?: string,
   ): Promise<ILPResponse<IAccountProperty>> {
@@ -93,7 +94,7 @@ export class AccountPropertiesService extends LPBaseService {
   async update(
     accountId: string,
     propertyId: string,
-    token: string,
+    token: TokenInfo | string,
     data: IUpdateAccountProperty,
     revision: string,
   ): Promise<ILPResponse<IAccountProperty>> {
@@ -110,7 +111,7 @@ export class AccountPropertiesService extends LPBaseService {
   /**
    * Get the current revision for account properties
    */
-  async getRevision(accountId: string, token: string): Promise<string | undefined> {
+  async getRevision(accountId: string, token: TokenInfo | string): Promise<string | undefined> {
     const response = await this.getAll(accountId, token);
     return response.revision;
   }
