@@ -337,7 +337,7 @@ export const useUserStore = defineStore("users", {
         return data;
       } catch (error: any) {
         const status = error?.response?.status || error?.status;
-        if (status === 401) {
+        if (status === 401 && !window.location.pathname.startsWith("/login")) {
           console.warn("[UserStore] Session expired (401 from /self), redirecting to login");
           this.$reset();
           window.location.href = "/login";

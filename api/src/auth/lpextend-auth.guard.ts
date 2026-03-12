@@ -78,8 +78,8 @@ export class LpExtendAuthGuard implements CanActivate {
       }, '📦 [DEBUG] Auth context');
     }
 
-    // Check if authenticated
-    if (!auth || !auth.lpUserId) {
+    // Check if authenticated (lpUserId may be empty in agent-login mode, check lpAccessToken too)
+    if (!auth || (!auth.lpUserId && !auth.lpAccessToken)) {
       this.logger.error({
         path: request.path,
         hasAuth: !!auth,

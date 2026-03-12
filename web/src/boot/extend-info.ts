@@ -8,7 +8,6 @@ export default boot(() => {
   const magenta = 'color: #d946ef; font-weight: bold';
   const dim = 'color: #9ca3af';
   const bold = 'color: #e5e7eb; font-weight: bold';
-  const reset = '';
 
   console.log(
     '%c  eX%cTEND %c— Full-stack development framework for LivePerson Conversational Cloud',
