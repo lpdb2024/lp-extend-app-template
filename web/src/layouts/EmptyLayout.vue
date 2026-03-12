@@ -94,11 +94,12 @@ onBeforeMount(async () => {
     return;
   }
 
-  // Fetch user info from session cookie
-  try {
-    await userStore.getSelf();
-  } catch (error) {
-    console.warn("[EmptyLayout] getSelf failed:", error);
+  // Validate session by calling /self (backend validates LP bearer token)
+  const selfResult = await userStore.getSelf();
+  if (!selfResult && hasLpSession) {
+    // getSelf returned null with an active SDK session — session may have expired
+    // If it was a 401, getSelf already redirects to login
+    console.warn("[EmptyLayout] getSelf returned null — session may be invalid");
   }
 });
 </script>

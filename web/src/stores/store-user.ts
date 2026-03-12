@@ -335,7 +335,13 @@ export const useUserStore = defineStore("users", {
           user: data,
         });
         return data;
-      } catch {
+      } catch (error: any) {
+        const status = error?.response?.status || error?.status;
+        if (status === 401) {
+          console.warn("[UserStore] Session expired (401 from /self), redirecting to login");
+          this.$reset();
+          window.location.href = "/login";
+        }
         return null;
       }
     },
