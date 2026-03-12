@@ -20,13 +20,10 @@
 
 <script setup lang="ts">
 import { nextTick } from "vue";
-import { useACStore } from "src/stores/store-ac";
 import { useUserStore } from "src/stores/store-user";
 import { onBeforeMount, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
-import type { AccountConfigItem, SettingGeneral } from "src/interfaces";
-import { SettingProperty } from "src/constants";
 import { useAppStore } from "src/stores/store-app";
 import { getAppAuthInstance } from "@lpextend/client-sdk";
 const { style, navRoutes } = storeToRefs(useUserStore());
@@ -72,66 +69,36 @@ onBeforeMount(async () => {
     console.log("[MainLayout] Set accountId from route query:", accountId);
   }
 
-  // Check if user has an active LP session before making LP-specific API calls
-  // Use shell auth service or legacy token check
+  // Check if user has an active LP session via SDK before making LP-specific API calls
   const userStore = useUserStore();
-  const legacyToken = userStore.getToken();
-  const legacyTokenExp = userStore.auth?.exp;
-  const hasValidLegacyToken = !!(
-    legacyToken &&
-    legacyTokenExp &&
-    legacyTokenExp * 1000 > Date.now()
-  );
+  const hasLpSession = auth.isAuthenticated();
+  const sdkAccountId = auth.getAccountId();
 
-  console.info("[MainLayout] LP session check:", {
-    hasValidLegacyToken,
-    legacyTokenExists: !!legacyToken,
+  console.info("[EmptyLayout] LP session check:", {
+    hasLpSession,
+    sdkAccountId,
+    strategy: auth.getStrategy(),
   });
 
-  if (!hasValidLegacyToken) {
+  // Set accountId from SDK if available
+  if (sdkAccountId) {
+    useAppStore().setaccountId(sdkAccountId);
+    userStore.setaccountId(sdkAccountId);
+  }
+
+  if (!hasLpSession) {
     // No LP session - user can still see the app, but LP features will be disabled
     console.info(
-      "No LP session - skipping LP API calls. User can access non-LP features."
+      "[EmptyLayout] No LP session - skipping LP API calls."
     );
-
-    // Don't try to fetch LP data, just let the app render
-    // The UI should show LP features as disabled/greyed out
     return;
   }
 
-  // Only fetch LP-specific data if we have LP access
-  // Wrap in try-catch to handle auth failures gracefully
+  // Fetch user info from session cookie
   try {
-    const config = await useACStore().getAccountConfig();
-    console.info("config", config);
-    if (!config || (Array.isArray(config) && config.length === 0)) {
-      // Config fetch failed or returned empty - likely auth issue
-      console.warn(
-        "Failed to fetch account config - may need to re-authenticate"
-      );
-      // Don't block, continue with defaults
-    } else {
-      const themeConfig = config.find(
-        (item: { id: SettingProperty | string }) =>
-          String(item.id) === String(SettingProperty.THEME)
-      );
-      const theme = themeConfig as unknown as AccountConfigItem<SettingGeneral>;
-      console.info("theme", SettingProperty.THEME, theme);
-      const themeValue = theme?.propertyValue?.value;
-      const dark = themeValue === "dark";
-      useUserStore().setDark(dark);
-    }
-
-    await useACStore().getApplication();
-    await Promise.all([useACStore().getBrandDetails()]);
-    const _user = await useUserStore().getSelf();
-    if (!_user) {
-      // No user found even with LP token - something is wrong
-      console.warn("LP session exists but getSelf() failed");
-    }
+    await userStore.getSelf();
   } catch (error) {
-    console.error("Error loading LP data:", error);
-    // Just continue without LP data
+    console.warn("[EmptyLayout] getSelf failed:", error);
   }
 });
 </script>

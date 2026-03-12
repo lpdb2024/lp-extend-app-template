@@ -45,6 +45,8 @@ export interface LpExtendAuthContext {
   lpUserId: string;
   lpAccountId: string;
   isLPA: boolean;
+  lpRole?: string;
+  loginName?: string;
   lpAccessToken?: string;
   cbToken?: string;
   cbOrg?: string;

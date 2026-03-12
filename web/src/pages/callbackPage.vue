@@ -4,57 +4,82 @@
     <div v-if="isPopup" class="text-center q-mt-md text-grey-6">
       Authenticating...
     </div>
+    <div v-if="errorMsg" class="text-center q-mt-md text-negative">
+      {{ errorMsg }}
+    </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { ROUTE_NAMES } from 'src/constants'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useUserStore } from 'src/stores/store-user'
+import { useAppStore } from 'src/stores/store-app'
+import { getAppAuthInstance } from '@lpextend/client-sdk'
 
-const route = useRoute()
 const router = useRouter()
 const isPopup = ref(false)
+const errorMsg = ref('')
 
 onMounted(async () => {
-  const { code } = route.query
-  console.info(route.query)
-  const q = code as string
-  if (!q) {
-    return
-  }
+  const auth = getAppAuthInstance()
 
   // Check if this is a popup window (for auto-login)
-  // Use localStorage since sessionStorage is not shared and may be lost after SSO redirect
-  // Also check window.opener as a secondary signal
   const lpSsoPopupFlag = localStorage.getItem('lpSsoPopup')
   const isPopupWindow = lpSsoPopupFlag === 'true' || (window.opener !== null && window.opener !== window)
   isPopup.value = isPopupWindow
 
-  const r = useUserStore().appRoute
-  const accountId = useUserStore().accountId
-  const x = await useUserStore().authApp(String(q), `${location.protocol}//${location.host}/callback`)
+  const userStore = useUserStore()
+  const appRoute = userStore.appRoute
 
-  if (x) {
-    console.info(`accountId: ${accountId}, appRoute: ${r}`)
+  try {
+    // Use SDK's handleCallback() — reads code/state from URL params,
+    // exchanges code for tokens, and creates an SDK session
+    console.info('[Callback] Calling auth.handleCallback()...')
+    await auth.handleCallback()
 
-    // If this is a popup window, notify the opener (if available) and close
+    const isAuthenticated = auth.isAuthenticated()
+    const accountId = auth.getAccountId()
+    console.info('[Callback] Post-handleCallback auth state:', {
+      isAuthenticated,
+      accountId,
+      userId: auth.getUserId(),
+      strategy: auth.getStrategy(),
+      session: auth.getSession(),
+    })
+
+    if (!isAuthenticated) {
+      console.error('[Callback] handleCallback completed but session not created')
+      errorMsg.value = 'Authentication failed — session was not created.'
+      handlePopupFailure(isPopupWindow)
+      return
+    }
+
+    // Sync accountId to stores
+    if (accountId) {
+      useAppStore().setaccountId(accountId)
+      userStore.setaccountId(accountId)
+    }
+
+    // Fetch user info
+    try {
+      await userStore.getSelf()
+    } catch (err) {
+      console.warn('[Callback] getSelf failed:', err)
+    }
+
+    // If this is a popup window, notify the opener and close
     if (isPopupWindow) {
       console.info('[Callback] Popup mode - auth success')
       localStorage.removeItem('lpSsoPopup')
       localStorage.removeItem('pendingLpAccountId')
 
-      // Try to notify opener if still available
       if (window.opener) {
         console.info('[Callback] Notifying opener of success')
         window.opener.postMessage({ type: 'LP_SSO_SUCCESS', accountId }, window.location.origin)
-      } else {
-        console.info('[Callback] No opener available (lost after redirect)')
       }
 
-      // Close this popup window - the main window will detect via polling
-      // Small delay to ensure message is sent
       setTimeout(() => {
         window.close()
       }, 500)
@@ -62,37 +87,44 @@ onMounted(async () => {
     }
 
     // Normal flow - navigate to the app
-    console.info('pushing route: ', { name: ROUTE_NAMES.APP, params: { accountId } })
-    if (r) {
-      const ro = { name: r, params: { accountId } }
-      console.info('redirecting to:')
-      console.info(ro)
-      await router.push({ name: r, params: { accountId } }).catch(err => {
-        console.error('Error while navigating:', err)
+    if (appRoute) {
+      console.info('[Callback] Redirecting to appRoute:', appRoute)
+      await router.push({ name: appRoute, params: { accountId: accountId || '' } }).catch(err => {
+        console.error('[Callback] Navigation error:', err)
       })
       return
     }
-    router.push({ name: ROUTE_NAMES.APPS, params: { accountId } }).catch(err => {
-      console.error('Error while navigating:', err)
+    await router.push({ name: ROUTE_NAMES.INDEX }).catch(err => {
+      console.error('[Callback] Navigation error:', err)
     })
-  } else {
-    // Auth failed
-    if (isPopupWindow) {
-      console.info('[Callback] Popup mode - auth failed')
-      localStorage.removeItem('lpSsoPopup')
-      localStorage.removeItem('pendingLpAccountId')
+  } catch (error) {
+    console.error('[Callback] handleCallback failed:', error)
+    errorMsg.value = 'Authentication failed. Please try again.'
+    handlePopupFailure(isPopupWindow)
 
-      if (window.opener) {
-        window.opener.postMessage({ type: 'LP_SSO_FAILURE' }, window.location.origin)
-      }
-
-      // Close popup even on failure
+    // In non-popup mode, redirect to login after a delay
+    if (!isPopupWindow) {
       setTimeout(() => {
-        window.close()
-      }, 500)
+        router.push({ name: ROUTE_NAMES.LOGIN }).catch(() => {})
+      }, 3000)
     }
   }
 })
+
+function handlePopupFailure(isPopupWindow: boolean) {
+  if (!isPopupWindow) return
+  console.info('[Callback] Popup mode - auth failed')
+  localStorage.removeItem('lpSsoPopup')
+  localStorage.removeItem('pendingLpAccountId')
+
+  if (window.opener) {
+    window.opener.postMessage({ type: 'LP_SSO_FAILURE' }, window.location.origin)
+  }
+
+  setTimeout(() => {
+    window.close()
+  }, 500)
+}
 </script>
 
 <style lang="scss" scoped>

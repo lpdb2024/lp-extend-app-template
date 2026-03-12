@@ -100,6 +100,7 @@ export default boot(({ router }) => {
       const isInShell = auth.isInShell();
       const isAuthenticated = auth.isAuthenticated();
       const strategy = auth.getStrategy();
+      const comingFromLogin = from.name === ROUTE_NAMES.LOGIN;
 
       if (logging) {
         console.info('[AuthGuard] Auth state:', {
@@ -107,6 +108,19 @@ export default boot(({ router }) => {
           isInShell,
           isAuthenticated,
           accountId: auth.getAccountId(),
+          from: from.name || '(initial)',
+          to: to.name,
+          sdkSession: auth.getSession(),
+          localStorage_session: localStorage.getItem('lp_auth_session'),
+        });
+      }
+
+      // If coming from login and SDK says not authenticated, log detailed debug info
+      if (comingFromLogin && !isAuthenticated) {
+        console.error('[AuthGuard] ⚠️ Post-login but SDK reports not authenticated!', {
+          session: auth.getSession(),
+          hasAccessToken: !!auth.getAccessToken(),
+          userId: auth.getUserId(),
         });
       }
 

@@ -24,6 +24,7 @@ import { LivePersonModule } from './Controllers/LivePerson/liveperson.module';
 import { AuthModule } from './auth/auth.module';
 import { AccountSettingsModule } from './Controllers/AccountSettings/account-settings.module';
 import { LpExtendAuthModule } from './auth/lpextend-auth.module';
+import { IdpModule } from './auth/idp.module';
 
 const firebaseProvider = {
   provide: 'FIREBASE_APP',
@@ -128,6 +129,7 @@ const firebaseProvider = {
     AuthModule,
     AccountSettingsModule,
     LpExtendAuthModule, // v2 API key-based auth for LP Extend shell integration
+    IdpModule, // Standalone auth endpoints (agent-login + SSO)
   ],
   controllers: [AppController],
   providers: [AppService, AuthService],

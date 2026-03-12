@@ -29,25 +29,27 @@ const isInShellMode = computed(() => {
   return auth.isInShell();
 });
 
-export default boot(({ app }) => {
+export default boot(async ({ app }) => {
   const bootStart = Date.now();
   console.log('[ShellAuthBoot] Starting auth init...', bootStart);
 
   // Get the LpAppAuth instance (will be initialized)
   const auth = getAppAuthInstance();
 
-  // Initialize auth early - this sets isInitialized when complete
-  void initAppAuth().then((authenticated: boolean) => {
+  // Initialize auth and wait for completion — this ensures lpAuth is ready
+  // before any component (e.g. LoginPage) tries to call loginWithCredentials
+  try {
+    const authenticated = await initAppAuth();
     const elapsed = Date.now() - bootStart;
     if (authenticated) {
       console.log(`[ShellAuthBoot] User is authenticated (${elapsed}ms)`);
     } else {
       console.log(`[ShellAuthBoot] User is not authenticated (${elapsed}ms)`);
     }
-  }).catch((error: Error) => {
+  } catch (error) {
     const elapsed = Date.now() - bootStart;
     console.error(`[ShellAuthBoot] Auth initialization failed (${elapsed}ms):`, error);
-  });
+  }
 
   // Make auth state available globally via provide/inject
   app.provide('authStrategy', authStrategy);

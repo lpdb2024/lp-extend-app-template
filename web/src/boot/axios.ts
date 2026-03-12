@@ -40,6 +40,13 @@ api.interceptors.request.use(
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
 
+    // X-LP-Account-Id: Required for agent-login mode so the backend middleware
+    // can identify the account when the bearer token is opaque (non-JWT)
+    const accountId = auth.getAccountId();
+    if (accountId) {
+      config.headers['X-LP-Account-Id'] = accountId;
+    }
+
     return config;
   },
   (error: Error) => {

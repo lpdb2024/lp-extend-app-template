@@ -10,7 +10,7 @@
 const { execSync } = require('child_process');
 const os = require('os');
 
-const PORT = process.env.PORT || 9001;
+const PORT = process.env.PORT || 3001;
 const platform = os.platform();
 
 console.log(`[kill-port] Checking for processes on port ${PORT}...`);

@@ -14,6 +14,8 @@ import {
   VerifyUser,
   VerifyPermissions,
 } from 'src/auth/auth.decorators';
+import { LpExtendAuth } from 'src/auth/lpextend-auth.decorators';
+import type { LpExtendAuthContext } from 'src/auth/lpextend-auth.service';
 import { API_ROUTES, MANAGER_ROLES } from '../../constants/constants';
 import { UserData, UsersDocument } from './users.interfaces';
 import { ERROR_RESPONSES } from '../../constants/constants';
@@ -43,11 +45,25 @@ export class UsersController {
   }
 
   @Get('/:accountId/self')
-  async getSelf(
-    @VerifyUser({ roles: [] }) user: UserDto,
-  ): Promise<UserDto> | null {
-    // Return user without LP role check - any authenticated user can get their own info
-    return user;
+  getSelf(
+    @LpExtendAuth() auth: LpExtendAuthContext,
+  ) {
+    // Return user info from the session — no DB lookup needed
+    if (!auth) {
+      return null;
+    }
+    // Return shape compatible with AppUser interface expected by frontend
+    return {
+      accountId: auth.lpAccountId,
+      displayName: auth.loginName || auth.lpUserId,
+      email: '',
+      roles: auth.lpRole ? [auth.lpRole] : [],
+      permissions: [],
+      isLPA: auth.isLPA,
+      lpUserId: auth.lpUserId,
+      lpAccountId: auth.lpAccountId,
+      hasCbToken: !!auth.cbToken,
+    };
   }
 
   @Get(':id')

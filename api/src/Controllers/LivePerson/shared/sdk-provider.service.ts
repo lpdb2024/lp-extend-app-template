@@ -67,6 +67,7 @@ export class SDKProviderService implements OnModuleDestroy {
   private readonly appId: string;
   private readonly apiKey: string | undefined;
   private readonly cacheTtlMs: number;
+  private readonly skipRegistration: boolean;
   private cleanupInterval: NodeJS.Timeout | null = null;
 
   constructor(
@@ -82,11 +83,13 @@ export class SDKProviderService implements OnModuleDestroy {
     this.appId = this.configService.get<string>('APP_ID') || 'lp-extend-template';
     this.apiKey = this.configService.get<string>('LPEXTEND_API_KEY');
     this.cacheTtlMs = this.configService.get<number>('SDK_CACHE_TTL_MS') || DEFAULT_CACHE_TTL_MS;
+    this.skipRegistration = this.configService.get<string>('BYPASS_SDK_REGISTRATION') === 'true';
 
     this.logger.info({
       shellBaseUrl: this.shellBaseUrl,
       appId: this.appId,
       hasApiKey: !!this.apiKey,
+      skipRegistration: this.skipRegistration,
     }, 'SDKProviderService initialized');
 
     // Start periodic cleanup
@@ -160,6 +163,7 @@ export class SDKProviderService implements OnModuleDestroy {
           shellBaseUrl: this.shellBaseUrl,
           scopes,
           debug: isDebug,
+          skipRegistration: this.skipRegistration,
         };
         this.logger.debug({ fn: 'getSDK', authMode: 'apiKey+extendToken' }, 'Using v2 API key auth');
       } else if (tokenInfo.extendToken) {
@@ -171,19 +175,31 @@ export class SDKProviderService implements OnModuleDestroy {
           shellBaseUrl: this.shellBaseUrl,
           scopes,
           debug: isDebug,
+          skipRegistration: this.skipRegistration,
         };
         this.logger.debug({ fn: 'getSDK', authMode: 'extendToken' }, 'Using legacy extendToken auth');
       } else {
-        // Direct access token (standalone mode)
+        // Direct access token (standalone / agent-login mode)
+        // Use local mode when AUTH_STRATEGY is 'agent-login' to skip shell contact
+        const authStrategy = this.configService.get<string>('AUTH_STRATEGY');
+        const useLocalMode = authStrategy === 'agent-login' || authStrategy === 'local';
+
         sdkConfig = {
           appId: this.appId,
           accountId,
           accessToken: tokenInfo.accessToken.replace('Bearer ', ''),
-          shellBaseUrl: this.shellBaseUrl,
           scopes,
           debug: isDebug,
+          skipRegistration: this.skipRegistration,
+          ...(useLocalMode
+            ? { mode: 'local' as const }
+            : { shellBaseUrl: this.shellBaseUrl }),
         };
-        this.logger.debug({ fn: 'getSDK', authMode: 'accessToken' }, 'Using direct accessToken');
+        this.logger.debug({
+          fn: 'getSDK',
+          authMode: useLocalMode ? 'local' : 'accessToken',
+          authStrategy,
+        }, useLocalMode ? 'Using local mode (no shell)' : 'Using direct accessToken');
       }
 
       const sdk = await initializeSDK(sdkConfig);

@@ -17,7 +17,7 @@ async function bootstrap() {
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT') || 8080;
+  const port = configService.get<number>('PORT') || 3001;
 
   const config = new DocumentBuilder()
     .setTitle('LP Extend example')

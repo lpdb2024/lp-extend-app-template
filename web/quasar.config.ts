@@ -3,6 +3,25 @@
 
 import { defineConfig } from "#q-app/wrappers";
 import { fileURLToPath } from "node:url";
+import { readFileSync, existsSync } from "node:fs";
+import { join } from "node:path";
+
+function getPkgVersion(nodeModulesBase: string, pkg: string): string {
+  try {
+    const p = join(nodeModulesBase, "node_modules", pkg, "package.json");
+    if (existsSync(p)) {
+      return JSON.parse(readFileSync(p, "utf-8")).version;
+    }
+  } catch (_e) {
+    // Package not installed
+  }
+  return "0.0.0";
+}
+
+const templateVersion = JSON.parse(
+  readFileSync(join(__dirname, "..", "package.json"), "utf-8")
+).version;
+const clientSdkVersion = getPkgVersion(__dirname, "@lpextend/client-sdk");
 
 export default defineConfig((ctx) => {
   return {
@@ -13,6 +32,7 @@ export default defineConfig((ctx) => {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
+      "extend-info", // Show eXtend version info in console
       "piniaPersist", // Must be first to restore persisted state before other boots use stores
       "shellAuth", // Must be early to detect shell mode before auth guard runs
       "i18n",
@@ -58,7 +78,10 @@ export default defineConfig((ctx) => {
       // publicPath: '/',
       // analyze: true,
       // env: {},
-      // rawDefine: {}
+      rawDefine: {
+        __EXTEND_TEMPLATE_VERSION__: JSON.stringify(templateVersion),
+        __EXTEND_CLIENT_SDK_VERSION__: JSON.stringify(clientSdkVersion),
+      },
       // ignorePublicFolder: true,
       // minify: false,
       // polyfillModulePreload: true,
@@ -104,11 +127,11 @@ export default defineConfig((ctx) => {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {
       vueDevtools: true,
-      port: 9000,
+      port: 3000,
       allowedHosts: true,
       proxy: {
         "/api": {
-          target: "http://127.0.0.1:9001/api",
+          target: "http://127.0.0.1:3001/api",
           changeOrigin: true,
           secure: true,
           ws: true,
@@ -116,15 +139,7 @@ export default defineConfig((ctx) => {
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
         "/socket.io": {
-          target: "ws://localhost:90001",
-          ws: true,
-        },
-        "/ws://localhost:9000": {
-          target: "ws://localhost:90001",
-          ws: true,
-        },
-        "ws://localhost:9000": {
-          target: "ws://localhost:90001",
+          target: "ws://localhost:3001",
           ws: true,
         },
       },
